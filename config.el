@@ -130,7 +130,9 @@
 ;; dirvish
 (map! :leader
       (:prefix ("t" . "toggle")
-       :desc "Toggle dirvish" "d" #'dirvish-dispatch))
+       :desc "Toggle dirvish" "d" #'dirvish-side))
+
+(setq dirvish-side-width 80)
 
 ;; YASNIPPET
 (defun yasnippet-extract-arg-and-type (arg)
