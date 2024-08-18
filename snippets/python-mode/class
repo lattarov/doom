@@ -5,23 +5,23 @@
 # group: object oriented
 # --
 
-class ${1:Name}:
+class ${1:Name}(${2:Parent`(or % "")`}):
     """
-    ${2:ShortDescription}
+    ${3:ShortDescription}
 
-    ${3:}
+    ${4:}
 
-    Parameters
+    Attributes
     ----------
-    ${4:$(yasnippet-python-params-doc yas-text)}
+    ${5:$(yasnippet-python-params-doc yas-text)}
 
     Exemples
     ----------
-    $5
+    $6
 
     """
 
-    def __init__(self, ${4:}):
-        ${4:$(yasnippet-python-parameter-assignments yas-text)}
+    def __init__(self, ${5:}):
+        ${5:$(yasnippet-python-parameter-assignments yas-text)}
 
     $0
