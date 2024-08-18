@@ -1,0 +1,27 @@
+# -*- mode: snippet -*-
+# name: class
+# key: cl
+# uuid: cl
+# group: object oriented
+# --
+
+class ${1:Name}:
+    """
+    ${2:ShortDescription}
+
+    ${3:}
+
+    Parameters
+    ----------
+    ${4:$(yasnippet-python-params-doc yas-text)}
+
+    Exemples
+    ----------
+    $5
+
+    """
+
+    def __init__(self, ${4:}):
+        ${4:$(yasnippet-python-parameter-assignments yas-text)}
+
+    $0
