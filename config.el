@@ -79,6 +79,8 @@
 ;; Save what you enter into minibuffer prompts
 (setq history-length 25)
 (savehist-mode 1)
+(add-to-list 'default-frame-alist '(fullscreen . maximized))
+
 ;; Revert buffers when the underlying file has changed
 (global-auto-revert-mode 1)
 ;; Revert Dired and other buffers
