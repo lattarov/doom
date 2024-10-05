@@ -23,7 +23,7 @@ not installing packages that are not compatible with windows
 #+end_src
 
 * Doom
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle config.el
 (setq doom-theme 'doom-dark+)
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
@@ -33,32 +33,37 @@ not installing packages that are not compatible with windows
 
 *  Emacs general configs
 **  Save command minibuffer command history
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle config.el
 (setq history-length 25)
 (savehist-mode 1)
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 #+end_src
 
 **  Revert buffers when the underlying file has changed
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle config.el
 (global-auto-revert-mode 1)
 ;; Revert Dired and other buffers
 (setq global-auto-revert-non-file-buffers t)
 #+end_src
 
 ** Text editing
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle config.el
 ;; Remember and restore the last cursor location of opened files
 (save-place-mode 1)
 #+end_src
 * Org
 ** Basic config
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle config.el
 (setq org-directory "~/org/")
 #+end_src
 
 ** Roam related configuration
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle packages.el
+(unpin! org-roam)
+(package! org-roam-ui)
+#+end_src 
+
+#+begin_src emacs-lisp :tangle config.el
 (use-package! websocket
   :after org-roam)
 
@@ -74,8 +79,9 @@ not installing packages that are not compatible with windows
         org-roam-ui-update-on-save t
         org-roam-ui-open-on-start t))
 #+end_src
+
 * Conda
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle config.el
 (use-package! conda
   :config
   (setq conda-anaconda-home (expand-file-name "~/miniconda3"))
@@ -83,9 +89,9 @@ not installing packages that are not compatible with windows
   (conda-env-initialize-interactive-shells)
   (conda-env-initialize-eshell))
 #+end_src
-* * Treetreema
+
 * Treemacs
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle config.el
 (after! treemacs
   (map! :leader
         (:prefix ("t" . "toggle")
@@ -94,7 +100,7 @@ not installing packages that are not compatible with windows
 #+end_src
 
 * vterm
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle config.el
 (after! vterm
   (map! :leader
         (:prefix ("t" . "toggle")
@@ -103,7 +109,7 @@ not installing packages that are not compatible with windows
 #+end_src
 
 * dirvish
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle config.el
 (map! :leader
 (:prefix ("t" . "toggle")
 :desc "Toggle dirvish" "d" #'dirvish-side))
@@ -112,7 +118,7 @@ not installing packages that are not compatible with windows
 #end_src
 
 * YASNIPPET
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle config.el
 (defun yasnippet-extract-arg-and-type (arg)
   "Extract argument name and type from a string of the form 'arg: type'."
   (let* ((parts (split-string arg ": ")))
