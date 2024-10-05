@@ -1,0 +1,154 @@
+* Introduction
+Personal and work doom emacs config.
+* Tasks
+** TODO Add packages.el and init.el configuration here
+** TODO Make it one single config compatible with windows and linux
+automatic environment detection
+line endings, path to server file, etc. automatically configured
+not installing packages that are not compatible with windows
+*** IDEA use org tangling and enabling/disabling it via a function to detect the OS
+#+begin_src emacs-lisp :tangle no
+;; for linux only config:
+
+(if (eq system-type 'gnu/linux)
+    (setq tangle-path-linux config.el)
+    (setq tangle-path-linux 'no)
+)
+
+(if (eq system-type 'windows-nt)
+    (setq tangle-path-win32 config.el)
+    (setq tangle-path-win32 'no)
+)
+
+#+end_src
+
+* Doom
+#+begin_src emacs-lisp
+(setq doom-theme 'doom-dark+)
+
+;; This determines the style of line numbers in effect. If set to `nil', line
+;; numbers are disabled. For relative line numbers, set this to `relative'.
+(setq display-line-numbers-type t)
+#+end_src
+
+*  Emacs general configs
+**  Save command minibuffer command history
+#+begin_src emacs-lisp
+(setq history-length 25)
+(savehist-mode 1)
+(add-to-list 'default-frame-alist '(fullscreen . maximized))
+#+end_src
+
+**  Revert buffers when the underlying file has changed
+#+begin_src emacs-lisp
+(global-auto-revert-mode 1)
+;; Revert Dired and other buffers
+(setq global-auto-revert-non-file-buffers t)
+#+end_src
+
+** Text editing
+#+begin_src emacs-lisp
+;; Remember and restore the last cursor location of opened files
+(save-place-mode 1)
+#+end_src
+* Org
+** Basic config
+#+begin_src emacs-lisp
+(setq org-directory "~/org/")
+#+end_src
+
+** Roam related configuration
+#+begin_src emacs-lisp
+(use-package! websocket
+  :after org-roam)
+
+(use-package! org-roam-ui
+  :after org-roam ;; or :after org
+  ;;         normally we'd recommend hooking orui after org-roam, but since org-roam does not have
+  ;;         a hookable mode anymore, you're advised to pick something yourself
+  ;;         if you don't care about startup time, use
+  ;;  :hook (after-init . org-roam-ui-mode)
+  :config
+  (setq org-roam-ui-sync-theme t
+        org-roam-ui-follow t
+        org-roam-ui-update-on-save t
+        org-roam-ui-open-on-start t))
+#+end_src
+* Conda
+#+begin_src emacs-lisp
+(use-package! conda
+  :config
+  (setq conda-anaconda-home (expand-file-name "~/miniconda3"))
+  (setq conda-env-home-directory (expand-file-name "~/miniconda3"))
+  (conda-env-initialize-interactive-shells)
+  (conda-env-initialize-eshell))
+#+end_src
+* * Treetreema
+* Treemacs
+#+begin_src emacs-lisp
+(after! treemacs
+  (map! :leader
+        (:prefix ("t" . "toggle")
+         :desc "Toggle treemacs" "t" #'treemacs))
+  )
+#+end_src
+
+* vterm
+#+begin_src emacs-lisp
+(after! vterm
+  (map! :leader
+        (:prefix ("t" . "toggle")
+         :desc "Toggle vterm" "v" #'+vterm/toggle))
+  )
+#+end_src
+
+* dirvish
+#+begin_src emacs-lisp
+(map! :leader
+(:prefix ("t" . "toggle")
+:desc "Toggle dirvish" "d" #'dirvish-side))
+
+(setq dirvish-side-width 80)
+#end_src
+
+* YASNIPPET
+#+begin_src emacs-lisp
+(defun yasnippet-extract-arg-and-type (arg)
+  "Extract argument name and type from a string of the form 'arg: type'."
+  (let* ((parts (split-string arg ": ")))
+    (if (= (length parts) 2)
+        (cons (car parts) (cadr parts))
+      (cons (car parts) "type"))))
+
+(defun yasnippet-python-params-doc (arg-string)
+  "Generates a docstring for parameters in NumPy style with optional type annotations.
+If there are no arguments, returns ''."
+  (let* ((args (split-string arg-string ", "))
+         (formatted-doc
+          (if (string-blank-p arg-string)
+              ""
+            (mapconcat (lambda (arg)
+                         (let* ((arg-pair (yasnippet-extract-arg-and-type arg))
+                                (arg-name (car arg-pair))
+                                (arg-type (cdr arg-pair)))
+                           ;; TODO: Generate placeholders for each parameter description.
+                           (format "%s : %s\n        TODO: Description of %s." arg-name arg-type arg-name)))
+                       args
+                       "\n    "))))
+    formatted-doc))
+
+(defun yasnippet-python-parameter-assignments (arg-string)
+  "Convert a comma-separated string of arguments into self assignments.
+If there are no arguments, returns 'pass'."
+  (let* ((args (split-string arg-string ", "))
+         (assignments
+          (if (string-blank-p arg-string)
+              "pass"
+            (mapconcat (lambda (arg)
+                         (let* ((parts (split-string arg ": "))
+                                (name (car parts)))
+                           (format "self.%s = %s" name name)))
+                       args
+                       "\n        "))))
+    assignments))
+#+end_src
