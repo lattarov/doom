@@ -1,7 +1,9 @@
 * Introduction
 Personal and work doom emacs config.
 * Tasks
-** TODO Add packages.el and init.el configuration here
+** DONE Add packages.el configuration here
+** TODO Add init.el configuration here
+*** [?] how to know about new flags and updates for modules if init.el content is here?
 ** TODO Make it one single config compatible with windows and linux
 automatic environment detection
 line endings, path to server file, etc. automatically configured
@@ -57,7 +59,7 @@ not installing packages that are not compatible with windows
 (setq org-directory "~/org/")
 #+end_src
 
-** Roam related configuration
+** Org Roam
 #+begin_src emacs-lisp :tangle packages.el
 (unpin! org-roam)
 (package! org-roam-ui)
@@ -183,4 +185,3 @@ If there are no arguments, returns 'pass'."
 #+end_src
 
 *** TODO Fine tune LSP flags
-*** TODO integrate with cmake-ide
