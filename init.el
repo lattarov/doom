@@ -161,6 +161,7 @@
             +present
             +pomodoro
             +dragndrop
+            +journal
             +brain)
        ;;php               ; perl's insecure younger brother
        ;;plantuml          ; diagrams for confusing people more
