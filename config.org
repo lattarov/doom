@@ -172,5 +172,15 @@ If there are no arguments, returns 'pass'."
           "--header-insertion-decorators=0"))
   (set-lsp-priority! 'clangd 2))
 #+end_src
+*** CMAKE-IDE
+[[https://github.com/Fox7Fog/emacs-cmake-ide][GitHub - Fox7Fog/emacs-cmake-ide: Use Emacs as a C/C++ IDE]]
+#+begin_src emacs-lisp :tangle packages.el
+(package! cmake-ide)
+#+end_src
+
+#+begin_src emacs-lisp :tangle config.el
+(cmake-ide-setup)
+#+end_src
+
 *** TODO Fine tune LSP flags
 *** TODO integrate with cmake-ide
