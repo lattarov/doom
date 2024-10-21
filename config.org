@@ -92,6 +92,15 @@ not installing packages that are not compatible with windows
   (conda-env-initialize-eshell))
 #+end_src
 
+* Projectile
+Allow automatic recognition of projects given a list of paths.
+#+begin_src emacs-lisp :tangle config.el
+(use-package! projectile
+  :config
+  (setq projectile-project-search-path '("~/dev"))
+  )
+#+end_src
+
 * Treemacs
 #+begin_src emacs-lisp :tangle config.el
 (after! treemacs
