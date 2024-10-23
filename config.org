@@ -194,3 +194,9 @@ If there are no arguments, returns 'pass'."
 #+end_src
 
 *** TODO Fine tune LSP flags
+** Emacs extension framework
+
+#+begin_src emacs-lisp :tangle config.el
+(add-to-list 'load-path "~/dev/emacs-application-framework/")
+(require 'eaf)
+#+end_src
