@@ -62,6 +62,7 @@ not installing packages that are not compatible with windows
 #+end_src
 
 ** Org Roam
+Shortcuts are mapped with the SPC n r prefix by default.
 #+begin_src emacs-lisp :tangle packages.el
 (unpin! org-roam)
 (package! org-roam-ui)
@@ -81,7 +82,13 @@ not installing packages that are not compatible with windows
   (setq org-roam-ui-sync-theme t
         org-roam-ui-follow t
         org-roam-ui-update-on-save t
-        org-roam-ui-open-on-start t))
+        org-roam-ui-open-on-start t)
+
+  (map! :leader
+        (:prefix ("n" . "toggle")
+        (:prefix ("r" . "toggle")
+         :desc "Open org roam UI" "u" #'org-roam-ui-mode))
+  ))
 #+end_src
 
 * Conda
