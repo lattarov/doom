@@ -75,6 +75,15 @@ Personal and work doom emacs config.
 
 #+begin_src emacs-lisp :tangle config.el
 (setq doom-theme 'catppuccin)
+** Terminals (WIP)
+this configures bash to be used as the default shell bash. In theory it corrects a few issues concerning
+
+#+begin_src emacs-lisp :tangle no
+;; Configuring terminal for windows
+(if (eq system-type 'windows-nt)
+        (setq shell-file-name "C:/Windows/system32/bash.exe")
+        (setenv "ESHELL" "bash")
+ )
 #+end_src
 * olivetti mode
 
