@@ -85,8 +85,8 @@ Shortcuts are mapped with the SPC n r prefix by default.
         org-roam-ui-open-on-start t)
 
   (map! :leader
-        (:prefix ("n" . "toggle")
-        (:prefix ("r" . "toggle")
+        (:prefix ("n" . "org")
+        (:prefix ("r" . "roam")
          :desc "Open org roam UI" "u" #'org-roam-ui-mode))
   ))
 #+end_src
@@ -318,3 +318,7 @@ Spaws a child process using UNIX watch command using nvidia-smi command."
  )
 #+end_src
 ***** TODO FIXME
+* bug-hunter
+#+begin_src emacs-lisp :tangle packages.el
+(package! bug-hunter)
+#+end_src
