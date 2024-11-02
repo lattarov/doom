@@ -219,6 +219,10 @@ If there are no arguments, returns 'pass'."
          :desc "add file to context" "a" #'gptel-add-file
          )
   )
+  ;; window to scroll automatically as the response is inserted
+  (add-hook 'gptel-post-stream-hook 'gptel-auto-scroll)
+  ;; make cursor to move to the next prompt after the response is inserted
+  (add-hook 'gptel-post-response-functions 'gptel-end-of-response)
 )
 #+end_src
 
@@ -370,4 +374,11 @@ entries]], it works by deleting selected items feed from elfeed's database.
       (cl-loop for entry in entries
 	       do (sk/elfeed-db-remove-entry (elfeed-entry-id entry)))))
   (elfeed-search-update--force))
+#+end_src
+* Completions
+** Corfu
+#+begin_src emacs-lisp :tangle config.el
+(setq-local corfu-auto        t
+            corfu-auto-delay  0.2 ;; TOO SMALL - NOT RECOMMENDED
+            completion-styles '(basic))
 #+end_src
