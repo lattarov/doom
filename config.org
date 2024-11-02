@@ -382,3 +382,42 @@ entries]], it works by deleting selected items feed from elfeed's database.
             corfu-auto-delay  0.2 ;; TOO SMALL - NOT RECOMMENDED
             completion-styles '(basic))
 #+end_src
+** IDEA Consult-omni
+[[https://github.com/armindarvish/consult-omni?tab=readme-ov-file#drop-in-example-config][GitHub - armindarvish/consult-omni: A Powerful Versatile Omni Search inside E...]]
+
+"consult-omni is a package for getting search results from one or several custom
+sources (web search engines, AI assistants, elfeed database, org notes, local
+files, desktop applications, mail servers, …) directly in Emacs minibuffer. It
+is a successor of consult-web, with expanded features and functionalities."
+
+It still in its beta phase, having its first release in July 24'.
+
+Some security concerns arise due to using emacs as a web browser... This is to
+be tested and tracked over time. The project seems nevertheless extremely
+promising and would bring plenty of nice features to the config.
+
+Tangling will be left disabled for now, but this can be a starting point for the future.
+#+begin_src emacs-lisp :tangle no
+(package! consult-omni)
+#+end_src
+
+#+begin_src emacs-lisp :tangle no
+(use-package! consult-omni
+  :after consult
+  :custom
+   ;; general settings that apply to all sources
+  (consult-omni-show-preview t) ;;; show previews
+  (consult-omni-preview-key "c-o") ;;; set the preview key to c-o
+  :config
+  ;; load sources core code
+  (require 'consult-omni-sources)
+  ;; load embark actions
+  (require 'consult-omni-embark)
+
+  ;; only load wikipedia source
+  (setq consult-omni-sources-modules-to-load (list 'consult-omni-wikipedia))
+  (consult-omni-sources-load-modules)
+
+  ;;; set your shorthand favorite interactive command
+  (setq consult-omni-default-interactive-command #'consult-omni-wikipedia))
+#+end_src
