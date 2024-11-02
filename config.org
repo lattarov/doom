@@ -60,7 +60,6 @@ not installing packages that are not compatible with windows
 #+begin_src emacs-lisp :tangle config.el
 (setq org-directory "~/org/")
 #+end_src
-
 ** Org Roam
 Shortcuts are mapped with the SPC n r prefix by default.
 #+begin_src emacs-lisp :tangle packages.el
@@ -321,4 +320,54 @@ Spaws a child process using UNIX watch command using nvidia-smi command."
 * bug-hunter
 #+begin_src emacs-lisp :tangle packages.el
 (package! bug-hunter)
+#+end_src
+
+* RSS feed
+** Setting up feeds
+By default, the feeds and their corresponding tags are described in[[file:~/org/elfeed.org][
+~/org/elfeed.org]].
+*** TODO automatically set up feeds
+Two trivial ways to do it:
+- Add the elfeed.org file to .dotfiles and use GNU Stow to symlink it to the
+  right place
+- Use org tangle to create and update it
+  Tried using babel code blocks with org, it did not work at all.
+** Basic elfeed configuration.
+#+begin_src emacs-lisp :tangle config.el
+;; global mapping
+(map! :leader
+      (:prefix ("e" . "elfeed")
+       :desc "Enter elfeed" "e" #'elfeed
+       :desc "Update all feeds" "u" #'elfeed-update))
+
+(after! elfeed
+  ;; the basic value cuts a part of the feed's title.
+  ;; Increasing the column width fixes it.
+  (setq elfeed-goodies/feed-source-column-width 20)
+
+)
+#+end_src
+
+** Removing items from the feed
+Strangely, elfeed does not allow us to delete entries that we don't want to see
+in the feed anymore. Moreover, when a feed is deleted, its entries are not
+removed from the feed.
+
+A solution is proposed by [[https://github.com/skeeto/elfeed/issues/392][skeeto/elfeed#392 Deleting feeds with all their
+entries]], it works by deleting selected items feed from elfeed's database.
+#+begin_src emacs-lisp :tangle config.el
+(defun sk/elfeed-db-remove-entry (id)
+  "Removes the entry for ID"
+  (avl-tree-delete elfeed-db-index id)
+  (remhash id elfeed-db-entries))
+
+(defun sk/elfeed-search-remove-selected ()
+  "Remove selected entries from database"
+  (interactive)
+  (let* ((entries (elfeed-search-selected))
+	 (count (length entries)))
+    (when (y-or-n-p (format "Delete %d entires?" count))
+      (cl-loop for entry in entries
+	       do (sk/elfeed-db-remove-entry (elfeed-entry-id entry)))))
+  (elfeed-search-update--force))
 #+end_src
