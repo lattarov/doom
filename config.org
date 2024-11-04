@@ -33,6 +33,9 @@ not installing packages that are not compatible with windows
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
 (setq display-line-numbers-type t)
+
+;; sets emacs general opacity
+(doom/set-frame-opacity 97)
 #+end_src
 
 *  Emacs general configs
