@@ -384,9 +384,16 @@ entries]], it works by deleting selected items feed from elfeed's database.
 * Completions
 ** Corfu
 #+begin_src emacs-lisp :tangle config.el
-(setq-local corfu-auto        t
-            corfu-auto-delay  0.2 ;; TOO SMALL - NOT RECOMMENDED
-            completion-styles '(basic))
+(use-package! corfu
+  :config
+  (defun corfu-enable-in-minibuffer ()
+    "Enable Corfu in the minibuffer if `completion-at-point' is bound."
+    (when (where-is-internal #'completion-at-point (list (current-local-map)))
+      ;; (setq-local corfu-auto nil) ;; Enable/disable auto completion
+      (setq-local corfu-echo-delay nil ;; Disable automatic echo and popup
+                  corfu-popupinfo-delay nil)
+      (corfu-mode 1)))
+  (add-hook 'minibuffer-setup-hook #'corfu-enable-in-minibuffer))
 #+end_src
 ** IDEA Consult-omni
 [[https://github.com/armindarvish/consult-omni?tab=readme-ov-file#drop-in-example-config][GitHub - armindarvish/consult-omni: A Powerful Versatile Omni Search inside E...]]
