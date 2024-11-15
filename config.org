@@ -410,7 +410,7 @@ be tested and tracked over time. The project seems nevertheless extremely
 promising and would bring plenty of nice features to the config.
 
 Tangling will be left disabled for now, but this can be a starting point for the future.
-#+begin_src emacs-lisp :tangle no
+#+begin_src emacs-lisp :tangle packages.el
 (package! consult-omni
   :type 'core
   :recipe '(:host github
@@ -420,7 +420,7 @@ Tangling will be left disabled for now, but this can be a starting point for the
 #+end_src
 
 When installing this, somehow it broke org table in a strange way, the GUI was jittering and error messages coming in non-stop. To be investigated !
-#+begin_src emacs-lisp :tangle no
+#+begin_src emacs-lisp :tangle config.el
 (use-package! consult-omni
   :after consult
   :custom
@@ -436,26 +436,26 @@ When installing this, somehow it broke org table in a strange way, the GUI was j
   ;; Either load all source modules or a selected list
 
   ;;; Select a list of modules you want to aload, otherwise all sources all laoded
-  ; (setq consult-omni-sources-modules-to-load (list 'consult-omni-wkipedia 'consult-omni-notes))
+  (setq consult-omni-sources-modules-to-load (list 'consult-omni-wkipedia 'consult-omni-notes 'consult-omni-gptel))
   (consult-omni-sources-load-modules)
   ;;; set multiple sources for consult-omni-multi command. Change these lists as needed for different interactive commands. Keep in mind that each source has to be a key in `consult-omni-sources-alist'.
   (setq consult-omni-multi-sources '("calc"
-                                     ;; "File"
-                                     ;; "Buffer"
+                                     "File"
+                                     "Buffer"
                                      ;; "Bookmark"
                                      "Apps"
-                                     ;; "gptel"
+                                     "gptel"
                                      "Brave"
                                      "Dictionary"
-                                     ;; "Google"
+                                     "Google"
                                      "Wikipedia"
                                      "elfeed"
                                      ;; "mu4e"
-                                     ;; "buffers text search"
+                                     "buffers text search"
                                      "Notes Search"
                                      "Org Agenda"
                                      "GitHub"
-                                     ;; "YouTube"
+                                     "YouTube"
                                      "Invidious"))
 
 ;; Per source customization
