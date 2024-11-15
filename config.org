@@ -242,7 +242,7 @@ added only two models that this machine can run
 (setq gptel-backend (gptel-make-ollama "Ollama"
         :host "localhost:11434"
         :stream t
-        :models '((llama3.1:8b) (llama3.2:3b))))
+        :models '((llama3.1:8b) (llama3.2:3b) (qwen2.5-coder))))
 #+end_src
 **** Spawning process
 #+begin_src emacs-lisp :tangle config.el
