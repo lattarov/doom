@@ -473,4 +473,60 @@ When installing this, somehow it broke org table in a strange way, the GUI was j
 
  ;;; Set your shorthand favorite interactive command
   (setq consult-omni-default-interactive-command #'consult-omni-multi))
+* Email client
+Using mu4e with mbsync as backend usage.
+
+A bug in ubuntu-based distros causes that whenever there's a reinstall of mu, it does not get properly reinstalled, so it must be added to the load path by hand.
+
+The installation process is a bit unclear in doom's documentation, but there are a few steps and dependencies to install in order to use mu4e in emacs.
+
+** Prerequisites
+*** Tasks
+**** DONE Make it work one time
+**** TODO document installation of external programs
+***** TODO mu
+***** TODO mbsync
+**** TODO make script to handle the installation
+*** mu
+Mu is a mail indexer. It's job is to make sense of a mail database stored locally.
+The version that's available using apt is not really functional as of 16/11/24. What worked was to download the tarball from the repo itself, compile and add it to the path.
+#+begin_src emacs-lisp :tangle config.el
+(add-to-list 'load-path "/usr/share/emacs/site-lisp/mu4e")
+#+end_src
+*** mbsync
+This is the machinery to fetch mail from an IMAP server.
+
+** Configuration
+
+#+begin_src emacs-lisp :tangle config.el
+;; Each path is relative to the path of the maildir you passed to mu
+
+;; (setq mu4e-get-mail-command "mbsync gmail"
+;;       ;; get emails and index every 5 minutes
+;;       mu4e-update-interval 300
+;; 	  ;; send emails with format=flowed
+;; 	  mu4e-compose-format-flowed t
+;; 	  ;; no need to run cleanup after indexing for gmail
+;; 	  mu4e-index-cleanup nil
+;; 	  mu4e-index-lazy-check t
+;;       ;; more sensible date format
+;;       mu4e-headers-date-format "%d.%m.%y")
+
+(set-email-account! "@gmail.com"
+  '((mu4e-sent-folder       . "/gmail/Sent Mail")
+    (mu4e-drafts-folder     . "/gmail/Drafts")
+    (mu4e-trash-folder      . "/gmail/Trash")
+    (mu4e-refile-folder     . "/gmail/All Mail")
+    (smtpmail-smtp-user     . "victorlattaro@gmail.com")
+    (mu4e-compose-signature . "---\nVictor Lattaro Volpini"))
+  )
+;; if "gmail" is missing from the address or maildir, the account must be
+;; specified manually in `+mu4e-gmail-accounts':
+(setq +mu4e-gmail-accounts '(("victorlattaro@gmail.com" . "/victorlattaro")))
+
+;; Each path is relative to the path of the maildir you passed to mu
+(setq mu4e-index-cleanup nil
+      ;; because gmail uses labels as folders we can use lazy check since
+      ;; messages don't really "move"
+      mu4e-index-lazy-check t)
 #+end_src
