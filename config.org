@@ -409,22 +409,20 @@ Some security concerns arise due to using emacs as a web browser... This is to
 be tested and tracked over time. The project seems nevertheless extremely
 promising and would bring plenty of nice features to the config.
 
-Tangling will be left disabled for now, but this can be a starting point for the future.
 #+begin_src emacs-lisp :tangle packages.el
 (package! consult-omni
   :type 'core
   :recipe '(:host github
             :repo "armindarvish/consult-omni"
-            :branch "main"
-            :files (:defaults "sources/*.el")))
+            :files ("sources/*.el" "consult-omni.el" "consult-omni-embark.el")
+            :build t))
 #+end_src
 
-When installing this, somehow it broke org table in a strange way, the GUI was jittering and error messages coming in non-stop. To be investigated !
 #+begin_src emacs-lisp :tangle config.el
 (use-package! consult-omni
-  :after consult
   :custom
-   ;; General settings that apply to all sources
+
+  ;; General settings that apply to all sources
   (consult-omni-show-preview t) ;;; show previews
   (consult-omni-preview-key "C-o") ;;; set the preview key to C-o
   :config
@@ -433,100 +431,36 @@ When installing this, somehow it broke org table in a strange way, the GUI was j
   ;; Load Embark Actions
   (require 'consult-omni-embark)
 
-  ;; Either load all source modules or a selected list
-
   ;;; Select a list of modules you want to aload, otherwise all sources all laoded
-  (setq consult-omni-sources-modules-to-load (list 'consult-omni-wkipedia 'consult-omni-notes 'consult-omni-gptel))
+  (setq consult-omni-sources-modules-to-load (list 'consult-omni-wikipedia 'consult-omni-notes 'consult-omni-elfeed 'consult-omni-duckduckgo 'consult-omni-file 'consult-omni-buffer 'consult-omni-buffer-search 'consult-omni-dict 'consult-omni-invidious))
+
   (consult-omni-sources-load-modules)
   ;;; set multiple sources for consult-omni-multi command. Change these lists as needed for different interactive commands. Keep in mind that each source has to be a key in `consult-omni-sources-alist'.
   (setq consult-omni-multi-sources '("calc"
                                      "File"
                                      "Buffer"
+                                     "DuckDuckGo"
                                      ;; "Bookmark"
                                      "Apps"
-                                     "gptel"
+                                     ;; "gptel"
                                      "Brave"
                                      "Dictionary"
-                                     "Google"
+                                     ;; "Google"
                                      "Wikipedia"
                                      "elfeed"
                                      ;; "mu4e"
                                      "buffers text search"
                                      "Notes Search"
                                      "Org Agenda"
-                                     "GitHub"
-                                     "YouTube"
+                                     ;; "GitHub"
+                                     ;; "YouTube"
                                      "Invidious"))
 
 ;; Per source customization
-
-  ;;; Set API KEYs. It is recommended to use a function that returns the string for better security.
-  ;; (setq consult-omni-google-customsearch-key "YOUR-GOOGLE-API-KEY-OR-FUNCTION")
-  ;; (setq consult-omni-google-customsearch-cx "YOUR-GOOGLE-CX-NUMBER-OR-FUNCTION")
-  ;; (setq consult-omni-brave-api-key "YOUR-BRAVE-API-KEY-OR-FUNCTION")
-  ;; (setq consult-omni-stackexchange-api-key "YOUR-STACKEXCHANGE-API-KEY-OR-FUNCTION")
-  ;; (setq consult-omni-pubmed-api-key "YOUR-PUBMED-API-KEY-OR-FUNCTION")
-  ;; (setq consult-omni-openai-api-key "YOUR-OPENAI-API-KEY-OR-FUNCTION")
 
 ;;; Pick you favorite autosuggest command.
   (setq consult-omni-default-autosuggest-command #'consult-omni-dynamic-brave-autosuggest) ;;or any other autosuggest source you define
 
  ;;; Set your shorthand favorite interactive command
   (setq consult-omni-default-interactive-command #'consult-omni-multi))
-* Email client
-Using mu4e with mbsync as backend usage.
-
-A bug in ubuntu-based distros causes that whenever there's a reinstall of mu, it does not get properly reinstalled, so it must be added to the load path by hand.
-
-The installation process is a bit unclear in doom's documentation, but there are a few steps and dependencies to install in order to use mu4e in emacs.
-
-** Prerequisites
-*** Tasks
-**** DONE Make it work one time
-**** TODO document installation of external programs
-***** TODO mu
-***** TODO mbsync
-**** TODO make script to handle the installation
-*** mu
-Mu is a mail indexer. It's job is to make sense of a mail database stored locally.
-The version that's available using apt is not really functional as of 16/11/24. What worked was to download the tarball from the repo itself, compile and add it to the path.
-#+begin_src emacs-lisp :tangle config.el
-(add-to-list 'load-path "/usr/share/emacs/site-lisp/mu4e")
-#+end_src
-*** mbsync
-This is the machinery to fetch mail from an IMAP server.
-
-** Configuration
-
-#+begin_src emacs-lisp :tangle config.el
-;; Each path is relative to the path of the maildir you passed to mu
-
-;; (setq mu4e-get-mail-command "mbsync gmail"
-;;       ;; get emails and index every 5 minutes
-;;       mu4e-update-interval 300
-;; 	  ;; send emails with format=flowed
-;; 	  mu4e-compose-format-flowed t
-;; 	  ;; no need to run cleanup after indexing for gmail
-;; 	  mu4e-index-cleanup nil
-;; 	  mu4e-index-lazy-check t
-;;       ;; more sensible date format
-;;       mu4e-headers-date-format "%d.%m.%y")
-
-(set-email-account! "@gmail.com"
-  '((mu4e-sent-folder       . "/gmail/Sent Mail")
-    (mu4e-drafts-folder     . "/gmail/Drafts")
-    (mu4e-trash-folder      . "/gmail/Trash")
-    (mu4e-refile-folder     . "/gmail/All Mail")
-    (smtpmail-smtp-user     . "victorlattaro@gmail.com")
-    (mu4e-compose-signature . "---\nVictor Lattaro Volpini"))
-  )
-;; if "gmail" is missing from the address or maildir, the account must be
-;; specified manually in `+mu4e-gmail-accounts':
-(setq +mu4e-gmail-accounts '(("victorlattaro@gmail.com" . "/victorlattaro")))
-
-;; Each path is relative to the path of the maildir you passed to mu
-(setq mu4e-index-cleanup nil
-      ;; because gmail uses labels as folders we can use lazy check since
-      ;; messages don't really "move"
-      mu4e-index-lazy-check t)
-#+end_src
+  #+end_src
