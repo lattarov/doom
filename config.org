@@ -65,6 +65,13 @@ not installing packages that are not compatible with windows
 ** Basic config
 #+begin_src emacs-lisp :tangle config.el
 (setq org-directory "~/org/")
+
+(setq org-agenda-start-on-weekday "1")
+#+end_src
+** Org agenda
+#+begin_src emacs-lisp :tangle config.el
+(setq org-agenda-files '("~/org/agenda/" "~/org/roam/" "~/org/" "~/org/journal/"))
+
 #+end_src
 ** Org Roam
 Shortcuts are mapped with the SPC n r prefix by default.
