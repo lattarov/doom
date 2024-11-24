@@ -69,10 +69,25 @@ not installing packages that are not compatible with windows
 (setq org-agenda-start-on-weekday "1")
 #+end_src
 ** Org agenda
-#+begin_src emacs-lisp :tangle config.el
-(setq org-agenda-files '("~/org/agenda/" "~/org/roam/" "~/org/" "~/org/journal/"))
+*** Improvements
+**** ideas from [[https://www.youtube.com/watch?v=a_WNtuefREM][Making Org Agenda Look Beautiful - YouTube]]
+***** TODO  [[https://github.com/alphapapa/org-super-agenda][GitHub - alphapapa/org-super-agenda: Supercharge your Org daily/weekly agenda...]] integration
+***** TODO add icons and improve agenda view using icons
+***** TODO create templates for org roam to create events from nodes
 
+*** Configuration
+#+begin_src emacs-lisp :tangle config.el
+
+(defun vlv/org-agenda-open-hook()
+"Hook to be called when opening an org agenda buffer"
+(olivetti-mode)
+(olivetti-set-width 120))
+
+(add-hook 'org-agenda-mode-hook  'vlv/org-agenda-open-hook)
+
+(setq org-agenda-files '("~/org/agenda/" "~/org/roam/" "~/org/" "~/org/journal/"))
 #+end_src
+
 ** Org Roam
 Shortcuts are mapped with the SPC n r prefix by default.
 #+begin_src emacs-lisp :tangle packages.el
@@ -101,6 +116,20 @@ Shortcuts are mapped with the SPC n r prefix by default.
         (:prefix ("r" . "roam")
          :desc "Open org roam UI" "u" #'org-roam-ui-mode))
   ))
+#+end_src
+** org modern
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! org-modern)
+#+end_src
+
+#+begin_src emacs-lisp :tangle config.el
+(global-org-modern-mode)
+#+end_src
+** olivetti mode
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! olivetti)
 #+end_src
 
 * Conda
@@ -243,13 +272,13 @@ If there are no arguments, returns 'pass'."
 added only two models that this machine can run
 #+begin_src emacs-lisp :tangle config.el
 ;; default model
-(setq gptel-model 'llama3.1:8b)
+(setq gptel-model 'qwen2.5-coder:7b)
 
 ;; adding Ollama backend
 (setq gptel-backend (gptel-make-ollama "Ollama"
         :host "localhost:11434"
         :stream t
-        :models '((llama3.1:8b) (llama3.2:3b) (qwen2.5-coder))))
+        :models '((llama3.1:8b) (llama3.2:3b) (qwen2.5-coder:7b))))
 #+end_src
 **** Spawning process
 #+begin_src emacs-lisp :tangle config.el
