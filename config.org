@@ -85,7 +85,7 @@ not installing packages that are not compatible with windows
 
 (add-hook 'org-agenda-mode-hook  'vlv/org-agenda-open-hook)
 
-(setq org-agenda-files '("~/org/agenda/" "~/org/roam/" "~/org/" "~/org/journal/"))
+(setq org-agenda-files '("~/org/agenda/" "~/org/roam/" "~/org/" "~/org/journal/" "~/.config/doom/"))
 #+end_src
 
 ** Org Roam
