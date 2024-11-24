@@ -131,6 +131,12 @@ Shortcuts are mapped with the SPC n r prefix by default.
 #+begin_src emacs-lisp :tangle packages.el
 (package! olivetti)
 #+end_src
+** Babel
+#+begin_src emacs-lisp :tangle config.el
+(org-babel-do-load-languages
+'org-babel-load-languages
+'((shell . t)))
+#+end_src
 
 * Conda
 #+begin_src emacs-lisp :tangle config.el
@@ -504,3 +510,124 @@ promising and would bring plenty of nice features to the config.
         (:prefix ("s" . "search")
          :desc "consult-omni-multi" "s" #'consult-omni-multi))
   #+end_src
+* Mail
+** Mu4e
+
+*** Installing dependencies
+**** mbsync (aka isync)
+#+begin_src
+sudo apt-get install isync
+#+end_src
+
+mbsync also requires a config file to be placed in the home directory. Here's the current file only configured for gmail.
+
+#+begin_src
+IMAPStore gmail-remote
+Host imap.gmail.com
+SSLType IMAPS
+AuthMechs LOGIN
+User victorlattaro@gmail.com
+Pass "epcw alkb kynv svai"
+
+MaildirStore gmail-local
+Path ~/Mail/gmail/
+Inbox ~/Mail/gmail/INBOX
+Subfolders Verbatim
+
+Channel gmail
+Master :gmail-remote:
+Slave :gmail-local:
+Create Both
+Expunge Both
+Patterns *
+SyncState *
+#+end_src
+
+Next, the mail directory (or MailDir in mu's vocabulary) must be created. By default, it's a ~/Mail, which is not automatically created. Let's do so:
+
+#+begin_src
+mkdir ~/Mail
+#+end_src
+
+finally, the following command pulls the mail from the given provider:
+
+#+begin_src
+mbsync -Va
+#+end_src
+
+
+***** TODO Cryptograph the password
+***** TODO add guide on how to create an application-specific password on google
+***** TODO setup smtp server or 2FA for gmail
+***** TODO configure for proton mail
+****** TODO install proton bridge
+**** Mu4e
+WARNING there's a hard dependency between mu and mu4e versions.
+#+begin_src
+sudo apt-get install mu4e
+#+end_src
+
+In order to set the mail directory and do the first setup for mu's database, use the following command:
+
+#+begin_src
+mu init --maildir=~/Mail
+#+end_src
+
+it should return something like this:
+
+#+begin_#+begin_quote
+maildir           : /home/lattaro/Mail
+database-path     : /home/lattaro/.cache/mu/xapian
+schema-version    : 452
+max-message-size  : 100000000
+batch-size        : 250000
+messages in store : 0
+created           : dim. 24 nov. 2024 23:26:27
+personal-address  : <none>
+#+end_quote
+
+#+end_#+begin_quote
+
+maildir           : /home/lattaro/Mail
+database-path     : /home/lattaro/.cache/mu/xapian
+schema-version    : 452
+max-message-size  : 100000000
+batch-size        : 250000
+messages in store : 0
+created           : dim. 24 nov. 2024 23:26:27
+personal-address  : <none>
+#+end_quote
+#+begin_src
+mu index
+#+end_src
+
+*** TODO Configuration (fix error with mu4e)
+DEADLINE: <2024-11-26 mar.> SCHEDULED: <2024-11-25 lun.>
+Because of some Ubuntu based bug, if mu4e was installed by the package manager (APT in Pop OS case) then the following bug shows up:
+
+#+begin_quote
+execute-extended-command: Cannot open load file: No such file or directory, mu4e
+#+end_quote
+
+Mas recommended in doom's mu4e docs as well as in [[https://github.com/doomemacs/doomemacs/issues/7885][doomemacs/doomemacs#7885 Can't open mu4e]] , manually adding the load path fixes this.
+
+#+begin_src emacs-lisp :tangle config.el
+(add-to-list 'load-path "/usr/share/emacs/site-lisp/mu4e")
+#+end_src
+
+#+begin_src emacs-lisp :tangle config.el
+(setq mu4e-maildir-list "~/Mail")
+
+(set-email-account! "gmail.com"
+  '((mu4e-sent-folder       . "/gmail/Sent Mail")
+    (mu4e-drafts-folder     . "/gmail/Drafts")
+    (mu4e-trash-folder      . "/gmail/Trash")
+    (mu4e-refile-folder     . "/gmail/All Mail")
+    (smtpmail-smtp-user     . "victorlattaro@gmail.com")
+    (mu4e-compose-signature . "---\nYours truly\nVictor Lattaro Volpini")))
+
+
+(setq +mu4e-gmail-accounts '(("victorlattaro@gmail.com" . "/gmail")))
+
+#+end_src
+
