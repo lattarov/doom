@@ -101,7 +101,10 @@ this configures bash to be used as the default shell bash. In theory it corrects
 * Org
 ** Basic config
 #+begin_src emacs-lisp :tangle config.el
-(setq org-directory "~/org/")
+
+(if (eq system-type 'windows-nt)
+        (setq org-directory "~/OneDrive - TIAMA/org")
+        (setq org-directory "~/org/"))
 
 (setq org-agenda-start-on-weekday "1")
 
@@ -121,7 +124,11 @@ this configures bash to be used as the default shell bash. In theory it corrects
 (add-hook! 'prog-mode-hook
         (vlv/olivetti-mode-hook))
 
-(setq org-agenda-files '("~/org/agenda/" "~/org/roam/" "~/org/" "~/org/journal/" "~/.config/doom/"))
+(setq org-agenda-files
+      (mapcar (lambda (dir) (expand-file-name dir org-directory))
+              '("agenda/" "roam/" "journal/" "~/.config/doom/")))
+
+(setq org-agenda-start-on-weekday 1) ;; start on monday
 #+end_src
 
 ** Org Roam
@@ -146,6 +153,8 @@ Shortcuts are mapped with the SPC n r prefix by default.
         org-roam-ui-follow t
         org-roam-ui-update-on-save t
         org-roam-ui-open-on-start t)
+
+  (setq org-roam-directory (expand-file-name "roam/" org-directory)) ;; necessary use the org directory set on the
 
   (map! :leader
         (:prefix ("n" . "org")
