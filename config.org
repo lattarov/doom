@@ -512,6 +512,70 @@ promising and would bring plenty of nice features to the config.
   #+end_src
 * Mail
 ** Mu4e
+*** Remaining work
+*** TODO Cryptograph the password
+*** TODO gmail setup
+**** [ ] add guide on how to create an application-specific password on google
+**** [ ] setup smtp server or 2FA for gmail
+*** TODO proton setup
+**** [ ] configure for proton mail
+**** [ ] install proton bridge
+
+*** DONE Installation error pitfall
+DEADLINE: <2024-11-26 mar.> SCHEDULED: <2024-11-25 lun.>
+Because of some Ubuntu based bug, if mu4e was installed by the package manager (APT in Pop OS case) then the following bug shows up:
+
+#+begin_quote
+execute-extended-command: Cannot open load file: No such file or directory, mu4e
+#+end_quote
+
+As recommended in doom's mu4e docs as well as in [[https://github.com/doomemacs/doomemacs/issues/7885][doomemacs/doomemacs#7885 Can't open mu4e]] , manually adding the load path fixes this.
+
+#+begin_src emacs-lisp :tangle no
+-(add-to-list 'load-path "/usr/share/emacs/site-lisp/mu4e")
+#+end_src
+
+But different bugs arise, apparently related to a header error in mu4e or something else. It seems that the mu version installed by apt is not really functional.
+
+**** Mu4e
+WARNING there's a hard dependency between mu and mu4e versions.
+#+begin_src
+sudo apt-get install mu4e
+#+end_src
+
+In order to set the mail directory and do the first setup for mu's database, use the following command:
+
+#+begin_src
+mu init --maildir=~/Mail
+#+end_src
+
+it should return something like this:
+
+#+begin_#+begin_quote
+maildir           : /home/lattaro/Mail
+database-path     : /home/lattaro/.cache/mu/xapian
+schema-version    : 452
+max-message-size  : 100000000
+batch-size        : 250000
+messages in store : 0
+created           : dim. 24 nov. 2024 23:26:27
+personal-address  : <none>
+#+end_quote
+
+#+end_#+begin_quote
+
+maildir           : /home/lattaro/Mail
+database-path     : /home/lattaro/.cache/mu/xapian
+schema-version    : 452
+max-message-size  : 100000000
+batch-size        : 250000
+messages in store : 0
+created           : dim. 24 nov. 2024 23:26:27
+personal-address  : <none>
+#+end_quote
+#+begin_src
+mu index
+#+end_src
 
 *** Installing dependencies
 **** mbsync (aka isync)
@@ -556,78 +620,70 @@ mbsync -Va
 #+end_src
 
 
-***** TODO Cryptograph the password
-***** TODO add guide on how to create an application-specific password on google
-***** TODO setup smtp server or 2FA for gmail
-***** TODO configure for proton mail
-****** TODO install proton bridge
-**** Mu4e
-WARNING there's a hard dependency between mu and mu4e versions.
-#+begin_src
-sudo apt-get install mu4e
-#+end_src
+**** mu
+The solution was to manually compile mu and install it by following instructions in [[github:https://github.com/djcb/mu][mu]].
 
-In order to set the mail directory and do the first setup for mu's database, use the following command:
-
-#+begin_src
-mu init --maildir=~/Mail
-#+end_src
-
-it should return something like this:
-
+According to the README:
 #+begin_#+begin_quote
-maildir           : /home/lattaro/Mail
-database-path     : /home/lattaro/.cache/mu/xapian
-schema-version    : 452
-max-message-size  : 100000000
-batch-size        : 250000
-messages in store : 0
-created           : dim. 24 nov. 2024 23:26:27
-personal-address  : <none>
-#+end_quote
+To be able to build mu, ensure you have:
 
-#+end_#+begin_quote
+a C++17 compiler (gcc or clang are known to work)
+development packages for Xapian and GMime and GLib (see meson.build for the versions)
+basic tools such as make, sed, grep
+meson
+#+end_quote options
 
-maildir           : /home/lattaro/Mail
-database-path     : /home/lattaro/.cache/mu/xapian
-schema-version    : 452
-max-message-size  : 100000000
-batch-size        : 250000
-messages in store : 0
-created           : dim. 24 nov. 2024 23:26:27
-personal-address  : <none>
-#+end_quote
-#+begin_src
+clone somewhere the latest release from mu, I used https://github.com/djcb/mu/releases/tag/v1.12.7
+(this version already comes with mu4e)
+
+cd wherever mu tarball was decompressed to and the autogen and make install
+
+./autogen.sh && make
+sudo make install
+
+Create the Maildir, in this config it is set to ~/Mail and run
+
+mu init --maildir ~/Mail
 mu index
+
+Add mu4e installation path to Emacs' load path.
+#+begin_src emacs-lisp :tangle config.el
+;; installation path for mu4e installed by the makefile of mu-1.12.7
+(add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu4e")
 #+end_src
 
-*** TODO Configuration (fix error with mu4e)
-DEADLINE: <2024-11-26 mar.> SCHEDULED: <2024-11-25 lun.>
-Because of some Ubuntu based bug, if mu4e was installed by the package manager (APT in Pop OS case) then the following bug shows up:
-
-#+begin_quote
-execute-extended-command: Cannot open load file: No such file or directory, mu4e
-#+end_quote
-
-Mas recommended in doom's mu4e docs as well as in [[https://github.com/doomemacs/doomemacs/issues/7885][doomemacs/doomemacs#7885 Can't open mu4e]] , manually adding the load path fixes this.
+From this point onwards, mu4e should be up and running.
+*** Configuration
 
 #+begin_src emacs-lisp :tangle config.el
-(add-to-list 'load-path "/usr/share/emacs/site-lisp/mu4e")
-#+end_src
+;; Each path is relative to the path of the maildir you passed to mu
 
-#+begin_src emacs-lisp :tangle config.el
-(setq mu4e-maildir-list "~/Mail")
+;; (setq mu4e-get-mail-command "mbsync gmail"
+;;       ;; get emails and index every 5 minutes
+;;       mu4e-update-interval 300
+;; 	  ;; send emails with format=flowed
+;; 	  mu4e-compose-format-flowed t
+;; 	  ;; no need to run cleanup after indexing for gmail
+;; 	  mu4e-index-cleanup nil
+;; 	  mu4e-index-lazy-check t
+;;       ;; more sensible date format
+;;       mu4e-headers-date-format "%d.%m.%y")
 
-(set-email-account! "gmail.com"
+(set-email-account! "@gmail.com"
   '((mu4e-sent-folder       . "/gmail/Sent Mail")
     (mu4e-drafts-folder     . "/gmail/Drafts")
     (mu4e-trash-folder      . "/gmail/Trash")
     (mu4e-refile-folder     . "/gmail/All Mail")
     (smtpmail-smtp-user     . "victorlattaro@gmail.com")
-    (mu4e-compose-signature . "---\nYours truly\nVictor Lattaro Volpini")))
+    (mu4e-compose-signature . "---\nVictor Lattaro Volpini"))
+  )
+;; if "gmail" is missing from the address or maildir, the account must be
+;; specified manually in `+mu4e-gmail-accounts':
+(setq +mu4e-gmail-accounts '(("victorlattaro@gmail.com" . "/victorlattaro")))
 
-
-(setq +mu4e-gmail-accounts '(("victorlattaro@gmail.com" . "/gmail")))
-
+;; Each path is relative to the path of the maildir you passed to mu
+(setq mu4e-index-cleanup nil
+      ;; because gmail uses labels as folders we can use lazy check since
+      ;; messages don't really "move"
+      mu4e-index-lazy-check t)
 #+end_src
-
