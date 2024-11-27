@@ -376,16 +376,28 @@ Spaws a child process using UNIX watch command using nvidia-smi command."
 #+end_src
 
 * RSS feed
-** Setting up feeds
-By default, the feeds and their corresponding tags are described in[[file:~/org/elfeed.org][
-~/org/elfeed.org]].
-*** TODO automatically set up feeds
-Two trivial ways to do it:
-- Add the elfeed.org file to .dotfiles and use GNU Stow to symlink it to the
-  right place
-- Use org tangle to create and update it
-  Tried using babel code blocks with org, it did not work at all.
-** Basic elfeed configuration.
+*** Add feeds to the reader
+feeds are read in ~/org/elfeed.org by default. We need to add all feeds we want and corresponding tags and simply export it to the elfeed org file.
+#+begin_src org :tangle ~/org/elfeed.org
+
+#+title: elfeed
+
+* root :elfeed:
+** Tech :tech:
+*** [[https://korben.info/feed][Les news de Korben]] :FR:
+** Podcasts :podcasts:
+*** [[https://lexfridman.com/feed/podcast/][Lex Fridman Podcast]]  :tech:
+** Programming :programming:
+*** [[https://this-week-in-rust.org/rss.xml][This Week in Rust]] :rust:
+*** [[https://buttondown.com/entropicthoughts/rss][Entropic Thoughts]]
+** Technology :tech:
+*** [[https://www.erichgrunewald.com/feed.xml][Erich Grunewald's Blog]]
+** Fun :fun:
+*** [[https://xkcd.com/rss.xml][xkcd]] :xkcd:
+** Miscellaneous :misc:
+[[https://protesilaos.com/master.xml][Protesilaos Stavrou: Master feed with all updates]]
+** Configuring elfeed
+#+end_src
 #+begin_src emacs-lisp :tangle config.el
 ;; global mapping
 (map! :leader
