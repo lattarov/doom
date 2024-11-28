@@ -782,3 +782,20 @@ From this point onwards, mu4e should be up and running.
       ;; messages don't really "move"
       mu4e-index-lazy-check t)
 #+end_src
+* Copilot
+#+begin_src emacs-lisp :tangle packages.el
+(package! copilot
+  :recipe (:host github :repo "copilot-emacs/copilot.el" :files ("*.el")))
+#+end_src
+
+#+begin_src emacs-lisp :tangle config.el
+;; accept completion from copilot and fallback to company
+(use-package! copilot
+  :hook (prog-mode . copilot-mode)
+  :bind (:map copilot-completion-map
+              ("<tab>" . 'copilot-accept-completion)
+              ("TAB" . 'copilot-accept-completion)
+              ("C-TAB" . 'copilot-accept-completion-by-word)
+              ("C-<tab>" . 'copilot-accept-completion-by-word)))
+
+#+end_src
