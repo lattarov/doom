@@ -131,12 +131,18 @@ Shortcuts are mapped with the SPC n r prefix by default.
 #+begin_src emacs-lisp :tangle packages.el
 (package! olivetti)
 #+end_src
+
 ** Babel
 #+begin_src emacs-lisp :tangle config.el
 (org-babel-do-load-languages
 'org-babel-load-languages
 '((shell . t)
-  (org . t)))
+  (org . t)
+  (python . t)
+  (rust . t)
+  (cpp . t)
+  (plantuml . t)
+  (emacs-lisp . t)))
 #+end_src
 
 * Conda
