@@ -477,6 +477,30 @@ promising and would bring plenty of nice features to the config.
             :repo "armindarvish/consult-omni"
             :files ("sources/*.el" "consult-omni.el" "consult-omni-embark.el")
             :build t))
+
+(package! consult-mu
+  :type 'core
+  :recipe '(:host github
+            :repo "armindarvish/consult-mu"
+            :branch "main"
+            :files (:defaults "extras/*.el")))
+
+#+end_src
+
+#+begin_src emacs-lisp :tangle config.el
+(use-package! consult-mu
+  :custom
+
+  ;;maximum number of results shown in minibuffer
+  (consult-mu-maxnum 200)
+  ;;show preview when pressing any keys
+  (consult-mu-preview-key 'any)
+  ;;do not mark email as read when previewed
+  (consult-mu-mark-previewed-as-read nil)
+  ;;do not amrk email as read when selected. This is a good starting point to ensure you would not miss important emails marked as read by mistake especially when trying this package out. Later you can change this to t.
+  (consult-mu-mark-viewed-as-read nil)
+  ;; open the message in mu4e-view-buffer when selected.
+  (consult-mu-action #'consult-mu--view-action))
 #+end_src
 
 #+begin_src emacs-lisp :tangle config.el
@@ -493,7 +517,7 @@ promising and would bring plenty of nice features to the config.
   (require 'consult-omni-embark)
 
   ;;; Select a list of modules you want to aload, otherwise all sources all laoded
-  (setq consult-omni-sources-modules-to-load (list 'consult-omni-duckduckgo-api 'consult-omni-notes 'consult-omni-wikipedia  'consult-omni-elfeed  'consult-omni-file 'consult-omni-buffer 'consult-omni-buffer-search 'consult-omni-dict))
+  (setq consult-omni-sources-modules-to-load (list 'consult-omni-duckduckgo-api 'consult-omni-notes  'consult-omni-file 'consult-omni-buffer 'consult-omni-buffer-search 'consult-omni-dict 'consult-omni-mu4e))
 
   (consult-omni-sources-load-modules)
   ;;; set multiple sources for consult-omni-multi command. Change these lists as needed for different interactive commands. Keep in mind that each source has to be a key in `consult-omni-sources-alist'.
@@ -507,9 +531,9 @@ promising and would bring plenty of nice features to the config.
                                      "Brave"
                                      "Dictionary"
                                      ;; "Google"
-                                     "Wikipedia"
-                                     "elfeed"
-                                     ;; "mu4e"
+                                     ;; "Wikipedia"
+                                     ;; "elfeed"
+                                     "mu4e"
                                      "buffers text search"
                                      "Notes Search"
                                      "Org Agenda"
