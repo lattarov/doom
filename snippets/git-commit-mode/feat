@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: feat
+# uuid:
+# key: feat
+# condition: t
+# --
+[VILAT] feat($1): $2
+
+$3

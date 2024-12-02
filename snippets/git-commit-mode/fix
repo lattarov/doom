@@ -1,0 +1,17 @@
+# -*- mode: snippet -*-
+# name: fix
+# uuid:
+# key: fix
+# condition: t
+# --
+[VILAT] fix(${1:Context}): ${2:Describe the issue or bug that this commit is fixing.}
+
+${3:Explain the problem and the solution in detail, including any relevant context or information.}
+
+${4:If applicable, provide additional details such as references to related issues or commits, or any other relevant information.}
+
+${5:If needed, list any side effects or potential impacts of the fix.}
+
+${6:If there are specific steps to test the fix or any caveats to be aware of, mention them here.}
+
+${7:List any additional information that may be helpful for understanding the fix or its implications.}
