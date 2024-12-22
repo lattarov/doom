@@ -47,8 +47,8 @@ Personal and work doom emacs config.
       user-mail-address "victorlattaro@gmail.com")
 
 (setq history-length 25)
+
 (savehist-mode 1)
-(add-to-list 'default-frame-alist '(fullscreen . maximized))
 #+end_src
 
 **  Revert buffers when the underlying file has changed
