@@ -124,8 +124,7 @@ Shortcuts are mapped with the SPC n r prefix by default.
   (map! :leader
         (:prefix ("n" . "org")
         (:prefix ("r" . "roam")
-         :desc "Open org roam UI" "u" #'org-roam-ui-mode))
-  ))
+         :desc "Open org roam UI" "u" #'org-roam-ui-mode))))
 #+end_src
 ** org modern
 
@@ -406,14 +405,17 @@ feeds are read in ~/org/elfeed.org by default. We need to add all feeds we want 
 ** Programming :programming:
 *** [[https://this-week-in-rust.org/rss.xml][This Week in Rust]] :rust:
 *** [[https://buttondown.com/entropicthoughts/rss][Entropic Thoughts]]
+*** [[https://meetingcpp.com/feed.xml][Meeting C++ Feed]] :cpp:
 ** Technology :tech:
 *** [[https://www.erichgrunewald.com/feed.xml][Erich Grunewald's Blog]]
 ** Fun :fun:
 *** [[https://xkcd.com/rss.xml][xkcd]] :xkcd:
 ** Miscellaneous :misc:
 [[https://protesilaos.com/master.xml][Protesilaos Stavrou: Master feed with all updates]]
-** Configuring elfeed
+
 #+end_src
+
+** Configuring elfeed
 #+begin_src emacs-lisp :tangle config.el
 ;; global mapping
 (map! :leader
