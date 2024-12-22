@@ -2,25 +2,29 @@
 Personal and work doom emacs config.
 * Tasks
 ** DONE Add packages.el configuration here
-** TODO Add init.el configuration here
+** IDEA Add init.el configuration here
 *** [?] how to know about new flags and updates for modules if init.el content is here?
-** TODO Make it one single config compatible with windows and linux
-automatic environment detection
-line endings, path to server file, etc. automatically configured
-not installing packages that are not compatible with windows
-*** IDEA use org tangling and enabling/disabling it via a function to detect the OS
+
+* Cross platform compatibility (WIP)
 #+begin_src emacs-lisp :tangle no
-;; for linux only config:
 
-(if (eq system-type 'gnu/linux)
-    (setq tangle-path-linux config.el)
-  (setq tangle-path-linux 'no)
-  )
+(setq vlv/config "NOT_YET_SET")
 
-(if (eq system-type 'windows-nt)
-    (setq tangle-path-win32 config.el)
-  (setq tangle-path-win32 'no)
-  )
+(defun vlv/is-work-config()
+  "Returns t if in a Windows environment."
+  (if (eq system-type 'windows-nt)
+      (setq vlv/config "WORK")))
+
+(defun vlv/is-personal-config()
+  "Returns t if in a linux environment."
+  (if (eq system-type 'gnu/linux)
+      (setq vlv/config "PERSONAL")))
+
+(defun vlv/config()
+  (interactive)
+  (vlv/is-personal-config())
+  (vlv/is-work-config())
+  (message (concat "Configuration type is:" 'vlv/config)))
 
 #+end_src
 
