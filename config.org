@@ -198,7 +198,7 @@ Allow automatic recognition of projects given a list of paths.
 :desc "Toggle dirvish" "d" #'dirvish-side))
 
 (setq dirvish-side-width 80)
-#end_src
+#+end_src
 
 * YASNIPPET
 #+begin_src emacs-lisp :tangle config.el
@@ -335,7 +335,7 @@ Assumes the ollama process is named 'ollama-serve-process'."
 #+end_src
 ** Process management
 **** Spawning a terminal process
-#+begin_src emacs-lisp :tanble config.el
+#+begin_src emacs-lisp :tangle config.el
 (defvar watch-history nil)
 (defun vlv/watch (command &optional name)
   "Runs \"watch COMMAND\" in a `term' buffer.  \"q\" to exit."
@@ -594,13 +594,13 @@ But different bugs arise, apparently related to a header error in mu4e or someth
 
 **** Mu4e
 WARNING there's a hard dependency between mu and mu4e versions.
-#+begin_src
+#+begin_src sh :tangle no
 sudo apt-get install mu4e
 #+end_src
 
 In order to set the mail directory and do the first setup for mu's database, use the following command:
 
-#+begin_src
+#+begin_src sh :tangle no
 mu init --maildir=~/Mail
 #+end_src
 
@@ -628,19 +628,20 @@ messages in store : 0
 created           : dim. 24 nov. 2024 23:26:27
 personal-address  : <none>
 #+end_quote
-#+begin_src
+
+#+begin_src sh :tangle no
 mu index
 #+end_src
 
 *** Installing dependencies
 **** mbsync (aka isync)
-#+begin_src
+#+begin_src sh :tangle  no
 sudo apt-get install isync
 #+end_src
 
 mbsync also requires a config file to be placed in the home directory. Here's the current file only configured for gmail.
 
-#+begin_src
+#+begin_src ini :tangle no
 IMAPStore gmail-remote
 Host imap.gmail.com
 SSLType IMAPS
@@ -664,13 +665,13 @@ SyncState *
 
 Next, the mail directory (or MailDir in mu's vocabulary) must be created. By default, it's a ~/Mail, which is not automatically created. Let's do so:
 
-#+begin_src
+#+begin_src sh :tangle no
 mkdir ~/Mail
 #+end_src
 
 finally, the following command pulls the mail from the given provider:
 
-#+begin_src
+#+begin_src sh :tangle no
 mbsync -Va
 #+end_src
 
@@ -679,14 +680,13 @@ mbsync -Va
 The solution was to manually compile mu and install it by following instructions in [[github:https://github.com/djcb/mu][mu]].
 
 According to the README:
-#+begin_#+begin_quote
+
 To be able to build mu, ensure you have:
 
 a C++17 compiler (gcc or clang are known to work)
 development packages for Xapian and GMime and GLib (see meson.build for the versions)
 basic tools such as make, sed, grep
 meson
-#+end_quote options
 
 clone somewhere the latest release from mu, I used https://github.com/djcb/mu/releases/tag/v1.12.7
 (this version already comes with mu4e)
