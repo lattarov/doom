@@ -154,7 +154,8 @@ Shortcuts are mapped with the SPC n r prefix by default.
   (emacs-lisp . t)))
 #+end_src
 
-* Conda
+* Python
+** Conda
 #+begin_src emacs-lisp :tangle config.el
 (use-package! conda
   :config
@@ -162,6 +163,24 @@ Shortcuts are mapped with the SPC n r prefix by default.
   (setq conda-env-home-directory (expand-file-name "~/miniconda3"))
   (conda-env-initialize-interactive-shells)
   (conda-env-initialize-eshell))
+#+end_src
+* uv :wip:
+A new package manager for python, much faster and simpler to use than conda or miniconda.
+
+#+begin_src emacs-lisp :tangle no
+
+(package! uv-menu
+  :type 'core
+  :recipe '(:host github
+            :repo "pizzatorque/uv-menu"
+            :branch "main"
+            :files ("uv.el")))
+
+#+end_src
+
+#+begin_src emacs-lisp :tangle no
+(use-package! uv-menu)
+
 #+end_src
 
 * Projectile
