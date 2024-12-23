@@ -5,7 +5,7 @@ Personal and work doom emacs config.
 ** IDEA Add init.el configuration here
 *** [?] how to know about new flags and updates for modules if init.el content is here?
 
-* Cross platform compatibility (WIP)
+* Cross platform compatibility :wip:
 #+begin_src emacs-lisp :tangle no
 
 (setq vlv/config "NOT_YET_SET")
@@ -188,8 +188,7 @@ Allow automatic recognition of projects given a list of paths.
 #+begin_src emacs-lisp :tangle config.el
 (use-package! projectile
   :config
-  (setq projectile-project-search-path '("~/dev"))
-  )
+  (setq projectile-project-search-path '("~/dev")))
 #+end_src
 
 * Treemacs
@@ -197,8 +196,7 @@ Allow automatic recognition of projects given a list of paths.
 (after! treemacs
   (map! :leader
         (:prefix ("t" . "toggle")
-         :desc "Toggle treemacs" "t" #'treemacs))
-  )
+         :desc "Toggle treemacs" "t" #'treemacs)))
 #+end_src
 
 * vterm
@@ -206,8 +204,7 @@ Allow automatic recognition of projects given a list of paths.
 (after! vterm
   (map! :leader
         (:prefix ("t" . "toggle")
-         :desc "Toggle vterm" "v" #'+vterm/toggle))
-  )
+         :desc "Toggle vterm" "v" #'+vterm/toggle)))
 #+end_src
 
 * dirvish
@@ -299,14 +296,12 @@ If there are no arguments, returns 'pass'."
          :desc "send" "s" #'gptel-send
          :desc "open prompt" "p" #'gptel
          :desc "abort" "A" #'gptel-abort
-         :desc "add file to context" "a" #'gptel-add-file
-         )
-  )
+         :desc "add file to context" "a" #'gptel-add-file))
+
   ;; window to scroll automatically as the response is inserted
   (add-hook 'gptel-post-stream-hook 'gptel-auto-scroll)
   ;; make cursor to move to the next prompt after the response is inserted
-  (add-hook 'gptel-post-response-functions 'gptel-end-of-response)
-)
+  (add-hook 'gptel-post-response-functions 'gptel-end-of-response))
 #+end_src
 
 *** ollama
@@ -334,10 +329,9 @@ Note: This function assumes that you have installed and configured Ollama proper
   (interactive)
 
   (if (eq (process-status "ollama") 'run)
-        (message "Ollama server is already running")
-    )
-        (start-process "ollama" "ollama-serve-process" "ollama" "serve")
- )
+        (message "Ollama server is already running"))
+
+        (start-process "ollama" "ollama-serve-process" "ollama" "serve"))
 #+end_src
 
 **** Killing process
@@ -345,12 +339,9 @@ Note: This function assumes that you have installed and configured Ollama proper
 (defun vlv/kill-ollama-process ()
   "Kills the running ollama processes.
 
-Assumes the ollama process is named 'ollama-serve-process'."
-
-
+  Assumes the ollama process is named 'ollama-serve-process'."
   (interactive)
-        (kill-process "ollama-serve-process")
- )
+  (kill-process "ollama-serve-process"))
 #+end_src
 ** Process management
 **** Spawning a terminal process
@@ -400,8 +391,7 @@ Assumes the ollama process is named 'ollama-serve-process'."
 Spaws a child process using UNIX watch command using nvidia-smi command."
 
   (interactive)
-  (vlv/watch "-n0.1 nvidia-smi")
- )
+  (vlv/watch "-n0.1 nvidia-smi"))
 #+end_src
 ***** TODO FIXME
 * bug-hunter
@@ -445,9 +435,7 @@ feeds are read in ~/org/elfeed.org by default. We need to add all feeds we want 
 (after! elfeed
   ;; the basic value cuts a part of the feed's title.
   ;; Increasing the column width fixes it.
-  (setq elfeed-goodies/feed-source-column-width 20)
-
-)
+  (setq elfeed-goodies/feed-source-column-width 20))
 #+end_src
 
 ** Removing items from the feed
