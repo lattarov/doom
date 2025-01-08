@@ -88,12 +88,15 @@ Personal and work doom emacs config.
 *** Configuration
 #+begin_src emacs-lisp :tangle config.el
 
-(defun vlv/org-agenda-open-hook()
+(defun vlv/olivetti-mode-hook()
 "Hook to be called when opening an org agenda buffer"
-(olivetti-mode)
-(olivetti-set-width 120))
+        (olivetti-mode)
+        (olivetti-set-width 120))
 
-(add-hook 'org-agenda-mode-hook  'vlv/org-agenda-open-hook)
+(add-hook 'org-agenda-mode-hook  'vlv/olivetti-mode-hook)
+
+(add-hook! 'prog-mode-hook
+        (vlv/olivetti-mode-hook))
 
 (setq org-agenda-files '("~/org/agenda/" "~/org/roam/" "~/org/" "~/org/journal/" "~/.config/doom/"))
 #+end_src
