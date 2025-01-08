@@ -539,7 +539,7 @@ promising and would bring plenty of nice features to the config.
   (require 'consult-omni-embark)
 
   ;;; Select a list of modules you want to aload, otherwise all sources all laoded
-  (setq consult-omni-sources-modules-to-load (list 'consult-omni-notes  'consult-omni-file 'consult-omni-buffer 'consult-omni-buffer-search 'consult-omni-elfeed 'consult-omni-wikipedia 'consult-omni-apps 'consult-omni-dictionary))
+  (setq consult-omni-sources-modules-to-load (list 'consult-omni-notes  'consult-omni-file 'consult-omni-buffer 'consult-omni-buffer-search 'consult-omni-elfeed 'consult-omni-wikipedia 'consult-omni-apps 'consult-omni-dictionary 'consult-omni-gptel))
 
   (consult-omni-sources-load-modules)
   ;;; set multiple sources for consult-omni-multi command. Change these lists as needed for different interactive commands. Keep in mind that each source has to be a key in `consult-omni-sources-alist'.
@@ -549,7 +549,7 @@ promising and would bring plenty of nice features to the config.
                                      ;; "DuckDuckGo"
                                      ;; "Bookmark"
                                      "Apps"
-                                     ;; "gptel"
+                                     "gptel"
                                      ;; "Brave"
                                      "Dictionary"
                                      ;; "Google"
