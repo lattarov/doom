@@ -418,6 +418,8 @@ feeds are read in ~/org/elfeed.org by default. We need to add all feeds we want 
 *** [[https://this-week-in-rust.org/rss.xml][This Week in Rust]] :rust:
 *** [[https://buttondown.com/entropicthoughts/rss][Entropic Thoughts]]
 *** [[https://meetingcpp.com/feed.xml][Meeting C++ Feed]] :cpp:
+** Science :science:
+*** [[https://api.quantamagazine.org/feed/][Quanta Magazine]]
 ** Technology :tech:
 *** [[https://www.erichgrunewald.com/feed.xml][Erich Grunewald's Blog]]
 ** Fun :fun:
