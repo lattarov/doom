@@ -196,10 +196,11 @@ Allow automatic recognition of projects given a list of paths.
 
 * Treemacs
 #+begin_src emacs-lisp :tangle config.el
-(after! treemacs
+(use-package! treemacs
+  :config
   (map! :leader
-        (:prefix ("t" . "toggle")
-         :desc "Toggle treemacs" "t" #'treemacs)))
+    (:prefix ("t" . "toggle")
+     :desc "Toggle treemacs" "t" #'treemacs)))
 #+end_src
 
 * vterm
