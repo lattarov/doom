@@ -77,6 +77,9 @@ Personal and work doom emacs config.
 (setq org-directory "~/org/")
 
 (setq org-agenda-start-on-weekday "1")
+
+(add-hook! 'org-mode-hook
+        (vlv/olivetti-mode-hook))
 #+end_src
 ** Org agenda
 *** Improvements
@@ -87,13 +90,6 @@ Personal and work doom emacs config.
 
 *** Configuration
 #+begin_src emacs-lisp :tangle config.el
-
-(defun vlv/olivetti-mode-hook()
-"Hook to be called when opening an org agenda buffer"
-        (olivetti-mode)
-        (olivetti-set-width 120))
-
-(add-hook 'org-agenda-mode-hook  'vlv/olivetti-mode-hook)
 
 (add-hook! 'prog-mode-hook
         (vlv/olivetti-mode-hook))
@@ -142,6 +138,12 @@ Shortcuts are mapped with the SPC n r prefix by default.
 
 #+begin_src emacs-lisp :tangle packages.el
 (package! olivetti)
+
+
+(defun vlv/olivetti-mode-hook()
+"Hook to be called when opening an org agenda buffer"
+        (olivetti-mode)
+        (olivetti-set-width 120))
 #+end_src
 
 ** Babel
