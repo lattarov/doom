@@ -71,6 +71,19 @@ Personal and work doom emacs config.
 #+begin_src emacs-lisp :tangle config.el
 (setq doom-theme 'catppuccin)
 #+end_src
+* olivetti mode
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! olivetti)
+#+end_src
+
+#+begin_src emacs-lisp :tangle config.el
+(defun vlv/olivetti-mode-hook()
+"Hook to be called when opening an org agenda buffer"
+        (olivetti-mode)
+        (olivetti-set-width 120))
+#+end_src
+
 * Org
 ** Basic config
 #+begin_src emacs-lisp :tangle config.el
@@ -134,18 +147,6 @@ Shortcuts are mapped with the SPC n r prefix by default.
 #+begin_src emacs-lisp :tangle config.el
 (global-org-modern-mode)
 #+end_src
-** olivetti mode
-
-#+begin_src emacs-lisp :tangle packages.el
-(package! olivetti)
-
-
-(defun vlv/olivetti-mode-hook()
-"Hook to be called when opening an org agenda buffer"
-        (olivetti-mode)
-        (olivetti-set-width 120))
-#+end_src
-
 ** Babel
 #+begin_src emacs-lisp :tangle config.el
 (org-babel-do-load-languages
