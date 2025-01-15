@@ -626,7 +626,8 @@ execute-extended-command: Cannot open load file: No such file or directory, mu4e
 
 As recommended in doom's mu4e docs as well as in [[https://github.com/doomemacs/doomemacs/issues/7885][doomemacs/doomemacs#7885 Can't open mu4e]] , manually adding the load path fixes this.
 
-#+begin_src emacs-lisp :tangle no
+#+begin_src emacs-lisp :tangle (if (eq system-type 'gnu/linux) "config.el" "no")
+
 -(add-to-list 'load-path "/usr/share/emacs/site-lisp/mu4e")
 #+end_src
 
@@ -750,7 +751,7 @@ Add mu4e installation path to Emacs' load path.
 From this point onwards, mu4e should be up and running.
 *** Configuration
 
-#+begin_src emacs-lisp :tangle config.el
+#+begin_src emacs-lisp :tangle (if (eq system-type 'gnu/linux) "config.el" "no")
 ;; Each path is relative to the path of the maildir you passed to mu
 
 ;; (setq mu4e-get-mail-command "mbsync gmail"
