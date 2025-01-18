@@ -134,7 +134,6 @@ this configures bash to be used as the default shell bash. In theory it corrects
 ** Org Roam
 Shortcuts are mapped with the SPC n r prefix by default.
 #+begin_src emacs-lisp :tangle packages.el
-(unpin! org-roam)
 (package! org-roam-ui)
 #+end_src
 
