@@ -800,3 +800,12 @@ From this point onwards, mu4e should be up and running.
               ("C-<tab>" . 'copilot-accept-completion-by-word)))
 
 #+end_src
+
+* Compiler Explorer
+#+begin_src emacs-lisp :tangle packages.el
+
+(package! compiler-explorer
+  :type 'core
+  :recipe '(:host github
+            :repo "mkcms/compiler-explorer.el"))
+#+end_src
