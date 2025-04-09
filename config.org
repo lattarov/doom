@@ -811,3 +811,10 @@ From this point onwards, mu4e should be up and running.
   :recipe '(:host github
             :repo "mkcms/compiler-explorer.el"))
 #+end_src
+* Compiler explorer :wip:
+#+begin_src emacs-lisp :tangle packages.el
+(package! compiler-explorer
+  :recipe '(:host github
+            :repo "mkcms/compiler-explorer.el"
+            :build t))
+#+end_src
