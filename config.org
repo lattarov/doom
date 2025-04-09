@@ -811,6 +811,47 @@ From this point onwards, mu4e should be up and running.
   :recipe '(:host github
             :repo "mkcms/compiler-explorer.el"))
 #+end_src
+* Work
+** TightVNC
+*** Transient menu :WIP:
+#+begin_src emacs-lisp :tangle config.el
+(require 'transient)
+
+(defvar my-vnc-machines
+  '(("VISIO" . "10.4.54.221")
+    ("VERN"  . "10.102.31.63")
+    ("BDT-INCA10-VERN"  . "10.102.31.64"))
+  "Alist mapping machine names to their TightVNC IPs.")
+
+(defvar my-vncviewer-path "C:/Program Files/TightVNC/tvnviewer.exe"
+  "Caminho completo para o executável do VNC Viewer.")
+
+(defvar my-vnc-password "ADMINVME"
+  "Senha para conexão VNC.")
+
+(defun my-connect-to-vnc (machine)
+  "Conectar ao VNC na máquina MACHINE."
+  (let ((ip (cdr (assoc machine my-vnc-machines))))
+    (message ip)
+    (if (and ip (file-exists-p my-vncviewer-path))
+        (start-process "tightvnc" nil my-vncviewer-path ip (concat "-password=" my-vnc-password))
+      (message "Error: Caminho do VNC Viewer inválido ou máquina desconhecida!"))))
+
+(defun my-vnc-menu-items ()
+  "Return a list of transient menu items for VNC machines."
+  (mapcar (lambda (pair)
+            (list (substring (car pair) 0 1) (car pair)
+                  (lambda () (interactive) (my-connect-to-vnc (car pair)))))
+          my-vnc-machines))
+
+(transient-define-prefix my-vnc-menu ()
+  "Transient menu for selecting a TightVNC machine."
+  [["Machines"
+    ("a" "VISIO" (lambda () (interactive) (my-connect-to-vnc "VISIO")))
+    ("z" "VERN" (lambda () (interactive) (my-connect-to-vnc "VERN")))]])
+
+(global-set-key (kbd "C-c v") 'my-vnc-menu)
+#+end_src
 * Compiler explorer :wip:
 #+begin_src emacs-lisp :tangle packages.el
 (package! compiler-explorer
