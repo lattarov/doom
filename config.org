@@ -783,13 +783,15 @@ From this point onwards, mu4e should be up and running.
       ;; messages don't really "move"
       mu4e-index-lazy-check t)
 #+end_src
-* Copilot
-#+begin_src emacs-lisp :tangle packages.el
+* Copilot :wip:
+
+17/01/25 - The package breaks A LOT of stuff in Windows, breaks LSP integration (currently using LSP-mode) and server needs to be reinstalled quite often.
+#+begin_src emacs-lisp :tangle no
 (package! copilot
   :recipe (:host github :repo "copilot-emacs/copilot.el" :files ("*.el")))
 #+end_src
 
-#+begin_src emacs-lisp :tangle config.el
+#+begin_src emacs-lisp :tangle no
 ;; accept completion from copilot and fallback to company
 (use-package! copilot
   :hook (prog-mode . copilot-mode)
