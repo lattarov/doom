@@ -237,8 +237,16 @@ Allow automatic recognition of projects given a list of paths.
          :desc "Toggle vterm" "v" #'+vterm/toggle)))
 #+end_src
 
-* dirvish
+* Dirvish
 #+begin_src emacs-lisp :tangle config.el
+
+(after! dirvish
+  (setq dirvish-quick-access-entries
+        '(("h" "~/" "Home")
+        ("d" "~/Downloads/" "Downloads")
+        ("t" "c:/Tiama/" "Tiama")
+        ("r" "~/dev/repos/" "Repos"))))
+
 (map! :leader
 (:prefix ("t" . "toggle")
 :desc "Toggle dirvish" "d" #'dirvish-side))
