@@ -894,3 +894,35 @@ From this point onwards, mu4e should be up and running.
       :desc "devdocs-lookup"
       "d" #'devdocs-lookup)
 #+end_src
+* Spotify
+#+begin_src emacs-lisp :tangle packages.el
+(package! spotify)
+#+end_src
+
+#+begin_src emacs-lisp :tangle config.el
+(defun vlv/spotify-next-and-display()
+  "Plays the next song and displays it's author, name and album."
+  (interactive)
+  (spotify-next)
+  (call-interactively 'spotify-current))
+
+(defun vlv/spotify-previous-and-display()
+  "Plays the previous song and displays it's author, name and album."
+  (interactive)
+  (spotify-previous)
+  (call-interactively 'spotify-current))
+
+(defun vlv/spotify-playpause-and-display()
+  "Toggles pause and displays it's author, name and album."
+  (interactive)
+  (spotify-playpause)
+  (call-interactively 'spotify-current))
+
+(map! :leader
+     (:prefix ("v" . "perso")
+      :desc "spotify-play/pause" "p" #'vlv/spotify-playpause-and-display
+      :desc "spotify-previous" "P" #'vlv/spotify-previous-and-display
+      :desc "spotify-open" "q" #'spotify-quit
+      :desc "spotify-next" "n" #'vlv/spotify-next-and-display))
+
+#+end_src
