@@ -890,7 +890,9 @@ From this point onwards, mu4e should be up and running.
 * DevDocs.el
 #+begin_src emacs-lisp :tangle packages.el
 (package! devdocs)
+#+end_src
 
+#+begin_src emacs-lisp :tangle config.el
 (map! :leader
       :prefix ("s" . "+search")
       :desc "devdocs-lookup"
