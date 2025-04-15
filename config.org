@@ -549,13 +549,8 @@ Some security concerns arise due to using emacs as a web browser... This is to
 be tested and tracked over time. The project seems nevertheless extremely
 promising and would bring plenty of nice features to the config.
 
-#+begin_src emacs-lisp :tangle packages.el
-(package! consult-omni
-  :type 'core
-  :recipe '(:host github
-            :repo "armindarvish/consult-omni"
-            :files ("sources/*.el" "consult-omni.el" "consult-omni-embark.el")
-            :build t))
+
+#+begin_src emacs-lisp :tangle no
 
 (package! consult-mu
   :type 'core
@@ -566,7 +561,7 @@ promising and would bring plenty of nice features to the config.
 
 #+end_src
 
-#+begin_src emacs-lisp :tangle config.el
+#+begin_src emacs-lisp :tangle no
 (use-package! consult-mu
   :custom
 
@@ -580,6 +575,15 @@ promising and would bring plenty of nice features to the config.
   (consult-mu-mark-viewed-as-read nil)
   ;; open the message in mu4e-view-buffer when selected.
   (consult-mu-action #'consult-mu--view-action))
+#+end_src
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! consult-omni
+  :type 'core
+  :recipe '(:host github
+            :repo "armindarvish/consult-omni"
+            :files ("sources/*.el" "consult-omni.el" "consult-omni-embark.el")
+            :build t))
 #+end_src
 
 #+begin_src emacs-lisp :tangle config.el
@@ -612,7 +616,7 @@ promising and would bring plenty of nice features to the config.
                                      ;; "Google"
                                      "Wikipedia"
                                      "elfeed"
-                                     "mu4e"
+                                     ;; "mu4e"
                                      "buffers text search"
                                      "Notes Search"
                                      "Org Agenda"
@@ -656,7 +660,7 @@ As recommended in doom's mu4e docs as well as in [[https://github.com/doomemacs/
 
 #+begin_src emacs-lisp :tangle (if (eq system-type 'gnu/linux) "config.el" "no")
 
--(add-to-list 'load-path "/usr/share/emacs/site-lisp/mu4e")
+(add-to-list 'load-path "/usr/share/emacs/site-lisp/mu4e")
 #+end_src
 
 But different bugs arise, apparently related to a header error in mu4e or something else. It seems that the mu version installed by apt is not really functional.
@@ -831,14 +835,6 @@ From this point onwards, mu4e should be up and running.
 
 #+end_src
 
-* Compiler Explorer
-#+begin_src emacs-lisp :tangle packages.el
-
-(package! compiler-explorer
-  :type 'core
-  :recipe '(:host github
-            :repo "mkcms/compiler-explorer.el"))
-#+end_src
 * Work
 ** TightVNC
 *** Transient menu :WIP:
