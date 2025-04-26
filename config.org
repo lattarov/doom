@@ -584,7 +584,7 @@ promising and would bring plenty of nice features to the config.
   (require 'consult-omni-embark)
 
   ;;; Select a list of modules you want to aload, otherwise all sources all laoded
-  (setq consult-omni-sources-modules-to-load (list 'consult-omni-notes  'consult-omni-file 'consult-omni-buffer 'consult-omni-buffer-search 'consult-omni-elfeed 'consult-omni-wikipedia 'consult-omni-apps 'consult-omni-dictionary 'consult-omni-gptel))
+  (setq consult-omni-sources-modules-to-load (list 'consult-omni-notes  'consult-omni-file 'consult-omni-buffer 'consult-omni-buffer-search 'consult-omni-elfeed 'consult-omni-wikipedia 'consult-omni-apps 'consult-omni-dictionary 'consult-omni-gptel 'consult-omni-youtube))
 
   (consult-omni-sources-load-modules)
   ;;; set multiple sources for consult-omni-multi command. Change these lists as needed for different interactive commands. Keep in mind that each source has to be a key in `consult-omni-sources-alist'.
@@ -605,7 +605,7 @@ promising and would bring plenty of nice features to the config.
                                      "Notes Search"
                                      "Org Agenda"
                                      ;; "GitHub"
-                                     ;; "YouTube"
+                                     "YouTube"
                                      ;; "Invidious"
                                      ))
 
@@ -621,6 +621,11 @@ promising and would bring plenty of nice features to the config.
         (:prefix ("s" . "search")
          :desc "consult-omni-multi" "s" #'consult-omni-multi))
   #+end_src
+*** YouTube search API
+#+begin_src emacs-lisp :tangle config.el
+(setq consult-omni-youtube-search-key "AIzaSyAMbCC2_BQRaGifhK2tVifSOTCwucT9Lao")
+#+end_src
+**** TODO Encrypt
 * Mail
 ** Mu4e
 *** Remaining work
