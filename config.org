@@ -450,6 +450,7 @@ feeds are read in ~/org/elfeed.org by default. We need to add all feeds we want 
 * root :elfeed:
 ** Tech :tech:
 *** [[https://korben.info/feed][Les news de Korben]] :FR:
+*** [[https://thelinuxexp.com/feed.xml][The Linux Experiment]]
 ** Podcasts :podcasts:
 *** [[https://lexfridman.com/feed/podcast/][Lex Fridman Podcast]]  :tech:
 ** Programming :programming:
