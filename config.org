@@ -240,23 +240,6 @@ Allow automatic recognition of projects given a list of paths.
   (setq projectile-project-search-path '("~/dev")))
 #+end_src
 
-* Treemacs
-#+begin_src emacs-lisp :tangle config.el
-(use-package! treemacs
-  :config
-  (map! :leader
-    (:prefix ("t" . "toggle")
-     :desc "Toggle treemacs" "t" #'treemacs)))
-#+end_src
-
-* vterm
-#+begin_src emacs-lisp :tangle config.el
-(after! vterm
-  (map! :leader
-        (:prefix ("t" . "toggle")
-         :desc "Toggle vterm" "v" #'+vterm/toggle)))
-#+end_src
-
 * Dirvish
 #+begin_src emacs-lisp :tangle config.el
 
@@ -268,8 +251,8 @@ Allow automatic recognition of projects given a list of paths.
         ("r" "~/dev/repos/" "Repos"))))
 
 (map! :leader
-(:prefix ("t" . "toggle")
-:desc "Toggle dirvish" "d" #'dirvish-side))
+(:prefix ("o" . "open")
+:desc "dirvish-side" "d" #'dirvish-side))
 
 (setq dirvish-side-width 80)
 #+end_src
