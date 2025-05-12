@@ -930,7 +930,24 @@ From this point onwards, mu4e should be up and running.
 (package! multi-vterm)
 #+end_src
 
+* Emacs Application Framework EAF :WIP:
+
+#+begin_src emacs-lisp :tangle no
+
+(package! eaf
+  :recipe '(
+    :host github
+    :repo "emacs-eaf/emacs-application-framework"
+    :files ("*.el" "*.py" "core" "app" "*.json")
+    :includes (eaf-browser) ; Straight won't try to search for these packages when we make further use-package invocations for them
+    :pre-build '(("python" "install-eaf.py" "--install" "browser" "--ignore-sys-deps"))))
 #+end_src
+
+#+begin_src emacs-lisp :tangle no
+(add-load-path! "~/.config/emacs/.local/straight/repos/emacs-application-framework")
+(require 'eaf-browser)
+#+end_src
+
 * Whisper
 
 Whisper.el is a package that allows voice to text transcription in Emacs. It needs a few dependencies, namely
