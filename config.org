@@ -925,3 +925,38 @@ From this point onwards, mu4e should be up and running.
       :desc "spotify-next" "n" #'vlv/spotify-next-and-display))
 
 #+end_src
+* Whisper
+
+Whisper.el is a package that allows voice to text transcription in Emacs. It needs a few dependencies, namely
+ - [[https://ffmpeg.org/][FFmpeg]]: "A complete, cross-platform solution to record, convert and stream audio and video."
+   Can be installed using
+   #+begin_src sh :tangle no
+sudo apt-get install ffmpeg
+   #+end_src
+ - [[https://github.com/ggml-org/whisper.cpp][whisper.cpp]]: Port of OpenAI's Whisper model in C/C++
+   Is fetched and compiled by running whisper. Needs git, a C++ compiler and CMake.
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! whisper.el
+  :recipe '(
+    :host github
+    :repo "natrys/whisper.el"))
+#+end_src
+
+
+#+begin_src emacs-lisp :tangle config.el
+(use-package! whisper.el
+  :defer t ;; A configuration error appears if the fur is not set.
+  :config
+  (setq whisper-install-directory "/tmp/"
+        whisper-model "base"
+        whisper-language "en"
+        whisper-translate nil
+        whisper-use-threads (/ (num-processors) 2)))
+
+(map! :leader
+    :prefix ("z" . "whisper")
+    :desc "whisper-run" "z" #'whisper-run)
+
+
+#+end_src
