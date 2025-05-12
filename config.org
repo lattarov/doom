@@ -960,9 +960,19 @@ sudo apt-get install ffmpeg
         whisper-translate nil
         whisper-use-threads (/ (num-processors) 2)))
 
+(defun vlv/whisper-run-english ()
+    (interactive)
+    (setq whisper-language "en")
+    (call-interactively 'whisper-run))
+
+(defun vlv/whisper-run-portuguese ()
+    (interactive)
+    (setq whisper-language "pt")
+    (call-interactively 'whisper-run))
+
 (map! :leader
     :prefix ("z" . "whisper")
-    :desc "whisper-run" "z" #'whisper-run)
-
-
+    :desc "whisper-run" "e" #'vlv/whisper-run-english
+    :desc "whisper-run" "p" #'vlv/whisper-run-portuguese)
 #+end_src
+
