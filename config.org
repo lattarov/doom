@@ -925,6 +925,12 @@ From this point onwards, mu4e should be up and running.
       :desc "spotify-next" "n" #'vlv/spotify-next-and-display))
 
 #+end_src
+* vterm
+#+begin_src emacs-lisp :tangle packages.el
+(package! multi-vterm)
+#+end_src
+
+#+end_src
 * Whisper
 
 Whisper.el is a package that allows voice to text transcription in Emacs. It needs a few dependencies, namely
