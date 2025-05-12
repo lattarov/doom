@@ -24,7 +24,18 @@ sudo make -j${JOBS} NATIVE_FULL_AOT=1
 sudo make install
 #+end_src
 
-#+RESULTS:
+** Setting up systemd service
+run the following command once:
+
+#+begin_src bash :tangle no
+systemctl --user enable --now emacs
+#+end_src
+
+If a restart is necessary, run
+
+#+begin_src bash :tangle no
+systemctl --user restart emacs
+#+end_src
 
 * Cross platform compatibility :wip:
 #+begin_src emacs-lisp :tangle no
