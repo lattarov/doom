@@ -124,7 +124,7 @@ this configures bash to be used as the default shell bash. In theory it corrects
 #+end_src
 
 #+begin_src emacs-lisp :tangle config.el
-(defun vlv/olivetti-mode-hook()
+(defun vlv/olivetti-mode()
 "Hook to be called when opening an org agenda buffer"
         (olivetti-mode)
         (olivetti-set-width 120))
@@ -141,7 +141,7 @@ this configures bash to be used as the default shell bash. In theory it corrects
 (setq org-agenda-start-on-weekday "1")
 
 (add-hook! 'org-mode-hook
-        (vlv/olivetti-mode-hook))
+        (vlv/olivetti-mode))
 #+end_src
 ** Org agenda
 *** Improvements
@@ -154,7 +154,7 @@ this configures bash to be used as the default shell bash. In theory it corrects
 #+begin_src emacs-lisp :tangle config.el
 
 (add-hook! 'prog-mode-hook
-        (vlv/olivetti-mode-hook))
+        (vlv/olivetti-mode))
 
 (setq org-agenda-files
       (mapcar (lambda (dir) (expand-file-name dir org-directory))
