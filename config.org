@@ -1,3 +1,62 @@
+* System setup
+** TODO Setup script
+Do a command to be run by the target system's package manager/other to install all necessary dependencies, set environment variables, etc.
+** Security
+*** Resources
+- [[https://christitus.com/linux-security-mistakes/][The 3 Biggest Security Mistakes Linux Users Make]]
+*** Setting up firewall
+By default in most distros, the firewall is not active. In order to install it, install a firewall configuration tool (such as Firewall Configuration in debian-based distros), and do at least the following:
+
+#+begin_src sh :tangle no
+sudo ufw limit 22/tcp
+sudo ufw allow 80/tcp
+sudo ufw allow 443/tcp
+sudo ufw default deny incoming
+sudo ufw default allow outgoing
+sudo ufw enable
+#+end_src
+*** Setting up [[https://github.com/fail2ban/fail2ban][fail2ban]]
+fail2ban is a tool that will block repeated failing incoming connexions (particularly useful against brute force attacks) and can be installed via
+
+#+begin_src sh :tangle no
+sudo apt-get install fail2ban
+#+end_src
+
+The following default config file is recommended by the link in resources subsection
+
+#+begin_src conf :tangle no
+[DEFAULT]
+ignoreip = 127.0.0.1/8 ::1
+bantime = 3600
+findtime = 600
+maxretry = 5
+
+[sshd]
+enabled = true
+#+end_src
+
+The following will activate the systemd service:
+#+begin_src sh :tangle no
+sudo systemctl enable fail2ban
+sudo systemctl start fail2ban
+#+end_src
+*** [[https://www.apparmor.net/][AppArmor]]
+App to set behavioural profiled restrictions to apps running in this machine. It mainly targets Linux servers, but it can be a very powerful tool for security in desktop environment.
+
+Configuration is not very straightforward according to reddit and forums...
+
+to check if it's currently running, do
+#+begin_src sh :tangle no
+aa-status
+#+end_src
+
+if AppArmor is running, the following should be printed:
+
+#+begin_quote
+apparmor module is loaded.
+#+end_quote
+
+It's already preinstalled in !PopOS 22.04
 * Tasks
 ** DONE Add packages.el configuration here
 ** IDEA Add init.el configuration here
