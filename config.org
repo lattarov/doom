@@ -1000,10 +1000,23 @@ sudo apt-get install ffmpeg
     (setq whisper-language "pt")
     (vlv/call-whisper-run-print-language))
 
+(defun vlv/whisper-run-french ()
+    (interactive)
+    (setq whisper-language "fr")
+    (vlv/call-whisper-run-print-language))
+
+(defun vlv/whisper-run-other-lang ()
+    (interactive)
+    (setq whisper-language
+          (read-string "Insert language to be used by whisper.cpp:"))
+    (vlv/call-whisper-run-print-language))
+
 (map! :leader
     :prefix ("z" . "whisper")
     :desc "whisper-run" "z" #'whisper-run
     :desc "whisper-run" "e" #'vlv/whisper-run-english
+    :desc "whisper-run" "f" #'vlv/whisper-run-french
+    :desc "whisper-run" "o" #'vlv/whisper-run-other-lang
     :desc "whisper-run" "p" #'vlv/whisper-run-portuguese)
 #+end_src
 
