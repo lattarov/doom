@@ -171,9 +171,11 @@ Shortcuts are mapped with the SPC n r prefix by default.
 
 #+begin_src emacs-lisp :tangle config.el
 (use-package! websocket
+  :defer t
   :after org-roam)
 
 (use-package! org-roam-ui
+  :defer t
   :after org-roam ;; or :after org
   ;;         normally we'd recommend hooking orui after org-roam, but since org-roam does not have
   ;;         a hookable mode anymore, you're advised to pick something yourself
@@ -218,6 +220,7 @@ Shortcuts are mapped with the SPC n r prefix by default.
 ** Conda
 #+begin_src emacs-lisp :tangle config.el
 (use-package! conda
+  :defer t
   :config
   (setq conda-anaconda-home (expand-file-name "~/miniconda3"))
   (setq conda-env-home-directory (expand-file-name "~/miniconda3"))
@@ -519,6 +522,7 @@ entries]], it works by deleting selected items feed from elfeed's database.
 ** Corfu
 #+begin_src emacs-lisp :tangle config.el
 (use-package! corfu
+  :defer t
   :config
   (defun corfu-enable-in-minibuffer ()
     "Enable Corfu in the minibuffer if `completion-at-point' is bound."
@@ -557,6 +561,7 @@ promising and would bring plenty of nice features to the config.
 
 #+begin_src emacs-lisp :tangle no
 (use-package! consult-mu
+  :defer t
   :custom
 
   ;;maximum number of results shown in minibuffer
@@ -582,6 +587,7 @@ promising and would bring plenty of nice features to the config.
 
 #+begin_src emacs-lisp :tangle config.el
 (use-package! consult-omni
+  :defer t
   :custom
 
   ;; General settings that apply to all sources
@@ -825,6 +831,7 @@ From this point onwards, mu4e should be up and running.
 #+begin_src emacs-lisp :tangle no
 ;; accept completion from copilot and fallback to company
 (use-package! copilot
+  :defet t
   :hook (prog-mode . copilot-mode)
   :bind (:map copilot-completion-map
               ("<tab>" . 'copilot-accept-completion)
