@@ -1020,3 +1020,9 @@ sudo apt-get install ffmpeg
     :desc "whisper-run" "p" #'vlv/whisper-run-portuguese)
 #+end_src
 
+* Emacs Web Wowser EWW
+It's much nicer to have no matter what web site rendered centralised in the screen, thankfully we already have a function for that!
+#+begin_src emacs-lisp :tangle config.el
+(add-hook! 'eww-mode-hook
+  (vlv/olivetti-mode))
+#+end_src
