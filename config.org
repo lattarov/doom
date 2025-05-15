@@ -511,45 +511,31 @@ Spaws a child process using UNIX watch command using nvidia-smi command."
 (package! bug-hunter)
 #+end_src
 
-* RSS feed
-*** Add feeds to the reader
-feeds are read in ~/org/elfeed.org by default. We need to add all feeds we want and corresponding tags and simply export it to the elfeed org file.
-#+begin_src org :tangle ~/org/elfeed.org
-
-#+title: elfeed
-
-* root :elfeed:
-** Tech :tech:
-*** [[https://thelinuxexp.com/feed.xml][The Linux Experiment]]
-** Podcasts :podcasts:
-*** [[https://lexfridman.com/feed/podcast/][Lex Fridman Podcast]]  :tech:
-** Programming :programming:
-*** [[https://this-week-in-rust.org/rss.xml][This Week in Rust]] :rust:
-*** [[https://buttondown.com/entropicthoughts/rss][Entropic Thoughts]]
-*** [[https://meetingcpp.com/feed.xml][Meeting C++ Feed]] :cpp:
-** Science :science:
-*** [[https://api.quantamagazine.org/feed/][Quanta Magazine]]
-** Technology :tech:
-*** [[https://www.erichgrunewald.com/feed.xml][Erich Grunewald's Blog]]
-** Fun :fun:
-*** [[https://xkcd.com/rss.xml][xkcd]] :xkcd:
-** Miscellaneous :misc:
-[[https://protesilaos.com/master.xml][Protesilaos Stavrou: Master feed with all updates]]
-
-#+end_src
-
-** Configuring elfeed
+* elfeed
 #+begin_src emacs-lisp :tangle config.el
-;; global mapping
-(map! :leader
-      (:prefix ("e" . "elfeed")
-       :desc "Enter elfeed" "e" #'elfeed
-       :desc "Update all feeds" "u" #'elfeed-update))
+(use-package! elfeed
+  :config
+    (setq elfeed-feeds
+    '("https://protesilaos.com/master.xml"
+        ("https://xkcd.com/rss.xml" fun xkcd)
+        ("https://www.erichgrunewald.com/feed.xml" tech)
+        ("https://api.quantamagazine.org/feed/" science)
+        ("https://meetingcpp.com/feed.xml" programming cpp)
+        ("https://buttondown.com/entropicthoughts/rss" programming)
+        ("https://this-week-in-rust.org/rss.xml" programming rust)
+        ("https://systemcrafters.net/rss/news.xml" programming lisp)
+        ("https://lexfridman.com/feed/podcast/" podcasts tech)
+        ("https://thelinuxexp.com/feed.xml" tech)))
 
-(after! elfeed
-  ;; the basic value cuts a part of the feed's title.
-  ;; Increasing the column width fixes it.
-  (setq elfeed-goodies/feed-source-column-width 20))
+    ;; some basic
+    (map! :leader
+        (:prefix ("e" . "elfeed")
+        :desc "Enter elfeed" "e" #'elfeed
+        :desc "Update all feeds" "u" #'elfeed-update))
+
+    ;; the basic value cuts a part of the feed's title.
+    ;; Increasing the column width fixes it.
+    (setq elfeed-goodies/feed-source-column-width 20))
 #+end_src
 
 ** Removing items from the feed
