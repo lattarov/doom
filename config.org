@@ -131,7 +131,9 @@ systemctl --user restart emacs
 (setq display-line-numbers-type t)
 
 ;; sets emacs general opacity
-(doom/set-frame-opacity 97)
+(add-hook! 'server-after-make-frame-hook
+    (setq opacity 90)
+    (doom/set-frame-opacity opacity))
 #+end_src
 
 * Emacs general configs
