@@ -124,9 +124,7 @@ systemctl --user restart emacs
     (setq doom-font (font-spec :family "Fira Mono" :size 18)))
 
 ;; sets emacs general opacity
-(add-hook! 'server-after-make-frame-hook
-    (setq opacity 90)
-    (doom/set-frame-opacity opacity))
+(add-to-list 'default-frame-alist '(alpha-background . 90))
 #+end_src
 
 * Emacs general configs
