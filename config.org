@@ -151,12 +151,10 @@ systemctl --user restart emacs
 (save-place-mode 1)
 #+end_src
 ** Theme
-#+begin_src emacs-lisp :tangle packages.el
-(package! catppuccin-theme)
+#+begin_src emacs-lisp :tangle config.el
+(setq load-theme 'doom-one)
 #+end_src
 
-#+begin_src emacs-lisp :tangle config.el
-(setq doom-theme 'catppuccin)
 ** Terminals (WIP)
 this configures bash to be used as the default shell bash. In theory it corrects a few issues concerning
 
