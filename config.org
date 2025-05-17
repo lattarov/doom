@@ -125,11 +125,6 @@ systemctl --user restart emacs
         (setq doom-font (font-spec :family "Cascadia Code" :size 14))
   )
 
-
-;; This determines the style of line numbers in effect. If set to `nil', line
-;; numbers are disabled. For relative line numbers, set this to `relative'.
-(setq display-line-numbers-type t)
-
 ;; sets emacs general opacity
 (add-hook! 'server-after-make-frame-hook
     (setq opacity 90)
