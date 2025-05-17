@@ -1056,3 +1056,11 @@ It's much nicer to have no matter what web site rendered centralised in the scre
 (add-hook! 'eww-mode-hook
   (vlv/olivetti-mode))
 #+end_src
+
+* PDF
+It can be quite disturbing to have a white background PDF displayed given that both OS and Emacs themes are consistently dark. Thankfully there's a pdf-view-mode function to set a dark colour scheme!
+
+#+begin_src emacs-lisp :tangle config.el
+(add-hook! 'pdf-view-mode-hook
+           (pdf-view-midnight-minor-mode))
+#+end_src
