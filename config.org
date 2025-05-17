@@ -1069,3 +1069,12 @@ It can be quite disturbing to have a white background PDF displayed given that b
 (add-hook! 'pdf-view-mode-hook
            (pdf-view-midnight-minor-mode))
 #+end_src
+* ibuffer
+
+#+begin_src emacs-lisp :tangle config.el
+;; a must have in ergonomics.
+(after! ibuffer
+  (map! :leader
+        (:prefix ("b")
+         :desc "Kill buffer and window" "K" #'kill-buffer-and-window)))
+#+end_src
