@@ -247,15 +247,6 @@ Shortcuts are mapped with the SPC n r prefix by default.
         (:prefix ("r" . "roam")
          :desc "Open org roam UI" "u" #'org-roam-ui-mode))))
 #+end_src
-** org modern
-
-#+begin_src emacs-lisp :tangle packages.el
-(package! org-modern)
-#+end_src
-
-#+begin_src emacs-lisp :tangle config.el
-(global-org-modern-mode)
-#+end_src
 * Python
 ** Conda
 #+begin_src emacs-lisp :tangle config.el
