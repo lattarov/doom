@@ -120,8 +120,8 @@ systemctl --user restart emacs
 * Doom
 #+begin_src emacs-lisp :tangle config.el
 (if (eq system-type 'windows-nt)
-    (setq doom-font (font-spec :family "Cascadia Code" :size 14))
-    (setq doom-font (font-spec :family "Fira Mono" :size 18)))
+    (customize-set-variable 'doom-font (font-spec :family "Cascadia Code" :size 14))
+    (customize-set-variable 'doom-font (font-spec :family "Fira Mono" :size 18)))
 
 ;; sets emacs general opacity
 (add-to-list 'default-frame-alist '(alpha-background . 90))
@@ -142,7 +142,7 @@ systemctl --user restart emacs
 #+begin_src emacs-lisp :tangle config.el
 (global-auto-revert-mode 1)
 ;; Revert Dired and other buffers
-(setq global-auto-revert-non-file-buffers t)
+(customize-set-variable 'global-auto-revert-non-file-buffers t)
 #+end_src
 
 ** Text editing
@@ -209,11 +209,11 @@ this configures bash to be used as the default shell bash. In theory it corrects
 (add-hook! 'prog-mode-hook
         (vlv/olivetti-mode))
 
-(setq org-agenda-files
+(customize-set-variable 'org-agenda-files
       (mapcar (lambda (dir) (expand-file-name dir org-directory))
               '("agenda/" "roam/" "journal/" "~/.config/doom/")))
 
-(setq org-agenda-start-on-weekday 1) ;; start on monday
+(customize-set-variable 'org-agenda-start-on-weekday 1) ;; start on monday
 #+end_src
 
 ** Org Roam
@@ -240,7 +240,7 @@ Shortcuts are mapped with the SPC n r prefix by default.
         org-roam-ui-update-on-save t
         org-roam-ui-open-on-start t)
 
-  (setq org-roam-directory (expand-file-name "roam/" org-directory)) ;; necessary use the org directory set on the
+  (customize-set-variable 'org-roam-directory (expand-file-name "roam/" org-directory)) ;; necessary use the org directory set on the
 
   (map! :leader
         (:prefix ("n" . "org")
@@ -489,7 +489,7 @@ Spaws a child process using UNIX watch command using nvidia-smi command."
 #+begin_src emacs-lisp :tangle config.el
 (use-package! elfeed
   :config
-    (setq elfeed-feeds
+    (customize-set-variable 'elfeed-feeds
     '("https://protesilaos.com/master.xml"
         ("https://xkcd.com/rss.xml" fun xkcd)
         ("https://www.erichgrunewald.com/feed.xml" tech)
@@ -621,7 +621,7 @@ promising and would bring plenty of nice features to the config.
 
   (consult-omni-sources-load-modules)
   ;;; set multiple sources for consult-omni-multi command. Change these lists as needed for different interactive commands. Keep in mind that each source has to be a key in `consult-omni-sources-alist'.
-  (setq consult-omni-multi-sources '("calc"
+  (customize-set-variable 'consult-omni-multi-sources '("calc"
                                      "File"
                                      "Buffer"
                                      ;; "DuckDuckGo"
@@ -645,10 +645,10 @@ promising and would bring plenty of nice features to the config.
 ;; Per source customization
 
 ;;; Pick you favorite autosuggest command.
-  (setq consult-omni-default-autosuggest-command #'consult-omni-dynamic-brave-autosuggest) ;;or any other autosuggest source you define
+  (customize-set-variable 'consult-omni-default-autosuggest-command #'consult-omni-dynamic-brave-autosuggest) ;;or any other autosuggest source you define
 
  ;;; Set your shorthand favorite interactive command
-  (setq consult-omni-default-interactive-command #'consult-omni-multi))
+  (customize-set-variable 'consult-omni-default-interactive-command #'consult-omni-multi))
 :bind
   (map! :leader
         (:prefix ("s" . "search")
@@ -997,11 +997,11 @@ sudo apt-get install ffmpeg
 (use-package! whisper.el
   :defer t ;; A configuration error appears if the fur is not set.
   :config
-  (setq whisper-install-directory "/tmp/"
-        whisper-model "base"
-        whisper-language "en"
-        whisper-translate nil
-        whisper-use-threads (/ (num-processors) 2)))
+  (customize-set-variable 'whisper-install-directory "/tmp/")
+  (customize-set-variable 'whisper-model "base")
+  (customize-set-variable 'whisper-language "en")
+  (customize-set-variable 'whisper-translate nil)
+  (customize-set-variable 'whisper-use-threads (/ (num-processors) 2)))
 
 (defun vlv/call-whisper-run-print-language ()
     (minibuffer-message
@@ -1011,22 +1011,22 @@ sudo apt-get install ffmpeg
 
 (defun vlv/whisper-run-english ()
     (interactive)
-    (setq whisper-language "en")
+    (customize-set-variable 'whisper-language "en")
     (vlv/call-whisper-run-print-language))
 
 (defun vlv/whisper-run-portuguese ()
     (interactive)
-    (setq whisper-language "pt")
+    (customize-set-variable 'whisper-language "pt")
     (vlv/call-whisper-run-print-language))
 
 (defun vlv/whisper-run-french ()
     (interactive)
-    (setq whisper-language "fr")
+    (customize-set-variable 'whisper-language "fr")
     (vlv/call-whisper-run-print-language))
 
 (defun vlv/whisper-run-other-lang ()
     (interactive)
-    (setq whisper-language
+    (customize-set-variable 'whisper-language
           (read-string "Insert language to be used by whisper.cpp:"))
     (vlv/call-whisper-run-print-language))
 
