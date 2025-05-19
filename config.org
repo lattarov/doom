@@ -95,26 +95,28 @@ systemctl --user restart emacs
 #+end_src
 
 * Cross platform compatibility :wip:
-#+begin_src emacs-lisp :tangle no
+#+begin_src emacs-lisp :tangle config.el
+(defcustom vlv/environment "PERSONAL" "The current environment.
 
-(setq vlv/config "NOT_YET_SET")
+This will be used to activate or not certain functionalities
+of this configuration, maily by tangling or not certain babel
+code blocks.
 
-(defun vlv/is-work-config()
-  "Returns t if in a Windows environment."
-  (if (eq system-type 'windows-nt)
-      (setq vlv/config "WORK")))
+TODO: replace this by a dedicated config for work once the doom
+profiles API is stable.
+"
+  :type 'string
+  :options '("WORK" "PERSONAL"))
 
-(defun vlv/is-personal-config()
-  "Returns t if in a linux environment."
-  (if (eq system-type 'gnu/linux)
-      (setq vlv/config "PERSONAL")))
-
-(defun vlv/config()
+(defun vlv/get-environment-type()
+  "Gets and displays in minibuffer the environment."
   (interactive)
-  (vlv/is-personal-config())
-  (vlv/is-work-config())
-  (message (concat "Configuration type is:" 'vlv/config)))
+  (if (eq system-type 'gnu/linux)
+      (customize-set-variable 'vlv/environment "PERSONAL")
+      (customize-set-variable 'vlv/environment "WORK"))
+  (message (concat "Environment: " vlv/environment)))
 
+(vlv/get-environment-type)
 #+end_src
 
 * Doom
@@ -187,7 +189,7 @@ this configures bash to be used as the default shell bash. In theory it corrects
 ** Basic config
 #+begin_src emacs-lisp :tangle config.el
 
-(if (eq system-type 'windows-nt)
+(if (eq 'vlv/environment "WORK")
         (setq org-directory "~/OneDrive - Kestrel Vision/org")
         (setq org-directory "~/org/"))
 
@@ -861,7 +863,7 @@ From this point onwards, mu4e should be up and running.
 * Work
 ** TightVNC
 *** Transient menu :WIP:
-#+begin_src emacs-lisp :tangle config.el
+#+begin_src emacs-lisp :tangle (if (eq 'vlv/environment "WORK") "config.el" "no")
 (require 'transient)
 
 (defvar my-vnc-machines
@@ -918,11 +920,11 @@ From this point onwards, mu4e should be up and running.
       "d" #'devdocs-lookup)
 #+end_src
 * Spotify
-#+begin_src emacs-lisp :tangle packages.el
+#+begin_src emacs-lisp :tangle (if (eq 'vlv/environment "PERSONAL") "packages.el" "no")
 (package! spotify)
 #+end_src
 
-#+begin_src emacs-lisp :tangle config.el
+#+begin_src emacs-lisp :tangle (if (eq 'vlv/environment "PERSONAL") "config.el" "no")
 (use-package! spotify
   :config
 
@@ -952,7 +954,7 @@ From this point onwards, mu4e should be up and running.
         :desc "spotify-next" "n" #'vlv/spotify-next-and-display)))
 #+end_src
 * multi-vterm
-#+begin_src emacs-lisp :tangle packages.el
+#+begin_src emacs-lisp :tangle (if (eq 'vlv/environment "PERSONAL") "packages.el" "no")
 (package! multi-vterm)
 #+end_src
 
@@ -985,7 +987,7 @@ sudo apt-get install ffmpeg
  - [[https://github.com/ggml-org/whisper.cpp][whisper.cpp]]: Port of OpenAI's Whisper model in C/C++
    Is fetched and compiled by running whisper. Needs git, a C++ compiler and CMake.
 
-#+begin_src emacs-lisp :tangle packages.el
+#+begin_src emacs-lisp :tangle (if (eq 'vlv/environment "PERSONAL") "packages.el" "no")
 (package! whisper.el
   :recipe '(
     :host github
@@ -993,7 +995,7 @@ sudo apt-get install ffmpeg
 #+end_src
 
 
-#+begin_src emacs-lisp :tangle config.el
+#+begin_src emacs-lisp :tangle (if (eq 'vlv/environment "PERSONAL") "config.el" "no")
 (use-package! whisper.el
   :defer t ;; A configuration error appears if the fur is not set.
   :config
