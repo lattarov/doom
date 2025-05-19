@@ -403,11 +403,10 @@ Set ollama as default backend for gptel, add default model and a few tweaks.
 ** Process management
 **** Spawning a terminal process
 #+begin_src emacs-lisp :tangle config.el
-(defvar watch-history nil)
 (defun vlv/watch (command &optional name)
   "Runs \"watch COMMAND\" in a `term' buffer.  \"q\" to exit."
   (interactive
-   (list (read-from-minibuffer "watch " nil nil nil 'watch-history)))
+   (list (read-from-minibuffer "watch " nil nil nil t)))
   (let* ((name (or name (concat "watch " command)))
          (switches (split-string-and-unquote command))
          (termbuf (apply 'make-term name "watch" nil switches))
@@ -434,15 +433,11 @@ Set ollama as default backend for gptel, add default model and a few tweaks.
                  (kill-buffer (process-buffer process)))))
     ;; Display the buffer.
     (switch-to-buffer termbuf)))
-
 #+end_src
-***** TODO open window after calling int
-***** TODO go to new window once its opened
-***** TODO make window killable using "q"
-
 **** Spawning nvidia smi watch process
-#+begin_src emacs-lisp :tangle no
+#+begin_src emacs-lisp :tangle config.el
 (defun vlv/open-nvidia-performance_tracker ()
+  (interactive)
   "Starts a process to display NVIDIA GPU data.
 
 Spaws a child process using UNIX watch command using nvidia-smi command."
@@ -450,7 +445,6 @@ Spaws a child process using UNIX watch command using nvidia-smi command."
   (interactive)
   (vlv/watch "-n0.1 nvidia-smi"))
 #+end_src
-***** TODO FIXME
 * bug-hunter
 #+begin_src emacs-lisp :tangle packages.el
 (package! bug-hunter)
