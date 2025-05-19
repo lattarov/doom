@@ -370,67 +370,36 @@ If there are no arguments, returns 'pass'."
 #+end_src
 
 *** TODO Fine tune LSP flags
-* LLM support
-** gptel installation
-#+begin_src emacs-lisp :tangle packages.el
-(package! gptel)
+* Large language model (LLM) support
+To priviledge local usage of LLMs, we'll use [[https://ollama.com/][Ollama]] to run LLM models locally.
+
+** ollama installation
+Installation procedure is available in [[https://ollama.com/download/linux][Download Ollama on Linux]]:
+
+#+begin_src sh :tangle no
+curl -fsSL https://ollama.com/install.sh | sh
 #+end_src
-*** Keybindings
+
+** GPTEL configuration
+Set ollama as default backend for gptel, add default model and a few tweaks.
+
 #+begin_src emacs-lisp :tangle config.el
 (after! gptel
-  (map! :leader
-        (:prefix ("l" . "gptel")
-         :desc "menu" "l" #'gptel-menu
-         :desc "send" "s" #'gptel-send
-         :desc "open prompt" "p" #'gptel
-         :desc "abort" "A" #'gptel-abort
-         :desc "add file to context" "a" #'gptel-add-file))
-
   ;; window to scroll automatically as the response is inserted
   (add-hook 'gptel-post-stream-hook 'gptel-auto-scroll)
   ;; make cursor to move to the next prompt after the response is inserted
-  (add-hook 'gptel-post-response-functions 'gptel-end-of-response))
+  (add-hook 'gptel-post-response-functions 'gptel-end-of-response)
+
+  ;; default model
+  (customize-set-variable 'gptel-model 'deepseek-r1:8b)
+
+  ;; adding Ollama backend
+  (customize-set-variable 'gptel-backend (gptel-make-ollama "Ollama"
+          :host "localhost:11434"
+          :stream t
+          :models '((llama3.1:8b) (llama3.2:3b) (qwen2.5-coder:7b) (deepseek-r1:8b)))))
 #+end_src
 
-*** ollama
-added only two models that this machine can run
-#+begin_src emacs-lisp :tangle config.el
-;; default model
-(customize-set-variable 'gptel-model 'deepseek-r1:8b)
-
-;; adding Ollama backend
-(customize-set-variable 'gptel-backend (gptel-make-ollama "Ollama"
-        :host "localhost:11434"
-        :stream t
-        :models '((llama3.1:8b) (llama3.2:3b) (qwen2.5-coder:7b) (deepseek-r1:8b))))
-#+end_src
-**** Spawning process
-#+begin_src emacs-lisp :tangle config.el
-(defun vlv/spawn-ollama-process ()
-  "Starts an Ollama server process in the background if there's not already one.
-
-This function runs the `ollama` command with the argument 'serve' to start a server
-process. The process is started in the background and does not block Emacs.
-
-Note: This function assumes that you have installed and configured Ollama properly."
-
-  (interactive)
-
-  (if (eq (process-status "ollama") 'run)
-        (message "Ollama server is already running"))
-
-        (start-process "ollama" "ollama-serve-process" "ollama" "serve"))
-#+end_src
-
-**** Killing process
-#+begin_src emacs-lisp :tangle config.el
-(defun vlv/kill-ollama-process ()
-  "Kills the running ollama processes.
-
-  Assumes the ollama process is named 'ollama-serve-process'."
-  (interactive)
-  (kill-process "ollama-serve-process"))
-#+end_src
 ** Process management
 **** Spawning a terminal process
 #+begin_src emacs-lisp :tangle config.el
