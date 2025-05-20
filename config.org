@@ -1016,9 +1016,11 @@ It can be quite disturbing to have a white background PDF displayed given that b
 
 #+begin_src emacs-lisp :tangle config.el
 ;; append the WARNING keyword to the keyword faces
-(customize-set-variable 'hl-todo-keyword-faces (append hl-todo-keyword-faces '(("WARNING" warning bold))))
+(use-package! hl-todo
+  :defer t
+  :config
+    (customize-set-variable 'hl-todo-keyword-faces (append hl-todo-keyword-faces '(("WARNING" warning bold))))
 
-;; add warning to the base regex used by hl-todo
-(setq hl-todo--regexp "\\(\\<\\(TODO\\|FIXME\\|REVIEW\\|HACK\\|DEPRECATED\\|NOTE\\|BUG\\|XXX\\|WARNING\\)\\>[:]*\\)")
-
+    ;; add warning to the base regex used by hl-todo
+    (setq hl-todo--regexp "\\(\\<\\(TODO\\|FIXME\\|REVIEW\\|HACK\\|DEPRECATED\\|NOTE\\|BUG\\|XXX\\|WARNING\\)\\>[:]*\\)"))
 #+end_src
