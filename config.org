@@ -626,17 +626,7 @@ promising and would bring plenty of nice features to the config.
 **** TODO Encrypt
 * Mail
 ** Mu4e
-*** Remaining work
-*** TODO Cryptograph the password
-*** TODO gmail setup
-**** [ ] add guide on how to create an application-specific password on google
-**** [ ] setup smtp server or 2FA for gmail
-*** TODO proton setup
-**** [ ] configure for proton mail
-**** [ ] install proton bridge
-
-*** DONE Installation error pitfall
-DEADLINE: <2024-11-26 mar.> SCHEDULED: <2024-11-25 lun.>
+*** WARNING Installation error pitfall
 Because of some Ubuntu based bug, if mu4e was installed by the package manager (APT in Pop OS case) then the following bug shows up:
 
 #+begin_quote
@@ -660,46 +650,29 @@ sudo apt-get install mu4e
 
 In order to set the mail directory and do the first setup for mu's database, use the following command:
 
-#+begin_src sh :tangle no
-mu init --maildir=~/Mail
-#+end_src
 
-it should return something like this:
-
-#+begin_#+begin_quote
-maildir           : /home/lattaro/Mail
-database-path     : /home/lattaro/.cache/mu/xapian
-schema-version    : 452
-max-message-size  : 100000000
-batch-size        : 250000
-messages in store : 0
-created           : dim. 24 nov. 2024 23:26:27
-personal-address  : <none>
-#+end_quote
-
-#+end_#+begin_quote
-
-maildir           : /home/lattaro/Mail
-database-path     : /home/lattaro/.cache/mu/xapian
-schema-version    : 452
-max-message-size  : 100000000
-batch-size        : 250000
-messages in store : 0
-created           : dim. 24 nov. 2024 23:26:27
-personal-address  : <none>
-#+end_quote
-
-#+begin_src sh :tangle no
-mu index
-#+end_src
-
-*** Installing dependencies
+*** Dependencies
 **** mbsync (aka isync)
 #+begin_src sh :tangle  no
 sudo apt-get install isync
 #+end_src
 
-mbsync also requires a config file to be placed in the home directory. Here's the current file only configured for gmail.
+mbsync also requires a config file (by default .mbsyncrc) to be placed in the home directory. See each mail provider's section for more information.
+
+
+Next, the mail directory, or MailDir in mu's vocabulary. By default, it's a ~/Mail, which is not automatically created. Let's do so:
+
+#+begin_src sh :tangle no
+mkdir ~/Mail
+#+end_src
+
+finally, the following command pulls the mail from the given provider:
+
+#+begin_src sh :tangle no
+mbsync -Va
+#+end_src
+
+***** GMail
 
 #+begin_src ini :tangle no
 IMAPStore gmail-remote
@@ -722,21 +695,16 @@ Expunge Both
 Patterns *
 SyncState *
 #+end_src
+****** TODO Encrypt password
 
-Next, the mail directory (or MailDir in mu's vocabulary) must be created. By default, it's a ~/Mail, which is not automatically created. Let's do so:
-
-#+begin_src sh :tangle no
-mkdir ~/Mail
-#+end_src
-
-finally, the following command pulls the mail from the given provider:
-
-#+begin_src sh :tangle no
-mbsync -Va
-#+end_src
-
+***** TODO Proton
+- needs a paid account and the proton bridge daemon installed.
+- running this in the background can eat up A LOT of memory, this is to be tested before going forward.
+***** TODO Outlook
 
 **** mu
+***** Setup and installation
+
 The solution was to manually compile mu and install it by following instructions in [[github:https://github.com/djcb/mu][mu]].
 
 According to the README:
@@ -751,17 +719,31 @@ meson
 clone somewhere the latest release from mu, I used https://github.com/djcb/mu/releases/tag/v1.12.7
 (this version already comes with mu4e)
 
-cd wherever mu tarball was decompressed to and the autogen and make install
+****** Dependencies
+#+begin_src sh :tangle no
+sudo apt-get install meson libgmime-3.0-dev libxapian-dev
+#+end_src
 
+****** Compile
+cd wherever mu release tarball was decompressed and
+
+#+begin_src sh :tangle no
 ./autogen.sh && make
 sudo make install
+#+end_src
 
+The tarball contains mu and mu4e.
+
+****** Init and index mail in maildir
 Create the Maildir, in this config it is set to ~/Mail and run
 
+#+begin_src sh :tangle no
 mu init --maildir ~/Mail
 mu index
+#+end_src
 
-Add mu4e installation path to Emacs' load path.
+if mu4e is not found in Emacs, add the path (probably the one below to the load-path)
+
 #+begin_src emacs-lisp :tangle config.el
 ;; installation path for mu4e installed by the makefile of mu-1.12.7
 (add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu4e")
@@ -802,6 +784,7 @@ From this point onwards, mu4e should be up and running.
       ;; messages don't really "move"
       mu4e-index-lazy-check t)
 #+end_src
+
 * Copilot :wip:
 
 17/01/25 - The package breaks A LOT of stuff in Windows, breaks LSP integration (currently using LSP-mode) and server needs to be reinstalled quite often.
