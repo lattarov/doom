@@ -170,7 +170,7 @@ this configures bash to be used as the default shell bash. In theory it corrects
 *** eshell
 #+begin_src emacs-lisp :tangle config.el
 (add-hook! 'eshell-mode-hook
-  (vlv/olivetti-mode))
+  (olivetti-mode))
 #+end_src
 * olivetti mode
 
@@ -179,10 +179,8 @@ this configures bash to be used as the default shell bash. In theory it corrects
 #+end_src
 
 #+begin_src emacs-lisp :tangle config.el
-(defun vlv/olivetti-mode()
-"Hook to be called when opening an org agenda buffer"
-        (olivetti-mode)
-        (olivetti-set-width 120))
+(after! olivetti-mode
+  (olivetti-set-width 120))
 #+end_src
 
 * Org
@@ -196,7 +194,7 @@ this configures bash to be used as the default shell bash. In theory it corrects
 (setq org-agenda-start-on-weekday "1")
 
 (add-hook! 'org-mode-hook
-        (vlv/olivetti-mode))
+        (olivetti-mode))
 #+end_src
 ** Org agenda
 *** Improvements
@@ -209,7 +207,7 @@ this configures bash to be used as the default shell bash. In theory it corrects
 #+begin_src emacs-lisp :tangle config.el
 
 (add-hook! 'prog-mode-hook
-        (vlv/olivetti-mode))
+        (olivetti-mode))
 
 (customize-set-variable 'org-agenda-files
       (mapcar (lambda (dir) (expand-file-name dir org-directory))
@@ -994,7 +992,7 @@ sudo apt-get install ffmpeg
   :defer t
   :config
     (add-hook! 'eww-mode-hook
-    (vlv/olivetti-mode))
+    (olivetti-mode))
     (set-variable 'eww-bookmarks
                 '((:url   "https://lars.ingebrigtsen.no/"
                     :title "Random Thoughts - Lars Ingebritsen")
