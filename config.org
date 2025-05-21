@@ -988,10 +988,18 @@ sudo apt-get install ffmpeg
 #+end_src
 
 * Emacs Web Wowser EWW
-It's much nicer to have no matter what web site rendered centralised in the screen, thankfully we already have a function for that!
+** Configuration
 #+begin_src emacs-lisp :tangle config.el
-(add-hook! 'eww-mode-hook
-  (vlv/olivetti-mode))
+(use-package! eww
+  :defer t
+  :config
+    (add-hook! 'eww-mode-hook
+    (vlv/olivetti-mode))
+    (set-variable 'eww-bookmarks
+                '((:url   "https://lars.ingebrigtsen.no/"
+                    :title "Random Thoughts - Lars Ingebritsen")
+                    (:url   "https://openlibrary.org/"
+                    :title "Open Library"))))
 #+end_src
 
 * PDF
