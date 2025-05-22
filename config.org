@@ -279,7 +279,6 @@ Allow automatic recognition of projects given a list of paths.
 
 * Dirvish
 #+begin_src emacs-lisp :tangle config.el
-
 (after! dirvish
   (setq dirvish-quick-access-entries
         '(("h" "~/" "Home")
@@ -288,10 +287,8 @@ Allow automatic recognition of projects given a list of paths.
         ("r" "~/dev/repos/" "Repos"))))
 
 (map! :leader
-(:prefix ("o" . "open")
-:desc "dirvish-side" "d" #'dirvish-side))
-
-(setq dirvish-side-width 80)
+    (:prefix ("o" . "open")
+    :desc "dirvish-side" "d" #'dirvish))
 #+end_src
 
 * YASNIPPET
