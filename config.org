@@ -145,10 +145,6 @@ profiles API is stable.
 (customize-set-variable 'global-auto-revert-non-file-buffers t)
 #+end_src
 
-** Theme
-#+begin_src emacs-lisp :tangle config.el
-(setq load-theme 'doom-one)
-#+end_src
 
 ** Terminals (WIP)
 this configures bash to be used as the default shell bash. In theory it corrects a few issues concerning
