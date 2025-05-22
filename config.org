@@ -145,6 +145,11 @@ profiles API is stable.
 (customize-set-variable 'global-auto-revert-non-file-buffers t)
 #+end_src
 
+** Editing
+#+begin_src emacs-lisp :tangle config.el
+(add-hook! 'prog-mode-hook
+        (olivetti-mode))
+#+end_src
 
 ** Terminals (WIP)
 this configures bash to be used as the default shell bash. In theory it corrects a few issues concerning
@@ -193,8 +198,6 @@ this configures bash to be used as the default shell bash. In theory it corrects
 *** Configuration
 #+begin_src emacs-lisp :tangle config.el
 
-(add-hook! 'prog-mode-hook
-        (olivetti-mode))
 
 (customize-set-variable 'org-agenda-files
       (mapcar (lambda (dir) (expand-file-name dir org-directory))
