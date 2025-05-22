@@ -626,7 +626,7 @@ execute-extended-command: Cannot open load file: No such file or directory, mu4e
 
 As recommended in doom's mu4e docs as well as in [[https://github.com/doomemacs/doomemacs/issues/7885][doomemacs/doomemacs#7885 Can't open mu4e]] , manually adding the load path fixes this.
 
-#+begin_src emacs-lisp :tangle config.el
+#+begin_src emacs-lisp :tangle (if (eq system-type 'gnu/linux) "config.el" "no")
 
 (add-to-list 'load-path "/usr/share/emacs/site-lisp/mu4e")
 #+end_src
@@ -743,7 +743,7 @@ if mu4e is not found in Emacs, add the path (probably the one below to the load-
 From this point onwards, mu4e should be up and running.
 *** Configuration
 
-#+begin_src emacs-lisp :tangle config.el
+#+begin_src emacs-lisp :tangle (if (eq system-type 'gnu/linux) "config.el" "no")
 ;; Each path is relative to the path of the maildir you passed to mu
 
 ;; (setq mu4e-get-mail-command "mbsync gmail"
@@ -800,9 +800,8 @@ From this point onwards, mu4e should be up and running.
 * Work
 ** TightVNC
 *** Transient menu :WIP:
-#+begin_src emacs-lisp :tangle config.el
-(if (string-equal 'vlv/environment "WORK")
-    (require 'transient)
+#+begin_src emacs-lisp :tangle (if (eq 'vlv/environment "WORK") "config.el" "no")
+(require 'transient)
 
     (defvar my-vnc-machines
     '(("VISIO" . "10.4.54.221")
@@ -860,12 +859,12 @@ From this point onwards, mu4e should be up and running.
       "d" #'devdocs-lookup)
 #+end_src
 * Spotify
-#+begin_src emacs-lisp :tangle packages.el
+#+begin_src emacs-lisp :tangle (if (eq 'vlv/environment "PERSONAL") "packages.el" "no")
 (package! spotify
   :pin "d918b5187638e0c44a2a2584f3980244b6aae3fa")
 #+end_src
 
-#+begin_src emacs-lisp :tangle config.el
+#+begin_src emacs-lisp :tangle (if (eq 'vlv/environment "PERSONAL") "config.el" "no")
 (use-package! spotify
   :config
 
@@ -895,7 +894,7 @@ From this point onwards, mu4e should be up and running.
         :desc "spotify-next" "n" #'vlv/spotify-next-and-display)))
 #+end_src
 * multi-vterm
-#+begin_src emacs-lisp :tangle packages.el
+#+begin_src emacs-lisp :tangle (if (eq 'vlv/environment "PERSONAL") "packages.el" "no")
 (package! multi-vterm
   :pin "36746d85870dac5aaee6b9af4aa1c3c0ef21a905")
 #+end_src
@@ -929,7 +928,7 @@ sudo apt-get install ffmpeg
  - [[https://github.com/ggml-org/whisper.cpp][whisper.cpp]]: Port of OpenAI's Whisper model in C/C++
    Is fetched and compiled by running whisper. Needs git, a C++ compiler and CMake.
 
-#+begin_src emacs-lisp :tangle packages.el
+#+begin_src emacs-lisp :tangle (if (eq 'vlv/environment "PERSONAL") "packages.el" "no")
 (package! whisper.el
   :pin "fc122657bfb8d5faf6aedaefdc1687193f456d1f"
   :recipe '(
@@ -938,7 +937,7 @@ sudo apt-get install ffmpeg
 #+end_src
 
 
-#+begin_src emacs-lisp :tangle config.el
+#+begin_src emacs-lisp :tangle (if (eq 'vlv/environment "PERSONAL") "config.el" "no")
 (use-package! whisper.el
   :defer t ;; A configuration error appears if the fur is not set.
   :config
