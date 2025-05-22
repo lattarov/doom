@@ -169,7 +169,8 @@ this configures bash to be used as the default shell bash. In theory it corrects
 * olivetti mode
 
 #+begin_src emacs-lisp :tangle packages.el
-(package! olivetti)
+(package! olivetti
+  :pin "845eb7a95a3ca3325f1120c654d761b91683f598")
 #+end_src
 
 #+begin_src emacs-lisp :tangle config.el
@@ -209,7 +210,8 @@ this configures bash to be used as the default shell bash. In theory it corrects
 ** Org Roam
 Shortcuts are mapped with the SPC n r prefix by default.
 #+begin_src emacs-lisp :tangle packages.el
-(package! org-roam-ui)
+(package! org-roam-ui
+  :pin "5ac74960231db0bf7783c2ba7a19a60f582e91ab")
 #+end_src
 
 #+begin_src emacs-lisp :tangle config.el
@@ -351,7 +353,8 @@ Allow automatic recognition of projects given a list of paths.
 *** CMAKE-IDE
 [[https://github.com/Fox7Fog/emacs-cmake-ide][GitHub - Fox7Fog/emacs-cmake-ide: Use Emacs as a C/C++ IDE]]
 #+begin_src emacs-lisp :tangle packages.el
-(package! cmake-ide)
+(package! cmake-ide
+  :pin "28dc4ab5bd01d99553901b4efeb7234280928b18")
 #+end_src
 
 #+begin_src emacs-lisp :tangle config.el
@@ -521,7 +524,7 @@ promising and would bring plenty of nice features to the config.
 #+begin_src emacs-lisp :tangle no
 
 (package! consult-mu
-  :type 'core
+  :pin "d0a24058bf0dda823e5f1efcae5da7dc0efe6bd"
   :recipe '(:host github
             :repo "armindarvish/consult-mu"
             :branch "main"
@@ -839,13 +842,15 @@ From this point onwards, mu4e should be up and running.
 * Compiler explorer
 #+begin_src emacs-lisp :tangle packages.el
 (package! compiler-explorer
+  :pin "171cbde72993956e46cc478ecc98825997450140"
   :recipe '(:host github
             :repo "mkcms/compiler-explorer.el"
             :build t))
 #+end_src
 * DevDocs.el
 #+begin_src emacs-lisp :tangle packages.el
-(package! devdocs)
+(package! devdocs
+  :pin "d2214d34cdeb4483a594dd6973fcd095cef4653f")
 #+end_src
 
 #+begin_src emacs-lisp :tangle config.el
@@ -856,7 +861,8 @@ From this point onwards, mu4e should be up and running.
 #+end_src
 * Spotify
 #+begin_src emacs-lisp :tangle packages.el
-(package! spotify)
+(package! spotify
+  :pin "d918b5187638e0c44a2a2584f3980244b6aae3fa")
 #+end_src
 
 #+begin_src emacs-lisp :tangle config.el
@@ -890,7 +896,8 @@ From this point onwards, mu4e should be up and running.
 #+end_src
 * multi-vterm
 #+begin_src emacs-lisp :tangle packages.el
-(package! multi-vterm)
+(package! multi-vterm
+  :pin "36746d85870dac5aaee6b9af4aa1c3c0ef21a905")
 #+end_src
 
 * Emacs Application Framework EAF :WIP:
@@ -924,6 +931,7 @@ sudo apt-get install ffmpeg
 
 #+begin_src emacs-lisp :tangle packages.el
 (package! whisper.el
+  :pin "fc122657bfb8d5faf6aedaefdc1687193f456d1f"
   :recipe '(
     :host github
     :repo "natrys/whisper.el"))
