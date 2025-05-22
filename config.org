@@ -130,24 +130,21 @@ profiles API is stable.
 #+end_src
 
 * Emacs general configs
-**  Save command minibuffer command history
+** Personal information
 #+begin_src emacs-lisp :tangle config.el
-(setq user-full-name "Victor Lattaro Volpini"
-      user-mail-address "victorlattaro@gmail.com")
+(customize-set-variable 'user-full-name "Victor Lattaro Volpini")
+
+(customize-set-variable 'user-mail-address "victorlattaro@gmail.com")
 #+end_src
 
 **  Revert buffers when the underlying file has changed
 #+begin_src emacs-lisp :tangle config.el
-(global-auto-revert-mode 1)
+(customize-set-variable 'global-auto-revert-mode t)
+
 ;; Revert Dired and other buffers
 (customize-set-variable 'global-auto-revert-non-file-buffers t)
 #+end_src
 
-** Text editing
-#+begin_src emacs-lisp :tangle config.el
-;; Remember and restore the last cursor location of opened files
-(save-place-mode 1)
-#+end_src
 ** Theme
 #+begin_src emacs-lisp :tangle config.el
 (setq load-theme 'doom-one)
@@ -186,8 +183,6 @@ this configures bash to be used as the default shell bash. In theory it corrects
 (if (eq 'vlv/environment "WORK")
         (setq org-directory "~/OneDrive - Kestrel Vision/org")
         (setq org-directory "~/org/"))
-
-(setq org-agenda-start-on-weekday "1")
 
 (add-hook! 'org-mode-hook
         (olivetti-mode))
