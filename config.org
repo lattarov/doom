@@ -181,12 +181,13 @@ this configures bash to be used as the default shell bash. In theory it corrects
 ** Basic config
 #+begin_src emacs-lisp :tangle config.el
 
-(if (eq 'vlv/environment "WORK")
-        (setq org-directory "~/OneDrive - Kestrel Vision/org")
-        (setq org-directory "~/org/"))
+(after! org
+    (if (eq 'vlv/environment "WORK")
+            (setq org-directory "~/OneDrive - Kestrel Vision/org")
+            (setq org-directory "~/org/"))
 
-(add-hook! 'org-mode-hook
-        (olivetti-mode))
+    (add-hook! 'org-mode-hook
+            (olivetti-mode)))
 #+end_src
 ** Org agenda
 *** Improvements
@@ -197,13 +198,12 @@ this configures bash to be used as the default shell bash. In theory it corrects
 
 *** Configuration
 #+begin_src emacs-lisp :tangle config.el
+(after! org-agenda
+    (customize-set-variable 'org-agenda-files
+        (mapcar (lambda (dir) (expand-file-name dir org-directory))
+                '("agenda/" "roam/" "journal/" "~/.config/doom/")))
 
-
-(customize-set-variable 'org-agenda-files
-      (mapcar (lambda (dir) (expand-file-name dir org-directory))
-              '("agenda/" "roam/" "journal/" "~/.config/doom/")))
-
-(customize-set-variable 'org-agenda-start-on-weekday 1) ;; start on monday
+    (customize-set-variable 'org-agenda-start-on-weekday 1)) ;; start on monday
 #+end_src
 
 ** Org Roam
@@ -294,44 +294,45 @@ Allow automatic recognition of projects given a list of paths.
 
 * YASNIPPET
 #+begin_src emacs-lisp :tangle config.el
-(defun yasnippet-extract-arg-and-type (arg)
-  "Extract argument name and type from a string of the form 'arg: type'."
-  (let* ((parts (split-string arg ": ")))
-    (if (= (length parts) 2)
-        (cons (car parts) (cadr parts))
-      (cons (car parts) "type"))))
+(after! yasnippet
+    (defun yasnippet-extract-arg-and-type (arg)
+    "Extract argument name and type from a string of the form 'arg: type'."
+    (let* ((parts (split-string arg ": ")))
+        (if (= (length parts) 2)
+            (cons (car parts) (cadr parts))
+        (cons (car parts) "type"))))
 
-(defun yasnippet-python-params-doc (arg-string)
-  "Generates a docstring for parameters in NumPy style with optional type annotations.
-If there are no arguments, returns ''."
-  (let* ((args (split-string arg-string ", "))
-         (formatted-doc
-          (if (string-blank-p arg-string)
-              ""
-            (mapconcat (lambda (arg)
-                         (let* ((arg-pair (yasnippet-extract-arg-and-type arg))
-                                (arg-name (car arg-pair))
-                                (arg-type (cdr arg-pair)))
-                           ;; TODO: Generate placeholders for each parameter description.
-                           (format "%s : %s\n        TODO: Description of %s." arg-name arg-type arg-name)))
-                       args
-                       "\n    "))))
-    formatted-doc))
+    (defun yasnippet-python-params-doc (arg-string)
+    "Generates a docstring for parameters in NumPy style with optional type annotations.
+    If there are no arguments, returns ''."
+    (let* ((args (split-string arg-string ", "))
+            (formatted-doc
+            (if (string-blank-p arg-string)
+                ""
+                (mapconcat (lambda (arg)
+                            (let* ((arg-pair (yasnippet-extract-arg-and-type arg))
+                                    (arg-name (car arg-pair))
+                                    (arg-type (cdr arg-pair)))
+                            ;; TODO: Generate placeholders for each parameter description.
+                            (format "%s : %s\n        TODO: Description of %s." arg-name arg-type arg-name)))
+                        args
+                        "\n    "))))
+        formatted-doc))
 
-(defun yasnippet-python-parameter-assignments (arg-string)
-  "Convert a comma-separated string of arguments into self assignments.
-If there are no arguments, returns 'pass'."
-  (let* ((args (split-string arg-string ", "))
-         (assignments
-          (if (string-blank-p arg-string)
-              "pass"
-            (mapconcat (lambda (arg)
-                         (let* ((parts (split-string arg ": "))
-                                (name (car parts)))
-                           (format "self.%s = %s" name name)))
-                       args
-                       "\n        "))))
-    assignments))
+    (defun yasnippet-python-parameter-assignments (arg-string)
+    "Convert a comma-separated string of arguments into self assignments.
+    If there are no arguments, returns 'pass'."
+    (let* ((args (split-string arg-string ", "))
+            (assignments
+            (if (string-blank-p arg-string)
+                "pass"
+                (mapconcat (lambda (arg)
+                            (let* ((parts (split-string arg ": "))
+                                    (name (car parts)))
+                            (format "self.%s = %s" name name)))
+                        args
+                        "\n        "))))
+        assignments)))
 #+end_src
 
 ** CC mode
@@ -473,27 +474,26 @@ removed from the feed.
 A solution is proposed by [[https://github.com/skeeto/elfeed/issues/392][skeeto/elfeed#392 Deleting feeds with all their
 entries]], it works by deleting selected items feed from elfeed's database.
 #+begin_src emacs-lisp :tangle config.el
-(defun sk/elfeed-db-remove-entry (id)
-  "Removes the entry for ID"
-  (avl-tree-delete elfeed-db-index id)
-  (remhash id elfeed-db-entries))
+(after! elfeed
+    (defun sk/elfeed-db-remove-entry (id)
+    "Removes the entry for ID"
+    (avl-tree-delete elfeed-db-index id)
+    (remhash id elfeed-db-entries))
 
-(defun sk/elfeed-search-remove-selected ()
-  "Remove selected entries from database"
-  (interactive)
-  (let* ((entries (elfeed-search-selected))
-	 (count (length entries)))
-    (when (y-or-n-p (format "Delete %d entires?" count))
-      (cl-loop for entry in entries
-	       do (sk/elfeed-db-remove-entry (elfeed-entry-id entry)))))
-  (elfeed-search-update--force))
+    (defun sk/elfeed-search-remove-selected ()
+    "Remove selected entries from database"
+    (interactive)
+    (let* ((entries (elfeed-search-selected))
+            (count (length entries)))
+        (when (y-or-n-p (format "Delete %d entires?" count))
+        (cl-loop for entry in entries
+                do (sk/elfeed-db-remove-entry (elfeed-entry-id entry)))))
+    (elfeed-search-update--force)))
 #+end_src
 * Completions
 ** Corfu
 #+begin_src emacs-lisp :tangle config.el
-(use-package! corfu
-  :defer t
-  :config
+(after! corfu
   (defun corfu-enable-in-minibuffer ()
     "Enable Corfu in the minibuffer if `completion-at-point' is bound."
     (when (where-is-internal #'completion-at-point (list (current-local-map)))
@@ -798,42 +798,43 @@ From this point onwards, mu4e should be up and running.
 ** TightVNC
 *** Transient menu :WIP:
 #+begin_src emacs-lisp :tangle config.el
-(require 'transient)
+(if (string-equal 'vlv/environment "WORK")
+    (require 'transient)
 
-(defvar my-vnc-machines
-  '(("VISIO" . "10.4.54.221")
-    ("VERN"  . "10.102.31.63")
-    ("BDT-INCA10-VERN"  . "10.102.31.64"))
-  "Alist mapping machine names to their TightVNC IPs.")
+    (defvar my-vnc-machines
+    '(("VISIO" . "10.4.54.221")
+        ("VERN"  . "10.102.31.63")
+        ("BDT-INCA10-VERN"  . "10.102.31.64"))
+    "Alist mapping machine names to their TightVNC IPs.")
 
-(defvar my-vncviewer-path "C:/Program Files/TightVNC/tvnviewer.exe"
-  "Caminho completo para o executável do VNC Viewer.")
+    (defvar my-vncviewer-path "C:/Program Files/TightVNC/tvnviewer.exe"
+    "Caminho completo para o executável do VNC Viewer.")
 
-(defvar my-vnc-password "ADMINVME"
-  "Senha para conexão VNC.")
+    (defvar my-vnc-password "ADMINVME"
+    "Senha para conexão VNC.")
 
-(defun my-connect-to-vnc (machine)
-  "Conectar ao VNC na máquina MACHINE."
-  (let ((ip (cdr (assoc machine my-vnc-machines))))
-    (message ip)
-    (if (and ip (file-exists-p my-vncviewer-path))
-        (start-process "tightvnc" nil my-vncviewer-path ip (concat "-password=" my-vnc-password))
-      (message "Error: Caminho do VNC Viewer inválido ou máquina desconhecida!"))))
+    (defun my-connect-to-vnc (machine)
+    "Conectar ao VNC na máquina MACHINE."
+    (let ((ip (cdr (assoc machine my-vnc-machines))))
+        (message ip)
+        (if (and ip (file-exists-p my-vncviewer-path))
+            (start-process "tightvnc" nil my-vncviewer-path ip (concat "-password=" my-vnc-password))
+        (message "Error: Caminho do VNC Viewer inválido ou máquina desconhecida!"))))
 
-(defun my-vnc-menu-items ()
-  "Return a list of transient menu items for VNC machines."
-  (mapcar (lambda (pair)
-            (list (substring (car pair) 0 1) (car pair)
-                  (lambda () (interactive) (my-connect-to-vnc (car pair)))))
-          my-vnc-machines))
+    (defun my-vnc-menu-items ()
+    "Return a list of transient menu items for VNC machines."
+    (mapcar (lambda (pair)
+                (list (substring (car pair) 0 1) (car pair)
+                    (lambda () (interactive) (my-connect-to-vnc (car pair)))))
+            my-vnc-machines))
 
-(transient-define-prefix my-vnc-menu ()
-  "Transient menu for selecting a TightVNC machine."
-  [["Machines"
-    ("a" "VISIO" (lambda () (interactive) (my-connect-to-vnc "VISIO")))
-    ("z" "VERN" (lambda () (interactive) (my-connect-to-vnc "VERN")))]])
+    (transient-define-prefix my-vnc-menu ()
+    "Transient menu for selecting a TightVNC machine."
+    [["Machines"
+        ("a" "VISIO" (lambda () (interactive) (my-connect-to-vnc "VISIO")))
+        ("z" "VERN" (lambda () (interactive) (my-connect-to-vnc "VERN")))]])
 
-(global-set-key (kbd "C-c v") 'my-vnc-menu)
+    (global-set-key (kbd "C-c v") 'my-vnc-menu))
 #+end_src
 * Compiler explorer
 #+begin_src emacs-lisp :tangle packages.el
@@ -978,8 +979,7 @@ sudo apt-get install ffmpeg
 * Emacs Web Wowser EWW
 ** Configuration
 #+begin_src emacs-lisp :tangle config.el
-(use-package! eww
-  :defer t
+(after! eww
   :config
     (add-hook! 'eww-mode-hook
     (olivetti-mode))
