@@ -112,8 +112,8 @@ profiles API is stable.
   "Gets and displays in minibuffer the environment."
   (interactive)
   (if (eq system-type 'gnu/linux)
-      (customize-set-variable 'vlv/environment "PERSONAL")
-      (customize-set-variable 'vlv/environment "WORK"))
+      (setopt vlv/environment "PERSONAL")
+      (setopt vlv/environment "WORK"))
   (message (concat "Environment: " vlv/environment)))
 
 (vlv/get-environment-type)
@@ -122,8 +122,8 @@ profiles API is stable.
 * Doom
 #+begin_src emacs-lisp :tangle config.el
 (if (eq system-type 'windows-nt)
-    (customize-set-variable 'doom-font (font-spec :family "Cascadia Code" :size 14))
-    (customize-set-variable 'doom-font (font-spec :family "Fira Mono" :size 18)))
+    (setopt doom-font (font-spec :family "Cascadia Code" :size 14))
+    (setopt doom-font (font-spec :family "Fira Mono" :size 18)))
 
 ;; sets emacs general opacity
 (add-to-list 'default-frame-alist '(alpha-background . 90))
@@ -132,17 +132,16 @@ profiles API is stable.
 * Emacs general configs
 ** Personal information
 #+begin_src emacs-lisp :tangle config.el
-(customize-set-variable 'user-full-name "Victor Lattaro Volpini")
-
-(customize-set-variable 'user-mail-address "victorlattaro@gmail.com")
+(setopt user-full-name    "Victor Lattaro Volpini"
+        user-mail-address "victorlattaro@gmail.com")
 #+end_src
 
 **  Revert buffers when the underlying file has changed
 #+begin_src emacs-lisp :tangle config.el
-(customize-set-variable 'global-auto-revert-mode t)
+(setopt global-auto-revert-mode t
 
-;; Revert Dired and other buffers
-(customize-set-variable 'global-auto-revert-non-file-buffers t)
+        ;; Revert Dired and other buffers
+        global-auto-revert-non-file-buffers t)
 #+end_src
 
 ** Editing
@@ -184,8 +183,8 @@ this configures bash to be used as the default shell bash. In theory it corrects
 
 (after! org
     (if (eq 'vlv/environment "WORK")
-            (setq org-directory "~/OneDrive - Kestrel Vision/org")
-            (setq org-directory "~/org/"))
+            (setopt org-directory "~/OneDrive - Kestrel Vision/org")
+            (setopt org-directory "~/org/"))
 
     (add-hook! 'org-mode-hook
             (olivetti-mode)))
@@ -200,11 +199,11 @@ this configures bash to be used as the default shell bash. In theory it corrects
 *** Configuration
 #+begin_src emacs-lisp :tangle config.el
 (after! org-agenda
-    (customize-set-variable 'org-agenda-files
+    (setopt org-agenda-files
         (mapcar (lambda (dir) (expand-file-name dir org-directory))
                 '("agenda/" "roam/" "journal/" "~/.config/doom/")))
 
-    (customize-set-variable 'org-agenda-start-on-weekday 1)) ;; start on monday
+    (setopt org-agenda-start-on-weekday 1)) ;; start on monday
 #+end_src
 
 ** Org Roam
@@ -232,7 +231,7 @@ Shortcuts are mapped with the SPC n r prefix by default.
         org-roam-ui-update-on-save t
         org-roam-ui-open-on-start t)
 
-  (customize-set-variable 'org-roam-directory (expand-file-name "roam/" org-directory)) ;; necessary use the org directory set on the
+  (setopt org-roam-directory (expand-file-name "roam/" org-directory)) ;; necessary use the org directory set on the
 
   (map! :leader
         (:prefix ("n" . "org")
@@ -274,14 +273,14 @@ Allow automatic recognition of projects given a list of paths.
 #+begin_src emacs-lisp :tangle config.el
 (use-package! projectile
   :config
-  (setq projectile-project-search-path '("~/dev")))
+  (setopt projectile-project-search-path '("~/dev")))
 #+end_src
 
 * Dirvish
 #+begin_src emacs-lisp :tangle config.el
 (use-package! dirvish
   :config
-  (customize-set-variable 'dirvish-quick-access-entries
+  (setopt dirvish-quick-access-entries
         '(("h" "~/" "Home")
         ("d" "~/Downloads/" "Downloads")
         ("t" "c:/Tiama/" "Tiama")
@@ -394,10 +393,10 @@ Set ollama as default backend for gptel, add default model and a few tweaks.
   (add-hook 'gptel-post-response-functions 'gptel-end-of-response)
 
   ;; default model
-  (customize-set-variable 'gptel-model 'deepseek-r1:8b)
+  (setopt gptel-model 'deepseek-r1:8b)
 
   ;; adding Ollama backend
-  (customize-set-variable 'gptel-backend (gptel-make-ollama "Ollama"
+  (setopt gptel-backend (gptel-make-ollama "Ollama"
           :host "localhost:11434"
           :stream t
           :models '((llama3.1:8b) (llama3.2:3b) (qwen2.5-coder:7b) (deepseek-r1:8b)))))
@@ -457,7 +456,7 @@ Spaws a child process using UNIX watch command using nvidia-smi command."
 #+begin_src emacs-lisp :tangle config.el
 (use-package! elfeed
   :config
-    (customize-set-variable 'elfeed-feeds
+    (setopt elfeed-feeds
     '("https://protesilaos.com/master.xml"
         ("https://xkcd.com/rss.xml" fun xkcd)
         ("https://www.erichgrunewald.com/feed.xml" tech)
@@ -477,7 +476,7 @@ Spaws a child process using UNIX watch command using nvidia-smi command."
 
     ;; the basic value cuts a part of the feed's title.
     ;; Increasing the column width fixes it.
-    (setq elfeed-goodies/feed-source-column-width 20))
+    (setopt elfeed-goodies/feed-source-column-width 20))
 #+end_src
 
 ** Removing items from the feed
@@ -584,11 +583,11 @@ promising and would bring plenty of nice features to the config.
   (require 'consult-omni-embark)
 
   ;;; Select a list of modules you want to aload, otherwise all sources all laoded
-  (setq consult-omni-sources-modules-to-load (list 'consult-omni-notes  'consult-omni-file 'consult-omni-buffer 'consult-omni-buffer-search 'consult-omni-elfeed 'consult-omni-wikipedia 'consult-omni-apps 'consult-omni-dictionary 'consult-omni-gptel 'consult-omni-youtube))
+  (setopt consult-omni-sources-modules-to-load (list 'consult-omni-notes  'consult-omni-file 'consult-omni-buffer 'consult-omni-buffer-search 'consult-omni-elfeed 'consult-omni-wikipedia 'consult-omni-apps 'consult-omni-dictionary 'consult-omni-gptel 'consult-omni-youtube))
 
   (consult-omni-sources-load-modules)
   ;;; set multiple sources for consult-omni-multi command. Change these lists as needed for different interactive commands. Keep in mind that each source has to be a key in `consult-omni-sources-alist'.
-  (customize-set-variable 'consult-omni-multi-sources '("calc"
+  (setopt consult-omni-multi-sources '("calc"
                                      "File"
                                      "Buffer"
                                      ;; "DuckDuckGo"
@@ -612,10 +611,10 @@ promising and would bring plenty of nice features to the config.
 ;; Per source customization
 
 ;;; Pick you favorite autosuggest command.
-  (customize-set-variable 'consult-omni-default-autosuggest-command #'consult-omni-dynamic-brave-autosuggest) ;;or any other autosuggest source you define
+  (setopt consult-omni-default-autosuggest-command #'consult-omni-dynamic-brave-autosuggest) ;;or any other autosuggest source you define
 
  ;;; Set your shorthand favorite interactive command
-  (customize-set-variable 'consult-omni-default-interactive-command #'consult-omni-multi))
+  (setopt consult-omni-default-interactive-command #'consult-omni-multi))
 :bind
   (map! :leader
         (:prefix ("s" . "search")
@@ -952,11 +951,11 @@ sudo apt-get install ffmpeg
 (use-package! whisper.el
   :defer t ;; A configuration error appears if the fur is not set.
   :config
-  (customize-set-variable 'whisper-install-directory "/tmp/")
-  (customize-set-variable 'whisper-model "base")
-  (customize-set-variable 'whisper-language "en")
-  (customize-set-variable 'whisper-translate nil)
-  (customize-set-variable 'whisper-use-threads (/ (num-processors) 2)))
+  (setopt whisper-install-directory "/tmp/")
+          whisper-model "base"
+          whisper-language "en"
+          whisper-translate nil
+          whisper-use-threads (/ (num-processors) 2))
 
 (defun vlv/call-whisper-run-print-language ()
     (minibuffer-message
@@ -966,22 +965,22 @@ sudo apt-get install ffmpeg
 
 (defun vlv/whisper-run-english ()
     (interactive)
-    (customize-set-variable 'whisper-language "en")
+    (setopt whisper-language "en")
     (vlv/call-whisper-run-print-language))
 
 (defun vlv/whisper-run-portuguese ()
     (interactive)
-    (customize-set-variable 'whisper-language "pt")
+    (setopt whisper-language "pt")
     (vlv/call-whisper-run-print-language))
 
 (defun vlv/whisper-run-french ()
     (interactive)
-    (customize-set-variable 'whisper-language "fr")
+    (setopt whisper-language "fr")
     (vlv/call-whisper-run-print-language))
 
 (defun vlv/whisper-run-other-lang ()
     (interactive)
-    (customize-set-variable 'whisper-language
+    (setopt whisper-language
           (read-string "Insert language to be used by whisper.cpp:"))
     (vlv/call-whisper-run-print-language))
 
@@ -1033,7 +1032,7 @@ It can be quite disturbing to have a white background PDF displayed given that b
 (use-package! hl-todo
   :defer t
   :config
-    (customize-set-variable 'hl-todo-keyword-faces (append hl-todo-keyword-faces '(("WARNING" warning bold))))
+    (setopt hl-todo-keyword-faces (append hl-todo-keyword-faces '(("WARNING" warning bold))))
 
     ;; add warning to the base regex used by hl-todo
     (setq hl-todo--regexp "\\(\\<\\(TODO\\|FIXME\\|REVIEW\\|HACK\\|DEPRECATED\\|NOTE\\|BUG\\|XXX\\|WARNING\\)\\>[:]*\\)"))
