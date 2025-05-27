@@ -21,12 +21,12 @@
        (layout +azerty)   ; auie,ctsrnm is the superior home row
 
        :completion
-       ;; company           ; the ultimate code completion backend
+       ;;company           ; the ultimate code completion backend
        (corfu +orderless    ; complete with cap(f), cape and a flying feather!
               +icons)
        ;;helm              ; the *other* search engine for love and life
        ;;ido               ; the other *other* search engine...
-       ;; ivy               ; a search engine for love and life
+       ;;ivy               ; a search engine for love and life
        (vertico +icons)     ; the search engine of the future
 
 
@@ -46,13 +46,13 @@
        ophints           ; highlight the region an operation acts on
        (popup +defaults)   ; tame sudden yet inevitable temporary windows
        ;;tabs              ; a tab bar for Emacs
-       ;; (treemacs +lsp)          ; a project drawer, like neotree but cooler
+       ;;(treemacs +lsp)          ; a project drawer, like neotree but cooler
        unicode           ; extended unicode support for various languages
        (vc-gutter +pretty) ; vcs diff in the fringe
-       ;; vi-tilde-fringe   ; fringe tildes to mark beyond EOB
+       ;;vi-tilde-fringe   ; fringe tildes to mark beyond EOB
        window-select     ; visually switch windows
        workspaces        ; tab emulation, persistence & separate workspaces
-       ;; zen               ; distraction-free coding or writing
+       ;;zen               ; distraction-free coding or writing
 
        :editor
        (evil +everywhere); come to the dark side, we have cookies
@@ -75,7 +75,7 @@
        eww               ; the internet is gross
        (ibuffer +icons)          ; interactive buffer management
        undo              ; persistent, smarter undo for your inevitable mistakes
-       ;; vc                ; version-control and Emacs, sitting in a tree
+       ;;vc                ; version-control and Emacs, sitting in a tree
 
        :term
        ;;eshell            ; the elisp shell that works everywhere
@@ -106,7 +106,7 @@
        ;;pass              ; password manager for nerds
        pdf               ; pdf enhancements
        ;;terraform         ; infrastructure as code
-       ;; tmux              ; an API for interacting with tmux
+       ;;tmux              ; an API for interacting with tmux
        tree-sitter       ; syntax and parsing, sitting in a tree...
        ;;upload            ; map local to remote projects via ssh/ftp
 
