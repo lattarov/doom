@@ -283,6 +283,7 @@ Allow automatic recognition of projects given a list of paths.
   (setopt dirvish-quick-access-entries
         '(("h" "~/" "Home")
         ("d" "~/Downloads/" "Downloads")
+        ("D" "~/Documents/" "Documents")
         ("t" "c:/Tiama/" "Tiama")
         ("r" "~/dev/repos/" "Repos"))))
 
