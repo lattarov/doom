@@ -279,8 +279,9 @@ Allow automatic recognition of projects given a list of paths.
 
 * Dirvish
 #+begin_src emacs-lisp :tangle config.el
-(after! dirvish
-  (setq dirvish-quick-access-entries
+(use-package! dirvish
+  :config
+  (customize-set-variable 'dirvish-quick-access-entries
         '(("h" "~/" "Home")
         ("d" "~/Downloads/" "Downloads")
         ("t" "c:/Tiama/" "Tiama")
@@ -289,6 +290,19 @@ Allow automatic recognition of projects given a list of paths.
 (map! :leader
     (:prefix ("o" . "open")
     :desc "dirvish-side" "d" #'dirvish))
+#+end_src
+
+#+begin_src emacs-lisp :tangle no
+;; FIXME This does not rebind + to a new menu.
+(map! :after dired
+      :map dired-mode-map
+      "+" nil)
+
+(map! :after dirvish
+      :map (dirvish-mode-map dirvish-directory-view-mode-map)
+      :prefix (("" . "new")
+      :desc "file" "d" #'dired-create-directory
+      :desc "file" "f" #'dired-create-empty-file))
 #+end_src
 
 * YASNIPPET
