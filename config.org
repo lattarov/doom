@@ -108,15 +108,15 @@ profiles API is stable.
   :type 'string
   :options '("WORK" "PERSONAL"))
 
-(defun vlv/get-environment-type()
+(defun vlv/environment ()
   "Gets and displays in minibuffer the environment."
   (interactive)
   (if (eq system-type 'gnu/linux)
       (setopt vlv/environment "PERSONAL")
       (setopt vlv/environment "WORK"))
-  (message (concat "Environment: " vlv/environment)))
+  (message vlv/environment))
 
-(vlv/get-environment-type)
+(vlv/environment)
 #+end_src
 
 * Doom
