@@ -173,8 +173,8 @@ this configures bash to be used as the default shell bash. In theory it corrects
 #+end_src
 
 #+begin_src emacs-lisp :tangle config.el
-(after! olivetti
-  (olivetti-set-width 120))
+(add-hook! 'olivetti-mode-hook
+    (olivetti-set-width 120))
 #+end_src
 
 * Org
