@@ -902,6 +902,8 @@ From this point onwards, mu4e should be up and running.
         :desc "spotify-next" "n" #'vlv/spotify-next-and-display)))
 #+end_src
 * vterm
+Found an interesting completion mechanism in [[https://www.reddit.com/r/emacs/comments/ovkyov/vterm_completion_for_files_directories_command/][this reddit post]] and it considerably improves usage.
+
 #+begin_src emacs-lisp :tangle config.el
 (use-package! vterm
   :config
