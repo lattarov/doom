@@ -462,6 +462,7 @@ Spaws a child process using UNIX watch command using nvidia-smi command."
         ("https://xkcd.com/rss.xml" fun xkcd)
         ("https://www.erichgrunewald.com/feed.xml" tech)
         ("https://api.quantamagazine.org/feed/" science)
+        ("https://irreal.org/blog/?feed=rss2" programming lisp)
         ("https://buttondown.com/entropicthoughts/rss" programming)
         ("https://systemcrafters.net/rss/news.xml" programming lisp)
         ("https://thelinuxexp.com/feed.xml" tech)))
