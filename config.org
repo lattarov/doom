@@ -1064,6 +1064,33 @@ It can be quite disturbing to have a white background PDF displayed given that b
     ;; add warning to the base regex used by hl-todo
     (setq hl-todo--regexp "\\(\\<\\(TODO\\|FIXME\\|REVIEW\\|HACK\\|DEPRECATED\\|NOTE\\|BUG\\|XXX\\|WARNING\\)\\>[:]*\\)"))
 #+end_src
+* Magit
+#+begin_src emacs-lisp :tangle config.el
+(use-package! magit
+  :config
+    (defun vlv/delete-merged-branches ()
+    "Fetch prune then deletes branches already merged to a target branch.
+Found in https://emacs.stackexchange.com/questions/60200/magit-remove-local-branches-that-were-merged-into-another-branch"
+    (interactive)
+    (magit-fetch-all-prune)
+    (let* ((default-branch
+            (read-string "Default branch: " (magit-get-current-branch)))
+            (merged-branches
+            (magit-git-lines "branch"
+                            "--format" "%(refname:short)"
+                            "--merged"
+                            default-branch))
+            (branches-to-delete
+            (remove default-branch merged-branches)))
+        (if branches-to-delete
+            (if (yes-or-no-p (concat "Delete branches? ["
+                                    (mapconcat 'identity branches-to-delete ", ") "]"))
+                (magit-branch-delete branches-to-delete))
+        (message "Nothing to delete"))))
+
+    (transient-append-suffix 'magit-branch "C"
+        '("K" "delete all merged" my-magit/delete-merged-branches)))
+#+end_src
 
 * Flyover :WIP:
 
