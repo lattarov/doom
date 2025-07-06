@@ -457,15 +457,13 @@ Spaws a child process using UNIX watch command using nvidia-smi command."
 #+begin_src emacs-lisp :tangle config.el
 (use-package! elfeed
   :config
-    (setopt elfeed-feeds
-    '("https://protesilaos.com/master.xml"
-        ("https://xkcd.com/rss.xml" fun xkcd)
-        ("https://www.erichgrunewald.com/feed.xml" tech)
-        ("https://api.quantamagazine.org/feed/" science)
-        ("https://irreal.org/blog/?feed=rss2" programming lisp)
-        ("https://buttondown.com/entropicthoughts/rss" programming)
-        ("https://systemcrafters.net/rss/news.xml" programming lisp)
-        ("https://thelinuxexp.com/feed.xml" tech)))
+    (setopt elfeed-feeds '(("https://xkcd.com/rss.xml" fun xkcd)
+                           ("https://www.erichgrunewald.com/feed.xml" tech)
+                           ("https://api.quantamagazine.org/feed/" science)
+                           ("https://irreal.org/blog/?feed=rss2" programming lisp)
+                           ("https://buttondown.com/entropicthoughts/rss" programming)
+                           ("https://systemcrafters.net/rss/news.xml" programming lisp)
+                           ("https://thelinuxexp.com/feed.xml" tech)))
 
     ;; some basic
     (map! :leader
