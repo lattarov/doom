@@ -281,11 +281,13 @@ Allow automatic recognition of projects given a list of paths.
 (use-package! dirvish
   :config
   (setopt dirvish-quick-access-entries
-        '(("h" "~/" "Home")
-        ("d" "~/Downloads/" "Downloads")
-        ("D" "~/Documents/" "Documents")
-        ("t" "c:/Tiama/" "Tiama")
-        ("r" "~/dev/repos/" "Repos"))))
+          (let ((org-path (expand-file-name org-directory)))
+            `(("h" "~/" "Home")
+              ("d" "~/Downloads/" "Downloads")
+              ("D" "~/Documents/" "Documents")
+              ("t" "c:/Tiama/" "Tiama")
+              ("o" ,org-path "Org")
+              ("r" "~/dev/repos/" "Repos")))))
 
 (map! :leader
     (:prefix ("o" . "open")
