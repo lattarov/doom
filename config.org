@@ -201,7 +201,7 @@ this configures bash to be used as the default shell bash. In theory it corrects
 (after! org-agenda
     (setopt org-agenda-files
         (mapcar (lambda (dir) (expand-file-name dir org-directory))
-                '("agenda/" "roam/" "journal/" "~/.config/doom/")))
+                '("agenda/" "journal/")))
 
     (setopt org-agenda-start-on-weekday 1)) ;; start on monday
 #+end_src
