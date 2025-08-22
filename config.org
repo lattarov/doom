@@ -457,14 +457,6 @@ Spaws a child process using UNIX watch command using nvidia-smi command."
 #+begin_src emacs-lisp :tangle config.el
 (use-package! elfeed
   :config
-    (setopt elfeed-feeds '(("https://xkcd.com/rss.xml" fun xkcd)
-                           ("https://www.erichgrunewald.com/feed.xml" tech)
-                           ("https://api.quantamagazine.org/feed/" science)
-                           ("https://irreal.org/blog/?feed=rss2" programming lisp)
-                           ("https://buttondown.com/entropicthoughts/rss" programming)
-                           ("https://systemcrafters.net/rss/news.xml" programming lisp)
-                           ("https://thelinuxexp.com/feed.xml" tech)))
-
     ;; the basic value cuts a part of the feed's title.
     ;; Increasing the column width fixes it.
     (setopt elfeed-goodies/feed-source-column-width 20))
@@ -473,6 +465,9 @@ Spaws a child process using UNIX watch command using nvidia-smi command."
     (:prefix ("e" . "elfeed")
     :desc "Enter elfeed" "e" #'elfeed
     :desc "Update all feeds" "u" #'elfeed-update))
+
+;; copy elfeed.org to the org directory
+(copy-file (expand-file-name "elfeed.org") org-directory 42)
 #+end_src
 
 ** Removing items from the feed
