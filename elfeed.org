@@ -1,0 +1,12 @@
+#+title: Elfeed
+
+* [[https://xkcd.com/rss.xml][xkcd.com]]
+* [[https://world.hey.com/dhh/feed.atom][David Heinemeier Hansson]]
+* [[https://www.erichgrunewald.com/feed.xml][Erich Grunewald's Blog]]
+* [[https://thelinuxexp.com/feed.xml][The Linux Experiment]]
+* [[https://systemcrafters.net/rss/news.xml][System Crafters News]]
+* [[https://thelinuxexp.com/feed.xml][The Linux Experiment]]
+* [[https://pixelateddwarf.com/feed/][Pixelated Dwarf]]
+* [[https://www.linuxfoundation.org/blog/rss.xml][Linux Foundation - Blog]]
+* [[https://api.quantamagazine.org/feed/][Quanta Magazine]]
+* [[https://buttondown.com/entropicthoughts/rss][Entropic Thoughts]]
