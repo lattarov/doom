@@ -1078,3 +1078,45 @@ It can be quite disturbing to have a white background PDF displayed given that b
     ;; add warning to the base regex used by hl-todo
     (setq hl-todo--regexp "\\(\\<\\(TODO\\|FIXME\\|REVIEW\\|HACK\\|DEPRECATED\\|NOTE\\|BUG\\|XXX\\|WARNING\\)\\>[:]*\\)"))
 #+end_src
+
+* Flyover :WIP:
+
+Package that increases how flymake and flyckeck syntax checking.
+
+There's some overlay with LSP errors and warnings (in rust at least), hence this is a WIP for now.
+#+begin_src emacs-lisp :tangle no
+
+(package! flyover
+  :type 'core
+  :recipe '(:host github
+            :repo "konrad1977/flyover"))
+#+end_src
+
+#+begin_src emacs-lisp :tangle no
+(use-package! flyover
+  :config
+  ;; Enable flyover-mode globally
+    (add-hook 'flycheck-mode-hook #'flyover-mode)
+
+    ;; Configure which error levels to display
+    ;; Possible values: error, warning, info
+    (setopt flyover-levels '(error warning info))
+
+    ;; Use theme colors for error/warning/info faces
+    (setopt flyover-use-theme-colors t)
+
+    ;; Adjust background lightness (lower values = darker)
+    (setopt flyover-background-lightness 45)
+
+    ;; Make icon background darker than foreground
+    (setopt flyover-percent-darker 40)
+
+    ;; "Percentage to lighten or darken the text when tinting is enabled."
+    (setopt flyover-text-tint-percent 50)
+
+    ;; Choose which checkers to use (flycheck, flymake, or both)
+    (setopt flyover-checkers '(flycheck flymake))
+
+    ;; Enable debug messages
+    (setopt flyover-debug nil))  ; Show all levels
+#+end_src
