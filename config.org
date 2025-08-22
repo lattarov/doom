@@ -465,15 +465,14 @@ Spaws a child process using UNIX watch command using nvidia-smi command."
                            ("https://systemcrafters.net/rss/news.xml" programming lisp)
                            ("https://thelinuxexp.com/feed.xml" tech)))
 
-    ;; some basic
-    (map! :leader
-        (:prefix ("e" . "elfeed")
-        :desc "Enter elfeed" "e" #'elfeed
-        :desc "Update all feeds" "u" #'elfeed-update))
-
     ;; the basic value cuts a part of the feed's title.
     ;; Increasing the column width fixes it.
     (setopt elfeed-goodies/feed-source-column-width 20))
+
+(map! :leader
+    (:prefix ("e" . "elfeed")
+    :desc "Enter elfeed" "e" #'elfeed
+    :desc "Update all feeds" "u" #'elfeed-update))
 #+end_src
 
 ** Removing items from the feed
