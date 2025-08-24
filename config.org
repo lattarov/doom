@@ -596,16 +596,13 @@ promising and would bring plenty of nice features to the config.
 
 ;; Per source customization
 
-;;; Pick you favorite autosuggest command.
-  (setopt consult-omni-default-autosuggest-command #'consult-omni-dynamic-brave-autosuggest) ;;or any other autosuggest source you define
-
- ;;; Set your shorthand favorite interactive command
-  (setopt consult-omni-default-interactive-command #'consult-omni-multi))
+;;; Set your shorthand favorite interactive command
+ (setopt consult-omni-default-interactive-command #'consult-omni-multi))
 :bind
   (map! :leader
         (:prefix ("s" . "search")
          :desc "consult-omni-multi" "s" #'consult-omni-multi))
-  #+end_src
+#+end_src
 *** YouTube search API
 #+begin_src emacs-lisp :tangle config.el
 (setq consult-omni-youtube-search-key "AIzaSyAMbCC2_BQRaGifhK2tVifSOTCwucT9Lao")
