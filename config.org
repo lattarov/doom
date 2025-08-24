@@ -522,20 +522,15 @@ be tested and tracked over time. The project seems nevertheless extremely
 promising and would bring plenty of nice features to the config.
 
 
-#+begin_src emacs-lisp :tangle no
-
+#+begin_src emacs-lisp :tangle packages.el
 (package! consult-mu
-  :pin "d0a24058bf0dda823e5f1efcae5da7dc0efe6bd"
   :recipe '(:host github
             :repo "armindarvish/consult-mu"
-            :branch "main"
             :files (:defaults "extras/*.el")))
-
 #+end_src
 
-#+begin_src emacs-lisp :tangle no
+#+begin_src emacs-lisp :tangle config.el
 (use-package! consult-mu
-  :defer t
   :custom
 
   ;;maximum number of results shown in minibuffer
