@@ -467,7 +467,7 @@ Spaws a child process using UNIX watch command using nvidia-smi command."
     :desc "Update all feeds" "u" #'elfeed-update))
 
 ;; copy elfeed.org to the org directory
-(copy-file (expand-file-name "elfeed.org") org-directory 42)
+(dired-copy-file (expand-file-name "elfeed.org" doom-user-dir) org-directory t)
 #+end_src
 
 ** Removing items from the feed
