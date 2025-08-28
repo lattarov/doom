@@ -797,42 +797,49 @@ From this point onwards, mu4e should be up and running.
 *** Transient menu :WIP:
 #+begin_src emacs-lisp :tangle (if (string-equal 'vlv/environment "WORK") "config.el" "no")
 (require 'transient)
-
-    (defvar my-vnc-machines
+(defvar vlv/vnc-machines
     '(("VISIO" . "10.4.54.221")
-        ("VERN"  . "10.102.31.63")
-        ("BDT-INCA10-VERN"  . "10.102.31.64"))
+    ("VERN"  . "10.102.31.63")
+    ("BDT-INCA10-VERN"  . "10.102.31.64"))
     "Alist mapping machine names to their TightVNC IPs.")
 
-    (defvar my-vncviewer-path "C:/Program Files/TightVNC/tvnviewer.exe"
-    "Caminho completo para o executável do VNC Viewer.")
+(defvar vlv/vncviewer-path "C:/Program Files/TightVNC/tvnviewer.exe"
+    "Path to the TightVNC client.")
 
-    (defvar my-vnc-password "ADMINVME"
-    "Senha para conexão VNC.")
+(defvar vlv/vnc-password "ADMINVME"
+    "Default password.")
 
-    (defun my-connect-to-vnc (machine)
-    "Conectar ao VNC na máquina MACHINE."
-    (let ((ip (cdr (assoc machine my-vnc-machines))))
-        (message ip)
-        (if (and ip (file-exists-p my-vncviewer-path))
-            (start-process "tightvnc" nil my-vncviewer-path ip (concat "-password=" my-vnc-password))
-        (message "Error: Caminho do VNC Viewer inválido ou máquina desconhecida!"))))
+(defun vlv/connect-to-vnc-with-machine (machine)
+    "Connect to a given machine via VNC given it's name."
+    (let ((ip (cdr (assoc machine vlv/vnc-machines))))
+    (message ip)
+    (if (and ip (file-exists-p vlv/vncviewer-path))
+            (start-process "tightvnc" nil vlv/vncviewer-path ip (concat "-password=" vlv/vnc-password))
+    (message "Error: Wrong path to TightVNC or bad password!"))))
 
-    (defun my-vnc-menu-items ()
+(defun vlv/connect-to-vnc-with-ip (ip)
+    "Conectar ao VNC na máquina IP."
+    (if (and ip (file-exists-p vlv/vncviewer-path))
+            (start-process "tightvnc" nil vlv/vncviewer-path ip (concat "-password=" vlv/vnc-password))
+    (message "Error: Caminho do VNC Viewer inválido ou máquina desconhecida!")))
+
+(defun vlv/vnc-menu-items ()
     "Return a list of transient menu items for VNC machines."
     (mapcar (lambda (pair)
-                (list (substring (car pair) 0 1) (car pair)
-                    (lambda () (interactive) (my-connect-to-vnc (car pair)))))
-            my-vnc-machines))
+            (list (substring (car pair) 0 1) (car pair)
+                    (lambda () (interactive) (vlv/connect-to-vnc (car pair)))))
+            vlv/vnc-machines))
 
-    (transient-define-prefix my-vnc-menu ()
-    "Transient menu for selecting a TightVNC machine."
+(transient-define-prefix vlv/vnc-menu ()
+"Transient menu for selecting a TightVNC machine."
     [["Machines"
-        ("a" "VISIO" (lambda () (interactive) (my-connect-to-vnc "VISIO")))
-        ("z" "VERN" (lambda () (interactive) (my-connect-to-vnc "VERN")))]])
+    ("a" "VISIO" (lambda () (interactive) (vlv/connect-to-vnc-with-machine "VISIO")))
+    ("z" "VERN" (lambda () (interactive) (vlv/connect-to-vnc-with-machine "VERN")))
+    ("o" "Choose IP:" (lambda () (interactive) (vlv/connect-to-vnc-with-ip  (read-string "IP:"))))]])
 
-    (global-set-key (kbd "C-c v") 'my-vnc-menu))
+(global-set-key (kbd "C-c v") 'vlv/vnc-menu)
 #+end_src
+
 * Compiler explorer
 #+begin_src emacs-lisp :tangle packages.el
 (package! compiler-explorer
