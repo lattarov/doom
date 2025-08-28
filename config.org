@@ -122,7 +122,7 @@ profiles API is stable.
 * Doom
 #+begin_src emacs-lisp :tangle config.el
 (if (eq system-type 'windows-nt)
-    (setopt doom-font (font-spec :family "Cascadia Code" :size 14))
+    (setopt doom-font (font-spec :family "Cascadia Code" :size 18))
     (setopt doom-font (font-spec :family "Fira Mono" :size 18)))
 
 ;; sets emacs general opacity
