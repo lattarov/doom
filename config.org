@@ -181,8 +181,9 @@ this configures bash to be used as the default shell bash. In theory it corrects
 ** Basic config
 #+begin_src emacs-lisp :tangle config.el
 
-(after! org
-    (if (eq 'vlv/environment "WORK")
+(use-package! org
+  :config
+    (if (string-equal vlv/environment "WORK")
             (setopt org-directory "~/OneDrive - Kestrel Vision/org")
             (setopt org-directory "~/org/"))
 
