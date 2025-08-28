@@ -525,14 +525,14 @@ be tested and tracked over time. The project seems nevertheless extremely
 promising and would bring plenty of nice features to the config.
 
 
-#+begin_src emacs-lisp :tangle packages.el
+#+begin_src emacs-lisp :tangle (if (string-equal 'vlv/environment "PERSONAL") "packages.el" "no")
 (package! consult-mu
   :recipe '(:host github
             :repo "armindarvish/consult-mu"
             :files (:defaults "extras/*.el")))
 #+end_src
 
-#+begin_src emacs-lisp :tangle config.el
+#+begin_src emacs-lisp :tangle (if (string-equal 'vlv/environment "PERSONAL") "config.el" "no")
 (use-package! consult-mu
   :custom
 
@@ -622,8 +622,7 @@ execute-extended-command: Cannot open load file: No such file or directory, mu4e
 
 As recommended in doom's mu4e docs as well as in [[https://github.com/doomemacs/doomemacs/issues/7885][doomemacs/doomemacs#7885 Can't open mu4e]] , manually adding the load path fixes this.
 
-#+begin_src emacs-lisp :tangle (if (string-equal system-type 'gnu/linux) "config.el" "no")
-
+#+begin_src emacs-lisp :tangle (if (string-equal 'vlv/environment "PERSONAL") "config.el" "no")
 (add-to-list 'load-path "/usr/share/emacs/site-lisp/mu4e")
 #+end_src
 
@@ -739,7 +738,7 @@ if mu4e is not found in Emacs, add the path (probably the one below to the load-
 From this point onwards, mu4e should be up and running.
 *** Configuration
 
-#+begin_src emacs-lisp :tangle (if (string-equal system-type 'gnu/linux) "config.el" "no")
+#+begin_src emacs-lisp :tangle (if (string-equal 'vlv/environment "PERSONAL") "config.el" "no")
 ;; Each path is relative to the path of the maildir you passed to mu
 
 ;; (setq mu4e-get-mail-command "mbsync gmail"
