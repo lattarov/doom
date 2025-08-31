@@ -126,7 +126,7 @@ profiles API is stable.
     (setopt doom-font (font-spec :family "Fira Mono" :size 18)))
 
 ;; sets emacs general opacity
-(add-to-list 'default-frame-alist '(alpha-background . 90))
+(doom/set-frame-opacity 90 t)
 #+end_src
 
 * Emacs general configs
