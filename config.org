@@ -57,6 +57,18 @@ apparmor module is loaded.
 #+end_quote
 
 It's already preinstalled in !PopOS 22.04
+*** NTSync module loading
+The loadable module ntsync, available since kernel 6.14, greatly improves Windows emulated software performance. Though available, it is not loaded by default.
+
+In order to load it at boot time, simply add
+
+#+begin_quote
+ntsync
+#+end_quote
+
+to [[/etc/modules]].
+
+
 * Tasks
 ** DONE Add packages.el configuration here
 ** IDEA Add init.el configuration here
