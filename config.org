@@ -837,8 +837,8 @@ From this point onwards, mu4e should be up and running.
 (defun vlv/connect-to-vnc-with-ip (ip)
     "Conectar ao VNC na máquina IP."
     (if (and ip (file-exists-p vlv/vncviewer-path))
-            (start-process "tightvnc" nil vlv/vncviewer-path ip (concat "-password=" vlv/vnc-password))
-    (message "Error: Caminho do VNC Viewer inválido ou máquina desconhecida!")))
+        (start-process "tightvnc" nil vlv/vncviewer-path ip (concat "-password=" vlv/vnc-password))
+    (message "Error: Failed to launch TightVNC")))
 
 (defun vlv/vnc-menu-items ()
     "Return a list of transient menu items for VNC machines."
