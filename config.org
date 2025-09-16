@@ -810,9 +810,14 @@ From this point onwards, mu4e should be up and running.
 #+begin_src emacs-lisp :tangle (if (string-equal 'vlv/environment "WORK") "config.el" "no")
 (require 'transient)
 (defvar vlv/vnc-machines
-    '(("VISIO" . "10.4.54.221")
-    ("VERN"  . "10.102.31.63")
-    ("BDT-INCA10-VERN"  . "10.102.31.64"))
+    '(("VISIO"            . "10.4.54.221")
+      ("VERN"             . "10.102.31.63")
+      ("Gamora"           . "10.4.52.13")
+      ("Groot"            . "10.4.52.9" )
+      ("Rocket"           . "10.4.52.11")
+      ("Mantis"           . "10.4.52.17")
+      ("Starlord"         . "10.4.52.3")
+      ("BDT-INCA10-VERN"  . "10.102.31.64"))
     "Alist mapping machine names to their TightVNC IPs.")
 
 (defvar vlv/vncviewer-path "C:/Program Files/TightVNC/tvnviewer.exe"
@@ -845,11 +850,38 @@ From this point onwards, mu4e should be up and running.
 (transient-define-prefix vlv/vnc-menu ()
 "Transient menu for selecting a TightVNC machine."
     [["Machines"
-    ("a" "VISIO" (lambda () (interactive) (vlv/connect-to-vnc-with-machine "VISIO")))
-    ("z" "VERN" (lambda () (interactive) (vlv/connect-to-vnc-with-machine "VERN")))
+    ("a" "VISIO"      (lambda () (interactive) (vlv/connect-to-vnc-with-machine "VISIO")))
+    ("z" "VERN"       (lambda () (interactive) (vlv/connect-to-vnc-with-machine "VERN")))
+    ("g" "Gamora"     (lambda () (interactive) (vlv/connect-to-vnc-with-machine "Gamora")))
+    ("G" "Groot"      (lambda () (interactive) (vlv/connect-to-vnc-with-machine "Groot")))
+    ("r" "Rocket"     (lambda () (interactive) (vlv/connect-to-vnc-with-machine "Rocket")))
+    ("m" "Mantis"     (lambda () (interactive) (vlv/connect-to-vnc-with-machine "Mantis")))
+    ("s" "Starlord"   (lambda () (interactive) (vlv/connect-to-vnc-with-machine "Starlord")))
     ("o" "Choose IP:" (lambda () (interactive) (vlv/connect-to-vnc-with-ip  (read-string "IP:"))))]])
 
-(global-set-key (kbd "C-c v") 'vlv/vnc-menu)
+(global-set-key(kbd "C-c v") 'vlv/vnc-menu)
+#+end_src
+
+
+** Visual Studio
+#+begin_src emacs-lisp tangle config.el
+(defun open-sln-in-visual-studio ()
+  "Find all .sln files in the current Projectile project and open one in Visual Studio at the current buffer's file."
+  (interactive)
+  (let* ((project-root (projectile-project-root))
+         (sln-files (directory-files-recursively project-root "\\.sln$"))
+         (current-file (buffer-file-name)))
+    (if (null sln-files)
+        (message "No .sln files found in the project.")
+      (let ((chosen-sln (if (= (length sln-files) 1)
+                            (car sln-files)
+                          (completing-read "Choose a solution: " sln-files nil t))))
+        (if current-file
+            (let* ((relative-path (file-relative-name current-file project-root))
+                   (command (format "start devenv \"%s\" /edit \"%s\"" chosen-sln relative-path)))
+              (message "Running: %s" command)
+              (start-process-shell-command "open-sln" nil command))
+          (message "Current buffer is not visiting a file."))))))
 #+end_src
 
 * Compiler explorer
