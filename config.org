@@ -212,10 +212,7 @@ this configures bash to be used as the default shell bash. In theory it corrects
 *** Configuration
 #+begin_src emacs-lisp :tangle config.el
 (after! org-agenda
-    (setopt org-agenda-files
-        (mapcar (lambda (dir) (expand-file-name dir org-directory))
-                '("agenda/" "journal/")))
-
+    (setopt org-journal-enable-agenda-integration t)
     (setopt org-agenda-start-on-weekday 1)) ;; start on monday
 #+end_src
 
