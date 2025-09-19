@@ -469,9 +469,9 @@ Spaws a child process using UNIX watch command using nvidia-smi command."
 #+begin_src emacs-lisp :tangle (if (string-equal 'vlv/environment "PERSONAL") "config.el" "no")
 (use-package! elfeed
   :config
-    ;; the basic value cuts a part of the feed's title.
-    ;; Increasing the column width fixes it.
-    (setopt elfeed-goodies/feed-source-column-width 20))
+  ;; the basic value cuts a part of the feed's title.
+  ;; Increasing the column width fixes it.
+  (setopt elfeed-goodies/feed-source-column-width 25))
 
 (map! :leader
     (:prefix ("e" . "elfeed")
