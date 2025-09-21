@@ -148,7 +148,7 @@ profiles API is stable.
         user-mail-address "victorlattaro@gmail.com")
 #+end_src
 
-**  Revert buffers when the underlying file has changed
+** Revert buffers when the underlying file has changed
 #+begin_src emacs-lisp :tangle config.el
 (setopt global-auto-revert-mode t
 
