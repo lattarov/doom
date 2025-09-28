@@ -143,22 +143,7 @@ profiles API is stable.
 ** UI
 
 #+begin_src emacs-lisp :tangle config.el
-(setq vlv/frame-opacity 60)
-
-;; sets emacs general opacity
-(defun vlv/set-frame-opacity ()
-  "Wrapper function to set the opacity for all frames
-
-Meant to used in frame cration, when spawning a client or
-a new Emacs process instance."
-  (doom/set-frame-opacity vlv/frame-opacity t))
-
-;; process use-case
-(if (not server-clients)
-    (vlv/set-frame-opacity))
-
-;; server-client use-case
-(add-hook! 'server-after-make-frame-hook 'vlv/set-frame-opacity)
+(add-to-list 'default-frame-alist '(alpha-background . 60))
 #+end_src
 
 * Emacs general configs
