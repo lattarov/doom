@@ -197,13 +197,13 @@ this configures bash to be used as the default shell bash. In theory it corrects
 * Org
 ** Basic config
 #+begin_src emacs-lisp :tangle config.el
-
 (use-package! org
-  :config
+  :init
     (if (string-equal vlv/environment "WORK")
             (setopt org-directory "~/OneDrive - Kestrel Vision/org")
             (setopt org-directory "~/org/"))
 
+  :config
     (add-hook! 'org-mode-hook
             (olivetti-mode)))
 #+end_src
