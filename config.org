@@ -135,9 +135,7 @@ profiles API is stable.
 ** font
 
 #+begin_src emacs-lisp :tangle config.el
-(if (string-equal 'vlv/environment "WORK")
-    (setopt doom-font (font-spec :family "Cascadia Code" :size 18))
-    (setopt doom-font (font-spec :family "Fira Mono" :size 18)))
+(setopt doom-font (font-spec :family "Cascadia Code" :size 18))
 #+end_src
 
 ** UI
