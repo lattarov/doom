@@ -1155,6 +1155,9 @@ Found in https://emacs.stackexchange.com/questions/60200/magit-remove-local-bran
 
     (transient-append-suffix 'magit-branch "C"
         '("K" "delete all merged" vlv/delete-merged-branches)))
+
+(add-hook! 'magit-mode-hook
+  (olivetti-mode))
 #+end_src
 
 * Flyover :WIP:
