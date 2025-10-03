@@ -286,7 +286,8 @@ Allow automatic recognition of projects given a list of paths.
 #+begin_src emacs-lisp :tangle config.el
 (use-package! projectile
   :config
-  (setopt projectile-project-search-path '("~/dev")))
+    (setopt +workspaces-on-switch-project-behavior t)
+    (setopt projectile-project-search-path '("~/dev")))
 #+end_src
 
 * Dirvish
