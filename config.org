@@ -884,6 +884,17 @@ From this point onwards, mu4e should be up and running.
               (start-process-shell-command "open-sln" nil command))
           (message "Current buffer is not visiting a file."))))))
 #+end_src
+** Wind River Workbench
+
+#+begin_src emacs-lisp :tangle config.el
+(defcustom vlv/workbench-start-script-path
+  "~/dev/repos/089-VXWORKS_CALIA4/workbench-4/startWorkbench.bat"
+  "The path to the batch script that starts the WindRiver workbench IDE.")
+
+(defun vlv/open-workbench ()
+    (interactive)
+    (start-process "workbench" nil vlv/workbench-start-script-path))
+#+end_src
 
 * Compiler explorer
 #+begin_src emacs-lisp :tangle packages.el
