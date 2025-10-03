@@ -131,7 +131,7 @@ profiles API is stable.
 (vlv/environment)
 #+end_src
 
-* Door
+* Doom
 ** font
 
 #+begin_src emacs-lisp :tangle config.el
