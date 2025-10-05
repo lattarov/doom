@@ -994,7 +994,6 @@ Found an interesting completion mechanism in [[https://www.reddit.com/r/emacs/co
 
 #+end_src
 
-** IDEA Use transient menu for completion
 * multi-vterm
 #+begin_src emacs-lisp :tangle packages.el
 (package! multi-vterm
