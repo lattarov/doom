@@ -416,7 +416,7 @@ Set ollama as default backend for gptel, add default model and a few tweaks.
   (setopt gptel-backend (gptel-make-ollama "Ollama"
           :host "localhost:11434"
           :stream t
-          :models '((ifioravanti/llamantino-2) (deepseek-r1:8b)))))
+          :models '((deepseek-coder-v2:16b) (ifioravanti/llamantino-2) (deepseek-r1:8b)))))
 #+end_src
 
 ** Process management
