@@ -877,12 +877,9 @@ From this point onwards, mu4e should be up and running.
       (let ((chosen-sln (if (= (length sln-files) 1)
                             (car sln-files)
                           (completing-read "Choose a solution: " sln-files nil t))))
-        (if current-file
-            (let* ((relative-path (file-relative-name current-file project-root))
-                   (command (format "start devenv \"%s\" /edit \"%s\"" chosen-sln relative-path)))
+            (let* ((command (format "start devenv \"%s\"" chosen-sln)))
               (message "Running: %s" command)
-              (start-process-shell-command "open-sln" nil command))
-          (message "Current buffer is not visiting a file."))))))
+              (start-process-shell-command "open-sln" nil command))))))
 #+end_src
 ** Wind River Workbench
 
