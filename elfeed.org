@@ -10,4 +10,3 @@
 ** [[https://buttondown.com/entropicthoughts/rss][Entropic Thoughts]]
 ** [[https://emacsconf.org/index.rss][EmacsConf]]
 ** [[http://nullprogram.com/feed][null program]]
-** [[http://feeds.harvardbusiness.org/harvardbusiness/][Harvard Business Review]]
