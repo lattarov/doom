@@ -894,6 +894,16 @@ From this point onwards, mu4e should be up and running.
     (start-process "workbench" nil vlv/workbench-start-script-path))
 #+end_src
 
+** consult-everything (windows)
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! consult-everything
+  :pin "ac574a63b3e869787bbe6354b57a7a8021647ee3"
+  :recipe '(:host github
+            :repo "jthaman/consult-everything"
+            :build t))
+#+end_src
+
 * Compiler explorer
 #+begin_src emacs-lisp :tangle packages.el
 (package! compiler-explorer
