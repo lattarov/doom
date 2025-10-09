@@ -1161,7 +1161,11 @@ Found in https://emacs.stackexchange.com/questions/60200/magit-remove-local-bran
         (message "Nothing to delete"))))
 
     (transient-append-suffix 'magit-branch "C"
-        '("K" "delete all merged" vlv/delete-merged-branches)))
+        '("K" "delete all merged" vlv/delete-merged-branches))
+
+    ;; add "develop" to magit long lived and main branch name lists.
+    (add-to-list 'magit-long-lived-branches "develop")
+    (add-to-list 'magit-main-branch-names "develop"))
 
 (add-hook! 'magit-mode-hook
   (olivetti-mode))
