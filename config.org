@@ -888,7 +888,8 @@ From this point onwards, mu4e should be up and running.
   "~/dev/repos/089-VXWORKS_CALIA4/workbench-4/startWorkbench.bat"
   "The path to the batch script that starts the WindRiver workbench IDE.")
 
-(defun vlv/open-workbench ()
+(defun vlv/open-windriver-workbench ()
+  "Open Wind River Workbench IDE."
     (interactive)
     (start-process "workbench" nil vlv/workbench-start-script-path))
 #+end_src
