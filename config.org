@@ -1095,7 +1095,25 @@ sudo apt-get install ffmpeg
 * Emacs Web Wowser EWW
 ** Configuration
 #+begin_src emacs-lisp :tangle config.el
-(after! eww
+(use-package! eww
+  :init
+  (defun vlv/eww ()
+    "Opens Emacs Web Wowser (EWW) in a new workspace."
+
+    (interactive)
+    (setq-local vlv-eww-workspace-name "EWW")
+    (progn
+        (+workspace-new vlv-eww-workspace-name)
+        (+workspace-switch vlv-eww-workspace-name)
+        (call-interactively 'eww)
+        (delete-other-windows)))
+
+  ;; TODO hook to kill workspace when quitting EWW if it's the only buffer in the workspace
+
+  (map! :leader
+        (:prefix ("o")
+         :desc "EWW" "u" #'vlv/eww))
+
   :config
     (add-hook! 'eww-mode-hook
     (olivetti-mode))
