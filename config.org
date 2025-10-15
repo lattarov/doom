@@ -180,6 +180,12 @@ this configures bash to be used as the default shell bash. In theory it corrects
 (add-hook! 'eshell-mode-hook
   (olivetti-mode))
 #+end_src
+
+** Emacs Lisp Mode
+#+begin_src emacs-lisp :tangle config.el
+(add-hook! 'emacs-lisp-mode-hook 'show-smartparens-mode)
+#+end_src
+
 * olivetti mode
 
 #+begin_src emacs-lisp :tangle packages.el
