@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: #+begin_src
+# uuid: srcc
+# key: srcc
+# --
+#+begin_src emacs-lisp :tangle config.el
+`%`(use-package! $0)
+#+end_src
