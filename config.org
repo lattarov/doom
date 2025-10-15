@@ -903,6 +903,20 @@ From this point onwards, mu4e should be up and running.
             :repo "jthaman/consult-everything"
             :build t))
 #+end_src
+** Tree-sitter
+*** treesit-auto
+Sometimes (especially on windows) the ts-* mode is always on even if the tree-sitter flag is off in init.el. Treesit-auto allows to detect if the grammar of the target language is installed prior to activating the <language>-mode or ts-<language>-mode, only activating the latter if the grammar is present.
+
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! treesit-auto)
+#+end_src
+
+#+begin_src emacs-lisp :tangle config.el
+(use-package! treesit-auto
+  :config
+  (global-treesit-auto-mode))
+#+end_src
 
 * Compiler explorer
 #+begin_src emacs-lisp :tangle packages.el
