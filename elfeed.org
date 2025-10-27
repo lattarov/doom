@@ -11,3 +11,4 @@
 ** [[https://emacsconf.org/index.rss][EmacsConf]]
 ** [[http://nullprogram.com/feed][null program]]
 ** [[https://akitaonrails.com/index.xml][Akita on Rails]]
+** [[https://vkoskiv.com/atom.xml][vkoskiv's blog]]
