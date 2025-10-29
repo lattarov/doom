@@ -865,6 +865,7 @@ From this point onwards, mu4e should be up and running.
     ("r" "Rocket"     (lambda () (interactive) (vlv/connect-to-vnc-with-machine "Rocket")))
     ("m" "Mantis"     (lambda () (interactive) (vlv/connect-to-vnc-with-machine "Mantis")))
     ("s" "Starlord"   (lambda () (interactive) (vlv/connect-to-vnc-with-machine "Starlord")))
+    ("b" "BDT-INCA10-VERN"   (lambda () (interactive) (vlv/connect-to-vnc-with-machine "BDT-INCA10-VERN")))
     ("o" "Choose IP:" (lambda () (interactive) (vlv/connect-to-vnc-with-ip  (read-string "IP:"))))]])
 
 (global-set-key(kbd "C-c v") 'vlv/vnc-menu)
