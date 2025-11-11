@@ -228,7 +228,14 @@ this configures bash to be used as the default shell bash. In theory it corrects
      ;; start on monday
     (setopt org-agenda-start-on-weekday 1)
 
+    ;; add org-roam files to org-agenda-files
+    (add-to-list 'org-agenda-files org-roam-directory)
+
 #+end_src
+*** TODO Improve org-roam org-agenda performance
+
+Ideas here: [[https://www.d12frosted.io/posts/2021-01-16-task-management-with-roam-vol5][Task management with org-roam Vol. 5: Dynamic and fast agenda - Boris Buliga]]
+
 
 ** Org Roam
 Shortcuts are mapped with the SPC n r prefix by default.
