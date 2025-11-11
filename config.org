@@ -231,6 +231,12 @@ this configures bash to be used as the default shell bash. In theory it corrects
     ;; add org-roam files to org-agenda-files
     (add-to-list 'org-agenda-files org-roam-directory)
 
+    ;; in org agenda, the default behavior for leave all org-related buffers
+    ;; opened. This is quite annoying given the number of buffers which can
+    ;; in the order of the hundreds.
+    (map! :map org-agenda-mode-map "q" nil)
+    (map! :map org-agenda-mode-map
+          :desc "Exit and close all buffers" "q" #'org-agenda-exit))
 #+end_src
 *** TODO Improve org-roam org-agenda performance
 
