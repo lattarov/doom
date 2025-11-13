@@ -945,6 +945,14 @@ In this case, the source directory is *c:/Tiama/tree-sitter*.
 mklink /D "c:/Users/LATTARO-VOLPINI/.config/emacs/.local/cache/tree-sitter" "c:/Tiama/tree-sitter"
 #+end_src
 
+** Org babel
+#+begin_src emacs-lisp :tangle config.el
+(use-package! org
+  :config
+    (setopt org-babel-C++-compiler "clang")
+    (setopt org-babel-C-compiler   "clang"))
+#+end_src
+
 * Compiler explorer
 #+begin_src emacs-lisp :tangle packages.el
 (package! compiler-explorer
