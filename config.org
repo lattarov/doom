@@ -909,14 +909,18 @@ From this point onwards, mu4e should be up and running.
 ** Wind River Workbench
 
 #+begin_src emacs-lisp :tangle config.el
-(defcustom vlv/workbench-start-script-path
+(defcustom vlv--workbench-start-script-path
   "~/dev/repos/089-VXWORKS_CALIA4/workbench-4/startWorkbench.bat"
   "The path to the batch script that starts the WindRiver workbench IDE.")
 
 (defun vlv/open-windriver-workbench ()
   "Open Wind River Workbench IDE."
     (interactive)
-    (start-process "workbench" nil vlv/workbench-start-script-path))
+    (start-process "workbench" nil vlv--workbench-start-script-path))
+
+(map! :leader
+      :prefix "o"
+      :desc "WindRiver Workbench" "w" #'vlv/open-windriver-workbench)
 #+end_src
 
 ** consult-everything (windows)
