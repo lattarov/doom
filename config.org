@@ -1136,7 +1136,7 @@ sudo apt-get install ffmpeg
 
 #+begin_src emacs-lisp :tangle (if (string-equal 'vlv/environment "PERSONAL") "packages.el" "no")
 (package! whisper.el
-  :pin "fc122657bfb8d5faf6aedaefdc1687193f456d1f"
+  :pin "6198ce3d9bff0555cf098a77b78d6c2d79baf4f9"
   :recipe '(
     :host github
     :repo "natrys/whisper.el"))
