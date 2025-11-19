@@ -195,6 +195,7 @@ this configures bash to be used as the default shell bash. In theory it corrects
 
 #+begin_src emacs-lisp :tangle config.el
 (use-package! olivetti
+  :defer t
   :config
   (setopt olivetti-body-width 120))
 #+end_src
@@ -203,6 +204,7 @@ this configures bash to be used as the default shell bash. In theory it corrects
 ** Basic config
 #+begin_src emacs-lisp :tangle config.el
 (use-package! org
+  :defer t
   :init
     (if (string-equal vlv/environment "WORK")
             (setopt org-directory "~/OneDrive - Kestrel Vision/org")
@@ -222,6 +224,7 @@ this configures bash to be used as the default shell bash. In theory it corrects
 *** Configuration
 #+begin_src emacs-lisp :tangle config.el
 (use-package! org-agenda
+  :defer t
   :config
     (setopt org-journal-enable-agenda-integration t)
 
@@ -278,6 +281,7 @@ Shortcuts are mapped with the SPC n r prefix by default.
 * Python
 #+begin_src emacs-lisp :tangle config.el
 (use-package! python
+  :defer t
   :config
     (if (executable-find "ipython")
       (setopt python-shell-interpreter "ipython")
@@ -309,7 +313,8 @@ A new package manager for python, much faster and simpler to use than conda or m
 #+end_src
 
 #+begin_src emacs-lisp :tangle no
-(use-package! uv-menu)
+(use-package! uv-menu
+  :defer t)
 
 #+end_src
 
@@ -317,6 +322,7 @@ A new package manager for python, much faster and simpler to use than conda or m
 Allow automatic recognition of projects given a list of paths.
 #+begin_src emacs-lisp :tangle config.el
 (use-package! projectile
+  :defer t
   :config
     (setopt +workspaces-on-switch-project-behavior t)
     (setopt projectile-project-search-path '("~/dev")))
@@ -325,6 +331,7 @@ Allow automatic recognition of projects given a list of paths.
 * Dirvish
 #+begin_src emacs-lisp :tangle config.el
 (use-package! dirvish
+  :defer t
   :config
   (setopt dirvish-quick-access-entries
           (let ((org-path (expand-file-name org-directory)))
@@ -504,6 +511,7 @@ Spaws a child process using UNIX watch command using nvidia-smi command."
 * elfeed
 #+begin_src emacs-lisp :tangle config.el
 (use-package! elfeed
+  :defer t
   :config
   ;; the basic value cuts a part of the feed's title.
   ;; Increasing the column width fixes it.
@@ -579,6 +587,7 @@ promising and would bring plenty of nice features to the config.
 
 #+begin_src emacs-lisp :tangle (if (string-equal 'vlv/environment "PERSONAL") "config.el" "no")
 (use-package! consult-mu
+  :defer t
   :custom
 
   ;;maximum number of results shown in minibuffer
@@ -943,6 +952,7 @@ From this point onwards, mu4e should be up and running.
 ** Tree-sitter
 #+begin_src emacs-lisp :tangle config.el
 (use-package! treesit
+  :defer t
   :config
   ;; if auto, it'll prompt for installation at every file, at every session...
   (setopt treesit-auto-install-grammar nil))
@@ -960,6 +970,7 @@ mklink /D "c:/Users/LATTARO-VOLPINI/.config/emacs/.local/cache/tree-sitter" "c:/
 ** Org babel
 #+begin_src emacs-lisp :tangle config.el
 (use-package! org
+  :defer t
   :config
     (setopt org-babel-C++-compiler "clang")
     (setopt org-babel-C-compiler   "clang"))
@@ -999,6 +1010,7 @@ mklink /D "c:/Users/LATTARO-VOLPINI/.config/emacs/.local/cache/tree-sitter" "c:/
 
 #+begin_src emacs-lisp :tangle (if (string-equal 'vlv/environment "PERSONAL") "config.el" "no")
 (use-package! spotify
+  :defer t
   :config
 
     (defun vlv/spotify-next-and-display()
@@ -1031,6 +1043,7 @@ Found an interesting completion mechanism in [[https://www.reddit.com/r/emacs/co
 
 #+begin_src emacs-lisp :tangle config.el
 (use-package! vterm
+  :defer t
   :config
   (defun get-full-list ()
     (let ((program-list (split-string (shell-command-to-string "compgen -c") "\n" t ))
@@ -1163,6 +1176,7 @@ sudo apt-get install ffmpeg
 ** Configuration
 #+begin_src emacs-lisp :tangle config.el
 (use-package! eww
+  :defer t
   :init
   (defun vlv/eww ()
     "Opens Emacs Web Wowser (EWW) in a new workspace."
@@ -1224,6 +1238,7 @@ It can be quite disturbing to have a white background PDF displayed given that b
 * Magit
 #+begin_src emacs-lisp :tangle config.el
 (use-package! magit
+  :defer t
   :config
     (defun vlv/delete-merged-branches ()
     "Fetch prune then deletes branches already merged to a target branch.
@@ -1271,6 +1286,7 @@ There's some overlay with LSP errors and warnings (in rust at least), hence this
 
 #+begin_src emacs-lisp :tangle no
 (use-package! flyover
+  :defer t
   :config
   ;; Enable flyover-mode globally
     (add-hook 'flycheck-mode-hook #'flyover-mode)
@@ -1301,6 +1317,7 @@ There's some overlay with LSP errors and warnings (in rust at least), hence this
 * Lookup
 #+begin_src emacs-lisp :tangle config.el
 (use-package! doom
+  :defer t
   :config
     ;; make lookup online use eww insted of default browser.
     (setopt +lookup-open-url-fn 'eww))
