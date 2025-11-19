@@ -978,8 +978,9 @@ mklink /D "c:/Users/LATTARO-VOLPINI/.config/emacs/.local/cache/tree-sitter" "c:/
 (use-package! org
   :defer t
   :config
-    (setopt org-babel-C++-compiler "clang")
-    (setopt org-babel-C-compiler   "clang"))
+    (when (string-equal vlv/environment "WORK")
+      (setopt org-babel-C++-compiler "clang"
+              org-babel-C-compiler   "clang")))
 #+end_src
 
 * Compiler explorer
