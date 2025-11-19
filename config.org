@@ -270,13 +270,13 @@ Shortcuts are mapped with the SPC n r prefix by default.
         org-roam-ui-follow t
         org-roam-ui-update-on-save t
         org-roam-ui-open-on-start t)
+  ;; necessary use the org directory set on the
+  (setopt org-roam-directory (expand-file-name "roam/" org-directory)))
 
-  (setopt org-roam-directory (expand-file-name "roam/" org-directory)) ;; necessary use the org directory set on the
-
-  (map! :leader
+(map! :leader
         (:prefix ("n" . "org")
         (:prefix ("r" . "roam")
-         :desc "Open org roam UI" "u" #'org-roam-ui-mode))))
+         :desc "Open org roam UI" "u" #'org-roam-ui-mode)))
 #+end_src
 * Python
 #+begin_src emacs-lisp :tangle config.el
@@ -969,7 +969,7 @@ mklink /D "c:/Users/LATTARO-VOLPINI/.config/emacs/.local/cache/tree-sitter" "c:/
 
 ** Org babel
 #+begin_src emacs-lisp :tangle config.el
-(use-package! org
+(use-package! org-mode
   :defer t
   :config
     (setopt org-babel-C++-compiler "clang")
@@ -1029,14 +1029,14 @@ mklink /D "c:/Users/LATTARO-VOLPINI/.config/emacs/.local/cache/tree-sitter" "c:/
     "Toggles pause and displays it's author, name and album."
     (interactive)
     (spotify-playpause)
-    (call-interactively 'spotify-current))
+    (call-interactively 'spotify-current)))
 
-    (map! :leader
+(map! :leader
         (:prefix ("v" . "perso")
         :desc "spotify-play/pause" "p" #'vlv/spotify-playpause-and-display
         :desc "spotify-previous" "P" #'vlv/spotify-previous-and-display
         :desc "spotify-open" "q" #'spotify-quit
-        :desc "spotify-next" "n" #'vlv/spotify-next-and-display)))
+        :desc "spotify-next" "n" #'vlv/spotify-next-and-display))
 #+end_src
 * vterm
 Found an interesting completion mechanism in [[https://www.reddit.com/r/emacs/comments/ovkyov/vterm_completion_for_files_directories_command/][this reddit post]] and it considerably improves usage.
@@ -1317,7 +1317,6 @@ There's some overlay with LSP errors and warnings (in rust at least), hence this
 * Lookup
 #+begin_src emacs-lisp :tangle config.el
 (use-package! doom
-  :defer t
   :config
     ;; make lookup online use eww insted of default browser.
     (setopt +lookup-open-url-fn 'eww))
