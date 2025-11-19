@@ -1002,7 +1002,7 @@ mklink /D "c:/Users/LATTARO-VOLPINI/.config/emacs/.local/cache/tree-sitter" "c:/
 * DevDocs.el
 #+begin_src emacs-lisp :tangle packages.el
 (package! devdocs
-  :pin "d2214d34cdeb4483a594dd6973fcd095cef4653f")
+  :pin "25c746024ddf73570195bf42b841f761a2fee10c")
 #+end_src
 
 #+begin_src emacs-lisp :tangle config.el
