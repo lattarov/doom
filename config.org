@@ -949,6 +949,11 @@ From this point onwards, mu4e should be up and running.
             :repo "jthaman/consult-everything"
             :build t))
 #+end_src
+
+#+begin_src emacs-lisp :tangle config.el
+(use-package! consult-everything
+  :defer t)
+#+end_src
 ** Tree-sitter
 #+begin_src emacs-lisp :tangle config.el
 (use-package! treesit
@@ -986,6 +991,9 @@ mklink /D "c:/Users/LATTARO-VOLPINI/.config/emacs/.local/cache/tree-sitter" "c:/
 #+end_src
 
 #+begin_src emacs-lisp :tangle config.el
+(use-package! compiler-explorer
+  :defer t)
+
 (map! :leader
       :prefix "o"
       :desc "Compiler Explorer (GodBolt)" "c" #'compiler-explorer)
@@ -997,6 +1005,9 @@ mklink /D "c:/Users/LATTARO-VOLPINI/.config/emacs/.local/cache/tree-sitter" "c:/
 #+end_src
 
 #+begin_src emacs-lisp :tangle config.el
+(use-package! devdocs
+  :defer t)
+
 (map! :leader
       :prefix ("s" . "+search")
       :desc "devdocs-lookup"
@@ -1086,6 +1097,11 @@ Found an interesting completion mechanism in [[https://www.reddit.com/r/emacs/co
 #+begin_src emacs-lisp :tangle packages.el
 (package! multi-vterm
   :pin "36746d85870dac5aaee6b9af4aa1c3c0ef21a905")
+#+end_src
+
+#+begin_src emacs-lisp :tangle config.el
+(use-package! multi-vterm
+  :defer t)
 #+end_src
 
 * Emacs Application Framework EAF :WIP:
