@@ -509,32 +509,23 @@ Spaws a child process using UNIX watch command using nvidia-smi command."
 #+end_src
 
 * elfeed
+
 #+begin_src emacs-lisp :tangle config.el
 (use-package! elfeed
   :defer t
   :config
-  ;; the basic value cuts a part of the feed's title.
-  ;; Increasing the column width fixes it.
-  (setopt elfeed-goodies/feed-source-column-width 25))
+    ;; the basic value cuts a part of the feed's title.
+    ;; Increasing the column width fixes it.
+    (setopt elfeed-goodies/feed-source-column-width 25)
 
-(map! :leader
-    (:prefix ("e" . "elfeed")
-    :desc "Enter elfeed" "e" #'elfeed
-    :desc "Update all feeds" "u" #'elfeed-update))
 
-;; copy elfeed.org to the org directory
-(copy-file (expand-file-name "elfeed.org" doom-user-dir) org-directory t)
-#+end_src
+    ;; Strangely, elfeed does not allow us to delete entries that we don't want to see
+    ;; in the feed anymore. Moreover, when a feed is deleted, its entries are not
+    ;; removed from the feed.
 
-** Removing items from the feed
-Strangely, elfeed does not allow us to delete entries that we don't want to see
-in the feed anymore. Moreover, when a feed is deleted, its entries are not
-removed from the feed.
+    ;; A solution is proposed by https://github.com/skeeto/elfeed/issues/392, it works
+    ;; by deleting selected items feed from elfeed's database.
 
-A solution is proposed by [[https://github.com/skeeto/elfeed/issues/392][skeeto/elfeed#392 Deleting feeds with all their
-entries]], it works by deleting selected items feed from elfeed's database.
-#+begin_src emacs-lisp :tangle config.el
-(after! elfeed
     (defun sk/elfeed-db-remove-entry (id)
     "Removes the entry for ID"
     (avl-tree-delete elfeed-db-index id)
@@ -549,7 +540,17 @@ entries]], it works by deleting selected items feed from elfeed's database.
         (cl-loop for entry in entries
                 do (sk/elfeed-db-remove-entry (elfeed-entry-id entry)))))
     (elfeed-search-update--force)))
+
+(map! :leader
+    (:prefix ("e" . "elfeed")
+    :desc "Enter elfeed" "e" #'elfeed
+    :desc "Update all feeds" "u" #'elfeed-update))
+
+;; copy elfeed.org to the org directory. Put here so that the elfeed.org
+;; is tangled whenever doom-reload is run.
+(copy-file (expand-file-name "elfeed.org" doom-user-dir) org-directory t)
 #+end_src
+
 * Completions
 ** Corfu
 #+begin_src emacs-lisp :tangle config.el
