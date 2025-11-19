@@ -975,7 +975,7 @@ mklink /D "c:/Users/LATTARO-VOLPINI/.config/emacs/.local/cache/tree-sitter" "c:/
 
 ** Org babel
 #+begin_src emacs-lisp :tangle config.el
-(use-package! org-mode
+(use-package! org
   :defer t
   :config
     (setopt org-babel-C++-compiler "clang")
