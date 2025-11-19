@@ -276,6 +276,14 @@ Shortcuts are mapped with the SPC n r prefix by default.
          :desc "Open org roam UI" "u" #'org-roam-ui-mode))))
 #+end_src
 * Python
+#+begin_src emacs-lisp :tangle config.el
+(use-package! python
+  :config
+    (if (executable-find "ipython")
+      (setopt python-shell-interpreter "ipython")
+      (message "ipython not found in path. Using %s." python-shell-interpreter)))
+#+end_src
+
 ** Conda
 #+begin_src emacs-lisp :tangle config.el
 (use-package! conda
