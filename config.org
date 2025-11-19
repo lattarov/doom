@@ -973,6 +973,12 @@ mklink /D "c:/Users/LATTARO-VOLPINI/.config/emacs/.local/cache/tree-sitter" "c:/
             :repo "mkcms/compiler-explorer.el"
             :build t))
 #+end_src
+
+#+begin_src emacs-lisp :tangle config.el
+(map! :leader
+      :prefix "o"
+      :desc "Compiler Explorer (GodBolt)" "c" #'compiler-explorer)
+#+end_src
 * DevDocs.el
 #+begin_src emacs-lisp :tangle packages.el
 (package! devdocs
