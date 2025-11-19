@@ -183,7 +183,7 @@ this configures bash to be used as the default shell bash. In theory it corrects
 
 ** Emacs Lisp Mode
 #+begin_src emacs-lisp :tangle config.el
-(add-hook! 'emacs-lisp-mode-hook 'show-smartparens-mode)
+(add-hook! 'emacs-lisp-mode-hook (show-smartparens-mode))
 #+end_src
 
 * olivetti mode
@@ -981,6 +981,8 @@ mklink /D "c:/Users/LATTARO-VOLPINI/.config/emacs/.local/cache/tree-sitter" "c:/
     (when (string-equal vlv/environment "WORK")
       (setopt org-babel-C++-compiler "clang"
               org-babel-C-compiler   "clang")))
+
+(add-hook! 'org-mode-hook (show-smartparens-mode))
 #+end_src
 
 * Compiler explorer
