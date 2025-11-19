@@ -985,7 +985,7 @@ mklink /D "c:/Users/LATTARO-VOLPINI/.config/emacs/.local/cache/tree-sitter" "c:/
 * Compiler explorer
 #+begin_src emacs-lisp :tangle packages.el
 (package! compiler-explorer
-  :pin "0111e651cfcd6c3147e370ccbcf04c104d3e8fb2"
+  :pin "efad3b9f92098d2eb28d6ae47b71e8853f6dfb49"
   :recipe '(:host github
             :repo "mkcms/compiler-explorer.el"
             :build t))
