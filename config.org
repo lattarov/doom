@@ -700,6 +700,14 @@ promising and would bring plenty of nice features to the config.
 (setq consult-omni-youtube-search-key "AIzaSyAMbCC2_BQRaGifhK2tVifSOTCwucT9Lao")
 #+end_src
 **** TODO Encrypt
+
+** consult-ripgrep
+#+begin_src emacs-lisp :tangle config.el
+(map! :leader
+      :prefix "s"
+      :desc "consult-ripgrep" "R" #'consult-ripgrep)
+#+end_src
+
 * Mail
 ** Mu4e
 *** WARNING Installation error pitfall
@@ -987,6 +995,10 @@ From this point onwards, mu4e should be up and running.
 #+begin_src emacs-lisp :tangle config.el
 (use-package! consult-everything
   :defer t)
+
+(map! :leader
+      :prefix "s"
+      :desc "consult-everything" "E" #'consult-everything)
 #+end_src
 ** Tree-sitter
 #+begin_src emacs-lisp :tangle config.el
