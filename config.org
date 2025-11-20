@@ -579,14 +579,14 @@ be tested and tracked over time. The project seems nevertheless extremely
 promising and would bring plenty of nice features to the config.
 
 
-#+begin_src emacs-lisp :tangle "packages.el"
+#+begin_src emacs-lisp :tangle packages.el
 (package! consult-mu
   :recipe '(:host github
             :repo "armindarvish/consult-mu"
             :files (:defaults "extras/*.el")))
 #+end_src
 
-#+begin_src emacs-lisp :tangle "config.el"
+#+begin_src emacs-lisp :tangle config.el
 (use-package! consult-mu
   :defer t
   :custom
@@ -677,7 +677,7 @@ execute-extended-command: Cannot open load file: No such file or directory, mu4e
 
 As recommended in doom's mu4e docs as well as in [[https://github.com/doomemacs/doomemacs/issues/7885][doomemacs/doomemacs#7885 Can't open mu4e]] , manually adding the load path fixes this.
 
-#+begin_src emacs-lisp :tangle "config.el"
+#+begin_src emacs-lisp :tangle config.el
 (add-to-list 'load-path "/usr/share/emacs/site-lisp/mu4e")
 #+end_src
 
@@ -793,7 +793,7 @@ if mu4e is not found in Emacs, add the path (probably the one below to the load-
 From this point onwards, mu4e should be up and running.
 *** Configuration
 
-#+begin_src emacs-lisp :tangle "config.el"
+#+begin_src emacs-lisp :tangle config.el
 ;; Each path is relative to the path of the maildir you passed to mu
 
 ;; (setq mu4e-get-mail-command "mbsync gmail"
@@ -850,7 +850,7 @@ From this point onwards, mu4e should be up and running.
 * Work
 ** TightVNC
 *** Transient menu :WIP:
-#+begin_src emacs-lisp :tangle "config.el"
+#+begin_src emacs-lisp :tangle config.el
 (require 'transient)
 (defvar vlv/vnc-machines
     '(("VISIO"            . "10.4.54.221")
@@ -905,7 +905,6 @@ From this point onwards, mu4e should be up and running.
 
 (global-set-key(kbd "C-c v") 'vlv/vnc-menu)
 #+end_src
-
 
 ** Visual Studio
 #+begin_src emacs-lisp tangle config.el
@@ -1018,12 +1017,12 @@ mklink /D "c:/Users/LATTARO-VOLPINI/.config/emacs/.local/cache/tree-sitter" "c:/
       "d" #'devdocs-lookup)
 #+end_src
 * Spotify
-#+begin_src emacs-lisp :tangle "packages.el"
+#+begin_src emacs-lisp :tangle packages.el
 (package! spotify
   :pin "d918b5187638e0c44a2a2584f3980244b6aae3fa")
 #+end_src
 
-#+begin_src emacs-lisp :tangle "config.el"
+#+begin_src emacs-lisp :tangle config.el
 (use-package! spotify
   ;; WARNING using "defer t" makes the package not be loaded when using bindings.
   :config
@@ -1136,7 +1135,7 @@ sudo apt-get install ffmpeg
  - [[https://github.com/ggml-org/whisper.cpp][whisper.cpp]]: Port of OpenAI's Whisper model in C/C++
    Is fetched and compiled by running whisper. Needs git, a C++ compiler and CMake.
 
-#+begin_src emacs-lisp :tangle "packages.el"
+#+begin_src emacs-lisp :tangle packages.el
 (package! whisper.el
   :pin "6198ce3d9bff0555cf098a77b78d6c2d79baf4f9"
   :recipe '(
@@ -1145,7 +1144,7 @@ sudo apt-get install ffmpeg
 #+end_src
 
 
-#+begin_src emacs-lisp :tangle "config.el"
+#+begin_src emacs-lisp :tangle config.el
 (use-package! whisper.el
   :defer t ;; A configuration error appears if the fur is not set.
   :config
