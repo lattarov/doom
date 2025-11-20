@@ -144,6 +144,39 @@ profiles API is stable.
 (add-to-list 'default-frame-alist '(alpha-background . 60))
 #+end_src
 
+** Welcome screen
+#+begin_src emacs-lisp :tangle config.el
+(use-package! doom
+  :defer t
+  :config
+
+(defun vlv/doom-dashboard-draw-ascii-banner-fn ()
+  (let* ((banner
+          '("██╗      █████╗ ████████╗████████╗ █████╗ ██████╗  ██████╗ "
+            "██║     ██╔══██╗╚══██╔══╝╚══██╔══╝██╔══██╗██╔══██╗██╔═══██╗"
+            "██║     ███████║   ██║      ██║   ███████║██████╔╝██║   ██║"
+            "██║     ██╔══██║   ██║      ██║   ██╔══██║██╔═██╚╗██║   ██║"
+            "███████╗██║  ██║   ██║      ██║   ██║  ██║██║ ███║███████╔╝"
+            "╚══════╝╚═╝  ╚═╝   ╚═╝      ╚═╝   ╚═╝  ╚═╝╚═╝ ╚══╝╚══════╝ "
+            "                                                           "
+            "                        E M A C S                          "
+            "                                                           "
+            "                                                           "
+            "                                                           "))
+         (longest-line (apply #'max (mapcar #'length banner))))
+    (put-text-property
+     (point)
+     (dolist (line banner (point))
+       (insert (+doom-dashboard--center
+                +doom-dashboard--width
+                (concat
+                 line (make-string (max 0 (- longest-line (length line)))
+                                   32)))
+               "\n"))
+     'face 'doom-dashboard-banner)))
+(setopt +doom-dashboard-ascii-banner-fn #'vlv/doom-dashboard-draw-ascii-banner-fn))
+#+end_src
+
 * Emacs general configs
 ** Personal information
 #+begin_src emacs-lisp :tangle config.el
