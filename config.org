@@ -1067,6 +1067,7 @@ mklink /D "c:/Users/LATTARO-VOLPINI/.config/emacs/.local/cache/tree-sitter" "c:/
 * Spotify
 #+begin_src emacs-lisp :tangle packages.el
 (package! spotify
+  :disable (not (eq system-type 'gnu/linux))
   :pin "d918b5187638e0c44a2a2584f3980244b6aae3fa")
 #+end_src
 
