@@ -581,7 +581,9 @@ Spaws a child process using UNIX watch command using nvidia-smi command."
 
 ;; copy elfeed.org to the org directory. Put here so that the elfeed.org
 ;; is tangled whenever doom-reload is run.
-(copy-file (expand-file-name "elfeed.org" doom-user-dir) org-directory t)
+
+(when (string-equal vlv/environment "PERSONAL")
+  (copy-file (expand-file-name "elfeed.org" doom-user-dir) org-directory t))
 #+end_src
 
 * Completions
