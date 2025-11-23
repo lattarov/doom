@@ -377,7 +377,7 @@ Allow automatic recognition of projects given a list of paths.
 
 (map! :leader
     (:prefix ("o" . "open")
-    :desc "dirvish-side" "d" #'dirvish))
+    :desc "dirvish" "d" #'dirvish))
 #+end_src
 
 #+begin_src emacs-lisp :tangle no
