@@ -913,7 +913,7 @@ From this point onwards, mu4e should be up and running.
 
 ** Visual Studio
 #+begin_src emacs-lisp tangle config.el
-(defun open-sln-in-visual-studio ()
+(defun vlv/find-and-open-sln-in-visual-studio ()
   "Find all .sln files in the current Projectile project and open one in Visual Studio at the current buffer's file."
   (interactive)
   (let* ((project-root (projectile-project-root))
@@ -927,6 +927,10 @@ From this point onwards, mu4e should be up and running.
             (let* ((command (format "start devenv \"%s\"" chosen-sln)))
               (message "Running: %s" command)
               (start-process-shell-command "open-sln" nil command))))))
+
+(map! :leader
+      :prefix "o"
+      :desc "Find project SLN and open Visual Studio" "s" #'vlv/find-and-open-sln-in-visual-studio)
 #+end_src
 ** Wind River Workbench
 
