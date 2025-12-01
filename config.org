@@ -361,6 +361,14 @@ Allow automatic recognition of projects given a list of paths.
     (setopt projectile-project-search-path '("~/dev")))
 #+end_src
 
+* Dired
+#+begin_src emacs-lisp :tangle config.el
+(use-package! dired
+  :defer t
+  :config
+    (setopt dired-async-mode t))
+#+end_src
+
 * Dirvish
 #+begin_src emacs-lisp :tangle config.el
 (use-package! dirvish
