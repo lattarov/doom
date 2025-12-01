@@ -925,18 +925,36 @@ From this point onwards, mu4e should be up and running.
 ** Wind River Workbench
 
 #+begin_src emacs-lisp :tangle config.el
-(defcustom vlv--workbench-start-script-path
-  "~/dev/repos/089-VXWORKS_CALIA4/workbench-4/startWorkbench.bat"
-  "The path to the batch script that starts the WindRiver workbench IDE.")
+(defcustom vlv--workbench3-path
+  "C:/WindRiver_6947/workbench-3.3/wrwb/platform/x86-win32/eclipse/wrwb-x86-win32.exe"
+  "The path to the executable or script to start WindRiver 3 workbench IDE."
+  :type 'file
+  :group 'work)
 
-(defun vlv/open-windriver-workbench ()
-  "Open Wind River Workbench IDE."
+(defcustom vlv--workbench4-path
+  "~/dev/repos/089-VXWORKS_CALIA4/workbench-4/startWorkbench.bat"
+  "The path to the executable or script to start WindRiver 4 workbench IDE."
+  :type 'file
+  :group 'work)
+
+(defun vlv/open-windriver3-workbench ()
+  "Open Wind River Workbench 3 IDE."
     (interactive)
-    (start-process "workbench" nil vlv--workbench-start-script-path))
+    (start-process "workbench" nil vlv--workbench3-path))
+
+(defun vlv/open-windriver4-workbench ()
+  "Open Wind River Workbench 4 IDE."
+    (interactive)
+    (start-process "workbench" nil vlv--workbench4-path))
+
 
 (map! :leader
       :prefix "o"
-      :desc "WindRiver Workbench" "w" #'vlv/open-windriver-workbench)
+      :desc "WindRiver Workbench 3" "W" #'vlv/open-windriver3-workbench)
+
+(map! :leader
+      :prefix "o"
+      :desc "WindRiver Workbench 4" "w" #'vlv/open-windriver4-workbench)
 #+end_src
 
 ** consult-everything (windows)
