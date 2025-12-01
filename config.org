@@ -475,20 +475,24 @@ curl -fsSL https://ollama.com/install.sh | sh
 Set ollama as default backend for gptel, add default model and a few tweaks.
 
 #+begin_src emacs-lisp :tangle config.el
-(after! gptel
-  ;; window to scroll automatically as the response is inserted
-  (add-hook 'gptel-post-stream-hook 'gptel-auto-scroll)
-  ;; make cursor to move to the next prompt after the response is inserted
-  (add-hook 'gptel-post-response-functions 'gptel-end-of-response)
+(use-package! gptel
+  :defer t
+  :config
+    (add-hook 'gptel-post-stream-hook 'gptel-auto-scroll)
 
-  ;; default model
-  (setopt gptel-model 'deepseek-r1:8b)
+    (add-hook 'gptel-post-response-functions 'gptel-end-of-response)
 
-  ;; adding Ollama backend
-  (setopt gptel-backend (gptel-make-ollama "Ollama"
-          :host "localhost:11434"
-          :stream t
-          :models '((deepseek-coder-v2:16b) (ifioravanti/llamantino-2) (deepseek-r1:8b) (deepseek-r1:7b)))))
+    (setopt gptel-model 'deepseek-r1:8b)
+
+    (setopt vlv--gptel-ollama (gptel-make-ollama "ollama"
+                                :host "localhost:11434"
+                                :stream t
+                                :models '((deepseek-coder-v2:16b)
+                                        (ifioravanti/llamantino-2)
+                                        (deepseek-r1:8b)
+                                        (deepseek-r1:7b))))
+
+    (setopt gptel-backend vlv--gptel-ollama))
 #+end_src
 
 * bug-hunter
