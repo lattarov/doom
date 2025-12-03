@@ -194,8 +194,7 @@ profiles API is stable.
 
 ** Editing
 #+begin_src emacs-lisp :tangle config.el
-(add-hook! 'prog-mode-hook
-        (olivetti-mode))
+(add-hook! 'prog-mode-hook 'olivetti-mode)
 #+end_src
 
 ** Terminals (WIP)
@@ -210,13 +209,12 @@ this configures bash to be used as the default shell bash. In theory it corrects
 #+end_src
 *** eshell
 #+begin_src emacs-lisp :tangle config.el
-(add-hook! 'eshell-mode-hook
-  (olivetti-mode))
+(add-hook! 'eshell-mode-hook 'olivetti-mode)
 #+end_src
 
 ** Emacs Lisp Mode
 #+begin_src emacs-lisp :tangle config.el
-(add-hook! 'emacs-lisp-mode-hook (show-smartparens-mode))
+(add-hook! 'emacs-lisp-mode-hook 'show-smartparens-mode)
 #+end_src
 
 * olivetti mode
@@ -244,8 +242,7 @@ this configures bash to be used as the default shell bash. In theory it corrects
             (setopt org-directory "~/org/"))
 
   :config
-    (add-hook! 'org-mode-hook
-            (olivetti-mode)))
+    (add-hook! 'org-mode-hook 'olivetti-mode))
 #+end_src
 ** Org agenda
 *** Improvements
@@ -486,9 +483,9 @@ Set ollama as default backend for gptel, add default model and a few tweaks.
 (use-package! gptel
   :defer t
   :config
-    (add-hook 'gptel-post-stream-hook 'gptel-auto-scroll)
+    (add-hook! 'gptel-post-stream-hook 'gptel-auto-scroll)
 
-    (add-hook 'gptel-post-response-functions 'gptel-end-of-response)
+    (add-hook! 'gptel-post-response-functions 'gptel-end-of-response)
 
     (setopt gptel-model 'deepseek-r1:8b)
 
@@ -566,7 +563,7 @@ Set ollama as default backend for gptel, add default model and a few tweaks.
       (setq-local corfu-echo-delay nil ;; Disable automatic echo and popup
                   corfu-popupinfo-delay nil)
       (corfu-mode 1)))
-  (add-hook 'minibuffer-setup-hook #'corfu-enable-in-minibuffer))
+  (add-hook! 'minibuffer-setup-hook #'corfu-enable-in-minibuffer))
 #+end_src
 * Consult :wip:
 ** Consult-omni
@@ -1020,7 +1017,7 @@ mklink /D "c:/Users/LATTARO-VOLPINI/.config/emacs/.local/cache/tree-sitter" "c:/
       (setopt org-babel-C++-compiler "clang"
               org-babel-C-compiler   "clang")))
 
-(add-hook! 'org-mode-hook (show-smartparens-mode))
+(add-hook! 'org-mode-hook 'show-smartparens-mode)
 #+end_src
 
 * Compiler explorer
@@ -1254,8 +1251,7 @@ sudo apt-get install ffmpeg
          :desc "EWW" "u" #'vlv/eww))
 
   :config
-    (add-hook! 'eww-mode-hook
-    (olivetti-mode))
+    (add-hook! 'eww-mode-hook olivetti-mode)
     (set-variable 'eww-bookmarks
                 '((:url   "https://lars.ingebrigtsen.no/"
                     :title "Random Thoughts - Lars Ingebritsen")
@@ -1325,8 +1321,7 @@ Found in https://emacs.stackexchange.com/questions/60200/magit-remove-local-bran
     (add-to-list 'magit-long-lived-branches "develop")
     (add-to-list 'magit-main-branch-names "develop"))
 
-(add-hook! 'magit-mode-hook
-  (olivetti-mode))
+(add-hook! 'magit-mode-hook 'olivetti-mode)
 #+end_src
 
 * Flyover :WIP:
@@ -1346,8 +1341,8 @@ There's some overlay with LSP errors and warnings (in rust at least), hence this
 (use-package! flyover
   :defer t
   :config
-  ;; Enable flyover-mode globally
-    (add-hook 'flycheck-mode-hook #'flyover-mode)
+    ;; Enable flyover-mode globally
+    (add-hook! 'flycheck-mode-hook #'flyover-mode)
 
     ;; Configure which error levels to display
     ;; Possible values: error, warning, info
@@ -1383,6 +1378,5 @@ There's some overlay with LSP errors and warnings (in rust at least), hence this
 * Markdown mode
 
 #+begin_src emacs-lisp :tangle config.el
-(add-hook! 'markdown-mode-hook
-    (olivetti-mode))
+(add-hook! 'markdown-mode-hook 'olivetti-mode)
 #+end_src
