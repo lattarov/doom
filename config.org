@@ -400,7 +400,9 @@ Allow automatic recognition of projects given a list of paths.
 
 * YASNIPPET
 #+begin_src emacs-lisp :tangle config.el
-(after! yasnippet
+(use-package! yasnippet
+  :defer t
+  :config
     (defun yasnippet-extract-arg-and-type (arg)
     "Extract argument name and type from a string of the form 'arg: type'."
     (let* ((parts (split-string arg ": ")))
@@ -444,8 +446,10 @@ Allow automatic recognition of projects given a list of paths.
 ** CC mode
 *** LSP (clangd)
 #+begin_src emacs-lisp :tangle config.el
-(after! lsp-clangd
-  (setq lsp-clients-clangd-args
+(use-package! lsp-clangd
+  :defer t
+  :config
+    (setq lsp-clients-clangd-args
         '("-j=3"
           "--background-index"
           "--clang-tidy"
@@ -555,7 +559,9 @@ Set ollama as default backend for gptel, add default model and a few tweaks.
 * Completions
 ** Corfu
 #+begin_src emacs-lisp :tangle config.el
-(after! corfu
+(use-package! corfu
+  :defer t
+  :config
   (defun corfu-enable-in-minibuffer ()
     "Enable Corfu in the minibuffer if `completion-at-point' is bound."
     (when (where-is-internal #'completion-at-point (list (current-local-map)))
@@ -1269,8 +1275,9 @@ It can be quite disturbing to have a white background PDF displayed given that b
 * ibuffer
 
 #+begin_src emacs-lisp :tangle config.el
-;; a must have in ergonomics.
-(after! ibuffer
+(use-package! ibuffer
+  :defer t
+  :config
   (map! :leader
         (:prefix ("b")
          :desc "Kill buffer and window" "K" #'kill-buffer-and-window)))
