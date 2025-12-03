@@ -1380,3 +1380,12 @@ There's some overlay with LSP errors and warnings (in rust at least), hence this
 #+begin_src emacs-lisp :tangle config.el
 (add-hook! 'markdown-mode-hook 'olivetti-mode)
 #+end_src
+
+* info, help(ful) and documentation modes
+#+begin_src emacs-lisp :tangle config.el
+(add-hook! 'help-mode-hook 'olivetti-mode)
+
+(add-hook! 'helpful-mode-hook 'olivetti-mode)
+
+(add-hook! 'Info-mode-hook 'olivetti-mode)
+#+end_src
