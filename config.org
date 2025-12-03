@@ -556,21 +556,6 @@ Set ollama as default backend for gptel, add default model and a few tweaks.
   (copy-file (expand-file-name "elfeed.org" doom-user-dir) org-directory t))
 #+end_src
 
-* Completions
-** Corfu
-#+begin_src emacs-lisp :tangle config.el
-(use-package! corfu
-  :defer t
-  :config
-  (defun corfu-enable-in-minibuffer ()
-    "Enable Corfu in the minibuffer if `completion-at-point' is bound."
-    (when (where-is-internal #'completion-at-point (list (current-local-map)))
-      ;; (setopt-local corfu-auto nil) ;; Enable/disable auto completion
-      (setopt-local corfu-echo-delay nil ;; Disable automatic echo and popup
-                  corfu-popupinfo-delay nil)
-      (corfu-mode 1)))
-  (add-hook! 'minibuffer-setup-hook #'corfu-enable-in-minibuffer))
-#+end_src
 * Consult :wip:
 ** Consult-omni
 [[https://github.com/armindarvish/consult-omni?tab=readme-ov-file#drop-in-example-config][GitHub - armindarvish/consult-omni: A Powerful Versatile Omni Search inside E...]]
