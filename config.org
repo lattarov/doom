@@ -856,6 +856,8 @@ From this point onwards, mu4e should be up and running.
 (defvar vlv/vnc-machines
     '(("VISIO"            . "10.4.54.221")
       ("VERN"             . "10.102.31.63")
+      ("CMX"              . "10.4.54.223")
+      ("CXP"              . "10.4.54.224")
       ("Gamora"           . "10.4.52.13")
       ("Groot"            . "10.4.52.9" )
       ("Rocket"           . "10.4.52.11")
