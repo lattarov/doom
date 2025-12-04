@@ -916,13 +916,13 @@ From this point onwards, mu4e should be up and running.
          (sln-files (directory-files-recursively project-root "\\.sln$"))
          (current-file (buffer-file-name)))
     (if (null sln-files)
-        (message "No .sln files found in the project.")
+        (error "No .sln files found in the project."))
       (let ((chosen-sln (if (= (length sln-files) 1)
                             (car sln-files)
                           (completing-read "Choose a solution: " sln-files nil t))))
             (let* ((command (format "start devenv \"%s\"" chosen-sln)))
               (message "Running: %s" command)
-              (start-process-shell-command "open-sln" nil command))))))
+              (start-process-shell-command "open-sln" nil command)))))
 
 (map! :leader
       :prefix "o"
