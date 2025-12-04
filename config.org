@@ -896,15 +896,13 @@ From this point onwards, mu4e should be up and running.
 (transient-define-prefix vlv/vnc-menu ()
 "Transient menu for selecting a TightVNC machine."
     [["Machines"
-    ("a" "VISIO"      (lambda () (interactive) (vlv/connect-to-vnc-with-machine "VISIO")))
-    ("z" "VERN"       (lambda () (interactive) (vlv/connect-to-vnc-with-machine "VERN")))
-    ("g" "Gamora"     (lambda () (interactive) (vlv/connect-to-vnc-with-machine "Gamora")))
-    ("G" "Groot"      (lambda () (interactive) (vlv/connect-to-vnc-with-machine "Groot")))
-    ("r" "Rocket"     (lambda () (interactive) (vlv/connect-to-vnc-with-machine "Rocket")))
-    ("m" "Mantis"     (lambda () (interactive) (vlv/connect-to-vnc-with-machine "Mantis")))
-    ("s" "Starlord"   (lambda () (interactive) (vlv/connect-to-vnc-with-machine "Starlord")))
-    ("b" "BDT-INCA10-VERN"   (lambda () (interactive) (vlv/connect-to-vnc-with-machine "BDT-INCA10-VERN")))
-    ("o" "Choose IP:" (lambda () (interactive) (vlv/connect-to-vnc-with-ip  (read-string "IP:"))))]])
+    ("a" "VISIO"             (lambda () (interactive) (vlv/connect-to-vnc-with-machine "VISIO")))
+    ("z" "VERN"              (lambda () (interactive) (vlv/connect-to-vnc-with-machine "VERN")))
+    ("e" "CMX"               (lambda () (interactive) (vlv/connect-to-vnc-with-machine "CMX")))
+    ("r" "CXP"               (lambda () (interactive) (vlv/connect-to-vnc-with-machine "CXP")))
+    ("t" "BDT-INCA10-VERN"   (lambda () (interactive) (vlv/connect-to-vnc-with-machine "BDT-INCA10-VERN")))
+    ("s" "STARLORD"          (lambda () (interactive) (vlv/connect-to-vnc-with-machine "STARLORD")))
+    ("o" "Choose IP:"        (lambda () (interactive) (vlv/connect-to-vnc-with-ip  (read-string "IP:"))))]])
 
 (map! :prefix "C-c" :desc "TightVNC menu" "v" #'vlv/vnc-menu)
 #+end_src
