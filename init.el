@@ -131,7 +131,7 @@
        (csharp +lsp        ; unity, .NET, and mono shenanigans
                +tree-sitter
                +dotnet)
-       ;;data              ; config/data formats
+       data              ; config/data formats
        ;;(dart +flutter)   ; paint ui and not much else
        ;;dhall
        ;;elixir            ; erlang done right
