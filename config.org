@@ -551,7 +551,9 @@ Set ollama as default backend for gptel, add default model and a few tweaks.
           (when (y-or-n-p (format "Delete %d entires?" count))
           (cl-loop for entry in entries
                   do (sk/elfeed-db-remove-entry (elfeed-entry-id entry)))))
-      (elfeed-search-update--force)))
+      (elfeed-search-update--force))
+
+    (add-hook! 'elfeed-show-mode-hook 'olivetti-mode))
 
 (map! :leader
     (:prefix ("e" . "elfeed")
