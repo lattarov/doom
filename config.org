@@ -539,19 +539,19 @@ Set ollama as default backend for gptel, add default model and a few tweaks.
     ;; by deleting selected items feed from elfeed's database.
 
     (defun sk/elfeed-db-remove-entry (id)
-    "Removes the entry for ID"
-    (avl-tree-delete elfeed-db-index id)
-    (remhash id elfeed-db-entries))
+      "Removes the entry for ID"
+      (avl-tree-delete elfeed-db-index id)
+      (remhash id elfeed-db-entries))
 
     (defun sk/elfeed-search-remove-selected ()
-    "Remove selected entries from database"
-    (interactive)
-    (let* ((entries (elfeed-search-selected))
-            (count (length entries)))
-        (when (y-or-n-p (format "Delete %d entires?" count))
-        (cl-loop for entry in entries
-                do (sk/elfeed-db-remove-entry (elfeed-entry-id entry)))))
-    (elfeed-search-update--force)))
+      "Remove selected entries from database"
+      (interactive)
+      (let* ((entries (elfeed-search-selected))
+              (count (length entries)))
+          (when (y-or-n-p (format "Delete %d entires?" count))
+          (cl-loop for entry in entries
+                  do (sk/elfeed-db-remove-entry (elfeed-entry-id entry)))))
+      (elfeed-search-update--force)))
 
 (map! :leader
     (:prefix ("e" . "elfeed")
