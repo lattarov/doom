@@ -178,6 +178,14 @@ OS dependent source blocks must depend on the result of this."
 (setopt +doom-dashboard-ascii-banner-fn #'vlv/doom-dashboard-draw-ascii-banner-fn))
 #+end_src
 
+** Checking for new modules
+#+begin_src emacs-lisp :tangle no :results none
+(let ((init-example-file (expand-file-name "static/init.example.el" doom-emacs-dir))
+      (init-file          (expand-file-name "init.el" doom-user-dir)))
+    (ediff-files init-file init-example-file))
+#+end_src
+*** IDEA create a hook in upgrade to discover new available modules
+
 * Emacs general configs
 ** Personal information
 #+begin_src emacs-lisp :tangle config.el
