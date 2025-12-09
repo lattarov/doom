@@ -121,12 +121,13 @@ profiles API is stable.
   :options '("WORK" "PERSONAL"))
 
 (defun vlv/environment ()
-  "Gets and displays in minibuffer the environment."
-  (interactive)
+  "Gets the current environment type.
+
+Used her to make a single configuration file for all OSs. The little
+OS dependent source blocks must depend on the result of this."
   (if (eq system-type 'gnu/linux)
       (setopt vlv/environment "PERSONAL")
-      (setopt vlv/environment "WORK"))
-  (message vlv/environment))
+      (setopt vlv/environment "WORK")))
 
 (vlv/environment)
 #+end_src
