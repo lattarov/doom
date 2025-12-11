@@ -517,6 +517,48 @@ Set ollama as default backend for gptel, add default model and a few tweaks.
     (setopt gptel-backend vlv--gptel-ollama))
 #+end_src
 
+** Auggie (Augment Code CLI) via agent-shell :WIP:
+Auggie is the Augment Code CLI that provides AI-powered coding assistance via the Agent Client Protocol (ACP).
+This integrates agent-shell.el to use Auggie alongside gptel backends.
+
+Prerequisites:
+- Install Auggie CLI: https://docs.augmentcode.com/cli/setup-auggie/install-auggie-cli
+- Login to Augment: =auggie login=
+
+#+begin_src emacs-lisp :tangle packages.el
+;; agent-shell and its dependencies for Auggie CLI integration
+(package! shell-maker)
+(package! acp)
+(package! agent-shell)
+#+end_src
+
+#+begin_src emacs-lisp :tangle config.el
+;; Load local Auggie configuration
+(add-to-list 'load-path (expand-file-name "auggie" doom-user-dir))
+
+(use-package! acp
+  :defer t)
+
+(use-package! agent-shell
+  :defer t
+  :after acp
+  :config
+  ;; Load Auggie configuration and add it to available agents
+  (require 'auggie-config)
+  (add-to-list 'agent-shell-agent-configs (auggie-make-config)))
+
+;; Keybindings for AI assistants (gptel and Auggie)
+(map! :leader
+      :prefix ("l" . "+LLM/AI")
+      :desc "Select AI assistant" "l" #'auggie-or-gptel
+      :desc "Start Auggie" "a" #'auggie-start
+      :desc "Start gptel" "g" #'gptel
+      :desc "gptel menu" "m" #'gptel-menu
+      :desc "Send region to Auggie" "r" #'auggie-send-region
+      :desc "Send buffer to Auggie" "b" #'auggie-send-buffer
+      :desc "gptel send" "s" #'gptel-send)
+#+end_src
+
 * bug-hunter
 #+begin_src emacs-lisp :tangle packages.el
 (package! bug-hunter)
