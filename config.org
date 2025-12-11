@@ -150,32 +150,34 @@ OS dependent source blocks must depend on the result of this."
 (use-package! doom
   :defer t
   :config
+  ;; only create this function if in personal environment
+  (when (string-equal vlv/environment "PERSONAL")
+        (defun vlv/doom-dashboard-draw-ascii-banner-fn ()
+            (let* ((banner
+                    '("██╗      █████╗ ████████╗████████╗ █████╗ ██████╗  ██████╗ "
+                      "██║     ██╔══██╗╚══██╔══╝╚══██╔══╝██╔══██╗██╔══██╗██╔═══██╗"
+                      "██║     ███████║   ██║      ██║   ███████║██████╔╝██║   ██║"
+                      "██║     ██╔══██║   ██║      ██║   ██╔══██║██╔═██╚╗██║   ██║"
+                      "███████╗██║  ██║   ██║      ██║   ██║  ██║██║ ███║███████╔╝"
+                      "╚══════╝╚═╝  ╚═╝   ╚═╝      ╚═╝   ╚═╝  ╚═╝╚═╝ ╚══╝╚══════╝ "
+                      "                                                           "
+                      "                        E M A C S                          "
+                      "                                                           "
+                      "                                                           "
+                      "                                                           "))
+                    (longest-line (apply #'max (mapcar #'length banner))))
+                (put-text-property
+                (point)
+                (dolist (line banner (point))
+                (insert (+doom-dashboard--center
+                            +doom-dashboard--width
+                            (concat
+                            line (make-string (max 0 (- longest-line (length line)))
+                                            32)))
+                        "\n"))
+                'face 'doom-dashboard-banner)))
 
-(defun vlv/doom-dashboard-draw-ascii-banner-fn ()
-  (let* ((banner
-          '("██╗      █████╗ ████████╗████████╗ █████╗ ██████╗  ██████╗ "
-            "██║     ██╔══██╗╚══██╔══╝╚══██╔══╝██╔══██╗██╔══██╗██╔═══██╗"
-            "██║     ███████║   ██║      ██║   ███████║██████╔╝██║   ██║"
-            "██║     ██╔══██║   ██║      ██║   ██╔══██║██╔═██╚╗██║   ██║"
-            "███████╗██║  ██║   ██║      ██║   ██║  ██║██║ ███║███████╔╝"
-            "╚══════╝╚═╝  ╚═╝   ╚═╝      ╚═╝   ╚═╝  ╚═╝╚═╝ ╚══╝╚══════╝ "
-            "                                                           "
-            "                        E M A C S                          "
-            "                                                           "
-            "                                                           "
-            "                                                           "))
-         (longest-line (apply #'max (mapcar #'length banner))))
-    (put-text-property
-     (point)
-     (dolist (line banner (point))
-       (insert (+doom-dashboard--center
-                +doom-dashboard--width
-                (concat
-                 line (make-string (max 0 (- longest-line (length line)))
-                                   32)))
-               "\n"))
-     'face 'doom-dashboard-banner)))
-(setopt +doom-dashboard-ascii-banner-fn #'vlv/doom-dashboard-draw-ascii-banner-fn))
+        (setopt +doom-dashboard-ascii-banner-fn #'vlv/doom-dashboard-draw-ascii-banner-fn)))
 #+end_src
 
 ** Checking for new modules
