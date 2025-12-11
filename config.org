@@ -108,7 +108,17 @@ systemctl --user restart emacs
 
 * Cross platform compatibility :wip:
 #+begin_src emacs-lisp :tangle config.el
-(defcustom vlv/environment "PERSONAL" "The current environment.
+
+(defvar vlv-environment-personal
+  "PERSONAL"
+  "Value set to vlv-environment if in personal environment.")
+
+(defvar vlv-environment-work
+  "WORK"
+  "Value set to vlv-environment if in work environment.")
+
+(defcustom vlv-environment vlv-environment-personal
+  "The current environment.
 
 This will be used to activate or not certain functionalities
 of this configuration, maily by tangling or not certain babel
@@ -118,18 +128,19 @@ TODO: replace this by a dedicated config for work once the doom
 profiles API is stable.
 "
   :type 'string
-  :options '("WORK" "PERSONAL"))
+  :options '(vlv-environment-personal vlv-environment-work))
 
-(defun vlv/environment ()
-  "Gets the current environment type.
+(if (eq system-type 'gnu/linux)
+    (setopt vlv-environment vlv-environment-personal)
+    (setopt vlv-environment vlv-environment-work))
 
-Used her to make a single configuration file for all OSs. The little
-OS dependent source blocks must depend on the result of this."
-  (if (eq system-type 'gnu/linux)
-      (setopt vlv/environment "PERSONAL")
-      (setopt vlv/environment "WORK")))
+(defun vlv-environment-work ()
+  "Returns t if in work environment, nil otherwise."
+  (string-equal vlv-environment vlv-environment-work))
 
-(vlv/environment)
+(defun vlv-environment-personal ()
+  "Returns t if in personal environment, nil otherwise."
+  (string-equal vlv-environment vlv-environment-personal))
 #+end_src
 
 * Doom
@@ -151,7 +162,7 @@ OS dependent source blocks must depend on the result of this."
   :defer t
   :config
   ;; only create this function if in personal environment
-  (when (string-equal vlv/environment "PERSONAL")
+  (when (vlv-environment-personal)
         (defun vlv/doom-dashboard-draw-ascii-banner-fn ()
             (let* ((banner
                     '("██╗      █████╗ ████████╗████████╗ █████╗ ██████╗  ██████╗ "
@@ -248,9 +259,9 @@ this configures bash to be used as the default shell bash. In theory it corrects
 (use-package! org
   :defer t
   :init
-    (if (string-equal vlv/environment "WORK")
-            (setopt org-directory "~/OneDrive - Kestrel Vision/org")
-            (setopt org-directory "~/org/"))
+    (if (vlv-environment-work)
+          (setopt org-directory "~/OneDrive - Kestrel Vision/org")
+          (setopt org-directory "~/org/"))
 
   :config
     (add-hook! 'org-mode-hook 'olivetti-mode))
@@ -607,7 +618,7 @@ Prerequisites:
 ;; copy elfeed.org to the org directory. Put here so that the elfeed.org
 ;; is tangled whenever doom-reload is run.
 
-(when (string-equal vlv/environment "PERSONAL")
+(when (vlv-environment-personal)
   (copy-file (expand-file-name "elfeed.org" doom-user-dir) org-directory t))
 #+end_src
 
@@ -1059,7 +1070,7 @@ mklink /D "c:/Users/LATTARO-VOLPINI/.config/emacs/.local/cache/tree-sitter" "c:/
 (use-package! org
   :defer t
   :config
-    (when (string-equal vlv/environment "WORK")
+    (when (vlv-environment-work)
       (setopt org-babel-C++-compiler "clang"
               org-babel-C-compiler   "clang")))
 
