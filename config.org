@@ -199,6 +199,15 @@ profiles API is stable.
 #+end_src
 *** IDEA create a hook in upgrade to discover new available modules
 
+** Bindings
+#+begin_src emacs-lisp :tangle config.el
+;; The original command bound to ":leader f p" opens the +snippets-dir,
+;; which is hardly ever what is the idea when opening the private config.
+(map! :leader
+      (:prefix "f"
+       :desc "Browse private config" "p" #'doom/open-private-config))
+#+end_src
+
 * Emacs general configs
 ** Personal information
 #+begin_src emacs-lisp :tangle config.el
