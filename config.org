@@ -212,7 +212,7 @@ profiles API is stable.
 ** Personal information
 #+begin_src emacs-lisp :tangle config.el
 (setopt user-full-name    "Victor Lattaro Volpini"
-        user-mail-address "victorlattaro@gmail.com")
+        user-mail-address "victorlattaro@proton.me")
 #+end_src
 
 ** Revert buffers when the underlying file has changed
