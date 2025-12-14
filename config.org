@@ -201,11 +201,30 @@ profiles API is stable.
 
 ** Bindings
 #+begin_src emacs-lisp :tangle config.el
-;; The original command bound to ":leader f p" opens the +snippets-dir,
-;; which is hardly ever what is the idea when opening the private config.
-(map! :leader
-      (:prefix "f"
-       :desc "Browse private config" "p" #'doom/open-private-config))
+(use-package! doom
+  :defer t
+  :config
+    ;; clear SPC f p prefix to use in private config
+    (map! :leader
+          :prefix "f" "p" nil)
+
+    (defun vlv-open-init-file ()
+      "Opens the init.el file from private config."
+      (interactive)
+      (find-file (expand-file-name doom-module-init-file doom-user-dir)))
+
+    (defun vlv-open-literate-config-file ()
+      "Opens the config.org file from private config."
+      (interactive)
+      ;; can' use +literate-config-file for it's not loaded until,
+      ;; the user opens that file.
+      (find-file (expand-file-name "config.org" doom-user-dir)))
+
+    (map! :leader
+          :prefix ("f p" . "Private config")
+          :desc "Open literate config" "i" #'vlv-open-init-file
+          :desc "Open literate config" "c" #'vlv-open-literate-config-file
+          :desc "Browse" "p" #'doom/open-private-config))
 #+end_src
 
 * Emacs general configs
