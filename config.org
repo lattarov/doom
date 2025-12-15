@@ -761,11 +761,15 @@ promising and would bring plenty of nice features to the config.
 #+end_src
 **** TODO Encrypt
 
-** consult-ripgrep
+** bindings
 #+begin_src emacs-lisp :tangle config.el
 (map! :leader
       :prefix "s"
       :desc "consult-ripgrep" "R" #'consult-ripgrep)
+
+(map! :leader
+      :prefix "s"
+      :desc "consult-kill-ring" "c" #'consult-yank-from-kill-ring)
 #+end_src
 
 * Mail
