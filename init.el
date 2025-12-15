@@ -86,7 +86,7 @@
        eshell            ; the elisp shell that works everywhere
        ;;shell             ; simple shell REPL for Emacs
        ;;term              ; basic terminal emulator for Emacs
-       (if (featurep :system 'gnu-linux)
+       (if (featurep :system 'linux)
            vterm)          ; the best terminal emulation in Emacs
 
        :checkers
@@ -110,7 +110,7 @@
        (magit +forge)      ; a git porcelain for Emacs
        ;;make              ; run make tasks from Emacs
        ;;pass              ; password manager for nerds
-       (if (featurep :system 'gnu-linux)
+       (if (featurep :system 'linux)
            pdf)               ; pdf enhancements
        ;;terraform         ; infrastructure as code
        ;;tmux              ; an API for interacting with tmux
@@ -204,7 +204,7 @@
        ;;zig               ; C, but simpler
 
        :email
-       (if (featurep :system gnu-linux)
+       (if (featurep :system 'linux)
            (mu4e +org
                  +gmail))
        ;;notmuch
