@@ -221,9 +221,15 @@ profiles API is stable.
       (interactive)
       (find-file (expand-file-name "config.org" doom-user-dir)))
 
+    (defun vlv-open-elfeed-file ()
+      "Opens the elfeed feeds descriptor file from private config."
+      (interactive)
+      (find-file (expand-file-name "elfeed.org" doom-user-dir)))
+
     (map! :leader
           :prefix ("f p" . "Private config")
           :desc "Open init.el" "i" #'vlv-open-init-file
+          :desc "Open elfeed.org" "e" #'vlv-open-elfeed-file
           :desc "Open literate config" "c" #'vlv-open-literate-config-file
           :desc "Browse" "p" #'doom/open-private-config))
 #+end_src
