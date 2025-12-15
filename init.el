@@ -86,7 +86,8 @@
        eshell            ; the elisp shell that works everywhere
        ;;shell             ; simple shell REPL for Emacs
        ;;term              ; basic terminal emulator for Emacs
-       vterm             ; the best terminal emulation in Emacs
+       (if (featurep :system 'gnu-linux)
+           vterm)          ; the best terminal emulation in Emacs
 
        :checkers
        syntax              ; tasing you for every semicolon you forget
@@ -109,7 +110,8 @@
        (magit +forge)      ; a git porcelain for Emacs
        ;;make              ; run make tasks from Emacs
        ;;pass              ; password manager for nerds
-       pdf               ; pdf enhancements
+       (if (featurep :system 'gnu-linux)
+           pdf)               ; pdf enhancements
        ;;terraform         ; infrastructure as code
        ;;tmux              ; an API for interacting with tmux
        tree-sitter       ; syntax and parsing, sitting in a tree...
@@ -129,9 +131,10 @@
        ;;common-lisp       ; if you've seen one lisp, you've seen them all
        ;;coq               ; proofs-as-programs
        ;;crystal           ; ruby at the speed of c
-       (csharp +lsp        ; unity, .NET, and mono shenanigans
-               +tree-sitter
-               +dotnet)
+       (if (featurep :system 'windows-nt)
+           (csharp +lsp        ; unity, .NET, and mono shenanigans
+                   +tree-sitter
+                   +dotnet))
        data              ; config/data formats
        ;;(dart +flutter)   ; paint ui and not much else
        ;;dhall
@@ -201,7 +204,9 @@
        ;;zig               ; C, but simpler
 
        :email
-       (mu4e +org +gmail)
+       (if (featurep :system gnu-linux)
+           (mu4e +org
+                 +gmail))
        ;;notmuch
        ;;(wanderlust +gmail)
 
