@@ -4,6 +4,12 @@
 ## Script to backup the emacs directory, where doom Emacs
 ## binaries are installed and where all caches are stored.
 
+# Tasks
+## TODO use absolute paths
+## TODO use doom environment variables
+## TODO get environment variables from doom emacs
+## TODO merge with doom emacs scripts
+
 # Constants
 ## Archive
 archive_prefix="emacs"
