@@ -8,7 +8,7 @@
 ## Archive
 archive_prefix="emacs"
 archive_file_type="tar.gz"
-max_archives=3 # Set the maximum number of archives to keep
+archive_count_max=3
 archive_backup_dir="backups"
 
 ## Colors
@@ -44,7 +44,7 @@ done
 # limit amount of archives
 if [ "$archive_count" -gt 0 ]; then
     # Check if the number of archives exceeds the limit
-    if [ "$archive_count" -ge "$max_archives" ]; then
+    if [ "$archive_count" -ge "$archive_count_max" ]; then
         # Identify and remove the oldest archive
         oldest_archive=$(ls -1t ${archive_prefix}*${archive_file_type}* | tail -n 1)
 
@@ -65,14 +65,14 @@ tar --create --gzip --file "$(pwd)/backups/${archive_name}" "${archive_prefix}/"
 echo "${GREEN}Backup end. Starting upgrade...${NO_COLOR}"
 
 ## Uncomment the following lines to enable the upgrade functionality
-doom upgrade --aot || echo "${RED}Failed upgrade doom${NO_COLOR}"
+doom upgrade --aot || echo "${RED}Failed upgrade doom!${NO_COLOR}"
 
-doom sync --gc || echo "${RED}Failed to sync doom post-upgrade${NO_COLOR}"
+doom sync --gc || echo "${RED}Failed to sync doom post-upgrade!${NO_COLOR}"
 
-echo "${GREEN}Upgrade done..${NO_COLOR}"
+echo "${GREEN}Upgrade done!${NO_COLOR}"
 
 ## Call the restart function and handle failure
 re || {
-    echo "${RED}Restart Emacs command not available.${NO_COLOR}"
+    echo "${RED}Restart Emacs command not available!${NO_COLOR}"
     exit 1
 }
