@@ -9,6 +9,7 @@
 archive_prefix="emacs"
 archive_file_type="tar.gz"
 max_archives=3 # Set the maximum number of archives to keep
+archive_backup_dir="backups"
 
 ## Colors
 GREEN='\033[0;32m'
@@ -29,6 +30,8 @@ echo "Backup started..."
 
 ## Navigate to the configuration directory
 cd ~/.config/ || exit
+
+mkdir -p "${archive_backup_dir}"
 
 ## Check for existing archive files
 archives=$(ls ${archive_prefix}*${archive_file_type}* 2>/dev/null)
@@ -57,7 +60,7 @@ git_sha=$(git -C "$(pwd)/emacs" rev-parse --short HEAD)
 archive_name="${archive_prefix}_$(date +%Y-%m-%d_%H-%M-%S)_${git_sha}.${archive_file_type}"
 
 ## Create a new archive file
-tar --create --gzip --file "${archive_name}" "${archive_prefix}/"
+tar --create --gzip --file "$(pwd)/backups/${archive_name}" "${archive_prefix}/"
 
 echo "${GREEN}Backup end. Starting upgrade...${NO_COLOR}"
 
