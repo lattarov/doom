@@ -98,7 +98,6 @@ JOBS=`nproc --ignore=1` # use almost all cores
                              --with-png \
                              --with-xml2 \
                              --with-tiff \
-                             --with-x-toolkit=yes \
                              --with-libsystemd \
                              --with-modules \
                              --with-gnutls \
