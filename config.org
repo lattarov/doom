@@ -89,6 +89,7 @@ JOBS=`nproc --ignore=1` # use almost all cores
  ./autogen.sh && ./configure \
                              --with-dbus \
                              --with-native-compilation \
+                             --with-tree-sitter \
                              --with-mailutils \
                              -with-pgtk \
                              --with-imagemagick \
