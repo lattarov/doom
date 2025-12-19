@@ -86,7 +86,24 @@ JOBS=`nproc --ignore=1` # use almost all cores
 # taken from
 # https://gist.github.com/abidanBrito/2b5e447f191bb6bb70c9b6fe6f9e7956 for the rest
 # https://www.reddit.com/r/emacs/comments/123klvf/emacs29_build_from_git_with_sqlite3/ (for sqlite3 error)
- ./autogen.sh && ./configure     --with-dbus      --with-native-compilation      --with-mailutils    -with-pgtk --with-imagemagick --with-gif --with-jpeg --with-png --with-xml2 --with-tiff --with-x-toolkit=yes --with-libsystemd --with-modules --with-gnutls -with-wide-int --with-x-toolkit=no  CFLAGS="-O2 -pipe -mtune=native -march=native -fomit-frame-pointer"
+ ./autogen.sh && ./configure \
+                             --with-dbus \
+                             --with-native-compilation \
+                             --with-mailutils \
+                             -with-pgtk \
+                             --with-imagemagick \
+                             --with-gif \
+                             --with-jpeg \
+                             --with-png \
+                             --with-xml2 \
+                             --with-tiff \
+                             --with-x-toolkit=yes \
+                             --with-libsystemd \
+                             --with-modules \
+                             --with-gnutls \
+                             -with-wide-int \
+                             --with-x-toolkit=no \
+                             CFLAGS="-O2 -pipe -mtune=native -march=native -fomit-frame-pointer"
 
 sudo make -j${JOBS} NATIVE_FULL_AOT=1
 
