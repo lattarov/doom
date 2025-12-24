@@ -890,6 +890,8 @@ SyncState *
 **** mu
 ***** Setup and installation
 
+****** Option 1: build from source
+
 The solution was to manually compile mu and install it by following instructions in [[github:https://github.com/djcb/mu][mu]].
 
 According to the README:
@@ -904,12 +906,12 @@ meson
 clone somewhere the latest release from mu, I used https://github.com/djcb/mu/releases/tag/v1.12.7
 (this version already comes with mu4e)
 
-****** Dependencies
+
+******* Dependencies
 #+begin_src sh :tangle no
 sudo apt-get install meson libgmime-3.0-dev libxapian-dev
 #+end_src
 
-****** Compile
 cd wherever mu release tarball was decompressed and
 
 #+begin_src sh :tangle no
@@ -919,7 +921,15 @@ sudo make install
 
 The tarball contains mu and mu4e.
 
-****** Init and index mail in maildir
+****** Option 2: Install with package manager
+
+WARNING there can be mismatches between mu and mu4e!
+#+begin_src sh :tangle no
+sudo apt-get install mu4e
+#+end_src
+
+
+***** Init and index mail in maildir
 Create the Maildir, in this config it is set to ~/Mail and run
 
 #+begin_src sh :tangle no
@@ -929,45 +939,50 @@ mu index
 
 if mu4e is not found in Emacs, add the path (probably the one below to the load-path)
 
-#+begin_src emacs-lisp :tangle config.el
-;; installation path for mu4e installed by the makefile of mu-1.12.7
-(add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu4e")
-#+end_src
 
 From this point onwards, mu4e should be up and running.
 *** Configuration
 
 #+begin_src emacs-lisp :tangle config.el
-;; Each path is relative to the path of the maildir you passed to mu
+(use-package! mu
+  :defer t
+  :init
+  ;; installation path for mu4e installed by the makefile (manual compiled)
+    (add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu4e")
 
-;; (setopt mu4e-get-mail-command "mbsync gmail"
-;;       ;; get emails and index every 5 minutes
-;;       mu4e-update-interval 300
-;; 	  ;; send emails with format=flowed
-;; 	  mu4e-compose-format-flowed t
-;; 	  ;; no need to run cleanup after indexing for gmail
-;; 	  mu4e-index-cleanup nil
-;; 	  mu4e-index-lazy-check t
-;;       ;; more sensible date format
-;;       mu4e-headers-date-format "%d.%m.%y")
+    ;; apt-based installation
+    (let* ((mu-version-command               "mu --version")
+        (mu-version-command-output-prefix "version ")
+        (mu-version-command-output        (shell-command-to-string mu-version-command))
+        (mu4e-target-version              (string-trim (string-remove-prefix
+                                                            mu-version-command-output-prefix
+                                                            mu-version-command-output)))
+        (mu4e-target-path-base            "/usr/share/emacs/site-lisp/elpa-src/mu4e-")
+        (mu4e-load-path                   (concat mu4e-target-path-base
+                                                    mu4e-target-version)))
+    ;; check if directory exusts
+    (if (file-directory-p mu4e-load-path)
+        (add-to-list 'load-path mu4e-load-path)
+        (error "Path to mu4e does not exist: %s. \n Potential version mismatch between mu and mu4e"
+            mu4e-load-path)))
 
-(set-email-account! "@gmail.com"
-  '((mu4e-sent-folder       . "/gmail/Sent Mail")
-    (mu4e-drafts-folder     . "/gmail/Drafts")
-    (mu4e-trash-folder      . "/gmail/Trash")
-    (mu4e-refile-folder     . "/gmail/All Mail")
-    (smtpmail-smtp-user     . "victorlattaro@gmail.com")
-    (mu4e-compose-signature . "---\nVictor Lattaro Volpini"))
-  )
-;; if "gmail" is missing from the address or maildir, the account must be
-;; specified manually in `+mu4e-gmail-accounts':
-(setopt +mu4e-gmail-accounts '(("victorlattaro@gmail.com" . "/victorlattaro")))
+    ;; setting up accounts
+    (set-email-account! "@gmail.com"
+    '((mu4e-sent-folder       . "/gmail/Sent Mail")
+        (mu4e-drafts-folder     . "/gmail/Drafts")
+        (mu4e-trash-folder      . "/gmail/Trash")
+        (mu4e-refile-folder     . "/gmail/All Mail")
+        (smtpmail-smtp-user     . "victorlattaro@gmail.com")
+        (mu4e-compose-signature . "---\nVictor Lattaro Volpini")))
+    ;; if "gmail" is missing from the address or maildir, the account must be
+    ;; specified manually in `+mu4e-gmail-accounts':
+    (setopt +mu4e-gmail-accounts '(("victorlattaro@gmail.com" . "/victorlattaro")))
 
-;; Each path is relative to the path of the maildir you passed to mu
-(setopt mu4e-index-cleanup nil
-      ;; because gmail uses labels as folders we can use lazy check since
-      ;; messages don't really "move"
-      mu4e-index-lazy-check t)
+    ;; Each path is relative to the path of the maildir you passed to mu
+    (setopt mu4e-index-cleanup nil
+            ;; because gmail uses labels as folders we can use lazy check since
+            ;; messages don't really "move"
+            mu4e-index-lazy-check t))
 #+end_src
 
 * Copilot :wip:
