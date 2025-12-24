@@ -126,15 +126,15 @@ systemctl --user restart emacs
 * Cross platform compatibility :wip:
 #+begin_src emacs-lisp :tangle config.el
 
-(defvar vlv-environment-personal
+(defvar vlv-env-personal
   "PERSONAL"
-  "Value set to vlv-environment if in personal environment.")
+  "Value set to vlv-env if in personal environment.")
 
-(defvar vlv-environment-work
+(defvar vlv-env-work
   "WORK"
-  "Value set to vlv-environment if in work environment.")
+  "Value set to vlv-env if in work environment.")
 
-(defcustom vlv-environment vlv-environment-personal
+(defcustom vlv-env vlv-env-personal
   "The current environment.
 
 This will be used to activate or not certain functionalities
@@ -145,34 +145,34 @@ TODO: replace this by a dedicated config for work once the doom
 profiles API is stable.
 "
   :type 'string
-  :options '(vlv-environment-personal vlv-environment-work))
+  :options '(vlv-env-personal vlv-env-work))
 
 (if (eq system-type 'gnu/linux)
-    (setopt vlv-environment vlv-environment-personal)
-    (setopt vlv-environment vlv-environment-work))
+    (setopt vlv-env vlv-env-personal)
+    (setopt vlv-env vlv-env-work))
 
-(defun vlv-environment-work ()
+(defun vlv-env-work ()
   "Returns t if in work environment, nil otherwise."
-  (string-equal vlv-environment vlv-environment-work))
+  (string-equal vlv-env vlv-env-work))
 
-(defun vlv-environment-personal ()
+(defun vlv-env-personal ()
   "Returns t if in personal environment, nil otherwise."
-  (string-equal vlv-environment vlv-environment-personal))
+  (string-equal vlv-env vlv-env-personal))
 
 ;; external doom dependencies in work environment
-(when (vlv-environment-work)
-  (let* ((vlv-environment-work-emacs-install-path  "c:/Emacs/")
-         (vlv-environment-work-runtimes-path       (expand-file-name "runtimes/"
-                                                                     vlv-environment-work-emacs-install-path))
-         (vlv-environment-work-runtimes-fd-path    (expand-file-name "fd"
-                                                                     vlv-environment-work-runtimes-path))
-         (vlv-environment-work-runtimes-rg-path    (expand-file-name "rg"
-                                                                     vlv-environment-work-runtimes-path))
+(when (vlv-env-work)
+  (let* ((vlv-env-work-emacs-install-path  "c:/Emacs/")
+         (vlv-env-work-runtimes-path       (expand-file-name "runtimes/"
+                                                                     vlv-env-work-emacs-install-path))
+         (vlv-env-work-runtimes-fd-path    (expand-file-name "fd"
+                                                                     vlv-env-work-runtimes-path))
+         (vlv-env-work-runtimes-rg-path    (expand-file-name "rg"
+                                                                     vlv-env-work-runtimes-path))
 
-         (paths-to-add (list vlv-environment-work-emacs-install-path
-                             vlv-environment-work-runtimes-path
-                             vlv-environment-work-runtimes-fd-path
-                             vlv-environment-work-runtimes-rg-path)))
+         (paths-to-add (list vlv-env-work-emacs-install-path
+                             vlv-env-work-runtimes-path
+                             vlv-env-work-runtimes-fd-path
+                             vlv-env-work-runtimes-rg-path)))
     ;; Add each existing path to `exec-path` and to the PATH env var
     (dolist (path paths-to-add)
       (let ((dir (directory-file-name (expand-file-name path))))
@@ -192,7 +192,7 @@ profiles API is stable.
   (add-to-list 'default-frame-alist '(alpha-background . 60))
 
   ;; welcome screen
-  (when (vlv-environment-personal)
+  (when (vlv-env-personal)
         (defun vlv/doom-dashboard-draw-ascii-banner-fn ()
             (let* ((banner
                     '("██╗      █████╗ ████████╗████████╗ █████╗ ██████╗  ██████╗ "
@@ -325,7 +325,7 @@ this configures bash to be used as the default shell bash. In theory it corrects
 (use-package! org
   :defer t
   :init
-    (if (vlv-environment-work)
+    (if (vlv-env-work)
           (setopt org-directory "~/OneDrive - Kestrel Vision/org")
           (setopt org-directory "~/org/"))
 
@@ -334,7 +334,7 @@ this configures bash to be used as the default shell bash. In theory it corrects
                               #'show-smartparens-mode)
 
     ;; babel
-    (when (vlv-environment-work)
+    (when (vlv-env-work)
     (setopt org-babel-C++-compiler "clang"
             org-babel-C-compiler   "clang")))
 #+end_src
@@ -691,7 +691,7 @@ Prerequisites:
 ;; copy elfeed.org to the org directory. Put here so that the elfeed.org
 ;; is tangled whenever doom-reload is run.
 
-(when (vlv-environment-personal)
+(when (vlv-env-personal)
   (copy-file (expand-file-name "elfeed.org" doom-user-dir) org-directory t))
 #+end_src
 
@@ -1442,7 +1442,7 @@ Found in https://emacs.stackexchange.com/questions/60200/magit-remove-local-bran
 
     (setopt magit-clone-always-transient t)
 
-    (setopt magit-clone-default-directory (if (vlv-environment-personal)
+    (setopt magit-clone-default-directory (if (vlv-env-personal)
                                               "~/dev/"
                                             "D:/@Src/"))
 
