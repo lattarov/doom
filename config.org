@@ -330,7 +330,13 @@ this configures bash to be used as the default shell bash. In theory it corrects
           (setopt org-directory "~/org/"))
 
   :config
-    (add-hook! 'org-mode-hook 'olivetti-mode))
+    (add-hook! 'org-mode-hook #'olivetti-mode
+                              #'show-smartparens-mode)
+
+    ;; babel
+    (when (vlv-environment-work)
+    (setopt org-babel-C++-compiler "clang"
+            org-babel-C-compiler   "clang")))
 #+end_src
 ** Org agenda
 *** Improvements
@@ -1134,18 +1140,6 @@ In this case, the source directory is *c:/Tiama/tree-sitter*.
 
 #+begin_src
 mklink /D "c:/Users/LATTARO-VOLPINI/.config/emacs/.local/cache/tree-sitter" "c:/Tiama/tree-sitter"
-#+end_src
-
-** Org babel
-#+begin_src emacs-lisp :tangle config.el
-(use-package! org
-  :defer t
-  :config
-    (when (vlv-environment-work)
-      (setopt org-babel-C++-compiler "clang"
-              org-babel-C-compiler   "clang")))
-
-(add-hook! 'org-mode-hook 'show-smartparens-mode)
 #+end_src
 
 * Compiler explorer
