@@ -452,7 +452,8 @@ Allow automatic recognition of projects given a list of paths.
   :defer t
   :config
     (setopt +workspaces-on-switch-project-behavior t)
-    (setopt projectile-project-search-path '("~/dev")))
+    (setopt projectile-project-search-path '("~/dev"
+                                             "D:/@Src")))
 #+end_src
 
 * Dired
@@ -1455,6 +1456,10 @@ Found in https://emacs.stackexchange.com/questions/60200/magit-remove-local-bran
         '("K" "delete all merged" vlv/delete-merged-branches))
 
     (setopt magit-clone-always-transient t)
+
+    (setopt magit-clone-default-directory (if (vlv-environment-personal)
+                                              "~/dev/"
+                                            "D:/@Src/"))
 
     ;; add "develop" to magit long lived and main branch name lists.
     (add-to-list 'magit-long-lived-branches "develop")
