@@ -158,6 +158,29 @@ profiles API is stable.
 (defun vlv-environment-personal ()
   "Returns t if in personal environment, nil otherwise."
   (string-equal vlv-environment vlv-environment-personal))
+
+;; external doom dependencies in work environment
+(when (vlv-environment-work)
+  (let* ((vlv-environment-work-emacs-install-path  "c:/Emacs/")
+         (vlv-environment-work-runtimes-path       (expand-file-name "runtimes/"
+                                                                     vlv-environment-work-emacs-install-path))
+         (vlv-environment-work-runtimes-fd-path    (expand-file-name "fd"
+                                                                     vlv-environment-work-runtimes-path))
+         (vlv-environment-work-runtimes-rg-path    (expand-file-name "rg"
+                                                                     vlv-environment-work-runtimes-path))
+
+         (paths-to-add (list vlv-environment-work-emacs-install-path
+                             vlv-environment-work-runtimes-path
+                             vlv-environment-work-runtimes-fd-path
+                             vlv-environment-work-runtimes-rg-path)))
+    ;; Add each existing path to `exec-path` and to the PATH env var
+    (dolist (path paths-to-add)
+      (let ((dir (directory-file-name (expand-file-name path))))
+        (when (file-directory-p dir)
+          ;; Add to Emacs' exec-path (used by call-process, etc.)
+          (add-to-list 'exec-path dir)
+          ;; Also add to the OS PATH environment so external tools can be found
+          (setenv "PATH" (concat dir ";" (getenv "PATH"))))))))
 #+end_src
 
 * Doom
