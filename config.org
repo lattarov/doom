@@ -91,7 +91,7 @@ JOBS=`nproc --ignore=1` # use almost all cores
                              --with-native-compilation \
                              --with-tree-sitter \
                              --with-mailutils \
-                             -with-pgtk \
+                             --with-pgtk \
                              --with-imagemagick \
                              --with-gif \
                              --with-jpeg \
@@ -101,9 +101,9 @@ JOBS=`nproc --ignore=1` # use almost all cores
                              --with-libsystemd \
                              --with-modules \
                              --with-gnutls \
-                             -with-wide-int \
                              --with-x-toolkit=no \
                              CFLAGS="-O2 -pipe -mtune=native -march=native -fomit-frame-pointer"
+                             --with-wide-int \
 
 sudo make -j${JOBS} NATIVE_FULL_AOT=1
 
