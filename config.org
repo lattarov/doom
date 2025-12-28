@@ -1388,7 +1388,7 @@ sudo apt-get install ffmpeg
          :desc "EWW" "u" #'vlv/eww))
 
   :config
-    (add-hook! 'eww-mode-hook olivetti-mode)
+    (add-hook! 'eww-mode-hook 'olivetti-mode)
     (set-variable 'eww-bookmarks
                 '((:url   "https://lars.ingebrigtsen.no/"
                     :title "Random Thoughts - Lars Ingebritsen")
