@@ -473,13 +473,14 @@ Allow automatic recognition of projects given a list of paths.
   :defer t
   :config
   (setopt dirvish-quick-access-entries
-          (let ((org-path (expand-file-name org-directory)))
+          (let ((org-path (expand-file-name org-directory))
+               (repos-path (if (vlv-env-work) "d:/@Src/" "~/dev/repos/")))
             `(("h" "~/" "Home")
               ("d" "~/Downloads/" "Downloads")
               ("D" "~/Documents/" "Documents")
               ("t" "c:/Tiama/" "Tiama")
               ("o" ,org-path "Org")
-              ("r" "~/dev/repos/" "Repos")))))
+              ("r" ,repos-path "Repos")))))
 
 (map! :leader
     (:prefix ("o" . "open")
