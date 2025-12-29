@@ -485,17 +485,20 @@ Allow automatic recognition of projects given a list of paths.
     :desc "dirvish" "d" #'dirvish))
 #+end_src
 
-#+begin_src emacs-lisp :tangle no
-;; FIXME This does not rebind + to a new menu.
-(map! :after dired
-      :map dired-mode-map
-      "+" nil)
+#+begin_src emacs-lisp :tangle config.el
+(use-package! dirvish
+  :defer t
+  :config
+  (transient-define-prefix vlv-dirvish-create ()
+    "Transient menu to create new file or directory in dirvish."
+    ["Create"
+     ("d" "directory" dired-create-directory)
+     ("f" "file" dired-create-empty-file)])
 
-(map! :after dirvish
-      :map (dirvish-mode-map dirvish-directory-view-mode-map)
-      :prefix (("" . "new")
-      :desc "file" "d" #'dired-create-directory
-      :desc "file" "f" #'dired-create-empty-file))
+  ;; (map! :map dired-mode-map   :n "+" nil)
+  ;; (map! :map dired-mode-map   :n "+" #'vlv-dirvish-create)
+  (map! :map dirvish-mode-map :n "+" nil)
+  (map! :map dirvish-mode-map :n "+" #'vlv-dirvish-create))
 #+end_src
 
 * YASNIPPET
