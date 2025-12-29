@@ -954,6 +954,7 @@ From this point onwards, mu4e should be up and running.
 #+begin_src emacs-lisp :tangle config.el
 (use-package! mu
   :defer t
+  :if (vlv-env-personal)
   :init
   ;; installation path for mu4e installed by the makefile (manual compiled)
     (add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu4e")
