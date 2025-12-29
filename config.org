@@ -190,76 +190,73 @@ profiles API is stable.
 
 * Doom
 #+begin_src emacs-lisp :tangle config.el
-(use-package! doom
-  :defer t
-  :config
-  ;; frame
-  (add-to-list 'default-frame-alist '(alpha-background . 60))
+;; frame
+(add-to-list 'default-frame-alist '(alpha-background . 60))
 
-  ;; welcome screen
-  (when (vlv-env-personal)
-        (defun vlv/doom-dashboard-draw-ascii-banner-fn ()
-            (let* ((banner
-                    '("██╗      █████╗ ████████╗████████╗ █████╗ ██████╗  ██████╗ "
-                      "██║     ██╔══██╗╚══██╔══╝╚══██╔══╝██╔══██╗██╔══██╗██╔═══██╗"
-                      "██║     ███████║   ██║      ██║   ███████║██████╔╝██║   ██║"
-                      "██║     ██╔══██║   ██║      ██║   ██╔══██║██╔═██╚╗██║   ██║"
-                      "███████╗██║  ██║   ██║      ██║   ██║  ██║██║ ███║███████╔╝"
-                      "╚══════╝╚═╝  ╚═╝   ╚═╝      ╚═╝   ╚═╝  ╚═╝╚═╝ ╚══╝╚══════╝ "
-                      "                                                           "
-                      "                        E M A C S                          "
-                      "                                                           "
-                      "                                                           "
-                      "                                                           "))
-                    (longest-line (apply #'max (mapcar #'length banner))))
-                (put-text-property
-                (point)
-                (dolist (line banner (point))
-                (insert (+doom-dashboard--center
-                            +doom-dashboard--width
-                            (concat
-                            line (make-string (max 0 (- longest-line (length line)))
-                                            32)))
-                        "\n"))
-                'face 'doom-dashboard-banner)))
+;; welcome screen
+(when (vlv-env-personal)
+    (defun vlv/doom-dashboard-draw-ascii-banner-fn ()
+        (let* ((banner
+                '("██╗      █████╗ ████████╗████████╗ █████╗ ██████╗  ██████╗ "
+                    "██║     ██╔══██╗╚══██╔══╝╚══██╔══╝██╔══██╗██╔══██╗██╔═══██╗"
+                    "██║     ███████║   ██║      ██║   ███████║██████╔╝██║   ██║"
+                    "██║     ██╔══██║   ██║      ██║   ██╔══██║██╔═██╚╗██║   ██║"
+                    "███████╗██║  ██║   ██║      ██║   ██║  ██║██║ ███║███████╔╝"
+                    "╚══════╝╚═╝  ╚═╝   ╚═╝      ╚═╝   ╚═╝  ╚═╝╚═╝ ╚══╝╚══════╝ "
+                    "                                                           "
+                    "                        E M A C S                          "
+                    "                                                           "
+                    "                                                           "
+                    "                                                           "))
+                (longest-line (apply #'max (mapcar #'length banner))))
+            (put-text-property
+            (point)
+            (dolist (line banner (point))
+            (insert (+doom-dashboard--center
+                        +doom-dashboard--width
+                        (concat
+                        line (make-string (max 0 (- longest-line (length line)))
+                                        32)))
+                    "\n"))
+            'face 'doom-dashboard-banner)))
 
-        (setopt +doom-dashboard-ascii-banner-fn #'vlv/doom-dashboard-draw-ascii-banner-fn)
+    (setopt +doom-dashboard-ascii-banner-fn #'vlv/doom-dashboard-draw-ascii-banner-fn))
 
-        ;; font
-        (setopt doom-font (font-spec :family "Cascadia Code" :size 18))
+    ;; font
+    (setopt doom-font (font-spec :family "Cascadia Code" :size 18))
 
 
-        ;; make lookup online use eww insted of default browser.
-        (setopt +lookup-open-url-fn 'eww)
+    ;; make lookup online use eww insted of default browser.
+    (setopt +lookup-open-url-fn 'eww)
 
-        ;; clear SPC f p prefix to use in private config
-        (map! :leader
-            :prefix "f" "p" nil)
+    ;; clear SPC f p prefix to use in private config
+    (map! :leader
+        :prefix "f" "p" nil)
 
-        (defun vlv-open-init-file ()
-          "Opens the init.el file from private config."
-          (interactive)
-          (find-file (expand-file-name doom-module-init-file doom-user-dir)))
+    (defun vlv-open-init-file ()
+        "Opens the init.el file from private config."
+        (interactive)
+        (find-file (expand-file-name doom-module-init-file doom-user-dir)))
 
-        (defun vlv-open-literate-config-file ()
-          "Opens the config.org file from private config.
+    (defun vlv-open-literate-config-file ()
+        "Opens the config.org file from private config.
 
-          NOTE we can't use +literate-config-file for it's not loaded
-          until the user opens that file."
-          (interactive)
-          (find-file (expand-file-name "config.org" doom-user-dir)))
+        NOTE we can't use +literate-config-file for it's not loaded
+        until the user opens that file."
+        (interactive)
+        (find-file (expand-file-name "config.org" doom-user-dir)))
 
-        (defun vlv-open-elfeed-file ()
-          "Opens the elfeed feeds descriptor file from private config."
-          (interactive)
-          (find-file (expand-file-name "elfeed.org" doom-user-dir)))
+    (defun vlv-open-elfeed-file ()
+        "Opens the elfeed feeds descriptor file from private config."
+        (interactive)
+        (find-file (expand-file-name "elfeed.org" doom-user-dir)))
 
-        (map! :leader
-            :prefix ("f p" . "Private config")
-            :desc "Open init.el" "i" #'vlv-open-init-file
-            :desc "Open elfeed.org" "e" #'vlv-open-elfeed-file
-            :desc "Open literate config" "c" #'vlv-open-literate-config-file
-            :desc "Browse" "p" #'doom/open-private-config)))
+    (map! :leader
+        :prefix ("f p" . "Private config")
+        :desc "Open init.el" "i" #'vlv-open-init-file
+        :desc "Open elfeed.org" "e" #'vlv-open-elfeed-file
+        :desc "Open literate config" "c" #'vlv-open-literate-config-file
+        :desc "Browse" "p" #'doom/open-private-config)
 #+end_src
 
 ** Checking for new modules
