@@ -169,10 +169,15 @@ profiles API is stable.
          (vlv-env-work-runtimes-rg-path    (expand-file-name "rg"
                                                                      vlv-env-work-runtimes-path))
 
+         (vlv-env-work-cygwin-bin-path    "C:/cygwin64/bin")
+
+
          (paths-to-add (list vlv-env-work-emacs-install-path
                              vlv-env-work-runtimes-path
                              vlv-env-work-runtimes-fd-path
-                             vlv-env-work-runtimes-rg-path)))
+                             vlv-env-work-runtimes-rg-path
+                             vlv-env-work-cygwin-bin-path)))
+
     ;; Add each existing path to `exec-path` and to the PATH env var
     (dolist (path paths-to-add)
       (let ((dir (directory-file-name (expand-file-name path))))
