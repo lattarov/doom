@@ -875,7 +875,7 @@ Host imap.gmail.com
 SSLType IMAPS
 AuthMechs LOGIN
 User victorlattaro@gmail.com
-Pass "epcw alkb kynv svai"
+PassCmd "gpg2 -q --for-your-eyes-only --no-tty -d ~/.config/doom/.mbsyncpass.gpg"
 
 MaildirStore gmail-local
 Path ~/Mail/gmail/
@@ -1239,7 +1239,7 @@ mklink /D "c:/Users/LATTARO-VOLPINI/.config/emacs/.local/cache/tree-sitter" "c:/
 * vterm
 Found an interesting completion mechanism in [[https://www.reddit.com/r/emacs/comments/ovkyov/vterm_completion_for_files_directories_command/][this reddit post]] and it considerably improves usage.
 
-#+begin_src emacs-lisp :tangle config.el
+#+begin_src emacs-lisp :tangle no
 (use-package! vterm
   :defer t
   :config
