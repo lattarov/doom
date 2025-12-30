@@ -1385,7 +1385,7 @@ sudo apt-get install ffmpeg
     "Opens Emacs Web Wowser (EWW) in a new workspace."
 
     (interactive)
-    (setopt-local vlv-eww-workspace-name "EWW")
+    (setq-local vlv-eww-workspace-name "EWW")
     (progn
         (+workspace-new vlv-eww-workspace-name)
         (+workspace-switch vlv-eww-workspace-name)
