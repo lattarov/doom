@@ -1333,46 +1333,46 @@ sudo apt-get install ffmpeg
 (use-package! whisper.el
   :defer t ;; A configuration error appears if the fur is not set.
   :config
-  (setopt whisper-install-directory "/tmp/")
-          whisper-model "base"
-          whisper-language "en"
-          whisper-translate nil
-          whisper-use-threads (/ (num-processors) 2))
+    (setopt whisper-install-directory "/tmp/"
+            whisper-model "base"
+            whisper-language "en"
+            whisper-translate nil
+            whisper-use-threads (/ (num-processors) 2))
 
-(defun vlv/call-whisper-run-print-language ()
-    (minibuffer-message
-        (concat
-            "Calling whisper-run with language: " (symbol-value 'whisper-language)))
-    (call-interactively 'whisper-run))
+    (defun vlv/call-whisper-run-print-language ()
+        (minibuffer-message
+            (concat
+                "Calling whisper-run with language: " (symbol-value 'whisper-language)))
+        (call-interactively 'whisper-run))
 
-(defun vlv/whisper-run-english ()
-    (interactive)
-    (setopt whisper-language "en")
-    (vlv/call-whisper-run-print-language))
+    (defun vlv/whisper-run-english ()
+        (interactive)
+        (setopt whisper-language "en")
+        (vlv/call-whisper-run-print-language))
 
-(defun vlv/whisper-run-portuguese ()
-    (interactive)
-    (setopt whisper-language "pt")
-    (vlv/call-whisper-run-print-language))
+    (defun vlv/whisper-run-portuguese ()
+        (interactive)
+        (setopt whisper-language "pt")
+        (vlv/call-whisper-run-print-language))
 
-(defun vlv/whisper-run-french ()
-    (interactive)
-    (setopt whisper-language "fr")
-    (vlv/call-whisper-run-print-language))
+    (defun vlv/whisper-run-french ()
+        (interactive)
+        (setopt whisper-language "fr")
+        (vlv/call-whisper-run-print-language))
 
-(defun vlv/whisper-run-other-lang ()
-    (interactive)
-    (setopt whisper-language
-          (read-string "Insert language to be used by whisper.cpp:"))
-    (vlv/call-whisper-run-print-language))
+    (defun vlv/whisper-run-other-lang ()
+        (interactive)
+        (setopt whisper-language
+            (read-string "Insert language to be used by whisper.cpp:"))
+        (vlv/call-whisper-run-print-language))
 
-(map! :leader
-    :prefix ("z" . "whisper")
-    :desc "whisper-run" "z" #'whisper-run
-    :desc "whisper-run" "e" #'vlv/whisper-run-english
-    :desc "whisper-run" "f" #'vlv/whisper-run-french
-    :desc "whisper-run" "o" #'vlv/whisper-run-other-lang
-    :desc "whisper-run" "p" #'vlv/whisper-run-portuguese)
+    (map! :leader
+        :prefix ("z" . "whisper")
+        :desc "whisper-run" "z" #'whisper-run
+        :desc "whisper-run" "e" #'vlv/whisper-run-english
+        :desc "whisper-run" "f" #'vlv/whisper-run-french
+        :desc "whisper-run" "o" #'vlv/whisper-run-other-lang
+        :desc "whisper-run" "p" #'vlv/whisper-run-portuguese))
 #+end_src
 
 * Emacs Web Wowser EWW
