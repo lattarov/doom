@@ -182,7 +182,8 @@
        (python +lsp        ; is better than ugly
                +conda
                +ein
-               +tree-sitter)
+               +tree-sitter
+               +uv)
        ;;qt                ; the 'cutest' gui framework ever
        ;;racket            ; a DSL for DSLs
        ;;raku              ; the artist formerly known as perl6
