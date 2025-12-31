@@ -71,7 +71,7 @@ tar --create --gzip --file "$(pwd)/backups/${archive_name}" "${archive_prefix}/"
 echo "${GREEN}Backup end. Starting upgrade...${NO_COLOR}"
 
 ## Uncomment the following lines to enable the upgrade functionality
-doom upgrade --aot || echo "${RED}Failed upgrade doom!${NO_COLOR}"
+doom upgrade --force --aot || echo "${RED}Failed upgrade doom!${NO_COLOR}"
 
 doom sync --gc || echo "${RED}Failed to sync doom post-upgrade!${NO_COLOR}"
 
