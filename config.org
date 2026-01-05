@@ -600,14 +600,14 @@ Prerequisites:
 - Install Auggie CLI: https://docs.augmentcode.com/cli/setup-auggie/install-auggie-cli
 - Login to Augment: =auggie login=
 
-#+begin_src emacs-lisp :tangle packages.el
+#+begin_src emacs-lisp :tangle no
 ;; agent-shell and its dependencies for Auggie CLI integration
 (package! shell-maker)
 (package! acp)
 (package! agent-shell)
 #+end_src
 
-#+begin_src emacs-lisp :tangle config.el
+#+begin_src emacs-lisp :tangle no
 ;; Load local Auggie configuration
 (add-to-list 'load-path (expand-file-name "auggie" doom-user-dir))
 
