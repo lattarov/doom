@@ -199,7 +199,7 @@ profiles API is stable.
 
 ;; welcome screen
 (when (vlv-env-personal)
-    (defun vlv/doom-dashboard-draw-ascii-banner-fn ()
+    (defun vlv-doom-dashboard-draw-ascii-banner-fn ()
         (let* ((banner
                 '("██╗      █████╗ ████████╗████████╗ █████╗ ██████╗  ██████╗ "
                     "██║     ██╔══██╗╚══██╔══╝╚══██╔══╝██╔══██╗██╔══██╗██╔═══██╗"
@@ -224,7 +224,7 @@ profiles API is stable.
                     "\n"))
             'face 'doom-dashboard-banner)))
 
-    (setopt +doom-dashboard-ascii-banner-fn #'vlv/doom-dashboard-draw-ascii-banner-fn))
+    (setopt +doom-dashboard-ascii-banner-fn #'vlv-doom-dashboard-draw-ascii-banner-fn))
 
     ;; font
     (setopt doom-font (font-spec :family "Cascadia Code" :size 18))
@@ -1003,7 +1003,7 @@ From this point onwards, mu4e should be up and running.
 *** Transient menu :WIP:
 #+begin_src emacs-lisp :tangle config.el
 (require 'transient)
-(defvar vlv/vnc-machines
+(defvar vlv-vnc-machines
     '(("VISIO"            . "10.4.54.221")
       ("VERN"             . "10.102.31.63")
       ("CMX"              . "10.4.54.223")
@@ -1016,50 +1016,50 @@ From this point onwards, mu4e should be up and running.
       ("BDT-INCA10-VERN"  . "10.102.31.64"))
     "Alist mapping machine names to their TightVNC IPs.")
 
-(defvar vlv/vncviewer-path "C:/Program Files/TightVNC/tvnviewer.exe"
+(defvar vlv-vncviewer-path "C:/Program Files/TightVNC/tvnviewer.exe"
     "Path to the TightVNC client.")
 
-(defvar vlv/vnc-password "ADMINVME"
+(defvar vlv-vnc-password "ADMINVME"
     "Default password.")
 
-(defun vlv/connect-to-vnc-with-machine (machine)
+(defun vlv-connect-to-vnc-with-machine (machine)
     "Connect to a given machine via VNC given it's name."
-    (let ((ip (cdr (assoc machine vlv/vnc-machines))))
+    (let ((ip (cdr (assoc machine vlv-vnc-machines))))
     (message ip)
-    (if (and ip (file-exists-p vlv/vncviewer-path))
-            (start-process "tightvnc" nil vlv/vncviewer-path ip (concat "-password=" vlv/vnc-password))
+    (if (and ip (file-exists-p vlv-vncviewer-path))
+            (start-process "tightvnc" nil vlv-vncviewer-path ip (concat "-password=" vlv-vnc-password))
     (message "Error: Wrong path to TightVNC or bad password!"))))
 
-(defun vlv/connect-to-vnc-with-ip (ip)
+(defun vlv-connect-to-vnc-with-ip (ip)
     "Conectar ao VNC na máquina IP."
-    (if (and ip (file-exists-p vlv/vncviewer-path))
-        (start-process "tightvnc" nil vlv/vncviewer-path ip (concat "-password=" vlv/vnc-password))
+    (if (and ip (file-exists-p vlv-vncviewer-path))
+        (start-process "tightvnc" nil vlv-vncviewer-path ip (concat "-password=" vlv-vnc-password))
     (message "Error: Failed to launch TightVNC")))
 
-(defun vlv/vnc-menu-items ()
+(defun vlv-vnc-menu-items ()
     "Return a list of transient menu items for VNC machines."
     (mapcar (lambda (pair)
             (list (substring (car pair) 0 1) (car pair)
-                    (lambda () (interactive) (vlv/connect-to-vnc (car pair)))))
-            vlv/vnc-machines))
+                    (lambda () (interactive) (vlv-connect-to-vnc (car pair)))))
+            vlv-vnc-machines))
 
-(transient-define-prefix vlv/vnc-menu ()
+(transient-define-prefix vlv-vnc-menu ()
 "Transient menu for selecting a TightVNC machine."
     [["Machines"
-    ("a" "VISIO"             (lambda () (interactive) (vlv/connect-to-vnc-with-machine "VISIO")))
-    ("z" "VERN"              (lambda () (interactive) (vlv/connect-to-vnc-with-machine "VERN")))
-    ("e" "CMX"               (lambda () (interactive) (vlv/connect-to-vnc-with-machine "CMX")))
-    ("r" "CXP"               (lambda () (interactive) (vlv/connect-to-vnc-with-machine "CXP")))
-    ("t" "BDT-INCA10-VERN"   (lambda () (interactive) (vlv/connect-to-vnc-with-machine "BDT-INCA10-VERN")))
-    ("s" "STARLORD"          (lambda () (interactive) (vlv/connect-to-vnc-with-machine "STARLORD")))
-    ("o" "Choose IP:"        (lambda () (interactive) (vlv/connect-to-vnc-with-ip  (read-string "IP:"))))]])
+    ("a" "VISIO"             (lambda () (interactive) (vlv-connect-to-vnc-with-machine "VISIO")))
+    ("z" "VERN"              (lambda () (interactive) (vlv-connect-to-vnc-with-machine "VERN")))
+    ("e" "CMX"               (lambda () (interactive) (vlv-connect-to-vnc-with-machine "CMX")))
+    ("r" "CXP"               (lambda () (interactive) (vlv-connect-to-vnc-with-machine "CXP")))
+    ("t" "BDT-INCA10-VERN"   (lambda () (interactive) (vlv-connect-to-vnc-with-machine "BDT-INCA10-VERN")))
+    ("s" "STARLORD"          (lambda () (interactive) (vlv-connect-to-vnc-with-machine "STARLORD")))
+    ("o" "Choose IP:"        (lambda () (interactive) (vlv-connect-to-vnc-with-ip  (read-string "IP:"))))]])
 
-(map! :prefix "C-c" :desc "TightVNC menu" "v" #'vlv/vnc-menu)
+(map! :prefix "C-c" :desc "TightVNC menu" "v" #'vlv-vnc-menu)
 #+end_src
 
 ** Visual Studio
 #+begin_src emacs-lisp tangle config.el
-(defun vlv/find-and-open-sln-in-visual-studio ()
+(defun vlv-find-and-open-sln-in-visual-studio ()
   "Find all .sln files in the current Projectile project and open one in Visual Studio at the current buffer's file."
   (interactive)
   (let* ((project-root (projectile-project-root))
@@ -1076,7 +1076,7 @@ From this point onwards, mu4e should be up and running.
 
 (map! :leader
       :prefix "o"
-      :desc "Find project SLN and open Visual Studio" "s" #'vlv/find-and-open-sln-in-visual-studio)
+      :desc "Find project SLN and open Visual Studio" "s" #'vlv-find-and-open-sln-in-visual-studio)
 #+end_src
 ** Wind River Workbench
 
@@ -1093,12 +1093,12 @@ From this point onwards, mu4e should be up and running.
   :type 'file
   :group 'work)
 
-(defun vlv/open-windriver3-workbench ()
+(defun vlv-open-windriver3-workbench ()
   "Open Wind River Workbench 3 IDE."
     (interactive)
     (start-process "workbench" nil vlv--workbench3-path))
 
-(defun vlv/open-windriver4-workbench ()
+(defun vlv-open-windriver4-workbench ()
   "Open Wind River Workbench 4 IDE."
     (interactive)
     (start-process "workbench" nil vlv--workbench4-path))
@@ -1106,11 +1106,11 @@ From this point onwards, mu4e should be up and running.
 
 (map! :leader
       :prefix "o"
-      :desc "WindRiver Workbench 3" "W" #'vlv/open-windriver3-workbench)
+      :desc "WindRiver Workbench 3" "W" #'vlv-open-windriver3-workbench)
 
 (map! :leader
       :prefix "o"
-      :desc "WindRiver Workbench 4" "w" #'vlv/open-windriver4-workbench)
+      :desc "WindRiver Workbench 4" "w" #'vlv-open-windriver4-workbench)
 #+end_src
 
 ** consult-everything (windows)
@@ -1192,19 +1192,19 @@ mklink /D "c:/Users/LATTARO-VOLPINI/.config/emacs/.local/cache/tree-sitter" "c:/
 (use-package! spotify
   ;; WARNING using "defer t" makes the package not be loaded when using bindings.
   :config
-    (defun vlv/spotify-next-and-display()
+    (defun vlv-spotify-next-and-display()
     "Plays the next song and displays it's author, name and album."
     (interactive)
     (spotify-next)
     (call-interactively 'spotify-current))
 
-    (defun vlv/spotify-previous-and-display()
+    (defun vlv-spotify-previous-and-display()
     "Plays the previous song and displays it's author, name and album."
     (interactive)
     (spotify-previous)
     (call-interactively 'spotify-current))
 
-    (defun vlv/spotify-playpause-and-display()
+    (defun vlv-spotify-playpause-and-display()
     "Toggles pause and displays it's author, name and album."
     (interactive)
     (spotify-playpause)
@@ -1212,10 +1212,10 @@ mklink /D "c:/Users/LATTARO-VOLPINI/.config/emacs/.local/cache/tree-sitter" "c:/
 
 (map! :leader
         (:prefix ("v" . "perso")
-        :desc "spotify-play/pause" "p" #'vlv/spotify-playpause-and-display
-        :desc "spotify-previous" "P" #'vlv/spotify-previous-and-display
+        :desc "spotify-play/pause" "p" #'vlv-spotify-playpause-and-display
+        :desc "spotify-previous" "P" #'vlv-spotify-previous-and-display
         :desc "spotify-open" "q" #'spotify-quit
-        :desc "spotify-next" "n" #'vlv/spotify-next-and-display))
+        :desc "spotify-next" "n" #'vlv-spotify-next-and-display))
 #+end_src
 * vterm
 Found an interesting completion mechanism in [[https://www.reddit.com/r/emacs/comments/ovkyov/vterm_completion_for_files_directories_command/][this reddit post]] and it considerably improves usage.
@@ -1320,40 +1320,40 @@ sudo apt-get install ffmpeg
             whisper-translate nil
             whisper-use-threads (/ (num-processors) 2))
 
-    (defun vlv/call-whisper-run-print-language ()
+    (defun vlv-call-whisper-run-print-language ()
         (minibuffer-message
             (concat
                 "Calling whisper-run with language: " (symbol-value 'whisper-language)))
         (call-interactively 'whisper-run))
 
-    (defun vlv/whisper-run-english ()
+    (defun vlv-whisper-run-english ()
         (interactive)
         (setopt whisper-language "en")
-        (vlv/call-whisper-run-print-language))
+        (vlv-call-whisper-run-print-language))
 
-    (defun vlv/whisper-run-portuguese ()
+    (defun vlv-whisper-run-portuguese ()
         (interactive)
         (setopt whisper-language "pt")
-        (vlv/call-whisper-run-print-language))
+        (vlv-call-whisper-run-print-language))
 
-    (defun vlv/whisper-run-french ()
+    (defun vlv-whisper-run-french ()
         (interactive)
         (setopt whisper-language "fr")
-        (vlv/call-whisper-run-print-language))
+        (vlv-call-whisper-run-print-language))
 
-    (defun vlv/whisper-run-other-lang ()
+    (defun vlv-whisper-run-other-lang ()
         (interactive)
         (setopt whisper-language
             (read-string "Insert language to be used by whisper.cpp:"))
-        (vlv/call-whisper-run-print-language))
+        (vlv-call-whisper-run-print-language))
 
     (map! :leader
         :prefix ("z" . "whisper")
         :desc "whisper-run" "z" #'whisper-run
-        :desc "whisper-run" "e" #'vlv/whisper-run-english
-        :desc "whisper-run" "f" #'vlv/whisper-run-french
-        :desc "whisper-run" "o" #'vlv/whisper-run-other-lang
-        :desc "whisper-run" "p" #'vlv/whisper-run-portuguese))
+        :desc "whisper-run" "e" #'vlv-whisper-run-english
+        :desc "whisper-run" "f" #'vlv-whisper-run-french
+        :desc "whisper-run" "o" #'vlv-whisper-run-other-lang
+        :desc "whisper-run" "p" #'vlv-whisper-run-portuguese))
 #+end_src
 
 * Emacs Web Wowser EWW
@@ -1362,7 +1362,7 @@ sudo apt-get install ffmpeg
 (use-package! eww
   :defer t
   :init
-  (defun vlv/eww ()
+  (defun vlv-eww ()
     "Opens Emacs Web Wowser (EWW) in a new workspace."
 
     (interactive)
@@ -1377,7 +1377,7 @@ sudo apt-get install ffmpeg
 
   (map! :leader
         (:prefix ("o")
-         :desc "EWW" "u" #'vlv/eww))
+         :desc "EWW" "u" #'vlv-eww))
 
   :config
     (add-hook! 'eww-mode-hook 'olivetti-mode)
@@ -1424,7 +1424,7 @@ It can be quite disturbing to have a white background PDF displayed given that b
 (use-package! magit
   :defer t
   :config
-    (defun vlv/delete-merged-branches ()
+    (defun vlv-delete-merged-branches ()
     "Fetch prune then deletes branches already merged to a target branch.
 Found in https://emacs.stackexchange.com/questions/60200/magit-remove-local-branches-that-were-merged-into-another-branch"
     (interactive)
@@ -1445,7 +1445,7 @@ Found in https://emacs.stackexchange.com/questions/60200/magit-remove-local-bran
         (message "Nothing to delete"))))
 
     (transient-append-suffix 'magit-branch "C"
-        '("K" "delete all merged" vlv/delete-merged-branches))
+        '("K" "delete all merged" vlv-delete-merged-branches))
 
     (setopt magit-clone-always-transient t)
 
