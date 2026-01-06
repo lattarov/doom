@@ -126,34 +126,38 @@ systemctl --user restart emacs
 * Cross platform compatibility :wip:
 #+begin_src emacs-lisp :tangle config.el
 
-(let ((vlv-env-personal "PERSONAL")
-      (vlv-env-work     "WORK"))
+(defvar vlv-env-personal
+  "PERSONAL"
+  "Value set to vlv-env if in personal environment.")
 
-    (defcustom vlv-env vlv-env-personal
-    "The current environment.
+(defvar vlv-env-work
+  "WORK"
+  "Value set to vlv-env if in work environment.")
 
-    This will be used to activate or not certain functionalities
-    of this configuration, maily by tangling or not certain babel
-    code blocks.
+(defcustom vlv-env vlv-env-personal
+  "The current environment.
 
-    TODO: replace this by a dedicated config for work once the doom
-    profiles API is stable.
-    "
-    :type 'string
-    :options '(vlv-env-personal vlv-env-work))
+This will be used to activate or not certain functionalities
+of this configuration, maily by tangling or not certain babel
+code blocks.
 
-    (if (eq system-type 'gnu/linux)
-        (setopt vlv-env vlv-env-personal)
-        (setopt vlv-env vlv-env-work))
+TODO: replace this by a dedicated config for work once the doom
+profiles API is stable.
+"
+  :type 'string
+  :options '(vlv-env-personal vlv-env-work))
 
-    (defun vlv-env-work ()
-    "Returns t if in work environment, nil otherwise."
-    (string-equal vlv-env vlv-env-work))
+(if (eq system-type 'gnu/linux)
+    (setopt vlv-env vlv-env-personal)
+    (setopt vlv-env vlv-env-work))
 
-    (defun vlv-env-personal ()
-    "Returns t if in personal environment, nil otherwise."
-    (string-equal vlv-env vlv-env-personal)))
+(defun vlv-env-work ()
+  "Returns t if in work environment, nil otherwise."
+  (string-equal vlv-env vlv-env-work))
 
+(defun vlv-env-personal ()
+  "Returns t if in personal environment, nil otherwise."
+  (string-equal vlv-env vlv-env-personal))
 
 ;; external doom dependencies in work environment
 (when (vlv-env-work)
