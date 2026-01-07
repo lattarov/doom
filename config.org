@@ -126,61 +126,53 @@ systemctl --user restart emacs
 * Cross platform compatibility :wip:
 #+begin_src emacs-lisp :tangle config.el
 
-(defvar vlv-env-personal
-  "PERSONAL"
-  "Value set to vlv-env if in personal environment.")
+(defgroup vlv nil
+  "personal config toggles."
+  :group 'convenience)
 
-(defvar vlv-env-work
-  "WORK"
-  "Value set to vlv-env if in work environment.")
-
-(defcustom vlv-env vlv-env-personal
+(defcustom vlv-env
+  (if (eq system-type 'gnu/linux) :personal :work)
   "The current environment.
 
-This will be used to activate or not certain functionalities
-of this configuration, maily by tangling or not certain babel
-code blocks.
+Used to enable/disable parts of the configuration.
+
 
 TODO: replace this by a dedicated config for work once the doom
-profiles API is stable.
-"
-  :type 'string
-  :options '(vlv-env-personal vlv-env-work))
+profiles API is stable."
+  :type '(choice (const :tag "PERSONAL" :personal)
+                 (const :tag "WORK"     :work))
+  :group 'vlv)
 
-(if (eq system-type 'gnu/linux)
-    (setopt vlv-env vlv-env-personal)
-    (setopt vlv-env vlv-env-work))
+(defun vlv-env-work-p ()
+  "Return non-nil if the current environment is Work."
+  (eq vlv-env :work))
 
-(defun vlv-env-work ()
-  "Returns t if in work environment, nil otherwise."
-  (string-equal vlv-env vlv-env-work))
-
-(defun vlv-env-personal ()
-  "Returns t if in personal environment, nil otherwise."
-  (string-equal vlv-env vlv-env-personal))
+(defun vlv-env-personal-p ()
+  "Return non-nil if the current environment is Personal."
+  (eq vlv-env :personal))
 
 ;; external doom dependencies in work environment
-(when (vlv-env-work)
-  (let* ((vlv-env-work-emacs-install-path  "c:/Emacs/")
-         (vlv-env-work-runtimes-path       (expand-file-name "runtimes/"
-                                                                     vlv-env-work-emacs-install-path))
-         (vlv-env-work-runtimes-fd-path    (expand-file-name "fd"
-                                                                     vlv-env-work-runtimes-path))
-         (vlv-env-work-runtimes-rg-path    (expand-file-name "rg"
-                                                                     vlv-env-work-runtimes-path))
+(when (vlv-env-work-p)
+  (let* ((vlv-env-work-p-emacs-install-path  "c:/Emacs/")
+         (vlv-env-work-p-runtimes-path       (expand-file-name "runtimes/"
+                                                                     vlv-env-work-p-emacs-install-path))
+         (vlv-env-work-p-runtimes-fd-path    (expand-file-name "fd"
+                                                                     vlv-env-work-p-runtimes-path))
+         (vlv-env-work-p-runtimes-rg-path    (expand-file-name "rg"
+                                                                     vlv-env-work-p-runtimes-path))
 
-         (vlv-env-work-cygwin-path         "C:/cygwin64")
+         (vlv-env-work-p-cygwin-path         "C:/cygwin64")
 
-         (vlv-env-work-cygwin-bin-path     (expand-file-name "bin"
-                                                                     vlv-env-work-cygwin-path))
+         (vlv-env-work-p-cygwin-bin-path     (expand-file-name "bin"
+                                                                     vlv-env-work-p-cygwin-path))
 
 
-         (paths-to-add (list vlv-env-work-emacs-install-path
-                             vlv-env-work-runtimes-path
-                             vlv-env-work-runtimes-fd-path
-                             vlv-env-work-runtimes-rg-path
-                             vlv-env-work-cygwin-path
-                             vlv-env-work-cygwin-bin-path)))
+         (paths-to-add (list vlv-env-work-p-emacs-install-path
+                             vlv-env-work-p-runtimes-path
+                             vlv-env-work-p-runtimes-fd-path
+                             vlv-env-work-p-runtimes-rg-path
+                             vlv-env-work-p-cygwin-path
+                             vlv-env-work-p-cygwin-bin-path)))
 
     ;; Add each existing path to `exec-path` and to the PATH env var
     (dolist (path paths-to-add)
@@ -198,7 +190,7 @@ profiles API is stable.
 (add-to-list 'default-frame-alist '(alpha-background . 60))
 
 ;; welcome screen
-(when (vlv-env-personal)
+(when (vlv-env-personal-p)
     (defun vlv-doom-dashboard-draw-ascii-banner-fn ()
         (let* ((banner
                   '("██╗      █████╗ ████████╗████████╗ █████╗ ██████╗  ██████╗ "
@@ -331,7 +323,7 @@ this configures bash to be used as the default shell bash. In theory it corrects
 (use-package! org
   :defer t
   :init
-    (if (vlv-env-work)
+    (if (vlv-env-work-p)
           (setopt org-directory "~/OneDrive - Kestrel Vision/org")
           (setopt org-directory "~/org/"))
 
@@ -340,7 +332,7 @@ this configures bash to be used as the default shell bash. In theory it corrects
                               #'show-smartparens-mode)
 
     ;; babel
-    (when (vlv-env-work)
+    (when (vlv-env-work-p)
     (setopt org-babel-C++-compiler "clang"
             org-babel-C-compiler   "clang")))
 #+end_src
@@ -457,7 +449,7 @@ Allow automatic recognition of projects given a list of paths.
   :config
   (setopt dirvish-quick-access-entries
           (let ((org-path (expand-file-name org-directory))
-               (repos-path (if (vlv-env-work) "d:/@Src/" "~/dev/repos/")))
+               (repos-path (if (vlv-env-work-p) "d:/@Src/" "~/dev/repos/")))
             `(("h" "~/" "Home")
               ("d" "~/Downloads/" "Downloads")
               ("D" "~/Documents/" "Documents")
@@ -684,7 +676,7 @@ Prerequisites:
 ;; copy elfeed.org to the org directory. Put here so that the elfeed.org
 ;; is tangled whenever doom-reload is run.
 
-(when (vlv-env-personal)
+(when (vlv-env-personal-p)
   (copy-file (expand-file-name "elfeed.org" doom-user-dir) org-directory t))
 #+end_src
 
@@ -939,7 +931,7 @@ From this point onwards, mu4e should be up and running.
 #+begin_src emacs-lisp :tangle config.el
 (use-package! mu
   :defer t
-  :if (vlv-env-personal)
+  :if (vlv-env-personal-p)
   :init
   ;; installation path for mu4e installed by the makefile (manual compiled)
     (add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu4e")
@@ -1451,7 +1443,7 @@ Found in https://emacs.stackexchange.com/questions/60200/magit-remove-local-bran
 
     (setopt magit-clone-always-transient t)
 
-    (setopt magit-clone-default-directory (if (vlv-env-personal)
+    (setopt magit-clone-default-directory (if (vlv-env-personal-p)
                                               "~/dev/"
                                             "D:/@Src/"))
 
