@@ -131,7 +131,7 @@ systemctl --user restart emacs
   :group 'convenience)
 
 (defcustom vlv-env
-  (if (eq system-type 'gnu/linux) :personal :work)
+  (if (eq system-type 'gnu/linux) "PERSONAL" "WORK")
   "The current environment.
 
 Used to enable/disable parts of the configuration.
@@ -139,17 +139,17 @@ Used to enable/disable parts of the configuration.
 
 TODO: replace this by a dedicated config for work once the doom
 profiles API is stable."
-  :type '(choice (const :tag "PERSONAL" :personal)
-                 (const :tag "WORK"     :work))
+  :type '(choice (const :tag "PERSONAL")
+                 (const :tag "WORK"))
   :group 'vlv)
 
 (defun vlv-env-work-p ()
   "Return non-nil if the current environment is Work."
-  (eq vlv-env :work))
+  (string-equal vlv-env "WORK"))
 
 (defun vlv-env-personal-p ()
   "Return non-nil if the current environment is Personal."
-  (eq vlv-env :personal))
+  (string-equal vlv-env "PERSONAL"))
 
 ;; external doom dependencies in work environment
 (when (vlv-env-work-p)
