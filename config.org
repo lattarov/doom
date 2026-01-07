@@ -1550,3 +1550,12 @@ There's some overlay with LSP errors and warnings (in rust at least), hence this
                  'woman-mode-hook)
            #'olivetti-mode)
 #+end_src
+
+* Conventional commits
+
+#+begin_src emacs-lisp :tangle config.el
+;; convert to proper package with vc
+(load-file "conventional-commits-snippets.el")
+#+end_src
+
+
