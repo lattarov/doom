@@ -1572,3 +1572,11 @@ There's some overlay with LSP errors and warnings (in rust at least), hence this
     ;; Enable debug messages
     (setopt flyover-debug nil))  ; Show all levels
 #+end_src
+
+* Conventional commits
+
+#+begin_src emacs-lisp :tangle config.el
+;; TODO convert to proper package with vc
+(load-file (expand-file-name "conventional-commits-snippets.el"
+                             doom-user-dir))
+#+end_src
