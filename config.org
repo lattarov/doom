@@ -402,6 +402,44 @@ Shortcuts are mapped with the SPC n r prefix by default.
         (:prefix ("r" . "roam")
          :desc "Open org roam UI" "u" #'org-roam-ui-mode)))
 #+end_src
+** org-gtd
+#+begin_src emacs-lisp :tangle packages.el
+(package! org-gtd)
+#+end_src
+
+#+begin_src emacs-lisp :tangle config.el
+(use-package! org-gtd
+  :defer t
+  :after org
+  :demand t
+  :init
+  ;; Suppress upgrade warnings (must be set before package loads)
+  (setq org-gtd-update-ack "4.0.0")
+
+  (setq org-gtd-directory (expand-file-name "gtd/" org-directory))
+
+  :custom
+  ;; Configure TODO keyword states (options like "TODO(t)" or "DONE(d!)" are fine)
+  (org-todo-keywords '((sequence "TODO" "NEXT" "WAIT" "|" "DONE" "CNCL")))
+
+  ;; Map GTD semantic states to your keywords
+  (org-gtd-keyword-mapping '((todo     . "TODO")
+                             (next     . "NEXT")
+                             (wait     . "WAIT")
+                             (done     . "DONE")
+                             (canceled . "CNCL")))
+
+  :config
+  ;; REQUIRED: Enable org-edna for project dependencies
+  (org-edna-mode 1)
+
+  ;; Add org-gtd files to your agenda (must be in :config so org-gtd-directory is defined)
+  (setopt org-agenda-files (list org-gtd-directory)))
+
+(map! :leader
+      :prefix "o"
+      :desc "org-gtd" "g" #'org-gtd-command-center)
+#+end_src
 * Python
 #+begin_src emacs-lisp :tangle config.el
 (use-package! python
