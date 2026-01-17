@@ -60,7 +60,7 @@ It's already preinstalled in !PopOS 22.04
 *** NTSync module loading
 The loadable module ntsync, available since kernel 6.14, greatly improves Windows emulated software performance. Though available, it is not loaded by default.
 
-In order to load it at boot time, simply add
+In order to load it at boot time, simply create a file /etc/modules-load.d/ntsync (/etc/modules file is obsolete and undocumented) with:
 
 #+begin_quote
 ntsync
