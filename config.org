@@ -404,27 +404,26 @@ Shortcuts are mapped with the SPC n r prefix by default.
 
 #+begin_src emacs-lisp :tangle config.el
 (use-package! org-gtd
+  :after org
   :init
     ;; Suppress upgrade warnings (must be set before package loads)
     (setopt org-gtd-update-ack "4.3.1")
 
+  :config
     (setopt org-gtd-directory (expand-file-name "gtd/" org-directory))
 
-    ;; Add org-gtd files to your agenda (must be in :config so org-gtd-directory is defined)
     (add-to-list 'org-agenda-files org-gtd-directory)
 
-  :custom
-    ;; Configure TODO keyword states (options like "TODO(t)" or "DONE(d!)" are fine)
-    (org-todo-keywords '((sequence "TODO" "NEXT" "WAIT" "|" "DONE" "CNCL")))
+    ;; Configure TODO keyword states
+    (setopt org-todo-keywords '((sequence "TODO" "NEXT" "WAIT" "|" "DONE" "CNCL")))
 
     ;; Map GTD semantic states to your keywords
-    (org-gtd-keyword-mapping '((todo     . "TODO")
-                               (next     . "NEXT")
-                               (wait     . "WAIT")
-                               (done     . "DONE")
-                               (canceled . "CNCL")))
+    (setopt org-gtd-keyword-mapping '((todo     . "TODO")
+                                      (next     . "NEXT")
+                                      (wait     . "WAIT")
+                                      (done     . "DONE")
+                                      (canceled . "CNCL")))
 
-  :config
     ;; REQUIRED: Enable org-edna for project dependencies
     (org-edna-mode 1)
 
@@ -434,19 +433,17 @@ Shortcuts are mapped with the SPC n r prefix by default.
     ;; Avoids manual saving all buffers once we're done
     (setopt org-gtd-save-after-organize t)
 
-    ;; Global keybindings (work anywhere in Emacs)
-  :bind
-    (;; Keybinding for organizing items (only works in clarify buffers)
-  :map org-gtd-clarify-mode-map
-    ("C-c c" . org-gtd-organize)
+    ;; keybindings
+    (map!
+        (:map org-gtd-clarify-mode-map
+               "C-c c" #'org-gtd-organize)
+        (:map org-agenda-mode-map
+               "C-c ." #'org-gtd-agenda-transient))
 
-    ;; Quick actions on tasks in agenda views (optional but recommended)
-  :map org-agenda-mode-map
-    ("C-c ." . org-gtd-agenda-transient)))
+    (map! :leader
+          :prefix "o"
+          :desc "org-gtd" "g" #'org-gtd-command-center))
 
-(map! :leader
-      :prefix "o"
-      :desc "org-gtd" "g" #'org-gtd-command-center)
 #+end_src
 
 * Python
