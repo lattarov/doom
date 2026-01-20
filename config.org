@@ -353,7 +353,6 @@ this configures bash to be used as the default shell bash. In theory it corrects
 
     ;; add org-roam files to org-agenda-files
     (add-to-list 'org-agenda-files
-                 org-roam-directory
                  org-directory)
 
     (setopt org-journal-enable-agenda-integration t))
