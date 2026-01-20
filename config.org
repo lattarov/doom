@@ -408,9 +408,6 @@ Shortcuts are mapped with the SPC n r prefix by default.
 
 #+begin_src emacs-lisp :tangle config.el
 (use-package! org-gtd
-  :defer t
-  :after org
-  :demand t
   :init
   ;; Suppress upgrade warnings (must be set before package loads)
   (setq org-gtd-update-ack "4.2.2")
@@ -429,11 +426,14 @@ Shortcuts are mapped with the SPC n r prefix by default.
                              (canceled . "CNCL")))
 
   :config
-  ;; REQUIRED: Enable org-edna for project dependencies
-  (org-edna-mode 1)
+    ;; REQUIRED: Enable org-edna for project dependencies
+    (org-edna-mode 1)
 
-  ;; Add org-gtd files to your agenda (must be in :config so org-gtd-directory is defined)
-  (setopt org-agenda-files (list org-gtd-directory)))
+    ;; Add org-gtd files to your agenda (must be in :config so org-gtd-directory is defined)
+    (add-to-list 'org-agenda-files org-gtd-directory)
+
+    ;; Make org-gtd prompt for refile target instead of auto-refiling
+    (setopt org-gtd-refile-to-any-target nil))
 
 (map! :leader
       :prefix "o"
