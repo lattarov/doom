@@ -415,7 +415,7 @@ Shortcuts are mapped with the SPC n r prefix by default.
     (add-to-list 'org-agenda-files org-gtd-directory)
 
     ;; Configure TODO keyword states
-    (setopt org-todo-keywords '((sequence "TODO" "NEXT" "WAIT" "|" "DONE" "CNCL")))
+    (setopt org-todo-keywords '((sequence "IDEA" "TODO" "NEXT" "WAIT" "DONE" "CNCL")))
 
     ;; Map GTD semantic states to your keywords
     (setopt org-gtd-keyword-mapping '((todo     . "TODO")
