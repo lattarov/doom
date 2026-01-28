@@ -23,8 +23,9 @@
        :completion
        ;;company           ; the ultimate code completion backend
        (corfu +dabbrev     ; complete with cap(f), cape and a flying feather!
-              +orderless
-              +icons)
+              +icons
+              +orderless)
+
        ;;helm              ; the *other* search engine for love and life
        ;;ido               ; the other *other* search engine...
        ;;ivy               ; a search engine for love and life
@@ -73,8 +74,9 @@
        word-wrap         ; soft wrapping with language-aware indent
 
        :emacs
-       (dired +icons             ; making dired pretty [functional]
-              +dirvish)
+       (dired +dirvish   ; making dired pretty [functional]
+              +icons)
+
        electric          ; smarter, keyword-based electric-indent
        eww               ; the internet is gross
        (ibuffer +icons)          ; interactive buffer management
@@ -132,9 +134,10 @@
        ;;coq               ; proofs-as-programs
        ;;crystal           ; ruby at the speed of c
        (if (featurep :system 'windows-nt)
-           (csharp +lsp        ; unity, .NET, and mono shenanigans
-                   +tree-sitter
-                   +dotnet))
+           (csharp +dotnet   ; unity, .NET, and mono shenanigans
+                   +lsp
+                   +tree-sitter))
+
        data              ; config/data formats
        ;;(dart +flutter)   ; paint ui and not much else
        ;;dhall
@@ -168,19 +171,19 @@
        ;;nim               ; python + lisp at the speed of c
        ;;nix               ; I hereby declare "nix geht mehr!"
        ;;ocaml             ; an objective camel
-       (org +roam          ; organize your plain life in plain text
-            +pretty
-            +present
+       (org +dragndrop     ; organize your plain life in plain text
+            +journal
             +pomodoro
-            +dragndrop
-            +journal)
+            +present
+            +pretty
+            +roam)
        ;;php               ; perl's insecure younger brother
        plantuml          ; diagrams for confusing people more
        ;;graphviz          ; diagrams for confusing yourself even more
        ;;purescript        ; javascript, but functional
-       (python +lsp        ; is better than ugly
-               +conda
+       (python +conda      ; is better than ugly
                +ein
+               +lsp
                +tree-sitter
                +uv)
        ;;qt                ; the 'cutest' gui framework ever
@@ -203,8 +206,8 @@
        ;;zig               ; C, but simpler
 
        :email
-       (mu4e +org
-             +gmail)
+       (mu4e +gmail
+             +org)
        ;;notmuch
        ;;(wanderlust +gmail)
 
