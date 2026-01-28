@@ -407,7 +407,7 @@ Shortcuts are mapped with the SPC n r prefix by default.
   :after org
   :init
     ;; Suppress upgrade warnings (must be set before package loads)
-    (setopt org-gtd-update-ack "4.3.1")
+    (setopt org-gtd-update-ack "4.5.0")
 
   :config
     (setopt org-gtd-directory (expand-file-name "gtd/" org-directory))
