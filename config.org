@@ -353,6 +353,8 @@ this configures bash to be used as the default shell bash. In theory it corrects
      ;; start on monday
     (setopt org-agenda-start-on-weekday 1)
 
+    (setopt org-agenda-span 20)
+
     (setopt org-journal-enable-agenda-integration t))
 
 ;; in org agenda, the default behavior for leave all org-related buffers
