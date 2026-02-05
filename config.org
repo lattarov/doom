@@ -218,6 +218,8 @@ profiles API is stable."
 
     (setopt +doom-dashboard-ascii-banner-fn #'vlv-doom-dashboard-draw-ascii-banner-fn))
 
+    (setopt doom-theme 'doom-dark+)
+
     ;; font
     (setopt doom-font (font-spec :family "Cascadia Code" :size 18))
 
