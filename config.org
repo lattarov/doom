@@ -1472,6 +1472,8 @@ It can be quite disturbing to have a white background PDF displayed given that b
 (use-package! ibuffer
   :defer t
   :config
+  (add-hook! 'ibuffer-mode-hook 'olivetti-mode)
+
   (map! :leader
         (:prefix ("b")
          :desc "Kill buffer and window" "K" #'kill-buffer-and-window)))
