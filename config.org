@@ -627,6 +627,7 @@ Set ollama as default backend for gptel, add default model and a few tweaks.
                                 :models '((deepseek-coder-v2:16b)
                                         (ifioravanti/llamantino-2)
                                         (deepseek-r1:8b)
+                                        (deepseek-r1:32b)
                                         (ministral-3:8b)
                                         (deepseek-r1:7b))))
 
