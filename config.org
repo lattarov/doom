@@ -1188,7 +1188,7 @@ Download or compile grammars and add them to a subdirectory in C:/Tiama/ (to avo
 
 In this case, the source directory is *c:/Tiama/tree-sitter*.
 
-#+begin_src
+#+begin_src pwsh :tangle no
 mklink /D "c:/Users/LATTARO-VOLPINI/.config/emacs/.local/cache/tree-sitter" "c:/Tiama/tree-sitter"
 #+end_src
 
