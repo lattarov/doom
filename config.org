@@ -1,6 +1,33 @@
 * System setup
 ** TODO Setup script
 Do a command to be run by the target system's package manager/other to install all necessary dependencies, set environment variables, etc.
+** TODO External dependencies :wip:
+#+begin_src bash :tangle no
+sudo apt update
+sudo apt install # common dependencies
+                 fd-find \
+                 git \
+                 ripgreg \
+                 # mail client dependencies
+                 isync \
+                 mu4e \
+                 # org dependencies
+                 graphviz \
+                 maim \
+                 pandoc \
+                 sqlite3 \
+                 wl-clipboard
+                 xclip \
+
+# rust dependencies
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+
+# lsp dependencies
+sudo apt install npm \
+cargo install emacs-lsp-booster
+
+
+#+end_src
 ** Security
 *** Resources
 - [[https://christitus.com/linux-security-mistakes/][The 3 Biggest Security Mistakes Linux Users Make]]
