@@ -307,11 +307,6 @@ profiles API is stable."
         global-auto-revert-non-file-buffers t)
 #+end_src
 
-** Editing
-#+begin_src emacs-lisp :tangle config.el
-(add-hook! 'prog-mode-hook 'olivetti-mode)
-#+end_src
-
 ** Terminals (WIP)
 this configures bash to be used as the default shell bash. In theory it corrects a few issues concerning
 
@@ -321,10 +316,6 @@ this configures bash to be used as the default shell bash. In theory it corrects
         (setopt shell-file-name "C:/Windows/system32/bash.exe")
         (setenv "ESHELL" "bash")
  )
-#+end_src
-*** eshell
-#+begin_src emacs-lisp :tangle config.el
-(add-hook! 'eshell-mode-hook 'olivetti-mode)
 #+end_src
 
 ** Emacs Lisp Mode
@@ -344,6 +335,19 @@ this configures bash to be used as the default shell bash. In theory it corrects
   :defer t
   :config
   (setopt olivetti-body-width 120))
+
+(add-hook! '(Info-mode-hook
+             Man-mode-hook
+             elfeed-show-mode-hook
+             eshell-mode-hook
+             eww-mode-hook
+             help-mode-hook
+             helpful-mode-hoo
+             magit-mode-hook
+             markdown-mode-hook
+             org-mode-hook
+             prog-mode-hook
+             woman-mode-hook) 'olivetti-mode)
 #+end_src
 
 * Org
@@ -357,8 +361,7 @@ this configures bash to be used as the default shell bash. In theory it corrects
           (setopt org-directory "~/org/"))
 
   :config
-    (add-hook! 'org-mode-hook #'olivetti-mode
-                              #'show-smartparens-mode)
+    (add-hook! 'org-mode-hook #'show-smartparens-mode)
 
     ;; babel
     (when (vlv-env-work-p)
@@ -741,9 +744,7 @@ Prerequisites:
           (when (y-or-n-p (format "Delete %d entires?" count))
           (cl-loop for entry in entries
                   do (sk/elfeed-db-remove-entry (elfeed-entry-id entry)))))
-      (elfeed-search-update--force))
-
-    (add-hook! 'elfeed-show-mode-hook 'olivetti-mode))
+      (elfeed-search-update--force)))
 
 (map! :leader
     (:prefix ("e" . "elfeed")
@@ -1451,7 +1452,6 @@ sudo apt-get install ffmpeg
          :desc "EWW" "u" #'vlv-eww))
 
   :config
-    (add-hook! 'eww-mode-hook 'olivetti-mode)
     (set-variable 'eww-bookmarks
                 '((:url   "https://lars.ingebrigtsen.no/"
                     :title "Random Thoughts - Lars Ingebritsen")
@@ -1527,8 +1527,6 @@ Found in https://emacs.stackexchange.com/questions/60200/magit-remove-local-bran
     ;; add "develop" to magit long lived and main branch name lists.
     (add-to-list 'magit-long-lived-branches "develop")
     (add-to-list 'magit-main-branch-names "develop"))
-
-(add-hook! 'magit-mode-hook 'olivetti-mode)
 #+end_src
 
 * Flyover :WIP:
@@ -1572,20 +1570,4 @@ There's some overlay with LSP errors and warnings (in rust at least), hence this
 
     ;; Enable debug messages
     (setopt flyover-debug nil))  ; Show all levels
-#+end_src
-
-* Markdown mode
-
-#+begin_src emacs-lisp :tangle config.el
-(add-hook! 'markdown-mode-hook 'olivetti-mode)
-#+end_src
-
-* info, help(ful) and documentation modes
-#+begin_src emacs-lisp :tangle config.el
-(add-hook! (list 'help-mode-hook
-                 'helpful-mode-hook
-                 'Info-mode-hook
-                 'Man-mode-hook
-                 'woman-mode-hook)
-           #'olivetti-mode)
 #+end_src
