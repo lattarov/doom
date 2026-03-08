@@ -18,6 +18,11 @@ sudo apt install # common dependencies
                  sqlite3 \
                  wl-clipboard
                  xclip \
+                 # latex dependencies
+                 texlive-latex-base \
+                 texlive-fonts-recommended \
+                 texlive-fonts-extra \
+                 texlive-latex-extra \
 
 # rust dependencies
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
