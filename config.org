@@ -282,6 +282,8 @@ profiles API is stable."
         :desc "Open elfeed.org" "e" #'vlv-open-elfeed-file
         :desc "Open literate config" "c" #'vlv-open-literate-config-file
         :desc "Browse" "p" #'doom/open-private-config)
+
+    (add-hook! 'doom-scratch-buffer-hook 'org-mode)
 #+end_src
 
 ** Checking for new modules
