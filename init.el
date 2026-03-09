@@ -21,11 +21,12 @@
        (layout +azerty)   ; auie,ctsrnm is the superior home row
 
        :completion
-       ;;company           ; the ultimate code completion backend
-       (corfu +dabbrev     ; complete with cap(f), cape and a flying feather!
-              +icons
-              +orderless)
-
+       ;; BUG corfu windows do not work in cosmic AMD PC
+       (if (string= system-name "pop-os-desktop")
+           company            ; the ultimate code completion backend
+         (corfu +dabbrev      ; complete with cap(f), cape and a flying feather!
+                +icons
+                +orderless))
        ;;helm              ; the *other* search engine for love and life
        ;;ido               ; the other *other* search engine...
        ;;ivy               ; a search engine for love and life
