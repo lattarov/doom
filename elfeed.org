@@ -13,4 +13,3 @@
 ** [[https://akitaonrails.com/index.xml][Akita on Rails]]
 ** [[https://vkoskiv.com/atom.xml][vkoskiv's blog]]
 ** [[https://silosneeded.com/en/feed.xml][Silos Needed]]
-** [[https://www.phoronix.com/rss.php][Phoronix]]
