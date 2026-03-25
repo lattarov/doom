@@ -1069,7 +1069,7 @@ From this point onwards, mu4e should be up and running.
 #+begin_src emacs-lisp :tangle no
 ;; accept completion from copilot and fallback to company
 (use-package! copilot
-  :defet t
+  :defer t
   :hook (prog-mode . copilot-mode)
   :bind (:map copilot-completion-map
               ("<tab>" . 'copilot-accept-completion)
