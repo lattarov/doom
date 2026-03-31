@@ -345,6 +345,7 @@ this configures bash to be used as the default shell bash. In theory it corrects
 
 (add-hook! '(ibuffer-mode-hook
              Info-mode-hook
+             compilation-mode
              Man-mode-hook
              elfeed-show-mode-hook
              eshell-mode-hook
