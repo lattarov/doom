@@ -290,7 +290,11 @@ profiles API is stable."
 
     (add-hook! 'doom-scratch-buffer-hook 'org-mode)
 
-    (setopt doom-modeline-percent-position nil)
+    (setopt doom-modeline-enable-buffer-position nil)
+
+    (setopt doom-modeline-time-analogue-clock nil)
+
+    (setopt size-indication-mode nil)
 #+end_src
 
 ** Checking for new modules
