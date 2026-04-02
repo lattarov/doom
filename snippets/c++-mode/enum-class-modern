@@ -1,0 +1,17 @@
+# -*- mode: snippet -*-
+# name: enum-class-modern
+# key: enumc
+# group: cpp23
+# --
+/// @brief ${1:Enum description}
+enum class ${2:EnumName} : ${3:std::uint8_t} {
+    ${4:First}  = ${5:0},
+    ${6:Second} = ${7:1},
+    ${0:Third}  = ${8:2},
+};
+
+/// @brief Convert $2 to its underlying type
+constexpr auto to_underlying($2 e) noexcept
+{
+    return std::to_underlying(e);
+}

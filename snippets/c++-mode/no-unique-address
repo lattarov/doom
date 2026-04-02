@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: no-unique-address
+# key: noua
+# group: cpp20
+# --
+[[no_unique_address]] ${1:Allocator} ${2:alloc_}{};
+$0

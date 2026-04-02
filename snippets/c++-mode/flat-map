@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: flat-map
+# key: flatm
+# group: cpp23
+# --
+auto ${1:map} = std::flat_map<${2:std::string}, ${3:int}>{
+    {"${4:alpha}", ${5:1}},
+    {"${6:beta}",  ${7:2}},
+    $0
+};

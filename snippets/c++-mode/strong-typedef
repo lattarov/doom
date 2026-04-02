@@ -1,0 +1,23 @@
+# -*- mode: snippet -*-
+# name: strong-typedef
+# key: strong
+# group: cpp17
+# --
+/// @brief Strong typedef for ${1:int} tagged by ${2:Tag}
+/// @tparam Tag Phantom type for compile-time distinction
+template <typename Tag>
+class ${3:StrongType} {
+public:
+    constexpr explicit $3($1 value) noexcept : value_{value} {}
+    constexpr auto get() const noexcept -> $1 { return value_; }
+
+    auto operator<=>($3 const&) const = default;
+
+private:
+    $1 value_;
+};
+
+// Usage:
+// struct ${4:MetersTag} {};
+// using ${5:Meters} = $3<$4>;
+$0

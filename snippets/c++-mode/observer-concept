@@ -1,0 +1,18 @@
+# -*- mode: snippet -*-
+# name: observer-concept
+# key: obs
+# group: cpp20
+# --
+/// @brief Observer concept for event type ${1:Event}
+template <typename T, typename Event>
+concept ${2:Observer} = requires(T ${3:obs}, Event const& ${4:evt}) {
+    { $3.on_event($4) } -> std::same_as<void>;
+};
+
+/// @brief Dispatch event to all observers
+template <typename Event, $2<Event>... Observers>
+auto dispatch(Event const& evt, Observers&... obs) -> void
+{
+    (obs.on_event(evt), ...);
+    $0
+}

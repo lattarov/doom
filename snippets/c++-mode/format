@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: format
+# key: fmt
+# group: cpp20
+# --
+std::format("${1:{}}"sv, ${0:args})

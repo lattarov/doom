@@ -1,0 +1,36 @@
+# -*- mode: snippet -*-
+# name: scope-guard-class
+# key: guardc
+# group: cpp20
+# --
+/// @brief RAII scope guard executing cleanup on destruction
+template <std::invocable Func>
+class [[nodiscard]] ${1:ScopeGuard} {
+public:
+    explicit $1(Func func) noexcept
+        : func_{std::move(func)}
+        , active_{true}
+    {}
+
+    ~$1()
+    {
+        if (active_) {
+            func_();
+        }
+    }
+
+    $1($1 const&) = delete;
+    auto operator=($1 const&) -> $1& = delete;
+
+    $1($1&& other) noexcept
+        : func_{std::move(other.func_)}
+        , active_{std::exchange(other.active_, false)}
+    {}
+
+    void dismiss() noexcept { active_ = false; }
+
+private:
+    Func func_;
+    bool active_;
+};
+$0

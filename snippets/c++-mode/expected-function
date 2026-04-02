@@ -1,0 +1,17 @@
+# -*- mode: snippet -*-
+# name: expected-function
+# key: expf
+# group: cpp23
+# --
+/// @brief ${1:Brief description}
+/// @param ${2:param} ${3:Parameter description}
+/// @return ${4:Value type} on success, ${5:ErrorType} on failure
+auto ${6:function_name}(${7:ParamType} ${8:const&} $2)
+    -> std::expected<$4, $5>
+{
+    if (${9:error_condition}) {
+        return std::unexpected{$5::${10:ErrorValue}};
+    }
+    $0
+    return ${11:result};
+}

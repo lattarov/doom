@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: nodiscard-reason
+# key: nodisc
+# group: cpp20
+# --
+[[nodiscard("${1:Ignoring return value may cause resource leak}")]]
+auto ${2:function_name}(${3:params}) -> ${0:ReturnType};

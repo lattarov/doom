@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: deduction-guide
+# key: ctad
+# group: cpp17
+# --
+/// @brief Deduction guide for ${1:ClassName}
+template <typename ${2:T}>
+$1(${3:$2}) -> $1<${0:$2}>;

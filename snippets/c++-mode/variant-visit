@@ -1,0 +1,16 @@
+# -*- mode: snippet -*-
+# name: variant-visit
+# key: vvisit
+# group: cpp17
+# --
+std::visit(overloaded{
+    [](${1:int} ${2:val}) {
+        ${3:// handle int}
+    },
+    [](${4:std::string} const& ${5:val}) {
+        ${6:// handle string}
+    },
+    [](auto const& ${7:val}) {
+        ${0:// fallback}
+    }
+}, ${8:variant});

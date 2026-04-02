@@ -1,0 +1,14 @@
+# -*- mode: snippet -*-
+# name: aggregate
+# key: agg
+# group: cpp20
+# --
+/// @brief ${1:Aggregate description}
+struct ${2:Config} {
+    ${3:std::string} ${4:host}     = ${5:"localhost"};
+    ${6:int}         ${7:port}     = ${8:8080};
+    ${9:bool}        ${10:verbose} = ${11:false};
+
+    auto operator<=>($2 const&) const = default;
+};
+$0

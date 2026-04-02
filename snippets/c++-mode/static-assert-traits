@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: static-assert-traits
+# key: sat
+# group: cpp17
+# --
+static_assert(std::${1:is_nothrow_move_constructible_v}<${2:Type}>,
+    "$2 must be nothrow move constructible");
+static_assert(std::${3:is_trivially_copyable_v}<$2>,
+    "$2 must be trivially copyable");
+$0

@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: ranges-chunk
+# key: rngch
+# group: cpp23
+# --
+for (auto ${1:chunk} : ${2:container} | std::views::${3:chunk}(${4:3})) {
+    for (auto const& ${5:elem} : $1) {
+        $0
+    }
+}

@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# name: ranges-pipeline
+# key: rng
+# group: cpp20
+# --
+auto ${1:result} = ${2:container}
+    | std::views::${3:filter}([](auto const& ${4:x}) {
+        return ${5:predicate};
+    })
+    | std::views::${6:transform}([](auto const& $4) {
+        return ${7:projection};
+    })${0};

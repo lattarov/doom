@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: scope-guard
+# key: guard
+# group: cpp17
+# --
+auto ${1:guard} = std::unique_ptr<void, std::function<void(void*)>>{
+    reinterpret_cast<void*>(1),
+    [&](void*) noexcept {
+        ${0:// cleanup logic}
+    }
+};

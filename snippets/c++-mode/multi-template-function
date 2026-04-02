@@ -1,0 +1,24 @@
+# -*- mode: snippet -*-
+# name: multi-template-function
+# key: mtfun
+# group: cpp20
+# --
+/// @brief ${1:Brief description}
+/// @tparam ${2:T} ${3:First type}
+/// @tparam ${4:U} ${5:Second type}
+/// @tparam ${6:V} ${7:Third type}
+template <
+    typename $2,
+    typename $4,
+    typename $6>
+    requires ${8:ConceptA}<$2>
+          && ${9:ConceptB}<$4>
+          && ${10:ConceptC}<$6>
+auto ${11:function_name}(
+    $2 const& ${12:a},
+    $4 const& ${13:b},
+    $6 const& ${14:c})
+    -> ${15:ReturnType}
+{
+    $0
+}

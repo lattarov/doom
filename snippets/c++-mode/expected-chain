@@ -1,0 +1,16 @@
+# -*- mode: snippet -*-
+# name: expected-chain
+# key: expc
+# group: cpp23
+# --
+${1:source}
+    .and_then([](auto&& ${2:val}) -> std::expected<${3:NextType}, ${4:Error}> {
+        $0
+        return ${5:result};
+    })
+    .or_else([](auto&& ${6:err}) -> std::expected<$3, $4> {
+        return std::unexpected{${7:fallback_error}};
+    })
+    .transform([](auto&& ${8:val}) {
+        return ${9:transformed};
+    });

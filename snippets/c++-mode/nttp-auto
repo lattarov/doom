@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+# name: nttp-auto
+# key: nttp
+# group: cpp20
+# --
+/// @brief ${1:Brief description}
+/// @tparam N ${2:Non-type parameter description}
+template <auto ${3:N}>
+constexpr auto ${4:function_name}() -> decltype($3)
+{
+    $0
+    return $3;
+}

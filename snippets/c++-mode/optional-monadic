@@ -1,0 +1,16 @@
+# -*- mode: snippet -*-
+# name: optional-monadic
+# key: optm
+# group: cpp23
+# --
+${1:source}
+    .transform([](auto&& ${2:val}) {
+        return ${3:transformed};
+    })
+    .and_then([](auto&& $2) -> std::optional<${4:NextType}> {
+        $0
+        return ${5:result};
+    })
+    .or_else([] -> std::optional<$4> {
+        return ${6:fallback};
+    });

@@ -1,0 +1,30 @@
+# -*- mode: snippet -*-
+# name: builder-pattern
+# key: builder
+# group: cpp17
+# --
+/// @brief Builder for ${1:Product}
+class ${2:Builder} {
+public:
+    auto ${3:with_name}(std::string ${4:name}) && -> $2&&
+    {
+        ${5:name_} = std::move($4);
+        return std::move(*this);
+    }
+
+    auto ${6:with_value}(${7:int} ${8:value}) && -> $2&&
+    {
+        ${9:value_} = $8;
+        return std::move(*this);
+    }
+
+    [[nodiscard]] auto build() && -> $1
+    {
+        return $1{std::move($5), $9};
+    }
+
+private:
+    std::string $5;
+    $7 $9{};
+};
+$0

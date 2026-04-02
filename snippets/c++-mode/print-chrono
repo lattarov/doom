@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: print-chrono
+# key: plnc
+# group: cpp23
+# --
+std::println(
+    "${1:Elapsed}: {:%T}",
+    std::chrono::duration_cast<${2:std::chrono::milliseconds}>(${0:elapsed})
+);

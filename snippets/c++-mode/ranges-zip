@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: ranges-zip
+# key: rngz
+# group: cpp23
+# --
+auto ${1:result} = std::views::zip(${2:container_a}, ${3:container_b})
+    | std::views::transform([](auto&& ${4:pair}) {
+        auto&& [${5:a}, ${6:b}] = $4;
+        return ${0:a + b};
+    });

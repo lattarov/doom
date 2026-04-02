@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: constrained-auto
+# key: cauto
+# group: cpp20
+# --
+${1:ConceptName} auto ${2:var} = ${0:init};

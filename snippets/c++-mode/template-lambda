@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: template-lambda
+# key: tlam
+# group: cpp20
+# --
+auto ${1:lambda} = []<typename ${2:T}>(${3:$2 const& value}) -> ${4:void}
+    requires ${5:std::regular}<$2>
+{
+    $0
+};

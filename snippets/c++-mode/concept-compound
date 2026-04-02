@@ -1,0 +1,18 @@
+# -*- mode: snippet -*-
+# name: concept-compound
+# key: conceptc
+# group: cpp20
+# --
+/// @brief ${1:Brief description}
+/// @tparam ${2:T} ${3:Type parameter description}
+template <typename $2>
+concept ${4:ConceptName} = requires($2 ${5:x}) {
+    // Simple requirement
+    ${6:x.begin()};
+    ${7:x.end()};
+    // Compound requirement
+    { ${8:x.size()} } noexcept -> std::${9:convertible_to}<${10:std::size_t}>;
+    // Nested requirement
+    requires std::${11:derived_from}<$2, ${12:Base}>;
+    $0
+};

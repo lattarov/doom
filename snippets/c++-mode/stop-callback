@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: stop-callback
+# key: stopc
+# group: cpp20
+# --
+auto ${1:cb} = std::stop_callback{
+    ${2:stop_token},
+    [&]() noexcept {
+        ${0:// cleanup on cancellation}
+    }
+};

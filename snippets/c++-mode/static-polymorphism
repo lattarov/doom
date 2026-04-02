@@ -1,0 +1,18 @@
+# -*- mode: snippet -*-
+# name: static-polymorphism
+# key: spoly
+# group: cpp20
+# --
+/// @brief Interface concept for ${1:Shape}-like types
+template <typename T>
+concept ${2:Drawable} = requires(T const& ${3:obj}) {
+    { $3.${4:draw}() } -> std::${5:same_as}<${6:void}>;
+    { $3.${7:area}() } -> std::${8:convertible_to}<${9:double}>;
+};
+
+/// @brief Generic algorithm operating on any $2
+auto ${10:render}($2 auto const& ${11:shape}) -> void
+{
+    $11.$4();
+    $0
+}

@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: constinit
+# key: cinit
+# group: cpp20
+# --
+/// @brief Statically initialized at load time
+constinit ${1:thread_local }${2:int} ${3:variable} = ${0:value};

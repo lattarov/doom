@@ -1,0 +1,20 @@
+# -*- mode: snippet -*-
+# name: deducing-this-visitor
+# key: dvisit
+# group: cpp23
+# --
+/// @brief Visitor using deducing this for CRTP-free mixin
+struct ${1:Visitor} {
+    template <typename Self>
+    auto visit(this Self&& self, ${2:Node} const& ${3:node})
+        -> ${4:void}
+    {
+        std::visit(
+            [&self](auto const& ${5:child}) {
+                std::forward<Self>(self).visit($5);
+            },
+            $3.${6:children}
+        );
+        $0
+    }
+};

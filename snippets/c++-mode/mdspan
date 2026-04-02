@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# name: mdspan
+# key: mdspan
+# group: cpp23
+# --
+auto ${1:matrix} = std::mdspan<
+    ${2:float},
+    std::extents<std::size_t, ${3:std::dynamic_extent}, ${4:std::dynamic_extent}>
+>{${5:data.data()}, ${6:rows}, ${7:cols}};
+
+// Access: $1[${8:i}, ${9:j}]
+$0

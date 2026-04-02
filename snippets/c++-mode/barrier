@@ -1,0 +1,14 @@
+# -*- mode: snippet -*-
+# name: barrier
+# key: barrier
+# group: cpp20
+# --
+auto ${1:barrier} = std::barrier{
+    ${2:num_threads},
+    [&]() noexcept {
+        ${0:// completion function runs at each phase}
+    }
+};
+
+// In each thread:
+// $1.arrive_and_wait();

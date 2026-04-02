@@ -1,0 +1,42 @@
+# -*- mode: snippet -*-
+# name: move-only
+# key: moveo
+# group: cpp17
+# --
+/// @brief Move-only resource handle for ${1:resource description}
+class ${2:UniqueHandle} {
+public:
+    explicit $2(${3:int} ${4:handle} = ${5:-1}) noexcept : ${6:handle_}{$4} {}
+
+    ~$2()
+    {
+        if ($6 != $5) {
+            ${7:// release resource}
+        }
+    }
+
+    // Non-copyable
+    $2($2 const&) = delete;
+    auto operator=($2 const&) -> $2& = delete;
+
+    // Movable
+    $2($2&& other) noexcept
+        : $6{std::exchange(other.$6, $5)}
+    {}
+
+    auto operator=($2&& other) noexcept -> $2&
+    {
+        if (this != &other) {
+            std::swap($6, other.$6);
+        }
+        return *this;
+    }
+
+    [[nodiscard]] auto get() const noexcept -> $3 { return $6; }
+    explicit operator bool() const noexcept { return $6 != $5; }
+
+    $0
+
+private:
+    $3 $6;
+};

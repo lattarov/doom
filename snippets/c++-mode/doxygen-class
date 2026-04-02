@@ -1,0 +1,17 @@
+# -*- mode: snippet -*-
+# name: doxygen-class
+# key: doxc
+# group: cpp17
+# --
+/// @class ${1:ClassName}
+/// @brief ${2:Brief description}
+///
+/// ${3:Detailed description of the class, its purpose,
+/// ownership semantics, and thread safety guarantees.}
+///
+/// @tparam ${4:T} ${5:Template parameter description}
+///
+/// @invariant ${6:Class invariant description}
+///
+/// @see ${7:RelatedClass}
+$0

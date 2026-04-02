@@ -1,0 +1,15 @@
+# -*- mode: snippet -*-
+# name: constrained-function
+# key: cfun
+# group: cpp20
+# --
+/// @brief ${1:Brief description}
+/// @tparam ${2:T} ${3:Type parameter description}
+/// @param ${4:param} ${5:Parameter description}
+/// @return ${6:Return description}
+template <typename $2>
+    requires ${7:ConceptName}<$2>
+auto ${8:function_name}($2 const& $4) -> ${9:ReturnType}
+{
+    $0
+}

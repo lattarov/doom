@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: concept
+# key: concept
+# group: cpp20
+# --
+/// @brief ${1:Brief description of the concept}
+template <typename ${2:T}>
+concept ${3:ConceptName} = requires(${2:$(yas-text)} ${4:x}) {
+    ${0:{ x.method() } -> std::convertible_to<int>;}
+};

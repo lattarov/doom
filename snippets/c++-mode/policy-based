@@ -1,0 +1,29 @@
+# -*- mode: snippet -*-
+# name: policy-based
+# key: policy
+# group: cpp20
+# --
+/// @brief Policy concept for ${1:logging behavior}
+template <typename P>
+concept ${2:LogPolicy} = requires(P ${3:p}, std::string_view ${4:msg}) {
+    { $3.${5:write}($4) } -> std::same_as<void>;
+};
+
+/// @brief ${6:Logger} parameterized by $2
+template <$2 ${7:Policy} = ${8:ConsoleLog}>
+class ${9:Logger} {
+public:
+    explicit $9($7 ${10:policy} = {})
+        : policy_{std::move($10)}
+    {}
+
+    auto log(std::string_view msg) -> void
+    {
+        policy_.$5(msg);
+    }
+
+    $0
+
+private:
+    $7 policy_;
+};

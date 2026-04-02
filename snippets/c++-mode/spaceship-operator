@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: spaceship-operator
+# key: space
+# group: cpp20
+# --
+/// @brief Three-way comparison
+auto operator<=>(${1:Type} const&) const = default;
+auto operator==($1 const&) const = default;
+$0

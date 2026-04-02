@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+# name: latch
+# key: latch
+# group: cpp20
+# --
+auto ${1:latch} = std::latch{${2:count}};
+
+// In each worker:
+// $1.count_down();
+
+// In waiting thread:
+$1.wait();
+$0

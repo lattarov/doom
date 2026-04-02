@@ -1,0 +1,23 @@
+# -*- mode: snippet -*-
+# name: compile-time-string
+# key: ctstr
+# group: cpp20
+# --
+/// @brief Fixed-size string usable as NTTP
+template <std::size_t N>
+struct ${1:FixedString} {
+    char data[N]{};
+
+    consteval $1(char const (&str)[N]) noexcept
+    {
+        std::copy_n(str, N, data);
+    }
+
+    constexpr auto operator<=>(const $1&) const = default;
+
+    constexpr operator std::string_view() const noexcept
+    {
+        return {data, N - 1};
+    }
+};
+$0
