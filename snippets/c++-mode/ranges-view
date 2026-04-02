@@ -1,0 +1,28 @@
+# -*- mode: snippet -*-
+# name: ranges-view
+# key: rngv
+# group: cpp20
+# --
+/// @brief Custom range adaptor: ${1:description}
+template <std::ranges::${2:input_range} R>
+    requires std::ranges::view<R>
+class ${3:FilteredView}
+    : public std::ranges::view_interface<$3<R>> {
+public:
+    $3() = default;
+
+    explicit $3(R ${4:base})
+        : base_{std::move($4)}
+    {}
+
+    auto begin() const { return base_.begin(); }
+    auto end() const { return base_.end(); }
+
+    $0
+
+private:
+    R base_{};
+};
+
+template <typename R>
+$3(R&&) -> $3<std::views::all_t<R>>;

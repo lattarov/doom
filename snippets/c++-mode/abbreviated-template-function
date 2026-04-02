@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: abbreviated-template-function
+# key: afun
+# group: cpp20
+# --
+/// @brief ${1:Brief description}
+/// @param ${2:param} ${3:Parameter description}
+auto ${4:function_name}(${5:ConceptName} auto const& $2) -> ${6:decltype(auto)}
+{
+    $0
+}

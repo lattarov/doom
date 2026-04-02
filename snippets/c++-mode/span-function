@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+# name: span-function
+# key: spanf
+# group: cpp20
+# --
+/// @brief ${1:Brief description}
+/// @param ${2:data} ${3:Non-owning view of contiguous elements}
+auto ${4:function_name}(std::span<${5:int const}> $2) -> ${6:void}
+{
+    for (auto const& ${7:elem} : $2) {
+        $0
+    }
+}

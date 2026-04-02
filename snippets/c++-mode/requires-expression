@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: requires-expression
+# key: req
+# group: cpp20
+# --
+requires(${1:T} ${2:x}) {
+    { ${3:x.method()} } -> std::${4:convertible_to}<${5:ReturnType}>;
+    $0
+}

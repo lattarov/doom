@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+# name: fold-expression
+# key: fold
+# group: cpp17
+# --
+/// @brief ${1:Apply operation across parameter pack}
+template <typename... Ts>
+    requires (${2:std::integral}<Ts> && ...)
+constexpr auto ${3:sum}(Ts... ${4:args}) noexcept
+{
+    return ($4 ${5:+} ...);
+}
+$0

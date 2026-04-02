@@ -1,0 +1,14 @@
+# -*- mode: snippet -*-
+# name: coroutine-generator
+# key: cogen
+# group: cpp20
+# --
+/// @brief ${1:Brief description}
+/// @return Generator yielding ${2:ValueType} values
+std::generator<${2:int}> ${3:generate}(${4:int max})
+{
+    for (${5:int i = 0; i < max; ++i}) {
+        co_yield ${6:i};
+    }
+    $0
+}

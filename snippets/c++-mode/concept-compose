@@ -1,0 +1,14 @@
+# -*- mode: snippet -*-
+# name: concept-compose
+# key: conceptd
+# group: cpp20
+# --
+/// @brief Composed concept: ${1:description}
+template <typename T>
+concept ${2:ComposedConcept} =
+    ${3:std::regular}<T>
+    && ${4:std::totally_ordered}<T>
+    && requires(T ${5:x}) {
+        { ${6:x.serialize()} } -> std::convertible_to<${7:std::string}>;
+    };
+$0

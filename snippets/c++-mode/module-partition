@@ -1,0 +1,15 @@
+# -*- mode: snippet -*-
+# name: module-partition
+# key: modp
+# group: cpp20
+# --
+/// @brief ${1:Partition description}
+export module ${2:module_name}:${3:partition_name};
+
+import std;
+
+export namespace ${4:ns} {
+
+$0
+
+} // namespace $4

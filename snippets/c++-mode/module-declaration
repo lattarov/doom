@@ -1,0 +1,21 @@
+# -*- mode: snippet -*-
+# name: module-declaration
+# key: mod
+# group: cpp20
+# --
+/// @file ${1:module_name}.cppm
+/// @brief ${2:Module description}
+module;
+
+// Global module fragment: legacy headers here
+#include <${3:cassert}>
+
+export module $1;
+
+import std;
+
+export namespace ${4:ns} {
+
+$0
+
+} // namespace $4

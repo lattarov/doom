@@ -1,0 +1,16 @@
+# -*- mode: snippet -*-
+# name: multi-visit
+# key: mvisit
+# group: cpp17
+# --
+std::visit(overloaded{
+    [](${1:TypeA} const& ${2:a}, ${3:TypeC} const& ${4:c}) {
+        ${5:// handle A + C}
+    },
+    [](${6:TypeB} const& ${7:b}, $3 const& $4) {
+        ${8:// handle B + C}
+    },
+    [](auto const&, auto const&) {
+        ${0:// fallback}
+    }
+}, ${9:variant1}, ${10:variant2});

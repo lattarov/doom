@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: println
+# key: pln
+# group: cpp23
+# --
+std::println("${1:{}}", ${0:args});

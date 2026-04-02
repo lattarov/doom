@@ -1,0 +1,19 @@
+# -*- mode: snippet -*-
+# name: source-location
+# key: srcloc
+# group: cpp20
+# --
+auto ${1:log}(
+    std::string_view ${2:msg},
+    std::source_location ${3:loc} = std::source_location::current())
+    -> void
+{
+    std::println(
+        "{}:{} [{}] {}",
+        $3.file_name(),
+        $3.line(),
+        $3.function_name(),
+        $2
+    );
+    $0
+}

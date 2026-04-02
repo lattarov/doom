@@ -1,0 +1,23 @@
+# -*- mode: snippet -*-
+# name: singleton
+# key: single
+# group: cpp17
+# --
+/// @brief Thread-safe singleton for ${1:Type}
+class $1 {
+public:
+    $1($1 const&) = delete;
+    auto operator=($1 const&) -> $1& = delete;
+
+    static auto instance() -> $1&
+    {
+        static $1 inst{};
+        return inst;
+    }
+
+    $0
+
+private:
+    $1() = default;
+    ~$1() = default;
+};

@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: if-init-structured-binding
+# key: iflet
+# group: cpp17
+# --
+if (auto [${1:key}, ${2:value}] = ${3:expression}; ${4:condition}) {
+    $0
+}

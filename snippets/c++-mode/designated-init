@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: designated-init
+# key: dinit
+# group: cpp20
+# --
+auto ${1:instance} = ${2:Config}{
+    .${3:host}     = ${4:"localhost"},
+    .${5:port}     = ${6:8080},
+    .${7:timeout}  = ${8:std::chrono::seconds{30}},
+    $0
+};

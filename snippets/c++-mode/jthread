@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: jthread
+# key: jth
+# group: cpp20
+# --
+auto ${1:worker} = std::jthread{[](std::stop_token ${2:stop}) {
+    while (!$2.stop_requested()) {
+        $0
+    }
+}};

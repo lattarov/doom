@@ -1,0 +1,21 @@
+# -*- mode: snippet -*-
+# name: rule-of-five
+# key: ro5
+# group: cpp17
+# --
+/// @brief ${1:Brief description}
+class ${2:ClassName} {
+public:
+    $2() = default;
+    ~$2() = default;
+
+    // Copy
+    $2($2 const&) = ${3:default};
+    auto operator=($2 const&) -> $2& = $3;
+
+    // Move
+    $2($2&&) noexcept = ${4:default};
+    auto operator=($2&&) noexcept -> $2& = $4;
+
+    $0
+};

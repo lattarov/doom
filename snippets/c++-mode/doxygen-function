@@ -1,0 +1,19 @@
+# -*- mode: snippet -*-
+# name: doxygen-function
+# key: doxf
+# group: cpp17
+# --
+/// @brief ${1:Brief description}
+///
+/// ${2:Detailed description}
+///
+/// @param ${3:param} ${4:Parameter description}
+/// @return ${5:Return value description}
+///
+/// @throws ${6:ExceptionType} ${7:When condition}
+///
+/// @pre ${8:Precondition}
+/// @post ${9:Postcondition}
+///
+/// @complexity ${10:O(n)}
+$0

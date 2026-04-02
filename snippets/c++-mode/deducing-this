@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# name: deducing-this
+# key: dthis
+# group: cpp23
+# --
+/// @brief ${1:Brief description}
+/// @tparam Self Deduced type of *this
+template <typename Self>
+auto ${2:method}(this Self&& ${3:self}) -> ${4:decltype(auto)}
+{
+    return std::forward<Self>($3).${0:member_};
+}

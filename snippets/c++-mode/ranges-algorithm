@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: ranges-algorithm
+# key: rnga
+# group: cpp20
+# --
+std::ranges::${1:sort}(${2:container}, ${3:std::less{}}, &${4:Type}::${5:member});$0

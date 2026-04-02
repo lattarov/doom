@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+# name: variadic-constrained
+# key: vfun
+# group: cpp20
+# --
+/// @brief ${1:Brief description}
+/// @param args ${2:Parameter pack description}
+template <${3:std::integral}... Ts>
+auto ${4:function_name}(Ts... args) -> ${5:std::common_type_t<Ts...>}
+{
+    return (args ${6:+} ...);
+    $0
+}

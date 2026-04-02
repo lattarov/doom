@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# name: if-constexpr
+# key: ifcx
+# group: cpp17
+# --
+if constexpr (${1:std::integral}<${2:T}>) {
+    ${3:// integral path}
+} else if constexpr (${4:std::floating_point}<$2>) {
+    ${5:// floating-point path}
+} else {
+    static_assert(${6:false}, "${0:Unsupported type}");
+}

@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+# name: coroutine-task
+# key: cotask
+# group: cpp20
+# --
+/// @brief ${1:Brief description}
+/// @return Awaitable task resolving to ${2:ResultType}
+auto ${3:async_operation}(${4:params}) -> ${5:Task}<$2>
+{
+    auto ${6:result} = co_await ${7:awaitable};
+    $0
+    co_return $6;
+}

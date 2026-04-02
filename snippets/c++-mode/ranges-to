@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: ranges-to
+# key: rngto
+# group: cpp23
+# --
+auto ${1:result} = ${2:container}
+    | std::views::${3:transform}([](auto const& ${4:x}) {
+        return ${5:projection};
+    })
+    | std::ranges::to<${0:std::vector}>();

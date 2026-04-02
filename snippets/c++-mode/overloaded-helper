@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: overloaded-helper
+# key: overl
+# group: cpp17
+# --
+/// @brief Overload set helper for std::visit
+template <typename... Ts>
+struct overloaded : Ts... {
+    using Ts::operator()...;
+};
+$0

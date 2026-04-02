@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# name: constexpr-function
+# key: cxfun
+# group: cpp17
+# --
+/// @brief ${1:Brief description}
+/// @param ${2:param} ${3:Parameter description}
+/// @return ${4:Return description}
+constexpr auto ${5:function_name}(${6:int} $2) noexcept -> $6
+{
+    $0
+}

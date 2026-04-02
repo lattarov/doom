@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: consteval-function
+# key: ceval
+# group: cpp20
+# --
+/// @brief ${1:Brief description} (evaluated at compile time only)
+consteval auto ${2:function_name}(${3:int value}) -> ${4:int}
+{
+    $0
+}

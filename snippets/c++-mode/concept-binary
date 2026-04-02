@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+# name: concept-binary
+# key: conceptb
+# group: cpp20
+# --
+/// @brief ${1:Binary concept description}
+/// @tparam ${2:T} ${3:First type description}
+/// @tparam ${4:U} ${5:Second type description}
+template <typename $2, typename $4>
+concept ${6:BinaryConcept} = requires($2 ${7:a}, $4 ${8:b}) {
+    { $7 + $8 } -> std::${9:common_with}<$2>;
+    $0
+};
