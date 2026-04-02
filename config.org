@@ -872,11 +872,6 @@ promising and would bring plenty of nice features to the config.
         (:prefix ("s" . "search")
          :desc "consult-omni-multi" "s" #'consult-omni-multi))
 #+end_src
-*** YouTube search API
-#+begin_src emacs-lisp :tangle config.el
-(setopt consult-omni-youtube-search-key "AIzaSyAMbCC2_BQRaGifhK2tVifSOTCwucT9Lao")
-#+end_src
-**** TODO Encrypt
 
 ** bindings
 #+begin_src emacs-lisp :tangle config.el
