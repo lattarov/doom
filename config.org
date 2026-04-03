@@ -1095,43 +1095,75 @@ From this point onwards, mu4e should be up and running.
       ("BDT-INCA10-VERN"  . "10.102.31.64"))
     "Alist mapping machine names to their TightVNC IPs.")
 
-(defvar vlv-vncviewer-path "C:/Program Files/TightVNC/tvnviewer.exe"
-    "Path to the TightVNC client.")
+(defcustom vlv-vncviewer-path "C:/Program Files/TightVNC/tvnviewer.exe"
+  "Path to the TightVNC viewer executable."
+  :type 'file
+  :group 'work)
 
-(defvar vlv-vnc-password "ADMINVME"
-    "Default password.")
+(defun vlv--vnc-password ()
+  "Retrieve VNC password from auth-source, or prompt if not found."
+  (require 'auth-source)
+  (let ((entry (auth-source-search :host "vnc-work" :user "admin" :max 1)))
+    (if entry
+        (funcall (plist-get (car entry) :secret))
+      (read-passwd "VNC password: "))))
+
+(defun vlv--vnc-check-viewer ()
+  "Signal an error if the TightVNC viewer executable is not found."
+  (unless (file-executable-p vlv-vncviewer-path)
+    (user-error "TightVNC not found at: %s" vlv-vncviewer-path)))
 
 (defun vlv-connect-to-vnc-with-machine (machine)
-    "Connect to a given machine via VNC given it's name."
-    (let ((ip (cdr (assoc machine vlv-vnc-machines))))
-    (message ip)
-    (if (and ip (file-exists-p vlv-vncviewer-path))
-            (start-process "tightvnc" nil vlv-vncviewer-path ip (concat "-password=" vlv-vnc-password))
-    (message "Error: Wrong path to TightVNC or bad password!"))))
+  "Connect to MACHINE by name via TightVNC."
+  (let ((ip (cdr (assoc machine vlv-vnc-machines))))
+    (unless ip (user-error "Unknown machine: %s" machine))
+    (vlv-connect-to-vnc-with-ip ip)))
 
 (defun vlv-connect-to-vnc-with-ip (ip)
-    "Conectar ao VNC na máquina IP."
-    (if (and ip (file-exists-p vlv-vncviewer-path))
-        (start-process "tightvnc" nil vlv-vncviewer-path ip (concat "-password=" vlv-vnc-password))
-    (message "Error: Failed to launch TightVNC")))
+  "Connect to IP via TightVNC."
+  (vlv--vnc-check-viewer)
+  (message "Connecting to %s..." ip)
+  (start-process "tightvnc" nil vlv-vncviewer-path
+                 ip (concat "-password=" (vlv--vnc-password))))
 
-(defun vlv-vnc-menu-items ()
-    "Return a list of transient menu items for VNC machines."
+(defun vlv--vnc-assign-keys (machines)
+  "Assign unique single-char keys to MACHINES, falling back to digits on collision."
+  (let ((used '())
+        (counter 0))
     (mapcar (lambda (pair)
-            (list (substring (car pair) 0 1) (car pair)
-                    (lambda () (interactive) (vlv-connect-to-vnc (car pair)))))
-            vlv-vnc-machines))
+              (let* ((name (car pair))
+                     (preferred (downcase (substring name 0 1)))
+                     (key (if (member preferred used)
+                              (prog1 (number-to-string counter)
+                                (cl-incf counter))
+                            preferred)))
+                (push key used)
+                (cons key name)))
+            machines)))
+
+(defun vlv--vnc-transient-items ()
+  "Build transient suffix list dynamically from `vlv-vnc-machines'."
+  (mapcar (lambda (pair)
+            (let ((key  (car pair))
+                  (name (cdr pair)))
+              (list key name
+                    `(lambda () (interactive)
+                       (vlv-connect-to-vnc-with-machine ,name)))))
+          (vlv--vnc-assign-keys vlv-vnc-machines)))
 
 (transient-define-prefix vlv-vnc-menu ()
-"Transient menu for selecting a TightVNC machine."
-    [["Machines"
-    ("a" "VISIO"             (lambda () (interactive) (vlv-connect-to-vnc-with-machine "VISIO")))
-    ("z" "VERN"              (lambda () (interactive) (vlv-connect-to-vnc-with-machine "VERN")))
-    ("e" "CMX"               (lambda () (interactive) (vlv-connect-to-vnc-with-machine "CMX")))
-    ("r" "CXP"               (lambda () (interactive) (vlv-connect-to-vnc-with-machine "CXP")))
-    ("t" "BDT-INCA10-VERN"   (lambda () (interactive) (vlv-connect-to-vnc-with-machine "BDT-INCA10-VERN")))
-    ("s" "STARLORD"          (lambda () (interactive) (vlv-connect-to-vnc-with-machine "STARLORD")))
-    ("o" "Choose IP:"        (lambda () (interactive) (vlv-connect-to-vnc-with-ip  (read-string "IP:"))))]])
+  "TightVNC machine selector — built dynamically from `vlv-vnc-machines'."
+  [:description "Machines"
+   :setup-children
+   (lambda (_)
+     (mapcar
+      (lambda (item)
+        (transient-parse-suffix 'vlv-vnc-menu item))
+      (append
+       (vlv--vnc-transient-items)
+       '(("o" "Choose IP…"
+          (lambda () (interactive)
+            (vlv-connect-to-vnc-with-ip (read-string "IP: "))))))))])
 
 (map! :prefix "C-c" :desc "TightVNC menu" "v" #'vlv-vnc-menu)
 #+end_src
