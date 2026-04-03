@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: NOSONAR comment
+# key: nosonar
+# uuid: comment-nosonar
+# --
+// NOSONAR - ${1:Exception reason}
+
