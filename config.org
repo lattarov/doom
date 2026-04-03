@@ -1297,6 +1297,26 @@ mklink /D "c:/Users/LATTARO-VOLPINI/.config/emacs/.local/cache/tree-sitter" "c:/
         :desc "spotify-next" "n" #'vlv-spotify-next-and-display))
 #+end_src
 * vterm
+#+begin_src emacs-lisp :tangle config.el
+(map!
+ :after vterm
+  ;; approach vterm behaviour to eshell
+  :map vterm-mode-map
+    ;; Fix 0   go to start of input, not buffer column 0
+    :n "0"  (lambda ()
+              (interactive)
+              (vterm-send-C-a)
+              (evil-refresh-cursor))
+    ;; Fix $   go to end of input
+    :n "$"  (lambda ()
+              (interactive)
+              (vterm-send-C-e)
+              (evil-refresh-cursor))
+    ;; Fix dd   clear input instead of deleting the buffer line
+    :n "dd" (lambda ()
+              (interactive)
+              (vterm-send-C-e)
+              (vterm-send-key "u" nil nil t)))
 
 * multi-vterm
 #+begin_src emacs-lisp :tangle packages.el
