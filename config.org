@@ -323,7 +323,7 @@ this configures bash to be used as the default shell bash. In theory it corrects
              eshell-mode-hook
              eww-mode-hook
              help-mode-hook
-             helpful-mode-hoo
+             helpful-mode-hook
              magit-mode-hook
              markdown-mode-hook
              org-mode-hook
