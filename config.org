@@ -1297,24 +1297,21 @@ mklink /D "c:/Users/LATTARO-VOLPINI/.config/emacs/.local/cache/tree-sitter" "c:/
 * vterm
 #+begin_src emacs-lisp :tangle config.el
 (map!
- :after vterm
+  :after vterm
   ;; approach vterm behaviour to eshell
   :map vterm-mode-map
     ;; Fix 0   go to start of input, not buffer column 0
-    :n "0"  (lambda ()
-              (interactive)
-              (vterm-send-C-a)
-              (evil-refresh-cursor))
+    :n "0"  (cmd! (vterm-send-key "a" nil nil t)
+                  (evil-refresh-cursor))
+
     ;; Fix $   go to end of input
-    :n "$"  (lambda ()
-              (interactive)
-              (vterm-send-C-e)
-              (evil-refresh-cursor))
+    :n "$"  (cmd! (vterm-send-key "e" nil nil t)
+                  (evil-refresh-cursor))
+
     ;; Fix dd   clear input instead of deleting the buffer line
-    :n "dd" (lambda ()
-              (interactive)
-              (vterm-send-C-e)
-              (vterm-send-key "u" nil nil t)))
+    :n "dd" (cmd! (vterm-send-key "e" nil nil t)
+                  (vterm-send-key "u" nil nil t)
+                  (evil-refresh-cursor)))
 #+end_src
 
 * multi-vterm
@@ -1611,4 +1608,9 @@ There's some overlay with LSP errors and warnings (in rust at least), hence this
         display-time-format               "%d/%m/%y %H:%M")
 
 (display-time)
+#+end_src
+
+* fzf
+#+begin_src emacs-lisp :tangle packages.el
+(package! fzf)
 #+end_src
