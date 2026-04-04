@@ -1620,6 +1620,5 @@ There's some overlay with LSP errors and warnings (in rust at least), hence this
 
 * fzf
 #+begin_src emacs-lisp :tangle packages.el
-(package! fzf
-  :disable (vlv-env-work-p))
+(package! fzf)
 #+end_src
