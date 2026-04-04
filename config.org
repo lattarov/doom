@@ -1393,7 +1393,7 @@ sudo apt-get install ffmpeg
 
 #+begin_src emacs-lisp :tangle packages.el
 (package! whisper.el
-  :pin "6198ce3d9bff0555cf098a77b78d6c2d79baf4f9"
+  :pin "fd9bf5787a99dd31a4bdf54d2bd9821aacf84e93"
   :recipe '(
     :host github
     :repo "natrys/whisper.el"))
