@@ -1135,7 +1135,7 @@ From this point onwards, mu4e should be up and running.
 #+end_src
 
 ** Visual Studio
-#+begin_src emacs-lisp tangle config.el
+#+begin_src emacs-lisp :tangle config.el
 (defun vlv-find-and-open-sln-in-visual-studio ()
   "Find all .sln files in the current Projectile project and open one in Visual Studio at the current buffer's file."
   (interactive)
