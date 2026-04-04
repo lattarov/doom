@@ -1349,6 +1349,7 @@ mklink /D "c:/Users/LATTARO-VOLPINI/.config/emacs/.local/cache/tree-sitter" "c:/
               (interactive)
               (vterm-send-C-e)
               (vterm-send-key "u" nil nil t)))
+#+end_src
 
 * multi-vterm
 #+begin_src emacs-lisp :tangle packages.el
