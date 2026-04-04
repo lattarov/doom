@@ -1452,29 +1452,68 @@ sudo apt-get install ffmpeg
 (use-package! eww
   :defer t
   :init
-  (defun vlv-eww ()
-    "Opens Emacs Web Wowser (EWW) in a new workspace."
 
-    (interactive)
-    (setq-local vlv-eww-workspace-name "EWW")
-    (progn
-        (+workspace-new vlv-eww-workspace-name)
+  (defconst vlv-eww-workspace-name "*EWW*"
+    "Name of the dedicated EWW workspace.")
+
+  (defun vlv-eww--get-or-create-workspace ()
+    "Switch to EWW workspace, creating it if needed."
+    (if (+workspace-exists-p vlv-eww-workspace-name)
         (+workspace-switch vlv-eww-workspace-name)
-        (call-interactively 'eww)
-        (delete-other-windows)))
+      (+workspace-new vlv-eww-workspace-name)
+      (+workspace-switch vlv-eww-workspace-name)))
 
-  ;; TODO hook to kill workspace when quitting EWW if it's the only buffer in the workspace
+  (defun vlv-eww--workspace-eww-buffers ()
+  "Return EWW buffers belonging to the EWW workspace, excluding current buffer."
+    (when (+workspace-exists-p vlv-eww-workspace-name)
+      (seq-filter
+       (lambda (buf)
+         ; exclude the buffer being killed
+         (and (not (eq buf (current-buffer)))
+              (eq (buffer-local-value 'major-mode buf) 'eww-mode)))
+       (+workspace-buffer-list
+        (+workspace-get vlv-eww-workspace-name)))))
+
+  (defun vlv-eww--maybe-close-workspace ()
+    "Close EWW workspace if no EWW buffers remain in it."
+    (when (+workspace-exists-p vlv-eww-workspace-name)
+      (unless (vlv-eww--workspace-eww-buffers)
+        (when (string= (+workspace-current-name) vlv-eww-workspace-name)
+          (+workspace-switch +workspace--last))
+        (persp-kill vlv-eww-workspace-name)
+        (message "EWW workspace closed."))))
+
+  (defun vlv-eww (url)
+    "Open URL in EWW in the dedicated EWW workspace."
+    (interactive
+     (list (read-string "URL: " (thing-at-point-url-at-point))))
+    (vlv-eww--get-or-create-workspace)
+    (eww url)
+    (delete-other-windows))
+
+  (defun vlv-eww-open-in-eww-workspace (url &rest _)
+    "Open URL in the EWW workspace. Used as `browse-url-browser-function'."
+    (vlv-eww url))
+
+  (defun vlv-eww--on-buffer-kill ()
+  "Close EWW workspace when the last EWW buffer is killed."
+    (when (eq major-mode 'eww-mode)
+      (vlv-eww--maybe-close-workspace)))
+
+  (setq browse-url-browser-function #'vlv-eww-open-in-eww-workspace)
 
   (map! :leader
-        (:prefix ("o")
-         :desc "EWW" "u" #'vlv-eww))
+        (:prefix "o"
+         :desc "EWW browser" "u" #'vlv-eww))
 
   :config
-    (set-variable 'eww-bookmarks
-                '((:url   "https://lars.ingebrigtsen.no/"
-                    :title "Random Thoughts - Lars Ingebritsen")
-                    (:url   "https://openlibrary.org/"
-                    :title "Open Library"))))
+  (add-hook! 'kill-buffer-hook #'vlv-eww--on-buffer-kill)
+
+  (setq eww-bookmarks
+        '((:url   "https://lars.ingebrigtsen.no/"
+           :title "Random Thoughts - Lars Ingebritsen")
+          (:url   "https://openlibrary.org/"
+           :title "Open Library"))))
 #+end_src
 
 * PDF
