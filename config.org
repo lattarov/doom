@@ -185,7 +185,7 @@ profiles API is stable."
 * Doom
 #+begin_src emacs-lisp :tangle config.el
 ;; frame
-(add-to-list 'default-frame-alist '(alpha-background . 60))
+(add-to-list 'default-frame-alist '(alpha-background . 80))
 
 ;; welcome screen
 (when (vlv-env-personal-p)
