@@ -700,6 +700,37 @@ Set ollama as default backend for gptel, add default model and a few tweaks.
     (setopt gptel-backend vlv--gptel-ollama))
 #+end_src
 
+*** gptel-tools
+**** llm-tool-collection
+#+begin_src emacs-lisp :tangle packages.el
+(package! llm-tool-collection
+  :recipe '(:host github
+            :repo "skissue/llm-tool-collection"))
+#+end_src
+
+#+begin_src emacs-lisp :tangle config.el
+(use-package! llm-tool-collection
+  :defer t
+  :after gptel
+  :config
+  (mapcar (apply-partially #'apply #'gptel-make-tool)
+          (llm-tool-collection-get-all)))
+#+end_src
+**** karthink/gptel-agent
+#+begin_src emacs-lisp :tangle packages.el
+(package! gptel-agent
+  :recipe '(:host github
+            :repo "karthink/gptel-agent"))
+#+end_src
+
+#+begin_src emacs-lisp :tangle config.el
+(use-package! gptel-agent
+  :defer t
+  :after gptel
+  :config
+  (gptel-agent-update))
+#+end_src
+
 ** Auggie (Augment Code CLI) via agent-shell :WIP:
 Auggie is the Augment Code CLI that provides AI-powered coding assistance via the Agent Client Protocol (ACP).
 This integrates agent-shell.el to use Auggie alongside gptel backends.
