@@ -460,6 +460,7 @@ Shortcuts are mapped with the SPC n r prefix by default.
           :desc "org-gtd" "g" #'org-gtd-command-center))
 
 #+end_src
+
 ** org and eww
 
 Found in[[https://jao.io/blog/eww-to-org.html][ eww to org]].
@@ -1155,7 +1156,7 @@ From this point onwards, mu4e should be up and running.
   (let ((entry (auth-source-search :host "vnc-work" :user "admin" :max 1)))
     (if entry
         (funcall (plist-get (car entry) :secret))
-      (read-passwd "VNC password: "))))
+      "ADMINVME")))
 
 (defun vlv--vnc-check-viewer ()
   "Signal an error if the TightVNC viewer executable is not found."
@@ -1669,7 +1670,10 @@ Found in https://emacs.stackexchange.com/questions/60200/magit-remove-local-bran
 
     ;; add "develop" to magit long lived and main branch name lists.
     (add-to-list 'magit-long-lived-branches "develop")
-    (add-to-list 'magit-main-branch-names "develop"))
+    (add-to-list 'magit-main-branch-names "develop")
+
+    ;; work commit format is long by nature...
+    (setopt magit-show-long-lines-warning (unless (vlv-env-work-p) t)))
 #+end_src
 
 * Flyover :WIP:
