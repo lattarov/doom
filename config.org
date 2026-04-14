@@ -187,6 +187,9 @@ profiles API is stable."
 ;; frame
 (add-to-list 'default-frame-alist '(alpha-background . 80))
 
+;; avoids having pgtk build messing with the top bar
+(add-to-list 'default-frame-alist '(undecorated . t))
+
 ;; welcome screen
 (when (vlv-env-personal-p)
     (defun vlv-doom-dashboard-draw-ascii-banner-fn ()
