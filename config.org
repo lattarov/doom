@@ -554,7 +554,8 @@ Allow automatic recognition of projects given a list of paths.
 (use-package! dired
   :defer t
   :config
-    (setopt dired-async-mode t))
+    (setopt dired-async-mode       t
+            dired-listing-switches "-alh --no-group -g"))
 #+end_src
 
 * Dirvish
