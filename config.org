@@ -587,8 +587,6 @@ Allow automatic recognition of projects given a list of paths.
      ("d" "directory" dired-create-directory)
      ("f" "file" dired-create-empty-file)])
 
-  ;; (map! :map dired-mode-map   :n "+" nil)
-  ;; (map! :map dired-mode-map   :n "+" #'vlv-dirvish-create)
   (map! :map dirvish-mode-map :n "+" nil)
   (map! :map dirvish-mode-map :n "+" #'vlv-dirvish-create))
 #+end_src
