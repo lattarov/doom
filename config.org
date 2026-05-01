@@ -1431,7 +1431,9 @@ mklink /D "c:/Users/LATTARO-VOLPINI/.config/emacs/.local/cache/tree-sitter" "c:/
     (vterm-send-string result)))
 
 (defun vlv-vterm-yas-expand ()
-  "Expand yasnippet in a popup buffer."
+  "Expand yasnippet in a popup buffer.
+ If the snippet has no placeholders, send it to vterm immediately
+ without displaying the temp buffer."
   (interactive)
   (let* ((word (thing-at-point 'word 'no-properties))
          (vterm-buf (current-buffer))
@@ -1441,27 +1443,37 @@ mklink /D "c:/Users/LATTARO-VOLPINI/.config/emacs/.local/cache/tree-sitter" "c:/
       (yas-minor-mode 1)
       (setq vlv-yas-vterm-source-buf vterm-buf)
       (setq vlv-yas-vterm-had-word word)
-      (when (bound-and-true-p evil-mode)
-        (evil-insert 1))
       (when word (insert word))
       (if (yas-expand)
-          (progn
-            (define-key (current-local-map) (kbd "Z Z") #'vlv-vterm-yas-confirm)
-            (define-key (current-local-map) (kbd "Z Q") #'kill-buffer-and-window)
-            (setq header-line-format
-                  (format "Press %s to send, %s to abandon."
-                          (key-description
-                           (where-is-internal #'vlv-vterm-yas-confirm
-                                              (current-local-map) t))
-                          (key-description
-                           (where-is-internal #'kill-buffer-and-window
-                                              (current-local-map) t))))
-            (pop-to-buffer tmp-buf
-                           '(display-buffer-below-selected
-                             (window-height . 5))))
+          ;; yas-expand returned non-nil, a snippet was triggered.
+          ;; Now check whether it left any active placeholders.
+          (if (yas--snippets-at-point)
+              ;; Has placeholders: show the popup for the user to fill in.
+              (progn
+                (when (bound-and-true-p evil-mode)
+                  (evil-insert 1))
+                (define-key (current-local-map) (kbd "Z Z") #'vlv-vterm-yas-confirm)
+                (define-key (current-local-map) (kbd "Z Q") #'kill-buffer-and-window)
+                (setq header-line-format
+                      (format "Press %s to send, %s to abandon."
+                              (key-description
+                               (where-is-internal #'vlv-vterm-yas-confirm
+                                                  (current-local-map) t))
+                              (key-description
+                               (where-is-internal #'kill-buffer-and-window
+                                                  (current-local-map) t))))
+                (pop-to-buffer tmp-buf
+                               '(display-buffer-below-selected
+                                 (window-height . 5))))
+            ;; No placeholders: grab result and send immediately.
+            (let ((result (buffer-string)))
+              (kill-buffer tmp-buf)
+              (with-current-buffer vterm-buf
+                (when word (vterm-send-meta-backspace))
+                (vterm-send-string result))))
+        ;; yas-expand found nothing: clean up and report.
         (kill-buffer tmp-buf)
         (message "No snippet found for: %s" (or word "<no word at point>"))))))
-
 (map!
   :after vterm
   ;; approach vterm behaviour to eshell
@@ -1757,6 +1769,56 @@ Found in https://emacs.stackexchange.com/questions/60200/magit-remove-local-bran
 
     (transient-append-suffix 'magit-branch "C"
         '("K" "delete all merged" vlv-delete-merged-branches))
+
+   (defconst vlv--magit-diff-cache-limit 2000
+     "Maximum number of symbols stored per diff buffer in `vlv--magit-diff-cache'.")
+
+   ;; Global accumulated symbol set. Reset on doom/reload or restart.
+   (setq vlv--magit-diff-symbols-cache (make-hash-table :test 'equal))
+
+   ;; Tracks the last-seen tick per diff buffer to avoid redundant rescans.
+   ;; Weak keys ensure dead buffers are GC'd automatically.
+   (setq vlv--magit-diff-cache-buffer-to-tick-tracker (make-hash-table :test 'eq :weakness 'key))
+
+   (defun vlv--split-symbol (sym)
+     "Split SYM into parts on hyphens, underscores, and camelCase boundaries."
+     (let* ((case-fold-search nil) ; camelCase regex requires case-sensitive matching.
+            (parts (split-string
+                    (replace-regexp-in-string
+                     "\\([a-z]\\)\\([A-Z]\\)" "\\1-\\2" sym)
+                    "[-_]+" t)))
+       (mapcar #'downcase parts)))
+
+   (defun vlv-magit-diff-capf ()
+     "Provide capf completion from symbols seen in any magit-diff buffer.
+
+   Symbols are accumulated globally across all projects for the session,
+   and reset only on doom/reload or Emacs restart.
+   Symbols containing hyphens, underscores, or camelCase boundaries are
+   also split into their constituent parts."
+     (when-let ((bounds (bounds-of-thing-at-point 'symbol))
+                (buf (magit-get-mode-buffer 'magit-diff-mode)))
+       (with-current-buffer buf
+         (let ((tick (buffer-modified-tick)))
+           (unless (equal tick (gethash buf vlv--magit-diff-cache-buffer-to-tick-tracker))
+             ;; add new symbols to cache and update the scan tracker.
+             (puthash buf tick vlv--magit-diff-cache-buffer-to-tick-tracker)
+             (save-excursion
+               (goto-char (point-min))
+               (while (re-search-forward "\\_<\\(?:\\sw\\|\\s_\\)\\{3,\\}\\_>" nil t)
+                 (let ((sym (match-string-no-properties 0)))
+                   ;; add the full symbol.
+                   (puthash sym t vlv--magit-diff-symbols-cache)
+                   ;; add each split part.
+                   (dolist (part (vlv--split-symbol sym))
+                     (puthash part t vlv--magit-diff-symbols-cache))))))))
+       (list (car bounds) (cdr bounds)
+             (hash-table-keys vlv--magit-diff-symbols-cache)
+             :exclusive 'no)))
+
+
+    (add-hook! 'git-commit-mode-hook
+      (add-hook 'completion-at-point-functions #'vlv-magit-diff-capf nil t))
 
     (setopt magit-clone-always-transient t)
 
