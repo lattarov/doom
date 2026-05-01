@@ -1447,7 +1447,7 @@ mklink /D "c:/Users/LATTARO-VOLPINI/.config/emacs/.local/cache/tree-sitter" "c:/
       (if (yas-expand)
           ;; yas-expand returned non-nil, a snippet was triggered.
           ;; Now check whether it left any active placeholders.
-          (if (yas--snippets-at-point)
+          (if (yas-active-snippets)
               ;; Has placeholders: show the popup for the user to fill in.
               (progn
                 (when (bound-and-true-p evil-mode)
