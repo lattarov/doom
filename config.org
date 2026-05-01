@@ -516,9 +516,6 @@ If DEST, a buffer, is provided, insert the markup there."
      (goto-char (point-min)))))
 #+end_src
 
-#+RESULTS:
-: jao-eww-to-org
-
 * Python
 #+begin_src emacs-lisp :tangle config.el
 (use-package! python
