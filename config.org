@@ -1205,6 +1205,7 @@ From this point onwards, mu4e should be up and running.
 (transient-define-prefix vlv-vnc-menu ()
   "TightVNC machine selector — built dynamically from `vlv-vnc-machines'."
   [:description "Machines"
+   :class transient-column
    :setup-children
    (lambda (_)
      (mapcar
