@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: fzf -e
+# uuid: fzfe
+# key: fzfe
+# condition: t
+# --
+fzf -e

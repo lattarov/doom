@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: cmdg
+# uuid: cmdg
+# key: cmdg
+# condition: t
+# --
+$1 | grep "$2"
