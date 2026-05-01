@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: catg
+# uuid: catg
+# key: catg
+# condition: t
+# --
+cat $1 | grep "$2"
