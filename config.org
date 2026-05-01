@@ -1410,12 +1410,64 @@ mklink /D "c:/Users/LATTARO-VOLPINI/.config/emacs/.local/cache/tree-sitter" "c:/
              (dir (file-truename (format "/proc/%d/cwd/" pid))))
         (setq default-directory dir)))))
 
+  (defvar-local vlv-yas-vterm-source-buf nil
+    "The vterm buffer to send snippet expansion back to.")
+
+  (defvar-local vlv-yas-vterm-had-word nil
+    "Whether there was a word at point when snippet expansion started.")
+
+(defun vlv-vterm-yas-confirm ()
+  "Send expanded snippet from temp buffer to vterm."
+  (interactive)
+  (let ((result (buffer-string))
+        (vterm-buf vlv-yas-vterm-source-buf)
+        (had-word vlv-yas-vterm-had-word)
+        (win (selected-window)))
+    (kill-buffer (current-buffer))
+    (ignore-errors (delete-window win))
+    (pop-to-buffer vterm-buf)
+    (when had-word (vterm-send-meta-backspace))
+    (vterm-send-string result)))
+
+(defun vlv-vterm-yas-expand ()
+  "Expand yasnippet in a popup buffer."
+  (interactive)
+  (let* ((word (thing-at-point 'word 'no-properties))
+         (vterm-buf (current-buffer))
+         (tmp-buf (generate-new-buffer "*yas-vterm*")))
+    (with-current-buffer tmp-buf
+      (sh-mode)
+      (yas-minor-mode 1)
+      (setq vlv-yas-vterm-source-buf vterm-buf)
+      (setq vlv-yas-vterm-had-word word)
+      (when (bound-and-true-p evil-mode)
+        (evil-insert 1))
+      (when word (insert word))
+      (if (yas-expand)
+          (progn
+            (define-key (current-local-map) (kbd "Z Z") #'vlv-vterm-yas-confirm)
+            (define-key (current-local-map) (kbd "Z Q") #'kill-buffer-and-window)
+            (setq header-line-format
+                  (format "Press %s to send, %s to abandon."
+                          (key-description
+                           (where-is-internal #'vlv-vterm-yas-confirm
+                                              (current-local-map) t))
+                          (key-description
+                           (where-is-internal #'kill-buffer-and-window
+                                              (current-local-map) t))))
+            (pop-to-buffer tmp-buf
+                           '(display-buffer-below-selected
+                             (window-height . 5))))
+        (kill-buffer tmp-buf)
+        (message "No snippet found for: %s" (or word "<no word at point>"))))))
+
 (map!
   :after vterm
   ;; approach vterm behaviour to eshell
   :map vterm-mode-map
     ;; completion
-    "<tab>" 'vterm-completion
+    :i "<tab>" nil
+    :i "<tab>" #'vlv-vterm-yas-expand
 
     ;; Fix 0   go to start of input, not buffer column 0
     :n "0"  (cmd! (vterm-send-key "a" nil nil t)
@@ -1445,6 +1497,42 @@ mklink /D "c:/Users/LATTARO-VOLPINI/.config/emacs/.local/cache/tree-sitter" "c:/
                  (evil-visual-make-region beg end)))))
 #+end_src
 
+* Spotify
+#+begin_src emacs-lisp :tangle packages.el
+(package! spotify
+  :disable (not (eq system-type 'gnu/linux))
+  :pin "d918b5187638e0c44a2a2584f3980244b6aae3fa")
+#+end_src
+
+#+begin_src emacs-lisp :tangle config.el
+(use-package! spotify
+  ;; WARNING using "defer t" makes the package not be loaded when using bindings.
+  :config
+    (defun vlv-spotify-next-and-display()
+    "Plays the next song and displays it's author, name and album."
+    (interactive)
+    (spotify-next)
+    (call-interactively 'spotify-current))
+
+    (defun vlv-spotify-previous-and-display()
+    "Plays the previous song and displays it's author, name and album."
+    (interactive)
+    (spotify-previous)
+    (call-interactively 'spotify-current))
+
+    (defun vlv-spotify-playpause-and-display()
+    "Toggles pause and displays it's author, name and album."
+    (interactive)
+    (spotify-playpause)
+    (call-interactively 'spotify-current)))
+
+(map! :leader
+        (:prefix ("v" . "perso")
+        :desc "spotify-play/pause" "p" #'vlv-spotify-playpause-and-display
+        :desc "spotify-previous" "P" #'vlv-spotify-previous-and-display
+        :desc "spotify-open" "q" #'spotify-quit
+        :desc "spotify-next" "n" #'vlv-spotify-next-and-display))
+#+end_src
 * multi-vterm
 #+begin_src emacs-lisp :tangle packages.el
 (package! multi-vterm
