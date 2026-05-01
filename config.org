@@ -187,10 +187,11 @@ profiles API is stable."
 ;; frame
 (add-to-list 'default-frame-alist '(alpha-background . 80))
 
-;; REVIEW it should avoid having pgtk build messing with
-;;        the top bar, but for now this has no effect
-;;        on COSMIC DE and only breaks stuff on Windows.
-;; (add-to-list 'default-frame-alist '(undecorated . t))
+;; avoids having pgtk build messing with the top bar
+;; in Windows, this hides the topbar and breaks the
+;; OS window manager Super + <arrow> bindings
+(when (vlv-env-personal-p)
+  (add-to-list 'default-frame-alist '(undecorated . t)))
 
 ;; welcome screen
 (when (vlv-env-personal-p)
