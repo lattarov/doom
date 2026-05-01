@@ -1428,6 +1428,12 @@ mklink /D "c:/Users/LATTARO-VOLPINI/.config/emacs/.local/cache/tree-sitter" "c:/
     :n "$"  (cmd! (vterm-send-key "e" nil nil t)
                   (evil-refresh-cursor))
 
+    ;; unbind "d" so that it can be used as a key sequence.
+    :n "d"  nil
+
+    :n "dd" (cmd! (vterm-send-key "e" nil nil t)
+                (vterm-send-key "u" nil nil t)
+
     ;; Fix dd   clear input instead of deleting the buffer line
     :n "dd" (cmd! (vterm-send-key "e" nil nil t)
                   (vterm-send-key "u" nil nil t)
@@ -1439,7 +1445,7 @@ mklink /D "c:/Users/LATTARO-VOLPINI/.config/emacs/.local/cache/tree-sitter" "c:/
                                 (re-search-forward "\\$ " (line-end-position) t)
                                 (point)))
                          (end (save-excursion (vterm-end-of-line) (point))))
-                 (evil-visual-make-region beg end))))
+                 (evil-visual-make-region beg end)))))
 #+end_src
 
 * multi-vterm
