@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: gitstatus
+# uuid: gs
+# key: gs
+# --
+git status
