@@ -129,19 +129,35 @@ systemctl --user restart emacs
 * Literate configuration specifics
 #+begin_src emacs-lisp :tangle config.el
 (defun vlv-format-org-elisp-blocks ()
-  "Reindent all emacs-lisp src blocks in the current org buffer."
+  "Reindent all emacs-lisp src blocks without triggering buffer hooks."
   (interactive)
   (save-excursion
     (goto-char (point-min))
-    (while (re-search-forward "^[ \t]*#\\+begin_src +emacs-lisp" nil t)
-      (forward-line 1)
-      (when (org-in-src-block-p)
-        (org-edit-src-code)
-        (indent-region (point-min) (point-max))
-        (org-edit-src-exit)))))
+    (while (re-search-forward "^[ \t]*#\\+begin_src +emacs-lisp[^\n]*\n" nil t)
+      (let ((content-beg (point)))
+        (when (re-search-forward "^[ \t]*#\\+end_src" nil t)
+          (let* ((content-end (match-beginning 0))
+                 (content (buffer-substring-no-properties content-beg content-end))
+                 (indented (with-temp-buffer
+                             (let ((prog-mode-hook nil)
+                                   (lisp-data-mode-hook nil)
+                                   (emacs-lisp-mode-hook nil)
+                                   (after-change-major-mode-hook nil)
+                                   (change-major-mode-after-body-hook nil))
+                               (emacs-lisp-mode))
+                             (insert content)
+                             (indent-region (point-min) (point-max))
+                             (buffer-string))))
+            (unless (string= content indented)
+              (let ((end-marker (point-marker)))
+                (goto-char content-beg)
+                (delete-region content-beg content-end)
+                (insert indented)                 (goto-char end-marker)))))))))
 
-;; Auto-format before every tangle
-(add-hook 'org-babel-pre-tangle-hook #'vlv-format-org-elisp-blocks)
+(add-hook 'org-mode-hook
+          (lambda ()
+            (add-hook 'before-save-hook #'vlv-format-org-elisp-blocks nil t)))
+
 #+end_src
 
 * Cross platform compatibility :wip:
@@ -160,7 +176,7 @@ Used to enable/disable parts of the configuration.
 TODO: replace this by a dedicated config for work once the doom
 profiles API is stable."
   :type '(choice (const :tag "PERSONAL" "PERSONAL")
-                 (const :tag "WORK" "WORK"))
+          (const :tag "WORK" "WORK"))
   :group 'vlv)
 
 (defun vlv-env-work-p ()
@@ -175,16 +191,16 @@ profiles API is stable."
 (when (vlv-env-work-p)
   (let* ((vlv-env-work-p-emacs-install-path  "c:/Emacs/")
          (vlv-env-work-p-runtimes-path       (expand-file-name "runtimes/"
-                                                                     vlv-env-work-p-emacs-install-path))
+                                                               vlv-env-work-p-emacs-install-path))
          (vlv-env-work-p-runtimes-fd-path    (expand-file-name "fd"
-                                                                     vlv-env-work-p-runtimes-path))
+                                                               vlv-env-work-p-runtimes-path))
          (vlv-env-work-p-runtimes-rg-path    (expand-file-name "rg"
-                                                                     vlv-env-work-p-runtimes-path))
+                                                               vlv-env-work-p-runtimes-path))
 
          (vlv-env-work-p-cygwin-path         "C:/cygwin64")
 
          (vlv-env-work-p-cygwin-bin-path     (expand-file-name "bin"
-                                                                     vlv-env-work-p-cygwin-path))
+                                                               vlv-env-work-p-cygwin-path))
 
 
          (paths-to-add (list vlv-env-work-p-emacs-install-path
@@ -216,87 +232,87 @@ profiles API is stable."
 
 ;; welcome screen
 (when (vlv-env-personal-p)
-    (declare-function +doom-dashboard--center "+doom-dashboard")
-    (defvar +doom-dashboard--width)
-    (defun vlv-doom-dashboard-draw-ascii-banner-fn ()
-        (let* ((banner
-                  '("██╗      █████╗ ████████╗████████╗ █████╗ ██████╗  ██████╗ "
-                    "██║     ██╔══██╗╚══██╔══╝╚══██╔══╝██╔══██╗██╔══██╗██╔═══██╗"
-                    "██║     ███████║   ██║      ██║   ███████║██████╔╝██║   ██║"
-                    "██║     ██╔══██║   ██║      ██║   ██╔══██║██╔═██╚╗██║   ██║"
-                    "███████╗██║  ██║   ██║      ██║   ██║  ██║██║ ███║███████╔╝"
-                    "╚══════╝╚═╝  ╚═╝   ╚═╝      ╚═╝   ╚═╝  ╚═╝╚═╝ ╚══╝╚══════╝ "
-                    "                                                           "
-                    "                        E M A C S                          "
-                    "                                                           "
-                    "                                                           "
-                    "                                                           "))
-                (longest-line (apply #'max (mapcar #'length banner))))
-            (put-text-property
-            (point)
-            (dolist (line banner (point))
-            (insert (+doom-dashboard--center
-                        +doom-dashboard--width
-                        (concat
-                        line (make-string (max 0 (- longest-line (length line)))
-                                        32)))
-                    "\n"))
-            'face 'doom-dashboard-banner)))
+  (declare-function +doom-dashboard--center "+doom-dashboard")
+  (defvar +doom-dashboard--width)
+  (defun vlv-doom-dashboard-draw-ascii-banner-fn ()
+    (let* ((banner
+            '("██╗      █████╗ ████████╗████████╗ █████╗ ██████╗  ██████╗ "
+              "██║     ██╔══██╗╚══██╔══╝╚══██╔══╝██╔══██╗██╔══██╗██╔═══██╗"
+              "██║     ███████║   ██║      ██║   ███████║██████╔╝██║   ██║"
+              "██║     ██╔══██║   ██║      ██║   ██╔══██║██╔═██╚╗██║   ██║"
+              "███████╗██║  ██║   ██║      ██║   ██║  ██║██║ ███║███████╔╝"
+              "╚══════╝╚═╝  ╚═╝   ╚═╝      ╚═╝   ╚═╝  ╚═╝╚═╝ ╚══╝╚══════╝ "
+              "                                                           "
+              "                        E M A C S                          "
+              "                                                           "
+              "                                                           "
+              "                                                           "))
+           (longest-line (apply #'max (mapcar #'length banner))))
+      (put-text-property
+       (point)
+       (dolist (line banner (point))
+         (insert (+doom-dashboard--center
+                  +doom-dashboard--width
+                  (concat
+                   line (make-string (max 0 (- longest-line (length line)))
+                                     32)))
+                 "\n"))
+       'face 'doom-dashboard-banner)))
 
-    (setopt +doom-dashboard-ascii-banner-fn #'vlv-doom-dashboard-draw-ascii-banner-fn))
+  (setopt +doom-dashboard-ascii-banner-fn #'vlv-doom-dashboard-draw-ascii-banner-fn))
 
-    (setopt doom-theme 'doom-moonlight)
+(setopt doom-theme 'doom-moonlight)
 
-    ;; font
-    (setopt doom-font (font-spec :family "Cascadia Code" :size 18))
+;; font
+(setopt doom-font (font-spec :family "Cascadia Code" :size 18))
 
 
-    ;; make lookup online use eww insted of default browser.
-    (setopt +lookup-open-url-fn 'eww)
+;; make lookup online use eww insted of default browser.
+(setopt +lookup-open-url-fn 'eww)
 
-    ;; clear SPC f p prefix to use in private config
-    (map! :leader
-        :prefix "f" "p" nil)
+;; clear SPC f p prefix to use in private config
+(map! :leader
+      :prefix "f" "p" nil)
 
-    (defun vlv-open-init-file ()
-        "Opens the init.el file from private config."
-        (interactive)
-        (find-file (expand-file-name doom-module-init-file doom-user-dir)))
+(defun vlv-open-init-file ()
+  "Opens the init.el file from private config."
+  (interactive)
+  (find-file (expand-file-name doom-module-init-file doom-user-dir)))
 
-    (defun vlv-open-literate-config-file ()
-        "Opens the config.org file from private config.
+(defun vlv-open-literate-config-file ()
+  "Opens the config.org file from private config.
 
         NOTE we can't use +literate-config-file for it's not loaded
         until the user opens that file."
-        (interactive)
-        (find-file (expand-file-name "config.org" doom-user-dir)))
+  (interactive)
+  (find-file (expand-file-name "config.org" doom-user-dir)))
 
-    (defun vlv-open-elfeed-file ()
-        "Opens the elfeed feeds descriptor file from private config."
-        (interactive)
-        (find-file (expand-file-name "elfeed.org" doom-user-dir)))
+(defun vlv-open-elfeed-file ()
+  "Opens the elfeed feeds descriptor file from private config."
+  (interactive)
+  (find-file (expand-file-name "elfeed.org" doom-user-dir)))
 
-    (map! :leader
-        :prefix ("f p" . "Private config")
-        :desc "Open init.el" "i" #'vlv-open-init-file
-        :desc "Open elfeed.org" "e" #'vlv-open-elfeed-file
-        :desc "Open literate config" "c" #'vlv-open-literate-config-file
-        :desc "Browse" "p" #'doom/open-private-config)
+(map! :leader
+      :prefix ("f p" . "Private config")
+      :desc "Open init.el" "i" #'vlv-open-init-file
+      :desc "Open elfeed.org" "e" #'vlv-open-elfeed-file
+      :desc "Open literate config" "c" #'vlv-open-literate-config-file
+      :desc "Browse" "p" #'doom/open-private-config)
 
-    (add-hook! 'doom-scratch-buffer-hook 'org-mode)
+(add-hook! 'doom-scratch-buffer-hook 'org-mode)
 
-    (setopt doom-modeline-enable-buffer-position nil)
+(setopt doom-modeline-enable-buffer-position nil)
 
-    (setopt doom-modeline-time-analogue-clock nil)
+(setopt doom-modeline-time-analogue-clock nil)
 
-    (setopt size-indication-mode nil)
+(setopt size-indication-mode nil)
 #+end_src
 
 ** Checking for new modules
 #+begin_src emacs-lisp :tangle no :results none
 (let ((init-example-file (expand-file-name "static/init.example.el" doom-emacs-dir))
       (init-file          (expand-file-name "init.el" doom-user-dir)))
-    (ediff-files init-file init-example-file))
+  (ediff-files init-file init-example-file))
 #+end_src
 *** IDEA create a hook in upgrade to discover new available modules
 
@@ -321,9 +337,8 @@ this configures bash to be used as the default shell bash. In theory it corrects
 #+begin_src emacs-lisp :tangle no
 ;; Configuring terminal for windows
 (if (eq system-type 'windows-nt)
-        (setopt shell-file-name "C:/Windows/system32/bash.exe")
-        (setenv "ESHELL" "bash")
- )
+    (setopt shell-file-name "C:/Windows/system32/bash.exe")
+  (setenv "ESHELL" "bash"))
 #+end_src
 
 ** Emacs Lisp Mode
@@ -366,15 +381,15 @@ this configures bash to be used as the default shell bash. In theory it corrects
 (use-package! org
   :defer t
   :init
-    (if (vlv-env-work-p)
-          (setopt org-directory "~/OneDrive - Kestrel Vision/org/")
-          (setopt org-directory "~/org/"))
+  (if (vlv-env-work-p)
+      (setopt org-directory "~/OneDrive - Kestrel Vision/org/")
+    (setopt org-directory "~/org/"))
 
   :config
-    (add-hook! 'org-mode-hook #'show-smartparens-mode)
+  (add-hook! 'org-mode-hook #'show-smartparens-mode)
 
-    ;; babel
-    (when (vlv-env-work-p)
+  ;; babel
+  (when (vlv-env-work-p)
     (setopt org-babel-C++-compiler "clang"
             org-babel-C-compiler   "clang")))
 #+end_src
@@ -390,19 +405,19 @@ this configures bash to be used as the default shell bash. In theory it corrects
 (use-package! org-agenda
   :defer t
   :config
-     ;; start on monday
-    (setopt org-agenda-start-on-weekday 1)
+  ;; start on monday
+  (setopt org-agenda-start-on-weekday 1)
 
-    (setopt org-agenda-span 20)
+  (setopt org-agenda-span 20)
 
-    (setopt org-journal-enable-agenda-integration t))
+  (setopt org-journal-enable-agenda-integration t))
 
 ;; in org agenda, the default behavior for leave all org-related buffers
 ;; opened. This is quite annoying given the number of buffers which can
 ;; in the order of the hundreds.
 (map! :map org-agenda-mode-map "q" nil)
 (map! :map org-agenda-mode-map
-        :desc "Exit and close all buffers" "q" #'org-agenda-exit)
+      :desc "Exit and close all buffers" "q" #'org-agenda-exit)
 #+end_src
 *** TODO Improve org-roam org-agenda performance
 
@@ -430,16 +445,16 @@ Shortcuts are mapped with the SPC n r prefix by default.
   ;;  :hook (after-init . org-roam-ui-mode)
   :config
   (setopt org-roam-ui-sync-theme t
-        org-roam-ui-follow t
-        org-roam-ui-update-on-save t
-        org-roam-ui-open-on-start t)
+          org-roam-ui-follow t
+          org-roam-ui-update-on-save t
+          org-roam-ui-open-on-start t)
   ;; necessary use the org directory set on the
   (setopt org-roam-directory (expand-file-name "roam/" org-directory)))
 
 (map! :leader
-        (:prefix ("n" . "org")
-        (:prefix ("r" . "roam")
-         :desc "Open org roam UI" "u" #'org-roam-ui-mode)))
+      (:prefix ("n" . "org")
+               (:prefix ("r" . "roam")
+                :desc "Open org roam UI" "u" #'org-roam-ui-mode)))
 #+end_src
 ** org-gtd
 #+begin_src emacs-lisp :tangle packages.el
@@ -450,43 +465,43 @@ Shortcuts are mapped with the SPC n r prefix by default.
 (use-package! org-gtd
   :after org
   :init
-    ;; Suppress upgrade warnings (must be set before package loads)
-    (setopt org-gtd-update-ack "4.5.0")
+  ;; Suppress upgrade warnings (must be set before package loads)
+  (setopt org-gtd-update-ack "4.5.0")
 
   :config
-    (setopt org-gtd-directory (expand-file-name "gtd/" org-directory))
+  (setopt org-gtd-directory (expand-file-name "gtd/" org-directory))
 
-    (add-to-list 'org-agenda-files org-gtd-directory)
+  (add-to-list 'org-agenda-files org-gtd-directory)
 
-    ;; Configure TODO keyword states
-    (setopt org-todo-keywords '((sequence "TODO" "NEXT" "WAIT" "DONE" "CNCL")))
+  ;; Configure TODO keyword states
+  (setopt org-todo-keywords '((sequence "TODO" "NEXT" "WAIT" "DONE" "CNCL")))
 
-    ;; Map GTD semantic states to your keywords
-    (setopt org-gtd-keyword-mapping '((todo     . "TODO")
-                                      (next     . "NEXT")
-                                      (wait     . "WAIT")
-                                      (done     . "DONE")
-                                      (canceled . "CNCL")))
+  ;; Map GTD semantic states to your keywords
+  (setopt org-gtd-keyword-mapping '((todo     . "TODO")
+                                    (next     . "NEXT")
+                                    (wait     . "WAIT")
+                                    (done     . "DONE")
+                                    (canceled . "CNCL")))
 
-    ;; REQUIRED: Enable org-edna for project dependencies
-    (org-edna-mode 1)
+  ;; REQUIRED: Enable org-edna for project dependencies
+  (org-edna-mode 1)
 
-    ;; Make org-gtd prompt for refile target instead of auto-refiling
-    (setopt org-gtd-refile-to-any-target nil)
+  ;; Make org-gtd prompt for refile target instead of auto-refiling
+  (setopt org-gtd-refile-to-any-target nil)
 
-    ;; Avoids manual saving all buffers once we're done
-    (setopt org-gtd-save-after-organize t)
+  ;; Avoids manual saving all buffers once we're done
+  (setopt org-gtd-save-after-organize t)
 
-    ;; keybindings
-    (map!
-        (:map org-gtd-clarify-mode-map
-               "C-c c" #'org-gtd-organize)
-        (:map org-agenda-mode-map
-               "C-c ." #'org-gtd-agenda-transient))
+  ;; keybindings
+  (map!
+   (:map org-gtd-clarify-mode-map
+         "C-c c" #'org-gtd-organize)
+   (:map org-agenda-mode-map
+         "C-c ." #'org-gtd-agenda-transient))
 
-    (map! :leader
-          :prefix "o"
-          :desc "org-gtd" "g" #'org-gtd-command-center))
+  (map! :leader
+        :prefix "o"
+        :desc "org-gtd" "g" #'org-gtd-command-center))
 
 #+end_src
 
@@ -497,47 +512,47 @@ Found in[[https://jao.io/blog/eww-to-org.html][ eww to org]].
 #+begin_src emacs-lisp :tangle config.el
 (after! (:and eww org)
   (defun jao-eww-to-org (&optional dest)
-   "Render the current eww buffer using org markup.
+    "Render the current eww buffer using org markup.
 If DEST, a buffer, is provided, insert the markup there."
-   (interactive)
-   (unless (org-region-active-p)
-     (let ((shr-width 80)) (eww-readable)))
-   (let* ((start (if (org-region-active-p) (region-beginning) (point-min)))
-          (end (if (org-region-active-p) (region-end) (point-max)))
-          (buff (or dest (generate-new-buffer "*eww-to-org*")))
-          (link (eww-current-url))
-          (title (or (plist-get eww-data :title) "")))
-     (with-current-buffer buff
-       (insert "#+title: " title "\n#+link: " link "\n\n")
-       (org-mode))
-     (save-excursion
-       (goto-char start)
-       (while (< (point) end)
-         (let* ((p (point))
-                (props (text-properties-at p))
-                (k (seq-find (lambda (x) (plist-get props x))
-                             '(shr-url image-url outline-level face)))
-                (prop (and k (list k (plist-get props k))))
-                (next (if prop
-                          (next-single-property-change p (car prop) nil end)
-                        (next-property-change p nil end)))
-                (txt (buffer-substring (point) next))
-                (txt (replace-regexp-in-string "\\*" "·" txt)))
-           (with-current-buffer buff
-             (insert
-              (pcase prop
-                ((and (or `(shr-url ,url) `(image-url ,url))
-                      (guard (string-match-p "^http" url)))
-                 (let ((tt (replace-regexp-in-string "\n\\([^$]\\)" " \\1" txt)))
-                   (org-link-make-string url tt)))
-                (`(outline-level ,n)
-                 (concat (make-string (- (* 2 n) 1) ?*) " " txt "\n"))
-                ('(face italic) (format "/%s/ " (string-trim txt)))
-                ('(face bold) (format "*%s* " (string-trim txt)))
-                (_ txt))))
-           (goto-char next))))
-     (pop-to-buffer buff)
-     (goto-char (point-min)))))
+    (interactive)
+    (unless (org-region-active-p)
+      (let ((shr-width 80)) (eww-readable)))
+    (let* ((start (if (org-region-active-p) (region-beginning) (point-min)))
+           (end (if (org-region-active-p) (region-end) (point-max)))
+           (buff (or dest (generate-new-buffer "*eww-to-org*")))
+           (link (eww-current-url))
+           (title (or (plist-get eww-data :title) "")))
+      (with-current-buffer buff
+        (insert "#+title: " title "\n#+link: " link "\n\n")
+        (org-mode))
+      (save-excursion
+        (goto-char start)
+        (while (< (point) end)
+          (let* ((p (point))
+                 (props (text-properties-at p))
+                 (k (seq-find (lambda (x) (plist-get props x))
+                              '(shr-url image-url outline-level face)))
+                 (prop (and k (list k (plist-get props k))))
+                 (next (if prop
+                           (next-single-property-change p (car prop) nil end)
+                         (next-property-change p nil end)))
+                 (txt (buffer-substring (point) next))
+                 (txt (replace-regexp-in-string "\\*" "·" txt)))
+            (with-current-buffer buff
+              (insert
+               (pcase prop
+                 ((and (or `(shr-url ,url) `(image-url ,url))
+                       (guard (string-match-p "^http" url)))
+                  (let ((tt (replace-regexp-in-string "\n\\([^$]\\)" " \\1" txt)))
+                    (org-link-make-string url tt)))
+                 (`(outline-level ,n)
+                  (concat (make-string (- (* 2 n) 1) ?*) " " txt "\n"))
+                 ('(face italic) (format "/%s/ " (string-trim txt)))
+                 ('(face bold) (format "*%s* " (string-trim txt)))
+                 (_ txt))))
+            (goto-char next))))
+      (pop-to-buffer buff)
+      (goto-char (point-min)))))
 #+end_src
 
 * Python
@@ -545,9 +560,9 @@ If DEST, a buffer, is provided, insert the markup there."
 (use-package! python
   :defer t
   :config
-    (if (executable-find "ipython")
+  (if (executable-find "ipython")
       (setopt python-shell-interpreter "ipython")
-      (message "ipython not found in path. Using %s." python-shell-interpreter)))
+    (message "ipython not found in path. Using %s." python-shell-interpreter)))
 #+end_src
 
 ** Conda
@@ -567,9 +582,9 @@ Allow automatic recognition of projects given a list of paths.
 (use-package! projectile
   :defer t
   :config
-    (setopt +workspaces-on-switch-project-behavior t)
-    (setopt projectile-project-search-path '("~/dev"
-                                             "D:/@Src")))
+  (setopt +workspaces-on-switch-project-behavior t)
+  (setopt projectile-project-search-path '("~/dev"
+                                           "D:/@Src")))
 #+end_src
 
 * Dired
@@ -577,8 +592,8 @@ Allow automatic recognition of projects given a list of paths.
 (use-package! dired
   :defer t
   :config
-    (setopt dired-async-mode       t
-            dired-listing-switches "-alh --no-group -g"))
+  (setopt dired-async-mode       t
+          dired-listing-switches "-alh --no-group -g"))
 #+end_src
 
 * Dirvish
@@ -588,7 +603,7 @@ Allow automatic recognition of projects given a list of paths.
   :config
   (setopt dirvish-quick-access-entries
           (let ((org-path (expand-file-name org-directory))
-               (repos-path (if (vlv-env-work-p) "d:/@Src/" "~/dev/repos/")))
+                (repos-path (if (vlv-env-work-p) "d:/@Src/" "~/dev/repos/")))
             `(("h" "~/" "Home")
               ("d" "~/Downloads/" "Downloads")
               ("D" "~/Documents/" "Documents")
@@ -597,8 +612,8 @@ Allow automatic recognition of projects given a list of paths.
               ("r" ,repos-path "Repos")))))
 
 (map! :leader
-    (:prefix ("o" . "open")
-    :desc "dirvish" "d" #'dirvish))
+      (:prefix ("o" . "open")
+       :desc "dirvish" "d" #'dirvish))
 #+end_src
 
 #+begin_src emacs-lisp :tangle config.el
@@ -620,44 +635,44 @@ Allow automatic recognition of projects given a list of paths.
 (use-package! yasnippet
   :defer t
   :config
-    (defun yasnippet-extract-arg-and-type (arg)
+  (defun yasnippet-extract-arg-and-type (arg)
     "Extract argument name and type from a string of the form `arg: type'."
     (let* ((parts (split-string arg ": ")))
-        (if (= (length parts) 2)
-            (cons (car parts) (cadr parts))
+      (if (= (length parts) 2)
+          (cons (car parts) (cadr parts))
         (cons (car parts) "type"))))
 
-    (defun yasnippet-python-params-doc (arg-string)
+  (defun yasnippet-python-params-doc (arg-string)
     "Generate NumPy-style docstring for parameters with optional type annotations.
 If there are no arguments, return an empty string."
     (let* ((args (split-string arg-string ", "))
-            (formatted-doc
+           (formatted-doc
             (if (string-blank-p arg-string)
                 ""
-                (mapconcat (lambda (arg)
-                            (let* ((arg-pair (yasnippet-extract-arg-and-type arg))
-                                    (arg-name (car arg-pair))
-                                    (arg-type (cdr arg-pair)))
-                            ;; TODO: Generate placeholders for each parameter description.
-                            (format "%s : %s\n        TODO: Description of %s." arg-name arg-type arg-name)))
-                        args
-                        "\n    "))))
-        formatted-doc))
+              (mapconcat (lambda (arg)
+                           (let* ((arg-pair (yasnippet-extract-arg-and-type arg))
+                                  (arg-name (car arg-pair))
+                                  (arg-type (cdr arg-pair)))
+                             ;; TODO: Generate placeholders for each parameter description.
+                             (format "%s : %s\n        TODO: Description of %s." arg-name arg-type arg-name)))
+                         args
+                         "\n    "))))
+      formatted-doc))
 
-    (defun yasnippet-python-parameter-assignments (arg-string)
+  (defun yasnippet-python-parameter-assignments (arg-string)
     "Convert a comma-separated string of arguments into self assignments.
 If there are no arguments, return `pass'."
     (let* ((args (split-string arg-string ", "))
-            (assignments
+           (assignments
             (if (string-blank-p arg-string)
                 "pass"
-                (mapconcat (lambda (arg)
-                            (let* ((parts (split-string arg ": "))
-                                    (name (car parts)))
-                            (format "self.%s = %s" name name)))
-                        args
-                        "\n        "))))
-        assignments)))
+              (mapconcat (lambda (arg)
+                           (let* ((parts (split-string arg ": "))
+                                  (name (car parts)))
+                             (format "self.%s = %s" name name)))
+                         args
+                         "\n        "))))
+      assignments)))
 #+end_src
 
 ** CC mode
@@ -666,13 +681,13 @@ If there are no arguments, return `pass'."
 (use-package! lsp-clangd
   :defer t
   :config
-    (setopt lsp-clients-clangd-args
-        '("-j=3"
-          "--background-index"
-          "--clang-tidy"
-          "--completion-style=detailed"
-          "--header-insertion=never"
-          "--header-insertion-decorators=0"))
+  (setopt lsp-clients-clangd-args
+          '("-j=3"
+            "--background-index"
+            "--clang-tidy"
+            "--completion-style=detailed"
+            "--header-insertion=never"
+            "--header-insertion-decorators=0"))
   (set-lsp-priority! 'clangd 2))
 #+end_src
 *** CMAKE-IDE
@@ -704,16 +719,16 @@ Set ollama as default backend for gptel, add default model and a few tweaks.
 (use-package! gptel
   :defer t
   :config
-    (add-hook! 'gptel-post-stream-hook 'gptel-auto-scroll)
+  (add-hook! 'gptel-post-stream-hook 'gptel-auto-scroll)
 
-    (add-hook! 'gptel-post-response-functions 'gptel-end-of-response)
+  (add-hook! 'gptel-post-response-functions 'gptel-end-of-response)
 
-    (setopt gptel-model 'gpt-oss:20b)
+  (setopt gptel-model 'gpt-oss:20b)
 
-    (setopt vlv--gptel-ollama (gptel-make-ollama "ollama"
-                                :host "localhost:11434"
-                                :stream t
-                                :models '((deepseek-coder-v2:16b)
+  (setopt vlv--gptel-ollama (gptel-make-ollama "ollama"
+                              :host "localhost:11434"
+                              :stream t
+                              :models '((deepseek-coder-v2:16b)
                                         (ifioravanti/llamantino-2)
                                         (deepseek-r1:8b)
                                         (deepseek-r1:32b)
@@ -721,9 +736,9 @@ Set ollama as default backend for gptel, add default model and a few tweaks.
                                         (gpt-oss:20b)
                                         (deepseek-r1:7b))))
 
-    (setopt vlv--gptel-copilot (gptel-make-gh-copilot "copilot"))
+  (setopt vlv--gptel-copilot (gptel-make-gh-copilot "copilot"))
 
-    (setopt gptel-backend vlv--gptel-ollama))
+  (setopt gptel-backend vlv--gptel-ollama))
 #+end_src
 
 *** gptel-tools
@@ -810,37 +825,37 @@ Prerequisites:
 (use-package! elfeed
   :defer t
   :config
-    ;; the basic value cuts a part of the feed's title.
-    ;; Increasing the column width fixes it.
-    (setopt elfeed-goodies/feed-source-column-width 25)
+  ;; the basic value cuts a part of the feed's title.
+  ;; Increasing the column width fixes it.
+  (setopt elfeed-goodies/feed-source-column-width 25)
 
 
-    ;; Strangely, elfeed does not allow us to delete entries that we don't want to see
-    ;; in the feed anymore. Moreover, when a feed is deleted, its entries are not
-    ;; removed from the feed.
+  ;; Strangely, elfeed does not allow us to delete entries that we don't want to see
+  ;; in the feed anymore. Moreover, when a feed is deleted, its entries are not
+  ;; removed from the feed.
 
-    ;; A solution is proposed by https://github.com/skeeto/elfeed/issues/392, it works
-    ;; by deleting selected items feed from elfeed's database.
+  ;; A solution is proposed by https://github.com/skeeto/elfeed/issues/392, it works
+  ;; by deleting selected items feed from elfeed's database.
 
-    (defun sk/elfeed-db-remove-entry (id)
-      "Removes the entry for ID"
-      (avl-tree-delete elfeed-db-index id)
-      (remhash id elfeed-db-entries))
+  (defun sk/elfeed-db-remove-entry (id)
+    "Removes the entry for ID"
+    (avl-tree-delete elfeed-db-index id)
+    (remhash id elfeed-db-entries))
 
-    (defun sk/elfeed-search-remove-selected ()
-      "Remove selected entries from database"
-      (interactive)
-      (let* ((entries (elfeed-search-selected))
-              (count (length entries)))
-          (when (y-or-n-p (format "Delete %d entires?" count))
-          (cl-loop for entry in entries
-                  do (sk/elfeed-db-remove-entry (elfeed-entry-id entry)))))
-      (elfeed-search-update--force)))
+  (defun sk/elfeed-search-remove-selected ()
+    "Remove selected entries from database"
+    (interactive)
+    (let* ((entries (elfeed-search-selected))
+           (count (length entries)))
+      (when (y-or-n-p (format "Delete %d entires?" count))
+        (cl-loop for entry in entries
+                 do (sk/elfeed-db-remove-entry (elfeed-entry-id entry)))))
+    (elfeed-search-update--force)))
 
 (map! :leader
-    (:prefix ("e" . "elfeed")
-    :desc "Enter elfeed" "e" #'elfeed
-    :desc "Update all feeds" "u" #'elfeed-update))
+      (:prefix ("e" . "elfeed")
+       :desc "Enter elfeed" "e" #'elfeed
+       :desc "Update all feeds" "u" #'elfeed-update))
 
 ;; copy elfeed.org to the org directory. Put here so that the elfeed.org
 ;; is tangled whenever doom-reload is run.
@@ -919,34 +934,34 @@ promising and would bring plenty of nice features to the config.
   (consult-omni-sources-load-modules)
   ;;; set multiple sources for consult-omni-multi command. Change these lists as needed for different interactive commands. Keep in mind that each source has to be a key in `consult-omni-sources-alist'.
   (setopt consult-omni-multi-sources '("calc"
-                                     "File"
-                                     "Buffer"
-                                     ;; "DuckDuckGo"
-                                     ;; "Bookmark"
-                                     "Apps"
-                                     "gptel"
-                                     ;; "Brave"
-                                     "Dictionary"
-                                     ;; "Google"
-                                     "Wikipedia"
-                                     "elfeed"
-                                     ;; "mu4e"
-                                     "buffers text search"
-                                     "Notes Search"
-                                     "Org Agenda"
-                                     ;; "GitHub"
-                                     "YouTube"
-                                     ;; "Invidious"
-                                     ))
+                                       "File"
+                                       "Buffer"
+                                       ;; "DuckDuckGo"
+                                       ;; "Bookmark"
+                                       "Apps"
+                                       "gptel"
+                                       ;; "Brave"
+                                       "Dictionary"
+                                       ;; "Google"
+                                       "Wikipedia"
+                                       "elfeed"
+                                       ;; "mu4e"
+                                       "buffers text search"
+                                       "Notes Search"
+                                       "Org Agenda"
+                                       ;; "GitHub"
+                                       "YouTube"
+                                       ;; "Invidious"
+                                       ))
 
-;; Per source customization
+  ;; Per source customization
 
 ;;; Set your shorthand favorite interactive command
- (setopt consult-omni-default-interactive-command #'consult-omni-multi))
+  (setopt consult-omni-default-interactive-command #'consult-omni-multi))
 :bind
-  (map! :leader
-        (:prefix ("s" . "search")
-         :desc "consult-omni-multi" "s" #'consult-omni-multi))
+(map! :leader
+      (:prefix ("s" . "search")
+       :desc "consult-omni-multi" "s" #'consult-omni-multi))
 #+end_src
 
 ** bindings
@@ -1099,41 +1114,41 @@ From this point onwards, mu4e should be up and running.
   :if (vlv-env-personal-p)
   :init
   ;; installation path for mu4e installed by the makefile (manual compiled)
-    (add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu4e")
+  (add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu4e")
 
-    ;; apt-based installation
-    (let* ((mu-version-command               "mu --version")
-        (mu-version-command-output-prefix "version ")
-        (mu-version-command-output        (shell-command-to-string mu-version-command))
-        (mu4e-target-version              (string-trim (string-remove-prefix
-                                                            mu-version-command-output-prefix
-                                                            mu-version-command-output)))
-        (mu4e-target-path-base            "/usr/share/emacs/site-lisp/elpa-src/mu4e-")
-        (mu4e-load-path                   (concat mu4e-target-path-base
-                                                    mu4e-target-version)))
+  ;; apt-based installation
+  (let* ((mu-version-command               "mu --version")
+         (mu-version-command-output-prefix "version ")
+         (mu-version-command-output        (shell-command-to-string mu-version-command))
+         (mu4e-target-version              (string-trim (string-remove-prefix
+                                                         mu-version-command-output-prefix
+                                                         mu-version-command-output)))
+         (mu4e-target-path-base            "/usr/share/emacs/site-lisp/elpa-src/mu4e-")
+         (mu4e-load-path                   (concat mu4e-target-path-base
+                                                   mu4e-target-version)))
     ;; check if directory exusts
     (if (file-directory-p mu4e-load-path)
         (add-to-list 'load-path mu4e-load-path)
-        (error "Path to mu4e does not exist: %s. \n Potential version mismatch between mu and mu4e"
-            mu4e-load-path)))
+      (error "Path to mu4e does not exist: %s. \n Potential version mismatch between mu and mu4e"
+             mu4e-load-path)))
 
-    ;; setting up accounts
-    (set-email-account! "@gmail.com"
-    '((mu4e-sent-folder       . "/gmail/Sent Mail")
-        (mu4e-drafts-folder     . "/gmail/Drafts")
-        (mu4e-trash-folder      . "/gmail/Trash")
-        (mu4e-refile-folder     . "/gmail/All Mail")
-        (smtpmail-smtp-user     . "victorlattaro@gmail.com")
-        (mu4e-compose-signature . "---\nVictor Lattaro Volpini")))
-    ;; if "gmail" is missing from the address or maildir, the account must be
-    ;; specified manually in `+mu4e-gmail-accounts':
-    (setopt +mu4e-gmail-accounts '(("victorlattaro@gmail.com" . "/victorlattaro")))
+  ;; setting up accounts
+  (set-email-account! "@gmail.com"
+                      '((mu4e-sent-folder       . "/gmail/Sent Mail")
+                        (mu4e-drafts-folder     . "/gmail/Drafts")
+                        (mu4e-trash-folder      . "/gmail/Trash")
+                        (mu4e-refile-folder     . "/gmail/All Mail")
+                        (smtpmail-smtp-user     . "victorlattaro@gmail.com")
+                        (mu4e-compose-signature . "---\nVictor Lattaro Volpini")))
+  ;; if "gmail" is missing from the address or maildir, the account must be
+  ;; specified manually in `+mu4e-gmail-accounts':
+  (setopt +mu4e-gmail-accounts '(("victorlattaro@gmail.com" . "/victorlattaro")))
 
-    ;; Each path is relative to the path of the maildir you passed to mu
-    (setopt mu4e-index-cleanup nil
-            ;; because gmail uses labels as folders we can use lazy check since
-            ;; messages don't really "move"
-            mu4e-index-lazy-check t))
+  ;; Each path is relative to the path of the maildir you passed to mu
+  (setopt mu4e-index-cleanup nil
+          ;; because gmail uses labels as folders we can use lazy check since
+          ;; messages don't really "move"
+          mu4e-index-lazy-check t))
 #+end_src
 
 * Copilot :wip:
@@ -1163,13 +1178,13 @@ From this point onwards, mu4e should be up and running.
 #+begin_src emacs-lisp :tangle config.el
 (require 'transient)
 (defvar vlv-vnc-machines
-    '(("VISIO"            . "10.4.54.221")
-      ("VERN"             . "10.102.31.63")
-      ("CMX"              . "10.4.54.223")
-      ("CXP"              . "10.4.54.224")
-      ("STARLORD"         . "10.4.52.3")
-      ("BDT-INCA10-VERN"  . "10.102.31.64"))
-    "Alist mapping machine names to their TightVNC IPs.")
+  '(("VISIO"            . "10.4.54.221")
+    ("VERN"             . "10.102.31.63")
+    ("CMX"              . "10.4.54.223")
+    ("CXP"              . "10.4.54.224")
+    ("STARLORD"         . "10.4.52.3")
+    ("BDT-INCA10-VERN"  . "10.102.31.64"))
+  "Alist mapping machine names to their TightVNC IPs.")
 
 (defcustom vlv-vncviewer-path "C:/Program Files/TightVNC/tvnviewer.exe"
   "Path to the TightVNC viewer executable."
@@ -1254,12 +1269,12 @@ From this point onwards, mu4e should be up and running.
          (sln-files (directory-files-recursively project-root "\\.sln$")))
     (if (null sln-files)
         (error "No .sln files found in the project."))
-      (let ((chosen-sln (if (= (length sln-files) 1)
-                            (car sln-files)
-                          (completing-read "Choose a solution: " sln-files nil t))))
-            (let* ((command (format "start devenv \"%s\"" chosen-sln)))
-              (message "Running: %s" command)
-              (start-process-shell-command "open-sln" nil command)))))
+    (let ((chosen-sln (if (= (length sln-files) 1)
+                          (car sln-files)
+                        (completing-read "Choose a solution: " sln-files nil t))))
+      (let* ((command (format "start devenv \"%s\"" chosen-sln)))
+        (message "Running: %s" command)
+        (start-process-shell-command "open-sln" nil command)))))
 
 (map! :leader
       :prefix "o"
@@ -1282,13 +1297,13 @@ From this point onwards, mu4e should be up and running.
 
 (defun vlv-open-windriver3-workbench ()
   "Open Wind River Workbench 3 IDE."
-    (interactive)
-    (start-process "workbench" nil vlv--workbench3-path))
+  (interactive)
+  (start-process "workbench" nil vlv--workbench3-path))
 
 (defun vlv-open-windriver4-workbench ()
   "Open Wind River Workbench 4 IDE."
-    (interactive)
-    (start-process "workbench" nil vlv--workbench4-path))
+  (interactive)
+  (start-process "workbench" nil vlv--workbench4-path))
 
 
 (map! :leader
@@ -1379,30 +1394,30 @@ mklink /D "c:/Users/LATTARO-VOLPINI/.config/emacs/.local/cache/tree-sitter" "c:/
 (use-package! spotify
   ;; WARNING using "defer t" makes the package not be loaded when using bindings.
   :config
-    (defun vlv-spotify-next-and-display()
+  (defun vlv-spotify-next-and-display()
     "Plays the next song and displays it's author, name and album."
     (interactive)
     (spotify-next)
     (call-interactively 'spotify-current))
 
-    (defun vlv-spotify-previous-and-display()
+  (defun vlv-spotify-previous-and-display()
     "Plays the previous song and displays it's author, name and album."
     (interactive)
     (spotify-previous)
     (call-interactively 'spotify-current))
 
-    (defun vlv-spotify-playpause-and-display()
+  (defun vlv-spotify-playpause-and-display()
     "Toggles pause and displays it's author, name and album."
     (interactive)
     (spotify-playpause)
     (call-interactively 'spotify-current)))
 
 (map! :leader
-        (:prefix ("v" . "perso")
-        :desc "spotify-play/pause" "p" #'vlv-spotify-playpause-and-display
-        :desc "spotify-previous" "P" #'vlv-spotify-previous-and-display
-        :desc "spotify-open" "q" #'spotify-quit
-        :desc "spotify-next" "n" #'vlv-spotify-next-and-display))
+      (:prefix ("v" . "perso")
+       :desc "spotify-play/pause" "p" #'vlv-spotify-playpause-and-display
+       :desc "spotify-previous" "P" #'vlv-spotify-previous-and-display
+       :desc "spotify-open" "q" #'spotify-quit
+       :desc "spotify-next" "n" #'vlv-spotify-next-and-display))
 #+end_src
 * vterm
 #+begin_src emacs-lisp :tangle config.el
@@ -1422,9 +1437,9 @@ mklink /D "c:/Users/LATTARO-VOLPINI/.config/emacs/.local/cache/tree-sitter" "c:/
   (defun vterm-completion ()
     (interactive)
     (vterm-directory-sync)
-   (let ((vterm-chosen-item (vterm-completion-choose-item)))
+    (let ((vterm-chosen-item (vterm-completion-choose-item)))
       (when (thing-at-point 'word)
-         (vterm-send-meta-backspace))
+        (vterm-send-meta-backspace))
       (vterm-send-string vterm-chosen-item)))
 
   (defun vterm-directory-sync ()
@@ -1435,11 +1450,11 @@ mklink /D "c:/Users/LATTARO-VOLPINI/.config/emacs/.local/cache/tree-sitter" "c:/
              (dir (file-truename (format "/proc/%d/cwd/" pid))))
         (setq default-directory dir)))))
 
-  (defvar-local vlv-yas-vterm-source-buf nil
-    "The vterm buffer to send snippet expansion back to.")
+(defvar-local vlv-yas-vterm-source-buf nil
+  "The vterm buffer to send snippet expansion back to.")
 
-  (defvar-local vlv-yas-vterm-had-word nil
-    "Whether there was a word at point when snippet expansion started.")
+(defvar-local vlv-yas-vterm-had-word nil
+  "Whether there was a word at point when snippet expansion started.")
 
 (defun vlv-vterm-yas-confirm ()
   "Send expanded snippet from temp buffer to vterm."
@@ -1499,39 +1514,39 @@ mklink /D "c:/Users/LATTARO-VOLPINI/.config/emacs/.local/cache/tree-sitter" "c:/
         (kill-buffer tmp-buf)
         (message "No snippet found for: %s" (or word "<no word at point>"))))))
 (map!
-  :after vterm
-  ;; approach vterm behaviour to eshell
-  :map vterm-mode-map
-    ;; completion
-    :i "<tab>" nil
-    :i "<tab>" #'vlv-vterm-yas-expand
+ :after vterm
+ ;; approach vterm behaviour to eshell
+ :map vterm-mode-map
+ ;; completion
+ :i "<tab>" nil
+ :i "<tab>" #'vlv-vterm-yas-expand
 
-    ;; Fix 0   go to start of input, not buffer column 0
-    :n "0"  (cmd! (vterm-send-key "a" nil nil t)
-                  (evil-refresh-cursor))
+ ;; Fix 0   go to start of input, not buffer column 0
+ :n "0"  (cmd! (vterm-send-key "a" nil nil t)
+               (evil-refresh-cursor))
 
-    ;; Fix $   go to end of input
-    :n "$"  (cmd! (vterm-send-key "e" nil nil t)
-                  (evil-refresh-cursor))
+ ;; Fix $   go to end of input
+ :n "$"  (cmd! (vterm-send-key "e" nil nil t)
+               (evil-refresh-cursor))
 
-    ;; unbind "d" so that it can be used as a key sequence.
-    :n "d"  nil
+ ;; unbind "d" so that it can be used as a key sequence.
+ :n "d"  nil
 
-    :n "dd" (cmd! (vterm-send-key "e" nil nil t)
-                (vterm-send-key "u" nil nil t)
+ :n "dd" (cmd! (vterm-send-key "e" nil nil t)
+               (vterm-send-key "u" nil nil t)
 
-    ;; Fix dd   clear input instead of deleting the buffer line
-    :n "dd" (cmd! (vterm-send-key "e" nil nil t)
-                  (vterm-send-key "u" nil nil t)
-                  (evil-refresh-cursor))
+               ;; Fix dd   clear input instead of deleting the buffer line
+               :n "dd" (cmd! (vterm-send-key "e" nil nil t)
+                             (vterm-send-key "u" nil nil t)
+                             (evil-refresh-cursor))
 
-    ;; Fix V    select the line from the tty "$" character onwards
-    :n "V"  (cmd! (let* ((beg (save-excursion
-                                (beginning-of-line)
-                                (re-search-forward "\\$ " (line-end-position) t)
-                                (point)))
-                         (end (save-excursion (vterm-end-of-line) (point))))
-                 (evil-visual-make-region beg end)))))
+               ;; Fix V    select the line from the tty "$" character onwards
+               :n "V"  (cmd! (let* ((beg (save-excursion
+                                           (beginning-of-line)
+                                           (re-search-forward "\\$ " (line-end-position) t)
+                                           (point)))
+                                    (end (save-excursion (vterm-end-of-line) (point))))
+                               (evil-visual-make-region beg end)))))
 #+end_src
 
 * multi-vterm
@@ -1551,11 +1566,11 @@ mklink /D "c:/Users/LATTARO-VOLPINI/.config/emacs/.local/cache/tree-sitter" "c:/
 
 (package! eaf
   :recipe '(
-    :host github
-    :repo "emacs-eaf/emacs-application-framework"
-    :files ("*.el" "*.py" "core" "app" "*.json")
-    :includes (eaf-browser) ; Straight won't try to search for these packages when we make further use-package invocations for them
-    :pre-build '(("python" "install-eaf.py" "--install" "browser" "--ignore-sys-deps"))))
+            :host github
+            :repo "emacs-eaf/emacs-application-framework"
+            :files ("*.el" "*.py" "core" "app" "*.json")
+            :includes (eaf-browser) ; Straight won't try to search for these packages when we make further use-package invocations for them
+            :pre-build '(("python" "install-eaf.py" "--install" "browser" "--ignore-sys-deps"))))
 #+end_src
 
 #+begin_src emacs-lisp :tangle no
@@ -1578,8 +1593,8 @@ sudo apt-get install ffmpeg
 (package! whisper.el
   :pin "fd9bf5787a99dd31a4bdf54d2bd9821aacf84e93"
   :recipe '(
-    :host github
-    :repo "natrys/whisper.el"))
+            :host github
+            :repo "natrys/whisper.el"))
 #+end_src
 
 
@@ -1598,8 +1613,8 @@ sudo apt-get install ffmpeg
 (defun vlv-call-whisper-run-print-language ()
   "Print the active whisper language then run whisper."
   (minibuffer-message
-      (concat "Calling whisper-run with language: "
-              (symbol-value 'whisper-language)))
+   (concat "Calling whisper-run with language: "
+           (symbol-value 'whisper-language)))
   (call-interactively 'whisper-run))
 
 (defun vlv-whisper-run-english ()
@@ -1654,11 +1669,11 @@ sudo apt-get install ffmpeg
       (+workspace-switch vlv-eww-workspace-name)))
 
   (defun vlv-eww--workspace-eww-buffers ()
-  "Return EWW buffers belonging to the EWW workspace, excluding current buffer."
+    "Return EWW buffers belonging to the EWW workspace, excluding current buffer."
     (when (+workspace-exists-p vlv-eww-workspace-name)
       (seq-filter
        (lambda (buf)
-         ; exclude the buffer being killed
+                                        ; exclude the buffer being killed
          (and (not (eq buf (current-buffer)))
               (eq (buffer-local-value 'major-mode buf) 'eww-mode)))
        (+workspace-buffer-list
@@ -1686,7 +1701,7 @@ sudo apt-get install ffmpeg
     (vlv-eww url))
 
   (defun vlv-eww--on-buffer-kill ()
-  "Close EWW workspace when the last EWW buffer is killed."
+    "Close EWW workspace when the last EWW buffer is killed."
     (when (eq major-mode 'eww-mode)
       (vlv-eww--maybe-close-workspace)))
 
@@ -1711,7 +1726,7 @@ It can be quite disturbing to have a white background PDF displayed given that b
 
 #+begin_src emacs-lisp :tangle config.el
 (add-hook! 'pdf-view-mode-hook
-           (pdf-view-midnight-minor-mode))
+  (pdf-view-midnight-minor-mode))
 #+end_src
 * ibuffer
 
@@ -1732,101 +1747,101 @@ It can be quite disturbing to have a white background PDF displayed given that b
 (use-package! hl-todo
   :defer t
   :config
-    (setopt hl-todo-keyword-faces (append hl-todo-keyword-faces '(("WARNING" warning bold))))
+  (setopt hl-todo-keyword-faces (append hl-todo-keyword-faces '(("WARNING" warning bold))))
 
-    ;; add warning to the base regex used by hl-todo
-    (setopt hl-todo--regexp "\\(\\<\\(TODO\\|FIXME\\|REVIEW\\|HACK\\|DEPRECATED\\|NOTE\\|BUG\\|XXX\\|WARNING\\)\\>[:]*\\)"))
+  ;; add warning to the base regex used by hl-todo
+  (setopt hl-todo--regexp "\\(\\<\\(TODO\\|FIXME\\|REVIEW\\|HACK\\|DEPRECATED\\|NOTE\\|BUG\\|XXX\\|WARNING\\)\\>[:]*\\)"))
 #+end_src
 * Magit
 #+begin_src emacs-lisp :tangle config.el
 (use-package! magit
   :defer t
   :config
-    (defun vlv-delete-merged-branches ()
+  (defun vlv-delete-merged-branches ()
     "Fetch prune then deletes branches already merged to a target branch.
 Found in https://emacs.stackexchange.com/questions/60200/magit-remove-local-branches-that-were-merged-into-another-branch"
     (interactive)
     (magit-fetch-all-prune)
     (let* ((default-branch
             (read-string "Default branch: " (magit-get-current-branch)))
-            (merged-branches
+           (merged-branches
             (magit-git-lines "branch"
-                            "--format" "%(refname:short)"
-                            "--merged"
-                            default-branch))
-            (branches-to-delete
+                             "--format" "%(refname:short)"
+                             "--merged"
+                             default-branch))
+           (branches-to-delete
             (remove default-branch merged-branches)))
-        (if branches-to-delete
-            (if (yes-or-no-p (concat "Delete branches? ["
-                                    (mapconcat 'identity branches-to-delete ", ") "]"))
-                (apply #'magit-run-git "branch" "-d" branches-to-delete))
+      (if branches-to-delete
+          (if (yes-or-no-p (concat "Delete branches? ["
+                                   (mapconcat 'identity branches-to-delete ", ") "]"))
+              (apply #'magit-run-git "branch" "-d" branches-to-delete))
         (message "Nothing to delete"))))
 
-    (transient-append-suffix 'magit-branch "C"
-        '("K" "delete all merged" vlv-delete-merged-branches))
+  (transient-append-suffix 'magit-branch "C"
+    '("K" "delete all merged" vlv-delete-merged-branches))
 
-   (defconst vlv--magit-diff-cache-limit 2000
-     "Maximum number of symbols stored per diff buffer in `vlv--magit-diff-cache'.")
+  (defconst vlv--magit-diff-cache-limit 2000
+    "Maximum number of symbols stored per diff buffer in `vlv--magit-diff-cache'.")
 
-   ;; Global accumulated symbol set. Reset on doom/reload or restart.
-   (setq vlv--magit-diff-symbols-cache (make-hash-table :test 'equal))
+  ;; Global accumulated symbol set. Reset on doom/reload or restart.
+  (setq vlv--magit-diff-symbols-cache (make-hash-table :test 'equal))
 
-   ;; Tracks the last-seen tick per diff buffer to avoid redundant rescans.
-   ;; Weak keys ensure dead buffers are GC'd automatically.
-   (setq vlv--magit-diff-cache-buffer-to-tick-tracker (make-hash-table :test 'eq :weakness 'key))
+  ;; Tracks the last-seen tick per diff buffer to avoid redundant rescans.
+  ;; Weak keys ensure dead buffers are GC'd automatically.
+  (setq vlv--magit-diff-cache-buffer-to-tick-tracker (make-hash-table :test 'eq :weakness 'key))
 
-   (defun vlv--split-symbol (sym)
-     "Split SYM into parts on hyphens, underscores, and camelCase boundaries."
-     (let* ((case-fold-search nil) ; camelCase regex requires case-sensitive matching.
-            (parts (split-string
-                    (replace-regexp-in-string
-                     "\\([a-z]\\)\\([A-Z]\\)" "\\1-\\2" sym)
-                    "[-_]+" t)))
-       (mapcar #'downcase parts)))
+  (defun vlv--split-symbol (sym)
+    "Split SYM into parts on hyphens, underscores, and camelCase boundaries."
+    (let* ((case-fold-search nil) ; camelCase regex requires case-sensitive matching.
+           (parts (split-string
+                   (replace-regexp-in-string
+                    "\\([a-z]\\)\\([A-Z]\\)" "\\1-\\2" sym)
+                   "[-_]+" t)))
+      (mapcar #'downcase parts)))
 
-   (defun vlv-magit-diff-capf ()
-     "Provide capf completion from symbols seen in any magit-diff buffer.
+  (defun vlv-magit-diff-capf ()
+    "Provide capf completion from symbols seen in any magit-diff buffer.
 
    Symbols are accumulated globally across all projects for the session,
    and reset only on doom/reload or Emacs restart.
    Symbols containing hyphens, underscores, or camelCase boundaries are
    also split into their constituent parts."
-     (when-let ((bounds (bounds-of-thing-at-point 'symbol))
-                (buf (magit-get-mode-buffer 'magit-diff-mode)))
-       (with-current-buffer buf
-         (let ((tick (buffer-modified-tick)))
-           (unless (equal tick (gethash buf vlv--magit-diff-cache-buffer-to-tick-tracker))
-             ;; add new symbols to cache and update the scan tracker.
-             (puthash buf tick vlv--magit-diff-cache-buffer-to-tick-tracker)
-             (save-excursion
-               (goto-char (point-min))
-               (while (re-search-forward "\\_<\\(?:\\sw\\|\\s_\\)\\{3,\\}\\_>" nil t)
-                 (let ((sym (match-string-no-properties 0)))
-                   ;; add the full symbol.
-                   (puthash sym t vlv--magit-diff-symbols-cache)
-                   ;; add each split part.
-                   (dolist (part (vlv--split-symbol sym))
-                     (puthash part t vlv--magit-diff-symbols-cache))))))))
-       (list (car bounds) (cdr bounds)
-             (hash-table-keys vlv--magit-diff-symbols-cache)
-             :exclusive 'no)))
+    (when-let ((bounds (bounds-of-thing-at-point 'symbol))
+               (buf (magit-get-mode-buffer 'magit-diff-mode)))
+      (with-current-buffer buf
+        (let ((tick (buffer-modified-tick)))
+          (unless (equal tick (gethash buf vlv--magit-diff-cache-buffer-to-tick-tracker))
+            ;; add new symbols to cache and update the scan tracker.
+            (puthash buf tick vlv--magit-diff-cache-buffer-to-tick-tracker)
+            (save-excursion
+              (goto-char (point-min))
+              (while (re-search-forward "\\_<\\(?:\\sw\\|\\s_\\)\\{3,\\}\\_>" nil t)
+                (let ((sym (match-string-no-properties 0)))
+                  ;; add the full symbol.
+                  (puthash sym t vlv--magit-diff-symbols-cache)
+                  ;; add each split part.
+                  (dolist (part (vlv--split-symbol sym))
+                    (puthash part t vlv--magit-diff-symbols-cache))))))))
+      (list (car bounds) (cdr bounds)
+            (hash-table-keys vlv--magit-diff-symbols-cache)
+            :exclusive 'no)))
 
 
-    (add-hook! 'git-commit-mode-hook
-      (add-hook 'completion-at-point-functions #'vlv-magit-diff-capf nil t))
+  (add-hook! 'git-commit-mode-hook
+    (add-hook 'completion-at-point-functions #'vlv-magit-diff-capf nil t))
 
-    (setopt magit-clone-always-transient t)
+  (setopt magit-clone-always-transient t)
 
-    (setopt magit-clone-default-directory (if (vlv-env-personal-p)
-                                              "~/dev/"
-                                            "D:/@Src/"))
+  (setopt magit-clone-default-directory (if (vlv-env-personal-p)
+                                            "~/dev/"
+                                          "D:/@Src/"))
 
-    ;; add "develop" to magit long lived and main branch name lists.
-    (add-to-list 'magit-long-lived-branches "develop")
-    (add-to-list 'magit-main-branch-names "develop")
+  ;; add "develop" to magit long lived and main branch name lists.
+  (add-to-list 'magit-long-lived-branches "develop")
+  (add-to-list 'magit-main-branch-names "develop")
 
-    ;; work commit format is long by nature...
-    (setopt magit-show-long-lines-warning (unless (vlv-env-work-p) t)))
+  ;; work commit format is long by nature...
+  (setopt magit-show-long-lines-warning (unless (vlv-env-work-p) t)))
 #+end_src
 
 * Flyover :WIP:
@@ -1846,30 +1861,30 @@ There's some overlay with LSP errors and warnings (in rust at least), hence this
 (use-package! flyover
   :defer t
   :config
-    ;; Enable flyover-mode globally
-    (add-hook! 'flycheck-mode-hook #'flyover-mode)
+  ;; Enable flyover-mode globally
+  (add-hook! 'flycheck-mode-hook #'flyover-mode)
 
-    ;; Configure which error levels to display
-    ;; Possible values: error, warning, info
-    (setopt flyover-levels '(error warning info))
+  ;; Configure which error levels to display
+  ;; Possible values: error, warning, info
+  (setopt flyover-levels '(error warning info))
 
-    ;; Use theme colors for error/warning/info faces
-    (setopt flyover-use-theme-colors t)
+  ;; Use theme colors for error/warning/info faces
+  (setopt flyover-use-theme-colors t)
 
-    ;; Adjust background lightness (lower values = darker)
-    (setopt flyover-background-lightness 45)
+  ;; Adjust background lightness (lower values = darker)
+  (setopt flyover-background-lightness 45)
 
-    ;; Make icon background darker than foreground
-    (setopt flyover-percent-darker 40)
+  ;; Make icon background darker than foreground
+  (setopt flyover-percent-darker 40)
 
-    ;; "Percentage to lighten or darken the text when tinting is enabled."
-    (setopt flyover-text-tint-percent 50)
+  ;; "Percentage to lighten or darken the text when tinting is enabled."
+  (setopt flyover-text-tint-percent 50)
 
-    ;; Choose which checkers to use (flycheck, flymake, or both)
-    (setopt flyover-checkers '(flycheck flymake))
+  ;; Choose which checkers to use (flycheck, flymake, or both)
+  (setopt flyover-checkers '(flycheck flymake))
 
-    ;; Enable debug messages
-    (setopt flyover-debug nil))  ; Show all levels
+  ;; Enable debug messages
+  (setopt flyover-debug nil))  ; Show all levels
 #+end_src
 
 * Conventional commits
@@ -1894,3 +1909,4 @@ There's some overlay with LSP errors and warnings (in rust at least), hence this
 #+begin_src emacs-lisp :tangle packages.el
 (package! fzf)
 #+end_src
+*
