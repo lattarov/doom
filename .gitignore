@@ -1,3 +1,6 @@
 config.el
 custom.el
 packages.el
+
+# emacs-lisp byte compiled files
+**.elc
