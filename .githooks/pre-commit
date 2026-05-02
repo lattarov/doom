@@ -1,0 +1,48 @@
+#!/usr/bin/env bash
+# Tangle config.org → config.el, then byte-compile and use the output as linter validation.
+set -uo pipefail
+
+EMACS="${EMACS:-emacs}"
+EMACSCLIENT="${EMACSCLIENT:-emacsclient}"
+REPO="$(pwd)"
+CONFIG_ORG="${REPO}/config.org"
+CONFIG_EL="${REPO}/config.el"
+TMPLOG=$(mktemp)
+
+cleanup() { rm -f "$TMPLOG" "${CONFIG_EL}c"; }
+trap cleanup EXIT
+
+printf 'pre-commit: tangling config.org → config.el\n'
+"$EMACS" --batch -Q \
+  --eval "(require 'ob-tangle)" \
+  --eval "(org-babel-tangle-file \"${CONFIG_ORG}\" \"${CONFIG_EL}\" \"emacs-lisp\")" \
+  2>/dev/null || true
+
+[[ -f "$CONFIG_EL" ]] || { printf 'pre-commit: no config.el after tangle — skipping\n'; exit 0; }
+
+if ! "$EMACSCLIENT" --eval 't' &>/dev/null; then
+  printf 'pre-commit: no Emacs server found — skipping byte-compile\n'
+  exit 0
+fi
+
+printf 'pre-commit: byte-compiling config.el\n'
+
+result=$("$EMACSCLIENT" --eval "
+(let ((log-buf (get-buffer-create \" *pre-commit-bytecomp*\")))
+  (with-current-buffer log-buf (setq buffer-read-only nil) (erase-buffer))
+  (let* ((byte-compile-log-buffer log-buf)
+         (ok (byte-compile-file \"${CONFIG_EL}\")))
+    (with-current-buffer log-buf
+      ;; The log always starts with a 'Compiling file … at DATE' header line.
+      ;; Skip it so the written log and the emptiness check only cover diagnostics.
+      (goto-char (point-min))
+      (forward-line 1)
+      (write-region (point) (point-max) \"${TMPLOG}\" nil 'quiet)
+      (let ((has-diag (string-match-p \"Warning:\\\\|Error:\" (buffer-string))))
+        (if (and ok (not has-diag)) :ok :error)))))")
+
+output=$(< "$TMPLOG")
+[[ -n "$output" ]] && printf '%s\n' "$output"
+
+[[ "$result" == ":ok" ]] || { printf 'pre-commit: byte-compilation failed\n' >&2; exit 1; }
+exit 0
