@@ -126,6 +126,24 @@ systemctl --user restart emacs
 ;;; -*- lexical-binding: t; -*-
 #+end_src
 
+* Literate configuration specifics
+#+begin_src emacs-lisp :tangle config.el
+(defun vlv-format-org-elisp-blocks ()
+  "Reindent all emacs-lisp src blocks in the current org buffer."
+  (interactive)
+  (save-excursion
+    (goto-char (point-min))
+    (while (re-search-forward "^[ \t]*#\\+begin_src +emacs-lisp" nil t)
+      (forward-line 1)
+      (when (org-in-src-block-p)
+        (org-edit-src-code)
+        (indent-region (point-min) (point-max))
+        (org-edit-src-exit)))))
+
+;; Auto-format before every tangle
+(add-hook 'org-babel-pre-tangle-hook #'vlv-format-org-elisp-blocks)
+#+end_src
+
 * Cross platform compatibility :wip:
 #+begin_src emacs-lisp :tangle config.el
 (defgroup vlv nil
