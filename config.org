@@ -121,9 +121,13 @@ If a restart is necessary, run
 systemctl --user restart emacs
 #+end_src
 
+* Header and documentation
+#+begin_src emacs-lisp :tangle config.el
+;;; -*- lexical-binding: t; -*-
+#+end_src
+
 * Cross platform compatibility :wip:
 #+begin_src emacs-lisp :tangle config.el
-
 (defgroup vlv nil
   "personal config toggles."
   :group 'convenience)
@@ -137,8 +141,8 @@ Used to enable/disable parts of the configuration.
 
 TODO: replace this by a dedicated config for work once the doom
 profiles API is stable."
-  :type '(choice (const :tag "PERSONAL")
-                 (const :tag "WORK"))
+  :type '(choice (const :tag "PERSONAL" "PERSONAL")
+                 (const :tag "WORK" "WORK"))
   :group 'vlv)
 
 (defun vlv-env-work-p ()
@@ -181,7 +185,6 @@ profiles API is stable."
           ;; Also add to the OS PATH environment so external tools can be found
           (setenv "PATH" (concat dir ";" (getenv "PATH"))))))))
 #+end_src
-
 * Doom
 #+begin_src emacs-lisp :tangle config.el
 ;; frame
@@ -195,6 +198,8 @@ profiles API is stable."
 
 ;; welcome screen
 (when (vlv-env-personal-p)
+    (declare-function +doom-dashboard--center "+doom-dashboard")
+    (defvar +doom-dashboard--width)
     (defun vlv-doom-dashboard-draw-ascii-banner-fn ()
         (let* ((banner
                   '("██╗      █████╗ ████████╗████████╗ █████╗ ██████╗  ██████╗ "
@@ -473,7 +478,7 @@ Found in[[https://jao.io/blog/eww-to-org.html][ eww to org]].
 
 #+begin_src emacs-lisp :tangle config.el
 (after! (:and eww org)
-  (defun jao-eww-to-org (&optional DEST)
+  (defun jao-eww-to-org (&optional dest)
    "Render the current eww buffer using org markup.
 If DEST, a buffer, is provided, insert the markup there."
    (interactive)
@@ -598,15 +603,15 @@ Allow automatic recognition of projects given a list of paths.
   :defer t
   :config
     (defun yasnippet-extract-arg-and-type (arg)
-    "Extract argument name and type from a string of the form 'arg: type'."
+    "Extract argument name and type from a string of the form `arg: type'."
     (let* ((parts (split-string arg ": ")))
         (if (= (length parts) 2)
             (cons (car parts) (cadr parts))
         (cons (car parts) "type"))))
 
     (defun yasnippet-python-params-doc (arg-string)
-    "Generates a docstring for parameters in NumPy style with optional type annotations.
-    If there are no arguments, returns ''."
+    "Generate NumPy-style docstring for parameters with optional type annotations.
+If there are no arguments, return an empty string."
     (let* ((args (split-string arg-string ", "))
             (formatted-doc
             (if (string-blank-p arg-string)
@@ -623,7 +628,7 @@ Allow automatic recognition of projects given a list of paths.
 
     (defun yasnippet-python-parameter-assignments (arg-string)
     "Convert a comma-separated string of arguments into self assignments.
-    If there are no arguments, returns 'pass'."
+If there are no arguments, return `pass'."
     (let* ((args (split-string arg-string ", "))
             (assignments
             (if (string-blank-p arg-string)
@@ -716,8 +721,8 @@ Set ollama as default backend for gptel, add default model and a few tweaks.
   :defer t
   :after gptel
   :config
-  (mapcar (apply-partially #'apply #'gptel-make-tool)
-          (llm-tool-collection-get-all)))
+  (mapc (apply-partially #'apply #'gptel-make-tool)
+        (llm-tool-collection-get-all)))
 #+end_src
 **** karthink/gptel-agent
 #+begin_src emacs-lisp :tangle packages.el
@@ -892,6 +897,7 @@ promising and would bring plenty of nice features to the config.
   ;;; Select a list of modules you want to aload, otherwise all sources all laoded
   (setopt consult-omni-sources-modules-to-load (list 'consult-omni-notes  'consult-omni-file 'consult-omni-buffer 'consult-omni-buffer-search 'consult-omni-elfeed 'consult-omni-wikipedia 'consult-omni-apps 'consult-omni-dictionary 'consult-omni-gptel 'consult-omni-youtube))
 
+  (declare-function consult-omni-sources-load-modules "consult-omni-sources")
   (consult-omni-sources-load-modules)
   ;;; set multiple sources for consult-omni-multi command. Change these lists as needed for different interactive commands. Keep in mind that each source has to be a key in `consult-omni-sources-alist'.
   (setopt consult-omni-multi-sources '("calc"
@@ -1224,11 +1230,10 @@ From this point onwards, mu4e should be up and running.
 ** Visual Studio
 #+begin_src emacs-lisp :tangle config.el
 (defun vlv-find-and-open-sln-in-visual-studio ()
-  "Find all .sln files in the current Projectile project and open one in Visual Studio at the current buffer's file."
+  "Find .sln files in the current Projectile project and open one in Visual Studio."
   (interactive)
   (let* ((project-root (projectile-project-root))
-         (sln-files (directory-files-recursively project-root "\\.sln$"))
-         (current-file (buffer-file-name)))
+         (sln-files (directory-files-recursively project-root "\\.sln$")))
     (if (null sln-files)
         (error "No .sln files found in the project."))
       (let ((chosen-sln (if (= (length sln-files) 1)
@@ -1511,42 +1516,6 @@ mklink /D "c:/Users/LATTARO-VOLPINI/.config/emacs/.local/cache/tree-sitter" "c:/
                  (evil-visual-make-region beg end)))))
 #+end_src
 
-* Spotify
-#+begin_src emacs-lisp :tangle packages.el
-(package! spotify
-  :disable (not (eq system-type 'gnu/linux))
-  :pin "d918b5187638e0c44a2a2584f3980244b6aae3fa")
-#+end_src
-
-#+begin_src emacs-lisp :tangle config.el
-(use-package! spotify
-  ;; WARNING using "defer t" makes the package not be loaded when using bindings.
-  :config
-    (defun vlv-spotify-next-and-display()
-    "Plays the next song and displays it's author, name and album."
-    (interactive)
-    (spotify-next)
-    (call-interactively 'spotify-current))
-
-    (defun vlv-spotify-previous-and-display()
-    "Plays the previous song and displays it's author, name and album."
-    (interactive)
-    (spotify-previous)
-    (call-interactively 'spotify-current))
-
-    (defun vlv-spotify-playpause-and-display()
-    "Toggles pause and displays it's author, name and album."
-    (interactive)
-    (spotify-playpause)
-    (call-interactively 'spotify-current)))
-
-(map! :leader
-        (:prefix ("v" . "perso")
-        :desc "spotify-play/pause" "p" #'vlv-spotify-playpause-and-display
-        :desc "spotify-previous" "P" #'vlv-spotify-previous-and-display
-        :desc "spotify-open" "q" #'spotify-quit
-        :desc "spotify-next" "n" #'vlv-spotify-next-and-display))
-#+end_src
 * multi-vterm
 #+begin_src emacs-lisp :tangle packages.el
 (package! multi-vterm
@@ -1598,48 +1567,55 @@ sudo apt-get install ffmpeg
 
 #+begin_src emacs-lisp :tangle config.el
 (use-package! whisper.el
-  :defer t ;; A configuration error appears if the fur is not set.
+  :defer t
   :config
-    (setopt whisper-install-directory "/tmp/"
-            whisper-model "base"
-            whisper-language "en"
-            whisper-translate nil
-            whisper-use-threads (/ (num-processors) 2))
+  (setopt whisper-install-directory "/tmp/"
+          whisper-model "base"
+          whisper-language "en"
+          whisper-translate nil
+          whisper-use-threads (/ (num-processors) 2)))
 
-    (defun vlv-call-whisper-run-print-language ()
-        (minibuffer-message
-            (concat
-                "Calling whisper-run with language: " (symbol-value 'whisper-language)))
-        (call-interactively 'whisper-run))
+(declare-function whisper-run "whisper")
 
-    (defun vlv-whisper-run-english ()
-        (interactive)
-        (setopt whisper-language "en")
-        (vlv-call-whisper-run-print-language))
+(defun vlv-call-whisper-run-print-language ()
+  "Print the active whisper language then run whisper."
+  (minibuffer-message
+      (concat "Calling whisper-run with language: "
+              (symbol-value 'whisper-language)))
+  (call-interactively 'whisper-run))
 
-    (defun vlv-whisper-run-portuguese ()
-        (interactive)
-        (setopt whisper-language "pt")
-        (vlv-call-whisper-run-print-language))
+(defun vlv-whisper-run-english ()
+  "Run whisper with English as the target language."
+  (interactive)
+  (setopt whisper-language "en")
+  (vlv-call-whisper-run-print-language))
 
-    (defun vlv-whisper-run-french ()
-        (interactive)
-        (setopt whisper-language "fr")
-        (vlv-call-whisper-run-print-language))
+(defun vlv-whisper-run-portuguese ()
+  "Run whisper with Portuguese as the target language."
+  (interactive)
+  (setopt whisper-language "pt")
+  (vlv-call-whisper-run-print-language))
 
-    (defun vlv-whisper-run-other-lang ()
-        (interactive)
-        (setopt whisper-language
-            (read-string "Insert language to be used by whisper.cpp:"))
-        (vlv-call-whisper-run-print-language))
+(defun vlv-whisper-run-french ()
+  "Run whisper with French as the target language."
+  (interactive)
+  (setopt whisper-language "fr")
+  (vlv-call-whisper-run-print-language))
 
-    (map! :leader
-        :prefix ("z" . "whisper")
-        :desc "whisper-run" "z" #'whisper-run
-        :desc "whisper-run" "e" #'vlv-whisper-run-english
-        :desc "whisper-run" "f" #'vlv-whisper-run-french
-        :desc "whisper-run" "o" #'vlv-whisper-run-other-lang
-        :desc "whisper-run" "p" #'vlv-whisper-run-portuguese))
+(defun vlv-whisper-run-other-lang ()
+  "Run whisper, prompting for the target language."
+  (interactive)
+  (setopt whisper-language
+          (read-string "Language for whisper.cpp: "))
+  (vlv-call-whisper-run-print-language))
+
+(map! :leader
+      :prefix ("z" . "whisper")
+      :desc "whisper-run"       "z" #'whisper-run
+      :desc "English"           "e" #'vlv-whisper-run-english
+      :desc "French"            "f" #'vlv-whisper-run-french
+      :desc "Other language"    "o" #'vlv-whisper-run-other-lang
+      :desc "Portuguese"        "p" #'vlv-whisper-run-portuguese)
 #+end_src
 
 * Emacs Web Wowser EWW
@@ -1765,7 +1741,7 @@ Found in https://emacs.stackexchange.com/questions/60200/magit-remove-local-bran
         (if branches-to-delete
             (if (yes-or-no-p (concat "Delete branches? ["
                                     (mapconcat 'identity branches-to-delete ", ") "]"))
-                (magit-branch-delete branches-to-delete))
+                (apply #'magit-run-git "branch" "-d" branches-to-delete))
         (message "Nothing to delete"))))
 
     (transient-append-suffix 'magit-branch "C"
