@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: sudo apt update && sudo apt upgrade
+# key: saptup
+# --
+sudo apt update && sudo apt upgrade
