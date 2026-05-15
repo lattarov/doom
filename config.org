@@ -223,6 +223,11 @@ this configures bash to be used as the default shell bash. In theory it corrects
 (add-hook! 'emacs-lisp-mode-hook 'show-smartparens-mode)
 #+end_src
 
+* Calendar
+#+begin_src emacs-lisp :tangle config.el
+(calendar-set-date-style 'european)
+#+end_src
+
 * olivetti mode
 
 #+begin_src emacs-lisp :tangle packages.el
