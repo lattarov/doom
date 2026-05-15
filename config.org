@@ -700,6 +700,9 @@ Prerequisites:
 * elfeed
 
 #+begin_src emacs-lisp :tangle config.el
+(declare-function elfeed-search-selected "elfeed-search")
+(declare-function sk/elfeed-db-remove-entry nil)
+
 (use-package! elfeed
   :defer t
   :config
@@ -1602,8 +1605,8 @@ sudo apt-get install ffmpeg
 It can be quite disturbing to have a white background PDF displayed given that both OS and Emacs themes are consistently dark. Thankfully there's a pdf-view-mode function to set a dark colour scheme!
 
 #+begin_src emacs-lisp :tangle config.el
-(add-hook! 'pdf-view-mode-hook
-  (pdf-view-midnight-minor-mode))
+(after! pdf-tools
+  (add-hook! 'pdf-view-mode-hook #'pdf-view-midnight-minor-mode))
 #+end_src
 * ibuffer
 
