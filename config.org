@@ -225,7 +225,7 @@ this configures bash to be used as the default shell bash. In theory it corrects
 
 * Calendar
 #+begin_src emacs-lisp :tangle config.el
-(calendar-set-date-style 'european)
+(setopt calendar-date-style 'european)
 #+end_src
 
 * olivetti mode
