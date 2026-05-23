@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: make ARCH=arm cross-compile
+# key: mkarm
+# --
+make ARCH=arm CROSS_COMPILE=${1:arm-linux-gnueabihf-} -j$(nproc)

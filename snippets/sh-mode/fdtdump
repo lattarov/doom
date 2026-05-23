@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: fdtdump <dtb>
+# key: fdtdump
+# --
+fdtdump ${1:file.dtb} | less

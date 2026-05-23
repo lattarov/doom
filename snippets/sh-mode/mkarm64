@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: make ARCH=arm64 cross-compile
+# key: mkarm64
+# --
+make ARCH=arm64 CROSS_COMPILE=${1:aarch64-linux-gnu-} -j$(nproc)

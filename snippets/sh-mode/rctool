@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: recipetool create <url>
+# key: rctool
+# --
+recipetool create ${1:url-or-path}

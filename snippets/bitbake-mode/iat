@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: inherit autotools
+# key: iat
+# --
+inherit autotools

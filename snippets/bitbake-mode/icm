@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: inherit cmake
+# key: icm
+# --
+inherit cmake

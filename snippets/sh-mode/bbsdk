@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: bitbake -c populate_sdk <image>
+# key: bbsdk
+# --
+bitbake -c populate_sdk ${1:core-image-minimal}

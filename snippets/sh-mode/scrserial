@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: screen serial console
+# key: scrserial
+# --
+screen /dev/ttyUSB${1:0} ${2:115200}

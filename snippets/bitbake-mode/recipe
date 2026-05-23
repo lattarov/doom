@@ -1,0 +1,20 @@
+# -*- mode: snippet -*-
+# name: full recipe skeleton
+# key: recipe
+# --
+SUMMARY = "${1:Short description}"
+DESCRIPTION = "${2:Longer description}"
+HOMEPAGE = "${3:https://example.com}"
+LICENSE = "${4:MIT}"
+LIC_FILES_CHKSUM = "file://LICENSE;md5=${5:checksum}"
+
+SRC_URI = "git://github.com/${6:user/repo}.git;protocol=https;branch=${7:main}"
+SRCREV = "\${AUTOREV}"
+S = "\${WORKDIR}/git"
+
+inherit ${8:cmake}
+
+do_install() {
+    install -d \${D}\${${9:bindir}}
+    install -m 0755 \${B}/${10:program} \${D}\${${9:bindir}}/
+}

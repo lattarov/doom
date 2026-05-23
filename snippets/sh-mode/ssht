@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: ssh root@<target>
+# key: ssht
+# --
+ssh root@${1:192.168.7.2}

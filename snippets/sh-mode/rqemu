@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: runqemu <machine>
+# key: rqemu
+# --
+runqemu ${1:qemux86-64}

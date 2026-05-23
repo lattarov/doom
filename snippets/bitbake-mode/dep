@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: DEPENDS
+# key: dep
+# --
+DEPENDS = "${1:recipe}"

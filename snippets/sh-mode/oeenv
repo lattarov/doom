@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: source oe-init-build-env <builddir>
+# key: oeenv
+# --
+source oe-init-build-env ${1:build}

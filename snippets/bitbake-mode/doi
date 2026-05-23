@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: do_install skeleton
+# key: doi
+# --
+do_install() {
+    install -d \${D}\${${1:bindir}}
+    install -m 0755 \${B}/${2:program} \${D}\${${1:bindir}}/
+    $0
+}

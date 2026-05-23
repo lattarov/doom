@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: bitbake-layers add-layer <path>
+# key: bbal
+# --
+bitbake-layers add-layer ${1:../meta-layer}

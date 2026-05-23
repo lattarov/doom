@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: recipetool appendfile <recipe> <file> <target-path>
+# key: rcappend
+# --
+recipetool appendfile ${1:recipe} ${2:local-file} ${3:/etc/target-path}

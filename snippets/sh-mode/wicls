@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: wic ls <image.wic>
+# key: wicls
+# --
+wic ls ${1:image.wic}

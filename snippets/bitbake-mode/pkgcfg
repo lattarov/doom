@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: PACKAGECONFIG skeleton
+# key: pkgcfg
+# --
+PACKAGECONFIG ??= ""
+PACKAGECONFIG[${1:feature}] = "--enable-${1:feature},--disable-${1:feature},${2:builddep},${3:rundep}"

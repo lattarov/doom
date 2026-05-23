@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: devtool deploy-target <recipe> <target>
+# key: dtdep
+# --
+devtool deploy-target ${1:recipe} root@${2:192.168.7.2}

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: devtool add <recipe> <url>
+# key: dtadd
+# --
+devtool add ${1:recipe} ${2:url-or-path}

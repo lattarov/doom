@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: scp <file> root@<target>:/tmp/
+# key: scpt
+# --
+scp ${1:file} root@${2:192.168.7.2}:${3:/tmp/}

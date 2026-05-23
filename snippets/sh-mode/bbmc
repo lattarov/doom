@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: bitbake -c menuconfig <recipe>
+# key: bbmc
+# --
+bitbake -c menuconfig ${1:recipe}

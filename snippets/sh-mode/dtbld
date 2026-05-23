@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: devtool build <recipe>
+# key: dtbld
+# --
+devtool build ${1:recipe}

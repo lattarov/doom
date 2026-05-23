@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: bitbake-layers show-recipes <recipe>
+# key: bbsr
+# --
+bitbake-layers show-recipes ${1:recipe}

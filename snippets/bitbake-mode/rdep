@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: RDEPENDS:${PN}
+# key: rdep
+# --
+RDEPENDS:\${PN} = "${1:recipe}"
