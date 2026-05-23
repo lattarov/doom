@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: bitbake -c fetch <recipe>
+# key: bbft
+# --
+bitbake -c fetch ${1:recipe}

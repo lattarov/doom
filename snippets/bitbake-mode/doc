@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: do_compile skeleton
+# key: doc
+# --
+do_compile() {
+    \${CC} \${CFLAGS} \${LDFLAGS} -o ${1:program} ${2:program.c}
+    $0
+}

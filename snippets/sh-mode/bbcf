@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: bitbake -c compile -f <recipe>
+# key: bbcf
+# --
+bitbake -c compile -f ${1:recipe}

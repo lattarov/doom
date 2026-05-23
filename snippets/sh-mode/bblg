@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: bitbake -g <recipe>  (dependency graph)
+# key: bblg
+# --
+bitbake -g ${1:recipe}

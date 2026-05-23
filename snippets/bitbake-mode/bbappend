@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: bbappend skeleton
+# key: bbappend
+# --
+FILESEXTRAPATHS:prepend := "\${THISDIR}/\${PN}:"
+
+SRC_URI += "file://${1:0001-fix.patch}"
+$0

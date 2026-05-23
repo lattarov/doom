@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: SRC_URI file://
+# key: srcfile
+# --
+SRC_URI = "file://${1:program.c} \
+           "

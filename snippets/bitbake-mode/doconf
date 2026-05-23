@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: do_configure skeleton
+# key: doconf
+# --
+do_configure() {
+    $0
+}

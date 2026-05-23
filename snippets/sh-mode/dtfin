@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: devtool finish <recipe> <layer>
+# key: dtfin
+# --
+devtool finish ${1:recipe} ${2:../meta-layer}

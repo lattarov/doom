@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: inherit systemd
+# key: isd
+# --
+inherit systemd
+
+SYSTEMD_SERVICE:\${PN} = "${1:service-name}.service"
+SYSTEMD_AUTO_ENABLE = "${2:enable}"

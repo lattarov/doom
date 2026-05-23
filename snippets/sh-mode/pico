@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: picocom serial console
+# key: pico
+# --
+picocom -b ${1:115200} --flow n /dev/ttyUSB${2:0}

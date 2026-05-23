@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: make ARCH= CROSS_COMPILE= menuconfig
+# key: mkmc
+# --
+make ARCH=${1:arm} CROSS_COMPILE=${2:arm-linux-gnueabihf-} menuconfig

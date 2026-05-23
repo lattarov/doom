@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: dtc compile dts -> dtb
+# key: dtcb
+# --
+dtc -I dts -O dtb -o ${1:out.dtb} ${2:in.dts}

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: bitbake -c cleanall <recipe>
+# key: bbca
+# --
+bitbake -c cleanall ${1:recipe}

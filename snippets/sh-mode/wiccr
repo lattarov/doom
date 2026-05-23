@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: wic create <wks>
+# key: wiccr
+# --
+wic create ${1:mkefidisk} -e ${2:core-image-minimal}

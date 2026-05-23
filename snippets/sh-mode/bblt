@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: bitbake -c listtasks <recipe>
+# key: bblt
+# --
+bitbake -c listtasks ${1:recipe}

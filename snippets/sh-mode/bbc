@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: bitbake -c clean <recipe>
+# key: bbc
+# --
+bitbake -c clean ${1:recipe}

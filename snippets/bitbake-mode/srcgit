@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: SRC_URI git
+# key: srcgit
+# --
+SRC_URI = "git://github.com/${1:user/repo}.git;protocol=https;branch=${2:main}"
+SRCREV = "\${AUTOREV}"
+S = "\${WORKDIR}/git"

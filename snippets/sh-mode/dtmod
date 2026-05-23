@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: devtool modify <recipe>
+# key: dtmod
+# --
+devtool modify ${1:recipe}

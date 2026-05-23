@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: bitbake -k <recipe>  (keep going)
+# key: bbk
+# --
+bitbake -k ${1:recipe}

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: bitbake -e <recipe> | grep <var>
+# key: bbenv
+# --
+bitbake -e ${1:recipe} | grep "^${2:VAR}"

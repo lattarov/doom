@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: FILES:${PN}
+# key: files
+# --
+FILES:\${PN} += "${1:\${bindir}/program}"

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: bitbake <recipe>
+# key: bb
+# --
+bitbake ${1:recipe}

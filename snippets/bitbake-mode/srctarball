@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: SRC_URI tarball with checksums
+# key: srctarball
+# --
+SRC_URI = "https://example.com/${1:project}-\${PV}.tar.gz"
+SRC_URI[md5sum] = "${2:md5sum}"
+SRC_URI[sha256sum] = "${3:sha256sum}"

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: bitbake-layers show-layers
+# key: bbsl
+# --
+bitbake-layers show-layers

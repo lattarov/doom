@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: bitbake -c devshell <recipe>
+# key: bbds
+# --
+bitbake -c devshell ${1:recipe}
