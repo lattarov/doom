@@ -1794,4 +1794,24 @@ There's some overlay with LSP errors and warnings (in rust at least), hence this
 #+begin_src emacs-lisp :tangle packages.el
 (package! fzf)
 #+end_src
-*
+
+* bitbake-mode
+To be used in yocto workflows.
+
+ #+begin_src emacs-lisp :tangle packages.el                       
+(package! bitbake)                                               
+(package! bitbake-ts-mode)
+#+end_src                                                        
+
+#+begin_src emacs-lisp :tangle config.el
+;; bitbake is not in treesit-language-source-alist by default
+(add-to-list 'treesit-language-source-alist
+             '(bitbake "https://github.com/tree-sitter-grammars/tree-sitter-bitbake"))
+
+(use-package! bitbake
+  :defer t
+  :mode (("\\.bb\\'"       . bitbake-ts-mode)
+         ("\\.bbappend\\'" . bitbake-ts-mode)
+         ("\\.bbclass\\'"  . bitbake-ts-mode)
+         ("\\.inc\\'"      . bitbake-ts-mode)))
+#+end_src
