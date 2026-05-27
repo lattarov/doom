@@ -1815,3 +1815,451 @@ To be used in yocto workflows.
          ("\\.bbclass\\'"  . bitbake-ts-mode)
          ("\\.inc\\'"      . bitbake-ts-mode)))
 #+end_src
+
+* Stuff to do or learn when porting to Emacs 31
+** TODO Emacs on MS-Windows is now capable of exporting frame screenshots to files.
+The new primitive 'w32-export-frame' can be used to export a screenshot
+of a specified frame to an image file in one of the supported image
+formats, such as JPEG or PNG.
+---
+** TODO Emacs on MS-Windows now supports the ':data' keyword for 'play-sound'.
+In addition to ':file FILE' for playing a sound from a file, ':data
+DATA' can now be used to play a sound from memory.
+
+---
+** TODO New primitive 'w32-sound-volume'.
+This primitive allows getting and setting the volume of the system's
+default audio device (or the "optimal device", if there are several
+devices).
+
+---
+** TODO adapt to new pgtk toolkit handling
+
+** TODO New major mode 'icalendar-mode'.
+A major mode for displaying and editing iCalendar (RFC5545) data.  This
+mode handles line unfolding and fontification, including highlighting
+syntax errors in invalid data.
+** TODO New library 'timeout'.
+This library provides functions to throttle or debounce Emacs Lisp
+functions.  This is useful for corralling overeager code that is slow
+and blocks Emacs, or does not provide ways to limit how often it runs.
+
++++
+** TODO New mode 'system-taskbar-mode'.
+This is a global minor mode and companion functions that integrate Emacs
+with system GUI taskbars (also called docks or launchers or something
+similar) to display a taskbar icon "badge" overlay, a progress bar
+report overlay, alert the user that an Emacs session needs attention,
+often by flashing or bouncing the Emacs application icon.  Supported
+capable systems are GNU/Linux via D-Bus, macOS/GNUstep 10.5+, MS-Windows
+7+.
+
+On GNU/Linux systems, shell extensions or similar helpers such as
+"dash-to-dock" may be required.  See
+<https://extensions.gnome.org/extension/307/dash-to-dock/> and
+<https://wiki.ubuntu.com/Unity/LauncherAPI>.
+
++++
+** TODO New package 'system-sleep'.
+This package provides platform-neutral interfaces to block your system
+from entering idle sleep and a hook to process pre-sleep and post-wake
+events.  You can use this to avoid the system entering an idle sleep
+state and interrupting a long-running process due to lack of user
+activity.  The sleep event hook lets you, for example, close external
+connections or serial ports before sleeping, and reestablish them when
+the system wakes up.
+
+Supported capable systems are GNU/Linux via D-Bus (sleep blocking and
+sleep events require the org.freedesktop.login1 service, display sleep
+blocking requires org.freedesktop.Screensaver service), macOS
+(sleep/display blocking requires version 10.9 or later, sleep events are
+supported on all versions), MS-Windows (sleep blocking is supported on
+all versions, sleep events require Windows 8 or later).
+
+
+** TODO *-human-readable-*
+** TODO New configure option '--with-systemduserunitdir'.
+This allows to specify the directory where the user unit file for
+systemd is installed; default is '${prefix}/usr/lib/systemd/user'.
+
+
+** TODO Emacs prepares a User Lisp directory by default.
+If you have a subdirectory "user-lisp/" in your Emacs configuration
+directory, then Lisp files in it and its subdirectories will now be
+recursively byte-compiled, scraped for autoload cookies and ensured to
+be in 'load-path' by default.  You can disable the feature by setting
+'user-lisp-auto-scrape' to nil, or set the 'user-lisp-directory' user
+option to process any other directory on your system.  You can also
+invoke the 'prepare-user-lisp' command manually at any time.  See the
+Info node "(emacs) User Lisp Directory" for more details.
+
+
+** TODO New commands to modify window layouts.
+
+- 'C-x w t' and 'C-x w r <left>/<right>' rotate the window layout.
+- 'C-x w o <left>/<right>' rotate the windows within the current layout.
+- 'C-x w f <left>/<right>/<up>/<down>' flip window layouts.
+
+By default, these commands operate on the selected frame's root window.
+With a prefix argument, they operate on the selected window's parent.
+
+** TODO Frames now have unique ids and the new function 'frame-id'.
+Each non-tooltip frame is assigned a unique integer id.  This allows you
+to unambiguously identify frames even if they share the same name or
+title.  When 'undelete-frame-mode' is enabled, each deleted frame's id
+is stored for resurrection.  The function 'frame-id' returns a frame's
+id (in C, use the frame struct member 'id').
+
+** TODO New commands 'select-frame-by-id', 'undelete-frame-by-id'.
+The command 'select-frame-by-id' selects a frame by ID and undeletes it
+if deleted.  The command 'undelete-frame-by-id' undeletes a frame by its
+ID.  When called interactively, both functions prompt for an ID.
+** TODO New user option 'native-comp-async-on-battery-power'.
+Customize this to nil to disable starting new asynchronous native
+compilations while AC power is not connected.
+** TODO 'line-spacing' now supports specifying spacing above the line.
+Previously, only spacing below the line could be specified.  The user
+option can now be set to a cons cell to specify spacing both above and
+below the line, which allows for vertically centering text.
+** TODO You can now use 'M-s t' to swap FROM and TO during 'query-replace'.
+Likewise during 'query-replace-regexp'.  The original binding of 'M-s'
+('next-matching-history-element') is now available on 'M-s M-s' or 'M-s
+s' for query replace minibuffer input.
+** TODO New functions 'buffer-to-register' and 'file-to-register'.
+These allow users to interactively store files and buffers in registers.
+Killed buffers stored in a register using 'buffer-to-register' are
+automatically converted to a file-query value if the buffer was visiting
+a file.
+** TODO The "*Register Preview*" buffer shows only suitable registers.
+That was already the case for the "fancy" UI but is now also true in
+the default UI you get, i.e., when 'register-use-preview' is 'traditional'.
+** TODO The "*Register Preview*" buffer shows sorted items.
+** TODO New command 'treesit-explore'.
+This command replaces 'treesit-explore-mode'.  It turns on
+'treesit-explore-mode' if it is not on, and pops up the explorer buffer
+if it is already on.
+
++++
+** TODO Semantic highlighting support for Emacs Lisp.
+'emacs-lisp-mode' can now use code analysis to highlight more symbols
+more accurately.  Customize the new user option
+'elisp-fontify-semantically' to non-nil to enable this feature, and see
+the Info node "(emacs) Semantic Font Lock" for more information.
+** TODO New column 'recency' in Ibuffer display.
+The user option 'ibuffer-formats' configures the Ibuffer formats.  Add
+'recency' to the format to display the column.
+** TODO New value 'title' for the user option 'ibuffer-use-header-line'.
+Display column titles in the header line if 'ibuffer-use-header-line' is
+set to 'title'.
+** TODO New user option 'ibuffer-human-readable-size'.
+When non-nil, buffer sizes are shown in human readable format.
+** TODO 'define-ibuffer-op' prompts can now be functions.
+The prompts 'opstring' and 'active-opstring' can now either be strings
+or functions.  This is useful when your prompts can benefit from dynamic
+content.
+** TODO New Ibuffer-dedicated faces.
+New faces 'ibuffer-marked', 'ibuffer-deletion', 'ibuffer-title', and
+'ibuffer-filter-group-name'.  By default they inherit from the
+general-purpose faces Ibuffer previously used, to preserve previous
+behavior.
+
+** TODO New user option 'browse-url-transform-alist'.
+This user option is an alist that allows transforming URLs before asking
+a web browser to load them.  For example, it could be used like this:
+
+    (add-to-list 'browse-url-transform-alist
+                 '("www.google.com" . "www.duckduckgo.com"))
+
+** TODO New function 'browse-url-qutebrowser' for Qutebrowser.
+For better integration with Qutebrowser, set
+'browse-url(-secondary)-browser-function' to 'browse-url-qutebrowser'.
+
+** TODO New GTK-native launch mode.
+For better Wayland support, the pgtk toolkit exposes a new
+'x-gtk-launch-uri' browse-url handler and uses it by default when URLs
+are browsed from a PGTK frame.  For other frames, we fall back to the
+default URL launch function.  This change allows us to properly raise
+browser windows under Wayland using the xdg_activation_v1 protocol.
+
+** TODO 'RET' can visit URLs in read-only buffers.
+In some keymaps such as 'ansi-osc-hyperlink-map', 'browse-url-button-map',
+'goto-address-highlight-keymap', 'bug-reference-map' it is possible now
+to visit URLs by typing just 'RET' instead of 'C-c RET' in read-only buffers.
+** TODO 'browse-url-firefox-program' now supports LibreWolf and Zen Browser.
+LibreWolf, Floorp and Zen Browser, three popular Firefox forks, have been
+added to the programs that are automatically recognizable as Firefox
+workalikes.  Emacs will set 'browse-url-firefox-program' to the first
+one of these found on your system.
+
+** TODO You can now regularly auto-save recently opened files.
+Customize user option 'recentf-autosave-interval' to the number of
+seconds between auto saving recently opened files.  For example,
+customize this variable to 300 to save recently opened files every 5
+minutes.  From Lisp, use 'setopt' not 'setq'.
+
+If 'recentf-autosave-interval' is nil, auto saving is disabled; this is
+the default.
+
+This user option is in sympathy with save-place, and savehist autosave
+timers.
+
+---
+** TODO New user option 'recentf-show-messages'.
+'recentf-save-list' can print a message when saving the recentf list.
+The new option, if set to nil, suppresses this message.
+
+---
+** TODO New user option 'recentf-suppress-open-file-help'.
+By default, invoking 'recentf-open-files' displays a message saying what
+action clicking or typing 'RET' on the item at point executes, and tabbing
+between items in the "*Open Recent*" buffer likewise displays such
+messages.  To suppress these messages, customize the user option
+'recentf-suppress-open-file-help' to non-nil.  The default value of this
+option is nil.
+
+---
+** TODO New user option 'recentf-exclude-ignored-extensions'.
+Add the new predicate function 'recentf-exclude-file-by-extension-p' to
+the list that is the value of the user option 'recentf-exclude' to
+ignore files with certain extensions.  By default, adding this function
+to 'recentf-exclude' ignores files whose extensions are listed in
+'completion-ignored-extensions'; you can specify a different list of
+extensions by customizing the new user option
+'recentf-exclude-ignored-extensions'.
+
+
+---
+** TODO The history file can be modified by external tools.
+Emacs can now handle this case gracefully by merging the external
+and internal history information.
+This feature is activated only when 'savehist-additional-variables' is nil.
+
+---
+** TODO Savehist no longer saves additional variables more than once.
+If you configured 'savehist-additional-variables' with variables that
+were also dynamically accumulated in minibuffer history during
+minibuffer use, they are now saved only once in the file specified by
+'savehist-file'.  Previously, they were saved twice.
+
+** TODO New interactive command 'eshell-clear'.
+This command scrolls the screen so that only the current prompt is
+visible, optionally erasing all the previous input/output as well.
+Previously, the Eshell built-in command 'eshell/clear' supported this
+(e.g., to call it via 'M-x'), but this new command behaves more
+consistently if you have a partially-typed command at the Eshell prompt.
+
+---
+** TODO New user option 'eshell-command-async-buffer'.
+This option lets you tell 'eshell-command' how to respond if its output
+buffer is already in use by another invocation of 'eshell-command', much
+like 'async-shell-command-buffer' does for 'shell-command'.  By default,
+this will prompt for confirmation before creating a new buffer when
+necessary.  To restore the previous behavior, set this option to
+'confirm-kill-process'.
+
++++
+** TODO 'eshell-execute-file' is now an interactive command.
+Interactively, this now prompts for a script file to execute.  With the
+prefix argument, it will also insert any output into the current buffer
+at point.
+
++++
+** TODO 'eshell-command' and 'eshell-execute-file' can now set where stderr goes.
+These functions now take an optional ERROR-TARGET argument to control
+where to send the standard error output.  See the "(eshell) Entry
+Points" node in the Eshell manual for more details.
+
++++
+** TODO You can now loop over ranges of integers with the Eshell 'for' command.
+When passing a range like 'BEGIN..END' to the Eshell 'for' command,
+Eshell will now iterate over each integer between BEGIN and END, not
+including END.
+
++++
+** TODO Conditional statements in Eshell now use an 'else' keyword.
+Eshell now prefers the following form when writing conditionals:
+
+    if {conditional} {true-subcommand} else {false-subcommand}
+
+The old form (without the 'else' keyword) is retained for compatibility.
+
++++
+** TODO You can now chain conditional statements in Eshell.
+When using the newly-preferred conditional form in Eshell, you can now
+chain together multiple 'if'/'else' statements.  For more information,
+see "(eshell) Control Flow" in the Eshell manual.
+
++++
+** TODO Eshell's built-in 'wait' command now accepts a timeout.
+By passing '-t' or '--timeout', you can specify a maximum time to wait
+for the processes to exit.  Additionally, you can now wait for external
+processes by passing their PIDs.
+
+---
+** TODO New hook 'eshell-after-initialize-hook'.
+This hook runs after an Eshell session has been fully initialized,
+immediately before running 'eshell-post-command-hook' for the first
+time.
+
++++
+** TODO Improved history Isearch.
+History Isearch in Eshell is reworked.  Two new commands
+'eshell-isearch-backward-regexp' and 'eshell-isearch-forward-regexp' are
+added for incrementally searching through the input history.
+'eshell-isearch-backward-regexp' is bound to 'M-r' by default, and 'M-s'
+is freed for normal search commands.  If you would like to restore the
+previous key-bindings for the non-incremental search commands, put in
+your configuration:
+
+    (with-eval-after-load 'em-hist
+      (keymap-set eshell-hist-mode-map "M-r"
+                  #'eshell-previous-matching-input)
+      (keymap-set eshell-hist-mode-map "M-s"
+                  #'eshell-next-matching-input))
+
++++
+** TODO New user option 'eshell-history-isearch'.
+When 'eshell-history-isearch' is nil (the default), Isearch commands
+search in the buffer contents.  If you customize it to t, those commands
+only search in input history.  If you customize it to the symbol 'dwim',
+those commands search in input history only when the point is after the
+last prompt.
+
+---
+** TODO Eshell 'alias' command now sorts the alias list.
+When adding an alias interactively, Eshell now sorts the list of aliases
+before saving the alias file.  This maintains the stability of the
+list of aliases to make the diff between versions more readable if you
+store your aliases in version control.
+
+** TODO Typing 'd' during 'query-replace' shows the diff buffer with replacements.
+
+** TODO New user option 'dired-create-empty-file-in-current-directory'.
+When non-nil, 'dired-create-empty-file' creates a new empty file and
+adds an entry for it (or its topmost new parent directory if created)
+under the current subdirectory in the Dired buffer by default
+(otherwise, it adds the new file (and new subdirectories if provided) to
+whichever directory the user enters at the prompt).  When nil,
+'dired-create-empty-file' acts on the default directory by default.
+
+Note that setting this user option to non-nil makes invoking
+'dired-create-empty-file' outside of a Dired buffer raise an error (like
+other Dired commands that always prompt with the current subdirectory,
+such as 'dired-create-directory').
+
++++
+** TODO New user option 'dired-check-symlinks' allows disabling validity checks.
+Dired uses 'file-truename' to check symbolic link validity when
+fontifying them, which can be slow for remote directories.  Setting
+'dired-check-symlinks' to nil disables these checks.  Defaults to t, can
+be set as a connection-local variable.
+
+---
+** TODO New user option 'dired-hide-details-hide-absolute-location'.
+When Dired's 'dired-hide-details-mode' is enabled, also hide the
+'default-directory' absolute location, typically displayed as the first
+line in a Dired buffer.
+
+With 'dired-hide-details-hide-absolute-location':
+
+    project: (100 GiB available)
+
+Without 'dired-hide-details-hide-absolute-location':
+
+    /absolute/path/to/my/important/project: (100 GiB available)
+
+---
+** TODO Clicking on base name of directory reverts buffer.
+When 'dired-make-directory-clickable' is non-nil, clicking on the base
+name of the directory now reverts the Dired buffer.
+
+** TODO 'dired-copy-filename-as-kill' supports project-relative names.
+With a new value of the prefix argument (1), this command copies file
+names relative to the root directory of the current project.
+
++++
+** TODO Warning when Dired displays a file name with a literal newline.
+If Dired uses an 'ls' implementation that supports the '-b' switch, then
+on visiting a directory that contains a file whose name has a newline,
+and Dired displays that character as a literal newline, Emacs now
+automatically pops up a buffer warning that such a display can be
+problematic for Dired and showing a way to change the display to use the
+unproblematic character '\n'.
+
++++
+** TODO New user option 'dired-auto-toggle-b-switch'.
+When this user option is non-nil and Dired uses an 'ls' implementation
+that supports the '-b' switch and 'dired-listing-switches' does not
+include the '-b' switch, then on visiting a directory containing a file
+whose name has a newline, Emacs automatically adds the '-b' switch and
+redisplays the directory in Dired to show '\n' in the file name instead
+of a literal newline.  This prevents executing many Dired operations on
+such a file from failing and signaling an error.  The default value of
+this user option is nil.
+
+---
+** TODO New Dired handling of errors from 'ls'.
+
+** New function 'flash-face-bell-function'.
+This function flashes a face briefly.
+It is intended to be used in 'ring-bell-function'.
+
+---
+** New function 'flash-echo-area-bell-function'.
+This function flashes the current echo area briefly.
+It is intended to be used in 'ring-bell-function'.
+
+---
+** New user option 'flash-face-duration'.
+This option controls the flash duration for 'flash-face-bell-function'
+and 'flash-echo-area-bell-function'.
+
+---
+** New user option 'flash-face-faces'.
+This option tells 'flash-face-bell-function' which faces should flash.
+
+---
+** New user option 'flash-face-attributes'
+This option tells 'flash-face-bell-function' and
+'flash-echo-area-bell-function' which face attributes should be used
+for flash.
+
+** New command 'calendar-recenter'.
+This command recenters the month of the date at point.  By default, it
+is bound to 'C-l' in the calendar buffer.
+
+---
+** Mouse wheel bindings for scrolling the calendar.
+You can now use the mouse wheel to scroll the calendar by 3 months.
+With the shift modifier, it scrolls by one month.  With the meta
+modifier, it scrolls by year.
+
+** Simpler key bindings for navigation in calendar by months and by years.
+The month and year navigation key bindings 'M-}', 'M-{', 'C-x ]' and
+'C-x [' now have the alternative keys '}', '{', ']' and '['.
+
+---
+** Avoid modifying Calendar's user options.
+The user options 'calendar-mark-holidays-flag' and
+'calendar-mark-diary-entries-flag' are not modified anymore when
+changing the marking state in the calendar buffer.
+
+** New library for iCalendar data.
+A new library has been added to the calendar for handling iCalendar
+(RFC5545) data.  The library is designed for reuse in other parts of
+Emacs and in third-party packages.  Package authors can find the new
+library in the Emacs distribution under "lisp/calendar/icalendar-*.el".
+
+Most of the functions and variables in the older icalendar.el have been
+marked obsolete and now suggest appropriate replacements from the new
+library.  diary-icalendar.el provides replacements for the diary-related
+features from icalendar.el; see below.
+
+** New major mode 'markdown-ts-mode'.
+A major mode based on the tree-sitter library for editing Markdown
+files.  Markdown files are visited using this mode when the required
+tree-sitter grammars ('markdown' and 'markdown-inline') are available,
+or when the user has opted in via 'treesit-enabled-modes'.  Otherwise,
+Markdown files fall back to 'text-mode'.
+
+To install the grammars, use 'M-x markdown-ts-mode-install-parsers'.
