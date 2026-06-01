@@ -2264,3 +2264,9 @@ or when the user has opted in via 'treesit-enabled-modes'.  Otherwise,
 Markdown files fall back to 'text-mode'.
 
 To install the grammars, use 'M-x markdown-ts-mode-install-parsers'.
+
+* evil-mode
+#+begin_src emacs-lisp :tangle config.el
+(after! evil-mode
+  (setopt evil-shift-width 12))
+#+end_src
