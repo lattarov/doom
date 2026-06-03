@@ -44,7 +44,11 @@
   :group 'convenience)
 
 (defcustom vlv-env
-  (if (eq system-type 'gnu/linux) "PERSONAL" "WORK")
+  (if (or (getenv "WSL_DISTRO_NAME")
+          (eq system-type 'windows-nt))
+      "WORK"
+    "PERSONAL")
+
   "The current environment.
 
 Used to enable/disable parts of the configuration.
@@ -265,7 +269,11 @@ this configures bash to be used as the default shell bash. In theory it corrects
   :defer t
   :init
   (if (vlv-env-work-p)
-      (setopt org-directory "~/OneDrive - Kestrel Vision/org/")
+      ;; treat the wsl special case
+      (let* ((home (if (getenv "WSL_DISTRO_NAME")
+                       "/mnt/c/Users/LATTARO-VOLPINI/"
+                     "~")))
+        (setopt org-directory (string-join (list home "OneDrive - Kestrel Vision/org/") "/")))
     (setopt org-directory "~/org/"))
 
   :config
