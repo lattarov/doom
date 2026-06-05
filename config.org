@@ -2286,6 +2286,8 @@ To install the grammars, use 'M-x markdown-ts-mode-install-parsers'.
 
 * evil-mode
 #+begin_src emacs-lisp :tangle config.el
-(after! evil-mode
-  (setopt evil-shift-width 12))
+;; evil is loaded before config.el, hence using after! or use-package! :defer t
+;; makes this block never to be run.
+
+(setopt evil-shift-width 30)
 #+end_src
