@@ -68,6 +68,16 @@ profiles API is stable."
   "Return non-nil if the current environment is Personal."
   (string-equal vlv-env "PERSONAL"))
 
+(defcustom vlv-home
+  (if (vlv-env-work-p)
+      (if (getenv "WSL_DISTRO_NAME")
+          "/mnt/c/Users/LATTARO-VOLPINI/"
+        "~/")
+    "~/")
+  "The home directory variable, compatible between Linux, Windows and wsl systems."
+  :type 'string
+  :group 'vlv)
+
 ;; external doom dependencies in work environment
 (when (vlv-env-work-p)
   (let* ((vlv-env-work-p-emacs-install-path  "c:/Emacs/")
@@ -268,13 +278,11 @@ this configures bash to be used as the default shell bash. In theory it corrects
 (use-package! org
   :defer t
   :init
-  (if (vlv-env-work-p)
-      ;; treat the wsl special case
-      (let* ((home (if (getenv "WSL_DISTRO_NAME")
-                       "/mnt/c/Users/LATTARO-VOLPINI/"
-                     "~")))
-        (setopt org-directory (string-join (list home "OneDrive - Kestrel Vision/org/") "/")))
-    (setopt org-directory "~/org/"))
+  (setopt org-directory (string-join
+                         (list vlv-home (if (vlv-env-work-p)
+                                            "OneDrive - Kestrel Vision/"
+                                          "")
+                               "org/") "")))
 
   :config
   (add-hook! 'org-mode-hook #'show-smartparens-mode)
@@ -494,10 +502,12 @@ Allow automatic recognition of projects given a list of paths.
   :config
   (setopt dirvish-quick-access-entries
           (let ((org-path (expand-file-name org-directory))
-                (repos-path (if (vlv-env-work-p) "d:/@Src/" "~/dev/repos/")))
-            `(("h" "~/" "Home")
-              ("d" "~/Downloads/" "Downloads")
-              ("D" "~/Documents/" "Documents")
+                (downloads-path (string-join (list vlv-home "Downloads/") ""))
+                (documents-path (string-join (list vlv-home "One Drive - Kestrel Visio/Documents/") ""))
+                (repos-path     (string-join (list vlv-home (if (vlv-env-work-p) "dev/@Src" "dev/")) "")))
+            `(("h" ,vlv-home "Home")
+              ("d" ,downloads-path "Downloads")
+              ("D" ,documents-path "Documents")
               ("t" "c:/Tiama/" "Tiama")
               ("o" ,org-path "Org")
               ("r" ,repos-path "Repos")))))
