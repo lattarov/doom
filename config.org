@@ -282,7 +282,7 @@ this configures bash to be used as the default shell bash. In theory it corrects
                          (list vlv-home (if (vlv-env-work-p)
                                             "OneDrive - Kestrel Vision/"
                                           "")
-                               "org/") "")))
+                               "org/") ""))
 
   :config
   (add-hook! 'org-mode-hook #'show-smartparens-mode)
