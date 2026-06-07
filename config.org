@@ -37,8 +37,12 @@
 
 #+end_src
 
-* Cross platform compatibility :wip:
-#+begin_src emacs-lisp :tangle config.el
+* Cross platform compatibility
+
+Small tweaks to activate or configurate variables depending on the machine. This will ultimately be replaced by doom profiles + modules, but it should work for now.
+
+#+name: vlv-env-setup
+#+begin_src emacs-lisp :tangle no
 (defgroup vlv nil
   "personal config toggles."
   :group 'convenience)
@@ -109,6 +113,17 @@ profiles API is stable."
           (add-to-list 'exec-path dir)
           ;; Also add to the OS PATH environment so external tools can be found
           (setenv "PATH" (concat dir ";" (getenv "PATH"))))))))
+#+end_src
+
+
+In order to disactivate packages, the easiest way is to use the 'disable' field of packages! macro. the vlv-env-* helper functions are quite handy for that, hence tangling them to packages.el and config.el at the same time solves all issues.
+
+#+begin_src emacs-lisp :tangle config.el :noweb yes
+<<vlv-env-setup>>
+#+end_src
+
+#+begin_src emacs-lisp :tangle packages.el :noweb yes
+<<vlv-env-setup>>
 #+end_src
 * Doom
 #+begin_src emacs-lisp :tangle config.el
@@ -1225,7 +1240,7 @@ From this point onwards, mu4e should be up and running.
 #+begin_src emacs-lisp :tangle packages.el
 (package! consult-everything
   :pin "ac574a63b3e869787bbe6354b57a7a8021647ee3"
-  :disable (not (eq system-type 'windows-nt))
+  :disable (vlv-env-personal-p)
   :recipe '(:host github
             :repo "jthaman/consult-everything"
             :build t))
@@ -1296,7 +1311,7 @@ mklink /D "c:/Users/LATTARO-VOLPINI/.config/emacs/.local/cache/tree-sitter" "c:/
 * Spotify
 #+begin_src emacs-lisp :tangle packages.el
 (package! spotify
-  :disable (not (eq system-type 'gnu/linux))
+  :disable (vlv-env-work-p)
   :pin "d918b5187638e0c44a2a2584f3980244b6aae3fa")
 #+end_src
 
@@ -2197,4 +2212,19 @@ To install the grammars, use 'M-x markdown-ts-mode-install-parsers'.
 ;; makes this block never to be run.
 
 (setopt evil-shift-width 30)
+#+end_src
+
+* mastodon
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! mastodon
+  :disable (vlv-env-work-p))
+#+end_src
+
+#+begin_src emacs-lisp :tangle config.el
+(use-package! mastodon
+  :defer t
+  :config
+  (setopt mastodon-active-user user-mail-address)
+  (setopt mastodon-instance-url "https://mastodon.social"))
 #+end_src
