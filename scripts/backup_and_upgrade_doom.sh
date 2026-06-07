@@ -40,7 +40,7 @@ cd ~/.config/ || exit
 mkdir -p "${archive_backup_dir}"
 
 ## Check for existing archive files
-archives=$(ls ${archive_prefix}*${archive_file_type}* 2>/dev/null)
+archives=$(ls "${archive_backup_dir}"/${archive_prefix}*${archive_file_type}* 2>/dev/null)
 archive_count=0
 
 for _ in $archives; do
@@ -52,7 +52,7 @@ if [ "$archive_count" -gt 0 ]; then
     # Check if the number of archives exceeds the limit
     if [ "$archive_count" -ge "$archive_count_max" ]; then
         # Identify and remove the oldest archive
-        oldest_archive=$(ls -1t ${archive_prefix}*${archive_file_type}* | tail -n 1)
+        oldest_archive=$(ls -1t "${archive_backup_dir}"/${archive_prefix}*${archive_file_type}* | tail -n 1)
 
         if [ -n "$oldest_archive" ]; then
             rm "$oldest_archive" && echo "${YELLOW}Removed oldest archive: $oldest_archive${NO_COLOR}"
