@@ -1265,8 +1265,7 @@ From this point onwards, mu4e should be up and running.
 (use-package! treesit
   :defer t
   :config
-  ;; if auto, it'll prompt for installation at every file, at every session...
-  (setopt treesit-auto-install-grammar nil)
+  (setopt treesit-auto-install-grammar 'ask)
 
   (add-to-list 'treesit-language-source-alist
 		       '(devicetree "https://github.com/joelspadin/tree-sitter-devicetree")))
