@@ -31,15 +31,13 @@ re() {
     echo "${GREEN}Done!"
 }
 
-# Script
 echo "Backup started..."
 
-## Navigate to the configuration directory
 cd ~/.config/ || exit
 
 mkdir -p "${archive_backup_dir}"
 
-## Check for existing archive files
+## Limit amount of archives
 archives=$(ls "${archive_backup_dir}"/${archive_prefix}*${archive_file_type}* 2>/dev/null)
 archive_count=0
 
@@ -47,7 +45,6 @@ for _ in $archives; do
     archive_count=$((archive_count + 1))
 done
 
-# limit amount of archives
 if [ "$archive_count" -gt 0 ]; then
     # Check if the number of archives exceeds the limit
     if [ "$archive_count" -ge "$archive_count_max" ]; then
@@ -65,21 +62,20 @@ git_sha=$(git -C "$(pwd)/emacs" rev-parse --short HEAD)
 
 archive_name="${archive_prefix}_$(date +%Y-%m-%d_%H-%M-%S)_${git_sha}.${archive_file_type}"
 
-## Create a new archive file
+## Generate backup
 tar --create --gzip --file "$(pwd)/backups/${archive_name}" "${archive_prefix}/"
 
 echo "${GREEN}Backup end. Starting upgrade...${NO_COLOR}"
 
-## Uncomment the following lines to enable the upgrade functionality
+## Upgrade, native compile, sync and cleanup
 doom upgrade --force --aot --jobs ${nproc-1} || echo "${RED}Failed upgrade doom!${NO_COLOR}"
-
-doom gc --force || echo "${RED}Failed to garbage-collect after upgrade!${NO_COLOR}"
 
 doom sync --jobs ${nproc-1} || echo "${RED}Failed to sync after upgrade!${NO_COLOR}"
 
+doom gc --force || echo "${RED}Failed to garbage-collect after upgrade!${NO_COLOR}"
+
 echo "${GREEN}Upgrade done!${NO_COLOR}"
 
-## Call the restart function and handle failure
 re || {
     echo "${RED}Restart Emacs command not available!${NO_COLOR}"
     exit 1
