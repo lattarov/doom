@@ -1276,7 +1276,7 @@ From this point onwards, mu4e should be up and running.
  		       '(devicetree "https://github.com/joelspadin/tree-sitter-devicetree"))
 
   (add-to-list 'treesit-language-source-alist
- 		       '(devicetree "https://github.com/tree-sitter/tree-sitter-c-sharp.git")))
+ 		       '(csharp     "https://github.com/tree-sitter/tree-sitter-c-sharp.git")))
 #+end_src
 
 *** Grammars
