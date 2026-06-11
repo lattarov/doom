@@ -270,8 +270,7 @@ this configures bash to be used as the default shell bash. In theory it corrects
   :config
   (setopt olivetti-body-width 120))
 
-(add-hook! '(ibuffer-mode-hook
-             Info-mode-hook
+(add-hook! '(Info-mode-hook
              Man-mode-hook
              compilation-mode
              conf-unix-mode-hook
@@ -280,11 +279,14 @@ this configures bash to be used as the default shell bash. In theory it corrects
              eww-mode-hook
              help-mode-hook
              helpful-mode-hook
+             ibuffer-mode-hook
              magit-mode-hook
              markdown-mode-hook
              org-mode-hook
              prog-mode-hook
-             woman-mode-hook) 'olivetti-mode)
+             woman-mode-hook
+             yaml-mode
+             yaml-ts-mode) 'olivetti-mode)
 #+end_src
 
 * Org
