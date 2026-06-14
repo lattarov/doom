@@ -15,6 +15,12 @@
 (require 'yasnippet)
 (require 'transient)
 
+
+(defvar conventional-commit-prefix (if (vlv-env-work-p)
+                                       "[VILAT] "
+                                     "")
+  "A prefix to be added to a commit title.")
+
 (defvar conventional-commit-type "feat"
   "The commit type selected from transient menu.")
 
@@ -60,7 +66,8 @@
                               (not (string-empty-p conventional-commit-ticket)))
                          (format " [%s]" conventional-commit-ticket)
                        ""))
-         (prefix (format "%s%s%s:%s "
+         (prefix (format "%s%s%s%s:%s "
+                         conventional-commit-prefix
                          conventional-commit-type
                          scope-str
                          breaking-str
@@ -76,7 +83,8 @@
   "Transient menu for conventional commits."
   [:description
    (lambda ()
-     (format "Preview: %s%s%s:%s [title]"
+     (format "Preview: %s%s%s%s:%s [title]"
+             conventional-commit-prefix
              conventional-commit-type
              (if (and conventional-commit-scope
                       (not (string-empty-p conventional-commit-scope)))
