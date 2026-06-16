@@ -211,6 +211,9 @@ In order to disactivate packages, the easiest way is to use the 'disable' field 
 
 (setopt doom-modeline-time-analogue-clock nil)
 
+(when (vlv-env-work-p)
+  (display-battery-mode))
+
 (setopt size-indication-mode nil)
 #+end_src
 
