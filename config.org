@@ -1,3 +1,5 @@
+#+STARTUP: hideblocks
+
 * Header and documentation
 #+begin_src emacs-lisp :tangle config.el
 ;;; -*- lexical-binding: t; -*-
