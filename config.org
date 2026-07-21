@@ -884,7 +884,7 @@ promising and would bring plenty of nice features to the config.
 
   ;; Per source customization
 
-;;; Set your shorthand favorite interactive command
+  ;;; Set your shorthand favorite interactive command
   (setopt consult-omni-default-interactive-command #'consult-omni-multi))
 
 (map! :leader
