@@ -374,9 +374,9 @@ Shortcuts are mapped with the SPC n r prefix by default.
   (setopt org-roam-directory (expand-file-name "roam/" org-directory)))
 
 (map! :leader
-      (:prefix ("n" . "org")
-               (:prefix ("r" . "roam")
-                :desc "Open org roam UI" "u" #'org-roam-ui-mode)))
+      :prefix "n"
+      :prefix "r"
+      :desc "Open org roam UI" "u" #'org-roam-ui-mode)
 #+end_src
 ** org-gtd
 #+begin_src emacs-lisp :tangle packages.el
@@ -886,10 +886,10 @@ promising and would bring plenty of nice features to the config.
 
 ;;; Set your shorthand favorite interactive command
   (setopt consult-omni-default-interactive-command #'consult-omni-multi))
-:bind
+
 (map! :leader
-      (:prefix ("s" . "search")
-       :desc "consult-omni-multi" "s" #'consult-omni-multi))
+      :prefix "s"
+      :desc "consult-omni-multi" "s" #'consult-omni-multi)
 #+end_src
 
 ** bindings
