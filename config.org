@@ -536,8 +536,8 @@ Allow automatic recognition of projects given a list of paths.
               ("r" ,repos-path "Repos")))))
 
 (map! :leader
-      (:prefix ("o" . "open")
-       :desc "dirvish" "d" #'dirvish))
+      :prefix "o"
+      :desc "dirvish" "d" #'dirvish)
 #+end_src
 
 #+begin_src emacs-lisp :tangle config.el
@@ -729,7 +729,7 @@ Prerequisites:
 
 ;; Keybindings for AI assistants (gptel and Auggie)
 (map! :leader
-      :prefix ("l" . "+LLM/AI")
+      :prefix "l"
       :desc "Select AI assistant" "l" #'auggie-or-gptel
       :desc "Start Auggie" "a" #'auggie-start
       :desc "Start gptel" "g" #'gptel
@@ -781,9 +781,9 @@ Prerequisites:
     (revert-buffer)))
 
 (map! :leader
-      (:prefix ("e" . "elfeed")
-       :desc "Enter elfeed" "e" #'elfeed
-       :desc "Update all feeds" "u" #'elfeed-update))
+      :prefix "e"
+      :desc "Enter elfeed" "e" #'elfeed
+      :desc "Update all feeds" "u" #'elfeed-update)
 
 ;; copy elfeed.org to the org directory. Put here so that the elfeed.org
 ;; is tangled whenever doom-reload is run.
@@ -1324,7 +1324,7 @@ mklink /D "c:/Users/LATTARO-VOLPINI/.config/emacs/.local/cache/tree-sitter" "c:/
   :defer t)
 
 (map! :leader
-      :prefix ("s" . "+search")
+      :prefix "s"
       :desc "devdocs-lookup"
       "d" #'devdocs-lookup)
 #+end_src
@@ -1489,7 +1489,7 @@ sudo apt-get install ffmpeg
   (vlv-call-whisper-run-print-language))
 
 (map! :leader
-      :prefix ("z" . "whisper")
+      :prefix "z"
       :desc "whisper-run"       "z" #'whisper-run
       :desc "English"           "e" #'vlv-whisper-run-english
       :desc "French"            "f" #'vlv-whisper-run-french
@@ -1581,8 +1581,8 @@ It can be quite disturbing to have a white background PDF displayed given that b
   :defer t
   :config
   (map! :leader
-        (:prefix ("b")
-         :desc "Kill buffer and window" "K" #'kill-buffer-and-window)))
+        :prefix "b"
+        :desc "Kill buffer and window" "K" #'kill-buffer-and-window))
 #+end_src
 
 * hl-todo
