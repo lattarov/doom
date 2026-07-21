@@ -1215,13 +1215,13 @@ From this point onwards, mu4e should be up and running.
 
 #+begin_src emacs-lisp :tangle config.el
 (defcustom vlv--workbench3-path
-  "C:/WindRiver_6947/workbench-3.3/wrwb/platform/x86-win32/eclipse/wrwb-x86-win32.exe"
+  "/mnt/c/WindRiver_6947/workbench-3.3/wrwb/platform/x86-win32/eclipse/wrwb-x86-win32.exe"
   "The path to the executable or script to start WindRiver 3 workbench IDE."
   :type 'file
   :group 'work)
 
 (defcustom vlv--workbench4-path
-  "c:/089-VXWORKS_CALIA4/workbench-4/startWorkbench.bat"
+  "/mnt/c/089-VXWORKS_CALIA4/workbench-4/startWorkbench.bat"
   "The path to the executable or script to start WindRiver 4 workbench IDE."
   :type 'file
   :group 'work)
