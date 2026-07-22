@@ -243,16 +243,6 @@ In order to disactivate packages, the easiest way is to use the 'disable' field 
         global-auto-revert-non-file-buffers t)
 #+end_src
 
-** Terminals (WIP)
-this configures bash to be used as the default shell bash. In theory it corrects a few issues concerning
-
-#+begin_src emacs-lisp :tangle no
-;; Configuring terminal for windows
-(if (eq system-type 'windows-nt)
-    (setopt shell-file-name "C:/Windows/system32/bash.exe")
-  (setenv "ESHELL" "bash"))
-#+end_src
-
 ** Emacs Lisp Mode
 #+begin_src emacs-lisp :tangle config.el
 (add-hook! 'emacs-lisp-mode-hook 'show-smartparens-mode)
@@ -506,7 +496,7 @@ Allow automatic recognition of projects given a list of paths.
   :config
   (setopt +workspaces-on-switch-project-behavior t)
   (setopt projectile-project-search-path '("~/dev"
-                                           "D:/@Src")))
+                                           "/mnt/d/@Src/")))
 #+end_src
 
 * Dired
@@ -1680,7 +1670,7 @@ Found in https://emacs.stackexchange.com/questions/60200/magit-remove-local-bran
 
   (setopt magit-clone-default-directory (if (vlv-env-personal-p)
                                             "~/dev/"
-                                          "D:/@Src/"))
+                                          "/mnt/d/@Src/"))
 
   ;; add "develop" to magit long lived and main branch name lists.
   (add-to-list 'magit-long-lived-branches "develop")
