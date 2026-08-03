@@ -232,7 +232,9 @@ In order to disactivate packages, the easiest way is to use the 'disable' field 
 ** Personal information
 #+begin_src emacs-lisp :tangle config.el
 (setopt user-full-name    "Victor Lattaro Volpini"
-        user-mail-address "victorlattaro@proton.me")
+        user-mail-address (if (vlv-env-work-p)
+                              "v.lattaro-volpini.ext@tiama.com"
+                            "victorlattaro@proton.me"))
 #+end_src
 
 ** Revert buffers when the underlying file has changed
