@@ -525,7 +525,16 @@ Allow automatic recognition of projects given a list of paths.
               ("D" ,documents-path "Documents")
               ("t" "c:/Tiama/" "Tiama")
               ("o" ,org-path "Org")
-              ("r" ,repos-path "Repos")))))
+              ("r" ,repos-path "Repos"))))
+
+  ;; set `tramp-direct-async-process' locally in all ssh connections
+  (connection-local-set-profile-variables
+   'remote-direct-async-process
+   '((tramp-direct-async-process . t)))
+
+  (connection-local-set-profiles
+   '(:application tramp :protocol "ssh")
+   'remote-direct-async-process))
 
 (map! :leader
       :prefix "o"
