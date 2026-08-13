@@ -2249,3 +2249,9 @@ To install the grammars, use 'M-x markdown-ts-mode-install-parsers'.
   (setopt mastodon-active-user user-mail-address)
   (setopt mastodon-instance-url "https://mastodon.social"))
 #+end_src
+
+* Alarms
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! alarm-clock)
+#+end_src
