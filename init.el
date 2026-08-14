@@ -112,7 +112,9 @@
                +docsets
                +offline)
        llm               ; when I said you needed friends, I didn't mean...
-       (lsp +peek)         ; M-x vscode
+       (lsp +booster       ; M-x vscode
+            +eglot
+            +peek)
        (magit +forge)      ; a git porcelain for Emacs
        ;;make              ; run make tasks from Emacs
        ;;pass              ; password manager for nerds
