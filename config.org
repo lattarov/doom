@@ -282,6 +282,8 @@ In order to disactivate packages, the easiest way is to use the 'disable' field 
              markdown-mode-hook
              org-mode-hook
              prog-mode-hook
+             python-mode-hook
+             python-ts-mode-hook
              woman-mode-hook
              yaml-mode
              yaml-ts-mode) 'olivetti-mode)
