@@ -570,25 +570,20 @@ Allow automatic recognition of projects given a list of paths.
 
   (connection-local-set-profiles
    '(:application tramp :protocol "ssh")
-   'remote-direct-async-process))
+   'remote-direct-async-process)
 
-(map! :leader
-      :prefix "o"
-      :desc "dirvish" "d" #'dirvish)
-#+end_src
-
-#+begin_src emacs-lisp :tangle config.el
-(use-package! dirvish
-  :defer t
-  :config
   (transient-define-prefix vlv-dirvish-create ()
     "Transient menu to create new file or directory in dirvish."
     ["Create"
      ("d" "directory" dired-create-directory)
-     ("f" "file" dired-create-empty-file)])
+     ("f" "file" dired-create-empty-file)]))
 
-  (map! :map dirvish-mode-map :n "+" nil)
-  (map! :map dirvish-mode-map :n "+" #'vlv-dirvish-create))
+(map! :map dirvish-mode-map :n "+" nil)
+(map! :map dirvish-mode-map :n "+" #'vlv-dirvish-create)
+
+(map! :leader
+      :prefix "o"
+      :desc "dirvish" "d" #'dirvish)
 #+end_src
 
 * YASNIPPET
