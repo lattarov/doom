@@ -471,6 +471,40 @@ If DEST, a buffer, is provided, insert the markup there."
       (goto-char (point-min)))))
 #+end_src
 
+** org-journal
+
+#+begin_src emacs-lisp :tangle config.el
+(after! org-journal
+
+  ;; integrate org-journal with doom's pop up mechanism
+  (defun +org-journal-find-file-popup (path)
+    "Open PATH in a Doom popup. For `org-journal-find-file'."
+    (pop-to-buffer (find-file-noselect path)))
+
+  (set-popup-rule!
+    (lambda (bufname _action)
+      (and (bound-and-true-p org-journal-dir)
+           (when-let* ((buf  (get-buffer bufname))
+                       (file (buffer-file-name buf)))
+             (file-in-directory-p file org-journal-dir))))
+    :side     'bottom
+    :size     0.4
+    :select   t
+    :modeline t
+    :quit     nil    ; ESC won't nuke a half-written entry
+    :ttl      nil)   ; keep the file buffer alive after closing)
+
+  (defadvice! +org-journal-popup-a (fn &rest args)
+    :around #'org-journal-new-entry
+    (let ((org-journal-find-file-fn #'+org-journal-find-file-popup))
+      (apply fn args))))
+
+(map! :after org-journal
+      :map org-journal-mode-map
+      :localleader
+      "z" (cmd! (save-buffer) (+popup/close nil t)))
+#+end_src
+
 * Python
 #+begin_src emacs-lisp :tangle config.el
 (use-package! python
