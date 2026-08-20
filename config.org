@@ -2287,6 +2287,18 @@ To install the grammars, use 'M-x markdown-ts-mode-install-parsers'.
 (package! alarm-clock)
 #+end_src
 
+#+begin_src emacs-lisp :tangle config.el
+(use-package! alarm-clock
+  :defer t
+  :config
+  (when (vlv-env-work-p)
+    (alarm-clock-set "08:30" "🍵 Coffee time!")
+    (alarm-clock-set "10:00" "🍵 Coffee time!")
+    (alarm-clock-set "12:00" "nham nham!")
+    (alarm-clock-set "15:00" "🍵 Coffee time!")
+    (alarm-clock-set "17:00" "Go home!")))
+#+end_src
+
 * Robot Framework
 
 #+begin_src emacs-lisp :tangle packages.el
