@@ -36,7 +36,127 @@ else
   die "Unsupported platform."
 fi
 
+# ── corporate network state ───────────────────────────────────────────────────
+# Pre-seed from the environment so a non-interactive run (CORP_PROXY=...
+# CORP_CA_BUNDLE=... ./build_emacs_doom.sh) skips the prompts entirely.
+CORP_PROXY="${CORP_PROXY:-${https_proxy:-${HTTPS_PROXY:-}}}"
+CORP_CA_BUNDLE="${CORP_CA_BUNDLE:-}"
+ENV_D_DIR="${HOME}/.config/environment.d"
+ENV_D_FILE="${ENV_D_DIR}/10-corporate-proxy.conf"
+
 # ── step definitions ──────────────────────────────────────────────────────────
+
+step_corporate_network() {
+  divider "Step 0 — Corporate proxy / CA trust"
+  log "If you're behind a corporate HTTP(S) proxy or a TLS-inspecting"
+  log "firewall, configure it here once. Everything downstream — apt, git"
+  log "(and therefore straight.el's package clones), cargo, npm, and the"
+  log "Emacs daemon — inherits it from this step."
+  echo ""
+
+  if [[ -z "$CORP_PROXY" ]]; then
+    if ask "Are you behind a corporate HTTP(S) proxy?" "n"; then
+      read -r -p "  Proxy URL (e.g. http://proxy.corp.example:8080): " CORP_PROXY
+    fi
+  else
+    log "Using proxy from environment: ${CORP_PROXY}"
+  fi
+
+  if [[ -n "$CORP_PROXY" ]]; then
+    local no_proxy_val="${no_proxy:-${NO_PROXY:-localhost,127.0.0.1}}"
+    export http_proxy="$CORP_PROXY" https_proxy="$CORP_PROXY"
+    export HTTP_PROXY="$CORP_PROXY" HTTPS_PROXY="$CORP_PROXY"
+    export no_proxy="$no_proxy_val" NO_PROXY="$no_proxy_val"
+
+    log "git: setting http.proxy/https.proxy globally. Emacs always reads"
+    log "~/.gitconfig when it shells out to git, regardless of the"
+    log "daemon's own environment — this is what makes straight.el's"
+    log "package clones work behind the proxy."
+    git config --global http.proxy "$CORP_PROXY"
+    git config --global https.proxy "$CORP_PROXY"
+
+    log "apt: writing a proxy conf (sudo drops env vars by default, so"
+    log "apt needs its own copy)."
+    printf 'Acquire::http::Proxy "%s";\nAcquire::https::Proxy "%s";\n' \
+      "$CORP_PROXY" "$CORP_PROXY" \
+      | sudo tee /etc/apt/apt.conf.d/95corporate-proxy >/dev/null
+
+    log "cargo: writing ~/.cargo/config.toml [http] proxy."
+    mkdir -p "${HOME}/.cargo"
+
+    log "systemd: persisting proxy vars for your user session, so"
+    log "services started later (emacs.service) inherit them too, and"
+    log "applying it to the current session immediately."
+    mkdir -p "$ENV_D_DIR"
+    {
+      echo "http_proxy=${CORP_PROXY}"
+      echo "https_proxy=${CORP_PROXY}"
+      echo "HTTP_PROXY=${CORP_PROXY}"
+      echo "HTTPS_PROXY=${CORP_PROXY}"
+      echo "no_proxy=${no_proxy_val}"
+      echo "NO_PROXY=${no_proxy_val}"
+    } > "$ENV_D_FILE"
+    systemctl --user set-environment \
+      http_proxy="$CORP_PROXY" https_proxy="$CORP_PROXY" \
+      HTTP_PROXY="$CORP_PROXY" HTTPS_PROXY="$CORP_PROXY" \
+      no_proxy="$no_proxy_val" NO_PROXY="$no_proxy_val" 2>/dev/null || true
+
+    step_done "Proxy configured: ${CORP_PROXY}"
+  else
+    step_skip "proxy configuration"
+  fi
+
+  if [[ -z "$CORP_CA_BUNDLE" ]]; then
+    if ask "Does your network use a TLS-inspecting proxy with a custom root CA?" "n"; then
+      read -r -p "  Path to the CA certificate (PEM): " CORP_CA_BUNDLE
+    fi
+  else
+    log "Using CA bundle from environment: ${CORP_CA_BUNDLE}"
+  fi
+
+  if [[ -n "$CORP_CA_BUNDLE" ]]; then
+    [[ -f "$CORP_CA_BUNDLE" ]] || die "CA bundle not found at ${CORP_CA_BUNDLE}"
+
+    log "Installing into the system trust store — this alone covers git,"
+    log "curl, wget, and Emacs's own GnuTLS-based TLS stack (url.el,"
+    log "gnutls-cli), since they all consult the OS trust store."
+    sudo cp "$CORP_CA_BUNDLE" /usr/local/share/ca-certificates/corporate-root-ca.crt
+    sudo update-ca-certificates
+
+    log "Also setting explicit CA vars for tools that don't trust the"
+    log "system store by default (node/npm, cargo, pip/requests)."
+    export NODE_EXTRA_CA_CERTS="$CORP_CA_BUNDLE"
+    export SSL_CERT_FILE="$CORP_CA_BUNDLE"
+    export REQUESTS_CA_BUNDLE="$CORP_CA_BUNDLE"
+    export CARGO_HTTP_CAINFO="$CORP_CA_BUNDLE"
+
+    {
+      echo "NODE_EXTRA_CA_CERTS=${CORP_CA_BUNDLE}"
+      echo "SSL_CERT_FILE=${CORP_CA_BUNDLE}"
+      echo "REQUESTS_CA_BUNDLE=${CORP_CA_BUNDLE}"
+      echo "CARGO_HTTP_CAINFO=${CORP_CA_BUNDLE}"
+    } >> "$ENV_D_FILE"
+    systemctl --user set-environment \
+      NODE_EXTRA_CA_CERTS="$CORP_CA_BUNDLE" SSL_CERT_FILE="$CORP_CA_BUNDLE" \
+      REQUESTS_CA_BUNDLE="$CORP_CA_BUNDLE" CARGO_HTTP_CAINFO="$CORP_CA_BUNDLE" 2>/dev/null || true
+
+    step_done "Corporate CA trusted (system store + tool-specific env vars)."
+  else
+    step_skip "custom CA trust"
+  fi
+
+  # Single write pass for cargo's [http] table — avoids duplicate-header
+  # TOML errors if both proxy and CA bundle were configured above.
+  if [[ -n "$CORP_PROXY" || -n "$CORP_CA_BUNDLE" ]] \
+     && ! grep -q '^\[http\]' "${HOME}/.cargo/config.toml" 2>/dev/null; then
+    mkdir -p "${HOME}/.cargo"
+    {
+      echo "[http]"
+      [[ -n "$CORP_PROXY" ]] && echo "proxy = \"${CORP_PROXY}\""
+      [[ -n "$CORP_CA_BUNDLE" ]] && echo "cainfo = \"${CORP_CA_BUNDLE}\""
+    } >> "${HOME}/.cargo/config.toml"
+  fi
+}
 
 step_apt_deps() {
   divider "Step 1 — System packages (apt)"
@@ -189,6 +309,14 @@ step_npm() {
   NPM_PREFIX="${HOME}/.local"
   npm config set prefix "${NPM_PREFIX}"
   export PATH="${NPM_PREFIX}/bin:${PATH}"
+
+  if [[ -n "$CORP_PROXY" ]]; then
+    npm config set proxy "$CORP_PROXY"
+    npm config set https-proxy "$CORP_PROXY"
+  fi
+  if [[ -n "$CORP_CA_BUNDLE" ]]; then
+    npm config set cafile "$CORP_CA_BUNDLE"
+  fi
 
   npm install -g pyright
 
