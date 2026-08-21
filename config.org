@@ -2307,3 +2307,9 @@ To install the grammars, use 'M-x markdown-ts-mode-install-parsers'.
 (package! robot-log
   :disable (vlv-env-personal-p))
 #+end_src
+
+* Device tree
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! dts-mode)
+#+end_src
