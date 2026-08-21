@@ -603,25 +603,30 @@ step_cleanup() {
   step_done "Build packages removed."
 }
 
+step_post_install_checks() {
+  divider "Step 10 — Post-install checks"
+
+  local started_temp_daemon=0
+  if ! emacsclient --eval 't' &>/dev/null; then
+    emacs --daemon
+    started_temp_daemon=1
+  fi
+
+  local backend native_comp fd_binary path_ok=0 cargo_ok=0
+
+  native_comp=$(emacsclient --eval '(if (and (fboundp (quote native-comp-available-p)) (native-comp-available-p)) "t" "nil")' 2>/dev/null | tr -d '"')
+  [[ "$native_comp" == "t" ]] \
+    && step_done "Native compilation" \
+    || step_fail "Native compilation unavailable"
+
+
+  [[ "$started_temp_daemon" -eq 1 ]] && emacsclient --eval '(kill-emacs)' &>/dev/null || true
+}
+
 # ── summary ───────────────────────────────────────────────────────────────────
 print_summary() {
   divider "Setup complete"
-  log "vterm, ghostel, whisper.cpp were installed in Step 8."
-  log ""
-  log "Verify Wayland rendering:"
-  log "  M-: (pgtk-backend-display-class)"
-  log "  expected: GdkWaylandDisplay"
-  log ""
-  log "Verify native compilation:"
-  log "  M-: (native-comp-available-p)"
-  log "  expected: t"
-  log ""
-  log "fdfind note — add to config.el:"
-  log "  (setq doom-projectile-fd-binary (executable-find \"fdfind\"))"
-  log ""
-  log "PATH note — add to ~/.bashrc or ~/.zshrc if not present:"
-  log "  export PATH=\"\$HOME/.local/bin:\$PATH\""
-  log "  source \$HOME/.cargo/env"
+  log "vterm, ghostel, whisper.cpp installed in Step 8; checked in Step 10."
 }
 
 # ── main ──────────────────────────────────────────────────────────────────────
@@ -645,4 +650,5 @@ step_doom
 step_systemd
 step_first_run_setup
 step_cleanup
+step_post_install_checks
 print_summary
