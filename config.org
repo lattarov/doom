@@ -1606,10 +1606,24 @@ Make buffer selection follow the workspace that owns the buffer, instead of pull
   (defun vlv-workspace-follow-buffer-h ()
     "Switch to the workspace that owns the just-selected buffer.
 
+Must run synchronously, ahead of Doom's own `+workspaces-add-current-buffer-h'
+in `doom-switch-buffer-hook' (hooks added later run first, since `add-hook'
+prepends by default): that default hook unconditionally adds the current
+buffer to the current workspace, so if it ran first, or if this were
+deferred past it, a buffer being *selected into* another workspace would
+get silently re-claimed by the workspace it's being switched away from
+before this function ever got to check ownership.
+
 Popups/special buffers are already excluded via `doom-real-buffer-p'.
 Buffer previews shown while a minibuffer session is active (consult/vertico
 narrowing) are ignored -- only the final, committed selection acts, since
-`active-minibuffer-window' is nil by the time that happens."
+`active-minibuffer-window' is nil by the time that happens.
+
+`+workspace-switch' can fail to restore a workspace's saved window layout
+if it no longer fits the frame (persp-mode logs a warning and leaves the
+old layout in place); the buffer is still explicitly re-selected
+afterwards regardless, so the visible buffer stays correct even if the
+rest of that workspace's window layout didn't restore."
     (when (and (not (active-minibuffer-window))
                (doom-real-buffer-p (current-buffer)))
       (let ((buf (current-buffer)))
@@ -1617,8 +1631,12 @@ narrowing) are ignored -- only the final, committed selection acts, since
           (when-let* ((owner (cl-find-if
                                (lambda (wk) (+workspace-contains-buffer-p buf wk))
                                (+workspace-list))))
-            (+workspace-switch (persp-name owner))
-            (switch-to-buffer buf))))))
+            (condition-case err
+                (+workspace-switch (persp-name owner))
+              (error (message "vlv-workspace-follow-buffer-h: switch to %s failed: %S"
+                               (persp-name owner) err)))
+            (when (buffer-live-p buf)
+              (switch-to-buffer buf)))))))
 
   (add-hook 'doom-switch-buffer-hook 'vlv-workspace-follow-buffer-h))
 #+end_src
