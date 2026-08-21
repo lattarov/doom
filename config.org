@@ -140,34 +140,21 @@ In order to disactivate packages, the easiest way is to use the 'disable' field 
 
 ;; welcome screen
 (when (vlv-env-personal-p)
-  (declare-function +doom-dashboard--center "+doom-dashboard")
-  (defvar +doom-dashboard--width)
   (defun vlv-doom-dashboard-draw-ascii-banner-fn ()
-    (let* ((banner
-            '("██╗      █████╗ ████████╗████████╗ █████╗ ██████╗  ██████╗ "
-              "██║     ██╔══██╗╚══██╔══╝╚══██╔══╝██╔══██╗██╔══██╗██╔═══██╗"
-              "██║     ███████║   ██║      ██║   ███████║██████╔╝██║   ██║"
-              "██║     ██╔══██║   ██║      ██║   ██╔══██║██╔═██╚╗██║   ██║"
-              "███████╗██║  ██║   ██║      ██║   ██║  ██║██║ ███║███████╔╝"
-              "╚══════╝╚═╝  ╚═╝   ╚═╝      ╚═╝   ╚═╝  ╚═╝╚═╝ ╚══╝╚══════╝ "
-              "                                                           "
-              "                        E M A C S                          "
-              "                                                           "
-              "                                                           "
-              "                                                           "))
-           (longest-line (apply #'max (mapcar #'length banner))))
-      (put-text-property
-       (point)
-       (dolist (line banner (point))
-         (insert (+doom-dashboard--center
-                  +doom-dashboard--width
-                  (concat
-                   line (make-string (max 0 (- longest-line (length line)))
-                                     32)))
-                 "\n"))
-       'face 'doom-dashboard-banner)))
+    (propertize
+     (string-join
+      '("██╗      █████╗ ████████╗████████╗ █████╗ ██████╗  ██████╗ "
+        "██║     ██╔══██╗╚══██╔══╝╚══██╔══╝██╔══██╗██╔══██╗██╔═══██╗"
+        "██║     ███████║   ██║      ██║   ███████║██████╔╝██║   ██║"
+        "██║     ██╔══██║   ██║      ██║   ██╔══██║██╔═██╚╗██║   ██║"
+        "███████╗██║  ██║   ██║      ██║   ██║  ██║██║ ███║███████╔╝"
+        "╚══════╝╚═╝  ╚═╝   ╚═╝      ╚═╝   ╚═╝  ╚═╝╚═╝ ╚══╝╚══════╝ "
+        "                                                           "
+        "                        E M A C S                          ")
+      "\n")
+     'face '+dashboard-banner))
 
-  (setopt +doom-dashboard-ascii-banner-fn #'vlv-doom-dashboard-draw-ascii-banner-fn))
+  (setopt +dashboard-ascii-banner-fn #'vlv-doom-dashboard-draw-ascii-banner-fn))
 
 (setopt doom-theme 'doom-moonlight)
 
