@@ -1585,6 +1585,29 @@ sudo apt-get install ffmpeg
            :title "Open Library"))))
 #+end_src
 
+* Workspaces
+
+#+begin_src emacs-lisp :tangle config.el
+(after! persp-mode
+  (defun vlv-workspace-follow-buffer-h ()
+    "Switch to the workspace that owns the just-selected buffer."
+    (when (and (not (active-minibuffer-window))
+               (doom-real-buffer-p (current-buffer)))
+      (let ((buf (current-buffer)))
+        (unless (+workspace-contains-buffer-p buf (+workspace-current))
+          (when-let* ((owner (cl-find-if
+                              (lambda (wk) (+workspace-contains-buffer-p buf wk))
+                              (+workspace-list))))
+            (condition-case err
+                (+workspace-switch (persp-name owner))
+              (error (message "vlv-workspace-follow-buffer-h: switch to %s failed: %S"
+                              (persp-name owner) err)))
+            (when (buffer-live-p buf)
+              (switch-to-buffer buf)))))))
+
+  (add-hook 'doom-switch-buffer-hook 'vlv-workspace-follow-buffer-h))
+#+end_src
+
 * PDF
 It can be quite disturbing to have a white background PDF displayed given that both OS and Emacs themes are consistently dark. Thankfully there's a pdf-view-mode function to set a dark colour scheme!
 
@@ -1600,7 +1623,15 @@ It can be quite disturbing to have a white background PDF displayed given that b
   :config
   (map! :leader
         :prefix "b"
-        :desc "Kill buffer and window" "K" #'kill-buffer-and-window))
+        :desc "Kill buffer and window" "K" #'kill-buffer-and-window)
+  (when (modulep! :ui workspaces)
+    (remove-hook 'ibuffer-hook #'ibuffer-projectile-set-filter-groups)
+    (defun vlv-ibuffer-set-workspace-filter-groups-h ()
+      (setq ibuffer-filter-groups
+            (mapcar (lambda (name)
+                      (cons name (list (cons 'workspace-buffers (+workspace-get name)))))
+                    (+workspace-list-names))))
+    (add-hook 'ibuffer-hook 'vlv-ibuffer-set-workspace-filter-groups-h)))
 #+end_src
 
 * hl-todo
