@@ -368,9 +368,8 @@ Shortcuts are mapped with the SPC n r prefix by default.
   (setopt org-roam-directory (expand-file-name "roam/" org-directory)))
 
 (map! :leader
-      :prefix "n"
-      :prefix "r"
-      :desc "Open org roam UI" "u" #'org-roam-ui-mode)
+      :prefix "n r"
+      :desc "Org-roam UI" "u" #'org-roam-ui-mode)
 #+end_src
 ** org-gtd
 #+begin_src emacs-lisp :tangle packages.el
