@@ -1,0 +1,15 @@
+# -*- mode: snippet -*-
+# name: kas-repos
+# uuid: krep
+# key: krep
+# condition: t
+# --
+
+meta-$1:
+  url: $2
+  branch: $3
+  commit: $4
+  path: sources/meta-$1
+  layers:
+    $5:
+$5
