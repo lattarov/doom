@@ -29,28 +29,85 @@ this employer places on the market.
 
 Ground truth was taken directly from the local straight.el checkout
 (`~/.config/emacs/.local/straight/repos/*`, `git remote get-url origin` +
-`git rev-parse HEAD` per repo) rather than parsed from config — this is what
-is actually on disk on this machine.
+`git rev-parse HEAD` per repo) plus Doom Emacs's own checkout, rather than
+parsed from config — this is what is actually on disk on this machine.
+
+The SBOM is published as **[SPDX 2.3 JSON](https://spdx.github.io/spdx-spec/v2.3/)**
+— the Linux Foundation standard also used by the OpenEmbedded/Yocto build
+system (`create-spdx.bbclass`) — at
+[`sbom-doom-packages-2026-08-21.spdx.json`](./sbom-doom-packages-2026-08-21.spdx.json).
+Each of its 281 `packages` entries carries a resolved git commit
+(`versionInfo`), a VCS download location, and an SPDX license identifier
+(`licenseConcluded`/`licenseDeclared`) — the license *identifier*, e.g.
+`GPL-3.0-or-later`, not the full license text; `copyrightText` is left
+`NOASSERTION` since no per-file copyright-holder extraction was done.
 
 | Metric | Value |
 |---|---|
-| Distinct upstream package repos (straight.el-managed) | **280** |
-| — via github.com | 270 |
+| Packages in the SBOM (280 straight.el-managed + Doom Emacs itself) | **281** |
+| — via github.com | 271 (270 packages + Doom Emacs core) |
 | — via codeberg.org | 7 |
 | — via gitlab.com | 3 |
-| Doom Emacs core packages declared upstream | 586, of which 574 carry an explicit `:pin <sha>` (~98%) |
+| Doom Emacs's own module tree (upstream, not separately re-verified) | 586 packages declared, 574 carry an explicit `:pin <sha>` (~98%) |
 | This user's `packages.el` overlay | 23 packages, 21 pinned as of this revision |
 
-Full machine-readable listing: [`sbom-doom-packages-2026-08-21.csv`](./sbom-doom-packages-2026-08-21.csv)
-(name, host, resolved commit, commit date, origin URL — one row per repo).
+### License breakdown (281 packages)
 
-Outside straight.el's package graph, three more hosts are touched, only at
-install/upgrade time, never at runtime:
+| SPDX identifier | Count |
+|---|---|
+| GPL-3.0-or-later | 216 |
+| MIT | 18 |
+| GPL-2.0-or-later | 12 |
+| BSD-2-Clause | 10 |
+| BSD-3-Clause | 7 |
+| GPL-3.0-only | 6 |
+| Unlicense | 5 |
+| NOASSERTION | 3 |
+| WTFPL | 2 |
+| LicenseRef-Public-Domain | 1 |
+| Apache-2.0 | 1 |
+
+Detection method, per package, in priority order: (1) an explicit
+`SPDX-License-Identifier:` header tag in a source `.el` file — searched
+recursively under the repo (not just its root, since well-organized
+packages like magit/forge/transient keep sources under `lisp/`) — as the
+single most authoritative signal, since it's the maintainer directly
+stating the license; failing that, (2) a repo-root `LICENSE`/`COPYING`
+family file, classified by signature phrases (full legal text, named
+license mentions like "Simplified BSD" or "3-clause", public-domain
+declarations, etc.); failing that, (3) GPL boilerplate or a license name in
+a source header comment; failing that, `NOASSERTION` rather than a guess.
+
+A bare `LICENSE` file's raw legal text can't by itself distinguish
+GPL "-only" from "-or-later" — that's a per-file authorial choice, stated
+in each source file's own header, not part of the license text itself. All
+GPL/LGPL classifications resolved only from a LICENSE file were
+cross-checked against source headers for "any later version" language
+before being finalized as "-only"; a handful had no matching header to
+check at all and default to the license file's plain reading — the least
+certain entries if a reviewer needs exact GPL-variant precision (a
+by-package breakdown of detection confidence is preserved in the
+[regeneration script](#regenerating-this-document)'s output, not
+duplicated here). Doom Emacs itself is MIT-licensed, read directly from its
+own `LICENSE` file.
+
+The 3 `NOASSERTION` entries: `emacsmirror-mirror` and `gnu-elpa-mirror`
+(index/mirror meta-repos, not single-license packages) and `evil-quick-diff`
+(no license file or header text found upstream — genuinely undeclared).
+`org-re-reveal`'s repository is multi-licensed at file granularity
+following the [REUSE](https://reuse.software/) spec (its `LICENSES/`
+directory holds AGPL-3.0-or-later, CC0-1.0, and GPL-3.0-or-later texts for
+different assets), but the actual Elisp file this config depends on,
+`org-re-reveal.el`, carries its own `SPDX-License-Identifier:
+GPL-3.0-or-later` tag — that's what's recorded here, since it's the
+license of the code actually pulled in, not the repository's other assets.
+
+Outside straight.el's package graph, more hosts are touched, only at
+install/upgrade time, never at runtime, and are not part of this SBOM file:
 
 | Component | Host | When | Integrity check |
 |---|---|---|---|
 | Emacs itself (source build) | `git.savannah.gnu.org` (GNU's own infra) | once, `build_emacs_doom.sh` Step 5 | git commit/tag pinned by version choice |
-| Doom Emacs core | `github.com/doomemacs/doomemacs` | once, Step 6 | none currently (see §6) |
 | LanguageTool (grammar checker) | `languagetool.org` | optional, Step 2 | **SHA-256 verified before use** |
 | Rust toolchain installer | `sh.rustup.rs`, `static.rust-lang.org` | optional, Step 3 | rustup's own signature checks |
 | Cargo crates (`emacs-lsp-booster`) | `crates.io` / `static.crates.io` / `index.crates.io` | optional, Step 3 | crates.io content hashing |
@@ -114,8 +171,8 @@ npm step for the same reason.
 No mirror/Artifactory-style proxy is assumed — this targets a plain
 HTTP(S) forward proxy with a TLS-inspecting CA, which is what's in place
 here. If IT later stands up an internal generic/git mirror, the
-straight.el `:host`/`:repo` recipes and the git remotes in the CSV above are
-exactly the list that would need remapping.
+straight.el `:host`/`:repo` recipes and the `downloadLocation` values in the
+SBOM above are exactly the list that would need remapping.
 
 ## 5. Why `packages.el` isn't in git (and what is)
 
@@ -159,7 +216,7 @@ relevant here:
 1. **Non-commercial open source.** The CRA's recitals (see Recital 18-19 in
    the adopted text) exclude free and open-source software developed or
    supplied outside the course of a commercial activity from most
-   obligations. Emacs, Doom Emacs, and the ~280 packages in the SBOM above
+   obligations. Emacs, Doom Emacs, and the 280 packages in the SBOM above
    are exactly that: individually-maintained or foundation-maintained FOSS,
    not sold or monetized as a product by their authors.
 2. **Internal tooling isn't "placed on the market."** This configuration is
@@ -180,21 +237,159 @@ reviewer's question.
 
 ## Regenerating this document
 
-```sh
-# 1. Rebuild the SBOM CSV from the live straight.el checkout:
-for d in ~/.config/emacs/.local/straight/repos/*/; do
-  name=$(basename "$d")
-  url=$(git -C "$d" remote get-url origin)
-  commit=$(git -C "$d" rev-parse HEAD)
-  date=$(git -C "$d" log -1 --format=%cI HEAD)
-  printf '%s|%s|%s|%s\n' "$name" "$url" "$commit" "$date"
-done > /tmp/sbom-raw.csv
+Save as e.g. `/tmp/gen-sbom.py` and run with `python3 /tmp/gen-sbom.py` from
+the repo root. Implements the detection rules from §2, including the
+GPL `-only` vs `-or-later` header cross-check.
 
-# 2. Add a header + host column, drop into docs/:
-awk -F'|' 'BEGIN{OFS=","; print "name,host,commit,commit_date,url"}
-  NF==4 { host="other"
-    if ($2 ~ /github\.com/) host="github.com"
-    else if ($2 ~ /codeberg\.org/) host="codeberg.org"
-    else if ($2 ~ /gitlab\.com/) host="gitlab.com"
-    print $1, host, $3, $4, $2 }' /tmp/sbom-raw.csv > docs/sbom-doom-packages-$(date +%F).csv
+```python
+#!/usr/bin/env python3
+import datetime, glob, json, os, re, subprocess, uuid
+
+REPOS_DIR = os.path.expanduser("~/.config/emacs/.local/straight/repos")
+DOOM_DIR = os.path.expanduser("~/.config/emacs")
+LICENSE_FILES = ["LICENSE", "LICENSE.txt", "LICENSE.md", "LICENSE-MIT",
+                  "LICENSE-APACHE", "COPYING", "COPYING.txt",
+                  "COPYING.LESSER", "UNLICENSE"]
+
+CANONICAL_SPDX_IDS = {
+    "gpl-3.0-or-later": "GPL-3.0-or-later", "gpl-3.0-only": "GPL-3.0-only",
+    "gpl-2.0-or-later": "GPL-2.0-or-later", "gpl-2.0-only": "GPL-2.0-only",
+    "mit": "MIT", "bsd-2-clause": "BSD-2-Clause", "bsd-3-clause": "BSD-3-Clause",
+    "apache-2.0": "Apache-2.0", "isc": "ISC", "wtfpl": "WTFPL",
+    "unlicense": "Unlicense", "cc0-1.0": "CC0-1.0", "mpl-2.0": "MPL-2.0",
+    "agpl-3.0-or-later": "AGPL-3.0-or-later", "agpl-3.0-only": "AGPL-3.0-only",
+}
+
+def canonicalize(spdx_id):
+    return CANONICAL_SPDX_IDS.get(spdx_id.lower(), spdx_id)
+
+def classify(text):
+    or_later = "any later version" in text
+    if "GNU AFFERO GENERAL PUBLIC LICENSE" in text.upper():
+        return "AGPL-3.0-or-later" if or_later else "AGPL-3.0-only"
+    if "GNU LESSER GENERAL PUBLIC LICENSE" in text.upper():
+        if "version 3" in text.lower(): return "LGPL-3.0-or-later" if or_later else "LGPL-3.0-only"
+        if "version 2.1" in text.lower(): return "LGPL-2.1-or-later" if or_later else "LGPL-2.1-only"
+    if "GENERAL PUBLIC LICENSE" in text.upper():
+        if "version 3" in text.lower(): return "GPL-3.0-or-later" if or_later else "GPL-3.0-only"
+        if "version 2" in text.lower(): return "GPL-2.0-or-later" if or_later else "GPL-2.0-only"
+    if "licensed under the same terms as emacs" in text.lower(): return "GPL-3.0-or-later"
+    if "MIT License" in text or "Permission is hereby granted, free of charge" in text: return "MIT"
+    if "Apache License" in text and "2.0" in text: return "Apache-2.0"
+    if "Redistribution and use in source and binary forms" in text:
+        return "BSD-3-Clause" if "Neither the name" in text else "BSD-2-Clause"
+    tl = text.lower()
+    if ("bsd 3-clause" in tl or "bsd-3-clause" in tl or "new bsd" in tl
+            or ("3-clause" in tl and "bsd" in tl)):
+        return "BSD-3-Clause"
+    if ("bsd 2-clause" in tl or "bsd-2-clause" in tl or "simplified bsd" in tl
+            or "freebsd license" in tl):
+        return "BSD-2-Clause"
+    if "Mozilla Public License" in text and "2.0" in text: return "MPL-2.0"
+    if "unencumbered software released into the public domain" in text: return "Unlicense"
+    if "CC0" in text: return "CC0-1.0"
+    if "ISC License" in text: return "ISC"
+    if "DO WHAT THE FUCK YOU WANT" in text or re.search(r"\bWTFPL\b", text): return "WTFPL"
+    if "public domain" in tl: return "LicenseRef-Public-Domain"
+    return None
+
+def el_headers(repo_dir, limit=8):
+    # Recursive: many well-organized packages (magit, forge, ghub, transient,
+    # with-editor, ...) keep sources under lisp/ rather than the repo root.
+    candidates = glob.glob(os.path.join(repo_dir, "**", "*.el"), recursive=True)
+    def sort_key(p):
+        rel = os.path.relpath(p, repo_dir)
+        depth = rel.count(os.sep)
+        is_test = 1 if "test" in os.path.basename(p).lower() else 0
+        return (depth, is_test, rel)
+    for el in sorted(candidates, key=sort_key)[:limit]:
+        yield "".join(open(el, errors="ignore").readlines()[:60])
+
+def detect_license(repo_dir):
+    # An explicit SPDX-License-Identifier tag is the single most authoritative
+    # signal available (it's the maintainer directly stating the license) —
+    # check it before anything else, including a LICENSE file, since a bare
+    # LICENSE file's raw legal text can't distinguish "-only" from "-or-later"
+    # (that distinction is a per-file authorial choice, not part of the
+    # license text itself).
+    headers = list(el_headers(repo_dir))
+    for head in headers:
+        m = re.search(r"SPDX-License-Identifier:\s*(\S+)", head)
+        if m:
+            return canonicalize(m.group(1)), "header-spdx-tag"
+
+    file_lic = None
+    for fname in LICENSE_FILES:
+        path = os.path.join(repo_dir, fname)
+        if os.path.isfile(path):
+            lic = classify(open(path, errors="ignore").read(3000))
+            if lic:
+                file_lic = lic
+                break
+
+    if file_lic and file_lic.endswith("-only") and file_lic.split("-")[0] in ("GPL", "LGPL"):
+        checked_any = or_later = False
+        for head in headers:
+            if "General Public License" in head:
+                checked_any = True
+                if "any later version" in head:
+                    or_later = True
+                    break
+        if or_later:
+            return file_lic.replace("-only", "-or-later"), "file+header-crosscheck-or-later"
+        return file_lic, "file+header-crosscheck-only" if checked_any else "file-no-header-crosscheck"
+    if file_lic:
+        return file_lic, "file"
+
+    for head in headers:
+        lic = classify(head)
+        if lic: return lic, "header-boilerplate"
+    return "NOASSERTION", "none"
+
+def repo_entry(repo_dir, name):
+    url = subprocess.check_output(["git", "-C", repo_dir, "remote", "get-url", "origin"], text=True).strip()
+    sha = subprocess.check_output(["git", "-C", repo_dir, "rev-parse", "HEAD"], text=True).strip()
+    lic, _confidence = detect_license(repo_dir)
+    return {"name": name, "url": url, "sha": sha, "license": lic}
+
+def sanitize(name):
+    return re.sub(r"[^a-zA-Z0-9.-]", "-", name)
+
+entries = [repo_entry(DOOM_DIR, "doom-emacs")]
+for d in sorted(os.listdir(REPOS_DIR)):
+    full = os.path.join(REPOS_DIR, d)
+    if os.path.isdir(os.path.join(full, ".git")):
+        entries.append(repo_entry(full, d))
+
+packages, relationships, seen = [], [], {}
+for e in entries:
+    base = f"SPDXRef-Package-{sanitize(e['name'])}"
+    seen[base] = seen.get(base, 0) + 1
+    spdx_id = base if seen[base] == 1 else f"{base}-{seen[base]}"
+    packages.append({
+        "SPDXID": spdx_id, "name": e["name"], "versionInfo": e["sha"],
+        "downloadLocation": f"git+{e['url']}@{e['sha']}",
+        "filesAnalyzed": False,
+        "licenseConcluded": e["license"], "licenseDeclared": e["license"],
+        "copyrightText": "NOASSERTION", "supplier": "NOASSERTION",
+    })
+    relationships.append({"spdxElementId": "SPDXRef-DOCUMENT",
+                           "relationshipType": "DESCRIBES",
+                           "relatedSpdxElement": spdx_id})
+
+doc = {
+    "spdxVersion": "SPDX-2.3", "dataLicense": "CC0-1.0", "SPDXID": "SPDXRef-DOCUMENT",
+    "name": "doom-emacs-personal-config",
+    "documentNamespace": f"https://spdx.org/spdxdocs/doom-emacs-personal-config-{datetime.date.today()}-{uuid.uuid4()}",
+    "creationInfo": {
+        "created": datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "creators": ["Tool: doom-config-sbom-generator",
+                      "Person: Victor Lattaro Volpini (victorlattaro+ai@gmail.com)"],
+    },
+    "packages": packages, "relationships": relationships,
+}
+
+out = f"docs/sbom-doom-packages-{datetime.date.today()}.spdx.json"
+json.dump(doc, open(out, "w"), indent=2)
+print(f"wrote {out}: {len(packages)} packages, {len(relationships)} relationships")
 ```

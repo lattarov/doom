@@ -1,0 +1,4514 @@
+{
+  "spdxVersion": "SPDX-2.3",
+  "dataLicense": "CC0-1.0",
+  "SPDXID": "SPDXRef-DOCUMENT",
+  "name": "doom-emacs-personal-config",
+  "documentNamespace": "https://spdx.org/spdxdocs/doom-emacs-personal-config-2026-08-21-c3abd45d-fcb5-4080-baa1-b4f0310fa3ec",
+  "creationInfo": {
+    "created": "2026-08-21T21:46:21Z",
+    "creators": [
+      "Tool: doom-config-sbom-generator",
+      "Person: Victor Lattaro Volpini (victorlattaro+ai@gmail.com)"
+    ]
+  },
+  "packages": [
+    {
+      "SPDXID": "SPDXRef-Package-doom-emacs",
+      "name": "doom-emacs",
+      "versionInfo": "87b8afe6e2ff0a5debbad96534ea131277a4df64",
+      "downloadLocation": "git+https://github.com/doomemacs/doomemacs@87b8afe6e2ff0a5debbad96534ea131277a4df64",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-Emacs-langtool",
+      "name": "Emacs-langtool",
+      "versionInfo": "6605f26f56b7da1499a32885236c02a40b0b0e31",
+      "downloadLocation": "git+https://github.com/mhayashi1120/Emacs-langtool.git@6605f26f56b7da1499a32885236c02a40b0b0e31",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-Emacs-wgrep",
+      "name": "Emacs-wgrep",
+      "versionInfo": "49f09ab9b706d2312cab1199e1eeb1bcd3f27f6f",
+      "downloadLocation": "git+https://github.com/mhayashi1120/Emacs-wgrep.git@49f09ab9b706d2312cab1199e1eeb1bcd3f27f6f",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-a.el",
+      "name": "a.el",
+      "versionInfo": "93e5ed8c495794d1ba3c04b43041b95ce01079b1",
+      "downloadLocation": "git+https://github.com/plexus/a.el.git@93e5ed8c495794d1ba3c04b43041b95ce01079b1",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-ace-window",
+      "name": "ace-window",
+      "versionInfo": "77115afc1b0b9f633084cf7479c767988106c196",
+      "downloadLocation": "git+https://github.com/abo-abo/ace-window.git@77115afc1b0b9f633084cf7479c767988106c196",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-adaptive-wrap",
+      "name": "adaptive-wrap",
+      "versionInfo": "6b9ffc18cdb1d3d18e2b9c3568bfb651f0ad517f",
+      "downloadLocation": "git+https://github.com/emacs-straight/adaptive-wrap.git@6b9ffc18cdb1d3d18e2b9c3568bfb651f0ad517f",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-alarm-clock",
+      "name": "alarm-clock",
+      "versionInfo": "8a805d365aa38be32041c4e968bb624d3bb1b54b",
+      "downloadLocation": "git+https://github.com/wlemuel/alarm-clock.git@8a805d365aa38be32041c4e968bb624d3bb1b54b",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-alert",
+      "name": "alert",
+      "versionInfo": "31fc56855289d0846e73d7ca9b84b628aeac16a0",
+      "downloadLocation": "git+https://github.com/jwiegley/alert.git@31fc56855289d0846e73d7ca9b84b628aeac16a0",
+      "filesAnalyzed": false,
+      "licenseConcluded": "BSD-3-Clause",
+      "licenseDeclared": "BSD-3-Clause",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-anaphora",
+      "name": "anaphora",
+      "versionInfo": "d22ae8afd3b3bf6a383f6a6c27522893b57130b1",
+      "downloadLocation": "git+https://github.com/rolandwalker/anaphora.git@d22ae8afd3b3bf6a383f6a6c27522893b57130b1",
+      "filesAnalyzed": false,
+      "licenseConcluded": "LicenseRef-Public-Domain",
+      "licenseDeclared": "LicenseRef-Public-Domain",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-anzu",
+      "name": "anzu",
+      "versionInfo": "21cb5ab2295614372cb9f1a21429381e49a6255f",
+      "downloadLocation": "git+https://github.com/emacsorphanage/anzu.git@21cb5ab2295614372cb9f1a21429381e49a6255f",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-apheleia",
+      "name": "apheleia",
+      "versionInfo": "0d64f2c99d886bf7aa1a64a2aa73d52bb8e8f912",
+      "downloadLocation": "git+https://github.com/radian-software/apheleia.git@0d64f2c99d886bf7aa1a64a2aa73d52bb8e8f912",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-auto-minor-mode",
+      "name": "auto-minor-mode",
+      "versionInfo": "17cfa1b54800fdef2975c0c0531dad34846a5065",
+      "downloadLocation": "git+https://github.com/joewreschnig/auto-minor-mode.git@17cfa1b54800fdef2975c0c0531dad34846a5065",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-auto-yasnippet",
+      "name": "auto-yasnippet",
+      "versionInfo": "6a9e406d0d7f9dfd6dff7647f358cb05a0b1637e",
+      "downloadLocation": "git+https://github.com/abo-abo/auto-yasnippet.git@6a9e406d0d7f9dfd6dff7647f358cb05a0b1637e",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-2.0-or-later",
+      "licenseDeclared": "GPL-2.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-avy",
+      "name": "avy",
+      "versionInfo": "933d1f36cca0f71e4acb5fac707e9ae26c536264",
+      "downloadLocation": "git+https://github.com/abo-abo/avy.git@933d1f36cca0f71e4acb5fac707e9ae26c536264",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-better-jumper",
+      "name": "better-jumper",
+      "versionInfo": "b1bf7a3c8cb820d942a0305e0e6412ef369f819c",
+      "downloadLocation": "git+https://github.com/gilbertw1/better-jumper.git@b1bf7a3c8cb820d942a0305e0e6412ef369f819c",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-bitbake-el",
+      "name": "bitbake-el",
+      "versionInfo": "f626d37727df0550aa2afd3f1b0ce81f38be18a3",
+      "downloadLocation": "git+https://github.com/danielcmccarthy/bitbake-el.git@f626d37727df0550aa2afd3f1b0ce81f38be18a3",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-bitbake-ts-mode",
+      "name": "bitbake-ts-mode",
+      "versionInfo": "f3ebbae4c09584774b99e4ada568fdf9451b69be",
+      "downloadLocation": "git+https://github.com/seokbeomKim/bitbake-ts-mode.git@f3ebbae4c09584774b99e4ada568fdf9451b69be",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-bug-hunter",
+      "name": "bug-hunter",
+      "versionInfo": "e89621287d14c8cc73cd78c63ef49595fbfd745f",
+      "downloadLocation": "git+https://github.com/emacs-straight/bug-hunter.git@e89621287d14c8cc73cd78c63ef49595fbfd745f",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-cape",
+      "name": "cape",
+      "versionInfo": "bd827d913f487d2bb3815731ac20b60419b9cb03",
+      "downloadLocation": "git+https://github.com/minad/cape.git@bd827d913f487d2bb3815731ac20b60419b9cb03",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-centered-window-mode",
+      "name": "centered-window-mode",
+      "versionInfo": "701f56cd1d2b68352d29914f05ca1b0037bb2595",
+      "downloadLocation": "git+https://github.com/nullvec/centered-window-mode.git@701f56cd1d2b68352d29914f05ca1b0037bb2595",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-2.0-or-later",
+      "licenseDeclared": "GPL-2.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-closql",
+      "name": "closql",
+      "versionInfo": "d382e7427f5d375ffc872851b049e9f9c4a43dfc",
+      "downloadLocation": "git+https://github.com/magit/closql.git@d382e7427f5d375ffc872851b049e9f9c4a43dfc",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-cmake-ide",
+      "name": "cmake-ide",
+      "versionInfo": "28dc4ab5bd01d99553901b4efeb7234280928b18",
+      "downloadLocation": "git+https://github.com/atilaneves/cmake-ide.git@28dc4ab5bd01d99553901b4efeb7234280928b18",
+      "filesAnalyzed": false,
+      "licenseConcluded": "BSD-3-Clause",
+      "licenseDeclared": "BSD-3-Clause",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-cmake-mode",
+      "name": "cmake-mode",
+      "versionInfo": "25340a7d12c2a4b7f514a3792f3e89af32c55dfa",
+      "downloadLocation": "git+https://github.com/emacsmirror/cmake-mode.git@25340a7d12c2a4b7f514a3792f3e89af32c55dfa",
+      "filesAnalyzed": false,
+      "licenseConcluded": "BSD-3-Clause",
+      "licenseDeclared": "BSD-3-Clause",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-code-review",
+      "name": "code-review",
+      "versionInfo": "303edcfbad8190eccb9a9269dfc58ed26d386ba5",
+      "downloadLocation": "git+https://github.com/doomelpa/code-review.git@303edcfbad8190eccb9a9269dfc58ed26d386ba5",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-compat",
+      "name": "compat",
+      "versionInfo": "df03e91f1fc47503ca71e11dd507ed18ca8b5ab0",
+      "downloadLocation": "git+https://github.com/emacs-compat/compat.git@df03e91f1fc47503ca71e11dd507ed18ca8b5ab0",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-compiler-explorer.el",
+      "name": "compiler-explorer.el",
+      "versionInfo": "e26a4dac90ca2ceed26b77470bdbea097e877aa4",
+      "downloadLocation": "git+https://github.com/mkcms/compiler-explorer.el.git@e26a4dac90ca2ceed26b77470bdbea097e877aa4",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-cond-let",
+      "name": "cond-let",
+      "versionInfo": "c48600dfab6372670225f046cace263700c78eab",
+      "downloadLocation": "git+https://github.com/tarsius/cond-let.git@c48600dfab6372670225f046cace263700c78eab",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-conda.el",
+      "name": "conda.el",
+      "versionInfo": "58b43d5020b8a7cc55065031bae9d0a5020528e0",
+      "downloadLocation": "git+https://github.com/necaris/conda.el.git@58b43d5020b8a7cc55065031bae9d0a5020528e0",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-consult",
+      "name": "consult",
+      "versionInfo": "e98ac9a3b7b78397e6f14eadfc70aacc069edd7d",
+      "downloadLocation": "git+https://github.com/minad/consult.git@e98ac9a3b7b78397e6f14eadfc70aacc069edd7d",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-consult-dash",
+      "name": "consult-dash",
+      "versionInfo": "edb57bf8cdbef422b88667fadc83e1bb046957a6",
+      "downloadLocation": "git+https://codeberg.org/ravi/consult-dash.git@edb57bf8cdbef422b88667fadc83e1bb046957a6",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-only",
+      "licenseDeclared": "GPL-3.0-only",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-consult-dir",
+      "name": "consult-dir",
+      "versionInfo": "1497b46d6f48da2d884296a1297e5ace1e050eb5",
+      "downloadLocation": "git+https://github.com/karthink/consult-dir.git@1497b46d6f48da2d884296a1297e5ace1e050eb5",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-consult-lsp",
+      "name": "consult-lsp",
+      "versionInfo": "f41a3946987a3880068f95f3725bbb7b0d4b0b22",
+      "downloadLocation": "git+https://github.com/gagbo/consult-lsp.git@f41a3946987a3880068f95f3725bbb7b0d4b0b22",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-consult-mu",
+      "name": "consult-mu",
+      "versionInfo": "8b54bbf86c2f112e3520eeeefb70d509b4590385",
+      "downloadLocation": "git+https://github.com/armindarvish/consult-mu.git@8b54bbf86c2f112e3520eeeefb70d509b4590385",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-consult-omni",
+      "name": "consult-omni",
+      "versionInfo": "3a126ee54479755408faed10da945dbc2366303b",
+      "downloadLocation": "git+https://github.com/armindarvish/consult-omni.git@3a126ee54479755408faed10da945dbc2366303b",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-consult-yasnippet",
+      "name": "consult-yasnippet",
+      "versionInfo": "89e39887c87e25d18861216a4d72e5d174f13751",
+      "downloadLocation": "git+https://github.com/mohkale/consult-yasnippet.git@89e39887c87e25d18861216a4d72e5d174f13751",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-corfu",
+      "name": "corfu",
+      "versionInfo": "6477aac54fa1ea4865b23d7562e48b83a082a1e4",
+      "downloadLocation": "git+https://github.com/minad/corfu.git@6477aac54fa1ea4865b23d7562e48b83a082a1e4",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-csv-mode",
+      "name": "csv-mode",
+      "versionInfo": "b7eca7304ef7757700be5c2bc23ef6204c60eb75",
+      "downloadLocation": "git+https://github.com/emacs-straight/csv-mode.git@b7eca7304ef7757700be5c2bc23ef6204c60eb75",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-cuda-mode",
+      "name": "cuda-mode",
+      "versionInfo": "c3dae31b3d1abedf4d0b98840127e2cac73d6ad8",
+      "downloadLocation": "git+https://github.com/chachi/cuda-mode.git@c3dae31b3d1abedf4d0b98840127e2cac73d6ad8",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-cuda-ts-mode",
+      "name": "cuda-ts-mode",
+      "versionInfo": "807f15150deb3a3060bc36a0e135a27876d7e239",
+      "downloadLocation": "git+https://github.com/Ergus/cuda-ts-mode.git@807f15150deb3a3060bc36a0e135a27876d7e239",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-dag-draw.el",
+      "name": "dag-draw.el",
+      "versionInfo": "c20b3c28781f1d768116a2cc601a4e8d0058e2ba",
+      "downloadLocation": "git+https://codeberg.org/trevoke/dag-draw.el.git@c20b3c28781f1d768116a2cc601a4e8d0058e2ba",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-dape",
+      "name": "dape",
+      "versionInfo": "b04e927abac6fcbef480c8a39881d69baa1bec98",
+      "downloadLocation": "git+https://github.com/svaante/dape.git@b04e927abac6fcbef480c8a39881d69baa1bec98",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-dash-docs",
+      "name": "dash-docs",
+      "versionInfo": "29848b6b347ac520f7646c200ed2ec36cea3feda",
+      "downloadLocation": "git+https://github.com/dash-docs-el/dash-docs.git@29848b6b347ac520f7646c200ed2ec36cea3feda",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-dash.el",
+      "name": "dash.el",
+      "versionInfo": "d746dd9edcb67a108818beb0cdc78dc1cb466832",
+      "downloadLocation": "git+https://github.com/magnars/dash.el.git@d746dd9edcb67a108818beb0cdc78dc1cb466832",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-define-word",
+      "name": "define-word",
+      "versionInfo": "31a8c67405afa99d0e25e7c86a4ee7ef84a808fe",
+      "downloadLocation": "git+https://github.com/abo-abo/define-word.git@31a8c67405afa99d0e25e7c86a4ee7ef84a808fe",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-deflate",
+      "name": "deflate",
+      "versionInfo": "d3863855d213f73dc7a1a54736d94a75f8f7e9c5",
+      "downloadLocation": "git+https://github.com/skuro/deflate.git@d3863855d213f73dc7a1a54736d94a75f8f7e9c5",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-demangle-mode",
+      "name": "demangle-mode",
+      "versionInfo": "04f545adab066708d6151f13da65aaf519f8ac4e",
+      "downloadLocation": "git+https://github.com/liblit/demangle-mode.git@04f545adab066708d6151f13da65aaf519f8ac4e",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-devdocs.el",
+      "name": "devdocs.el",
+      "versionInfo": "25c746024ddf73570195bf42b841f761a2fee10c",
+      "downloadLocation": "git+https://github.com/astoff/devdocs.el.git@25c746024ddf73570195bf42b841f761a2fee10c",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-diff-hl",
+      "name": "diff-hl",
+      "versionInfo": "6f1df2b83d1140a2938409b35de7f4c9c7b1defd",
+      "downloadLocation": "git+https://github.com/dgutov/diff-hl.git@6f1df2b83d1140a2938409b35de7f4c9c7b1defd",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-diredfl",
+      "name": "diredfl",
+      "versionInfo": "fe72d2e42ee18bf6228bba9d7086de4098f18a70",
+      "downloadLocation": "git+https://github.com/purcell/diredfl.git@fe72d2e42ee18bf6228bba9d7086de4098f18a70",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-dirvish",
+      "name": "dirvish",
+      "versionInfo": "300b6b2536006aaf5f803775ca93ca5f6ec35de1",
+      "downloadLocation": "git+https://github.com/latiagertrutis/dirvish.git@300b6b2536006aaf5f803775ca93ca5f6ec35de1",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-disaster",
+      "name": "disaster",
+      "versionInfo": "0299c129d4153e3a794358159737c3ff9d155654",
+      "downloadLocation": "git+https://github.com/jart/disaster.git@0299c129d4153e3a794358159737c3ff9d155654",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-2.0-or-later",
+      "licenseDeclared": "GPL-2.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-doom-modeline",
+      "name": "doom-modeline",
+      "versionInfo": "2d6828870bce42c3de6feebe1e70d9edc46515a6",
+      "downloadLocation": "git+https://github.com/seagle0128/doom-modeline.git@2d6828870bce42c3de6feebe1e70d9edc46515a6",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-dtrt-indent",
+      "name": "dtrt-indent",
+      "versionInfo": "8402da6bcc288709366e0b589fa79e744e877788",
+      "downloadLocation": "git+https://github.com/jscheid/dtrt-indent.git@8402da6bcc288709366e0b589fa79e744e877788",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-2.0-or-later",
+      "licenseDeclared": "GPL-2.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-dts-mode",
+      "name": "dts-mode",
+      "versionInfo": "cd1847d0e7162c1ecab772c6ca7ef4f3c5d2214d",
+      "downloadLocation": "git+https://github.com/bgamari/dts-mode.git@cd1847d0e7162c1ecab772c6ca7ef4f3c5d2214d",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-dumb-jump",
+      "name": "dumb-jump",
+      "versionInfo": "cf06b4ccdce6a39346c32f05139f9ee8b77ee229",
+      "downloadLocation": "git+https://github.com/jacktasia/dumb-jump.git@cf06b4ccdce6a39346c32f05139f9ee8b77ee229",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-edit-indirect",
+      "name": "edit-indirect",
+      "versionInfo": "82a28d8a85277cfe453af464603ea330eae41c05",
+      "downloadLocation": "git+https://github.com/Fanael/edit-indirect.git@82a28d8a85277cfe453af464603ea330eae41c05",
+      "filesAnalyzed": false,
+      "licenseConcluded": "BSD-2-Clause",
+      "licenseDeclared": "BSD-2-Clause",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-el-get",
+      "name": "el-get",
+      "versionInfo": "447b7efc9fca29a087f4ec29c5d8ccb580cd1c78",
+      "downloadLocation": "git+https://github.com/dimitri/el-get.git@447b7efc9fca29a087f4ec29c5d8ccb580cd1c78",
+      "filesAnalyzed": false,
+      "licenseConcluded": "WTFPL",
+      "licenseDeclared": "WTFPL",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-eldoc",
+      "name": "eldoc",
+      "versionInfo": "cfd17854b6b9b6830111851ad21c2d560db07dfb",
+      "downloadLocation": "git+https://github.com/emacs-straight/eldoc.git@cfd17854b6b9b6830111851ad21c2d560db07dfb",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-elfeed",
+      "name": "elfeed",
+      "versionInfo": "943a5acf49b286a129a78f7142672126781578c0",
+      "downloadLocation": "git+https://github.com/emacs-elfeed/elfeed.git@943a5acf49b286a129a78f7142672126781578c0",
+      "filesAnalyzed": false,
+      "licenseConcluded": "Unlicense",
+      "licenseDeclared": "Unlicense",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-elfeed-org",
+      "name": "elfeed-org",
+      "versionInfo": "34c0b4d758942822e01a5dbe66b236e49a960583",
+      "downloadLocation": "git+https://github.com/remyhonig/elfeed-org.git@34c0b4d758942822e01a5dbe66b236e49a960583",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-elfeed-tube",
+      "name": "elfeed-tube",
+      "versionInfo": "f653d5b7f27a2eace217d9e6b4f40e0e35ae88cd",
+      "downloadLocation": "git+https://github.com/karthink/elfeed-tube.git@f653d5b7f27a2eace217d9e6b4f40e0e35ae88cd",
+      "filesAnalyzed": false,
+      "licenseConcluded": "Unlicense",
+      "licenseDeclared": "Unlicense",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-elisp-def",
+      "name": "elisp-def",
+      "versionInfo": "2451ed6594807448a24a63c51c917727713ed19d",
+      "downloadLocation": "git+https://github.com/Wilfred/elisp-def.git@2451ed6594807448a24a63c51c917727713ed19d",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-elisp-demos",
+      "name": "elisp-demos",
+      "versionInfo": "1a108d1c5011f9ced58be2ca98bea1fbd4130a2f",
+      "downloadLocation": "git+https://github.com/xuchunyang/elisp-demos.git@1a108d1c5011f9ced58be2ca98bea1fbd4130a2f",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-elisp-refs",
+      "name": "elisp-refs",
+      "versionInfo": "541a064c3ce27867872cf708354a65d83baf2a6d",
+      "downloadLocation": "git+https://github.com/Wilfred/elisp-refs.git@541a064c3ce27867872cf708354a65d83baf2a6d",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-emacs-aio",
+      "name": "emacs-aio",
+      "versionInfo": "0e94a06bb035953cbbb4242568b38ca15443ad4c",
+      "downloadLocation": "git+https://github.com/skeeto/emacs-aio.git@0e94a06bb035953cbbb4242568b38ca15443ad4c",
+      "filesAnalyzed": false,
+      "licenseConcluded": "Unlicense",
+      "licenseDeclared": "Unlicense",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-emacs-async",
+      "name": "emacs-async",
+      "versionInfo": "4fdcb061a166e0d6ccc27d3829a28e04415ae825",
+      "downloadLocation": "git+https://github.com/jwiegley/emacs-async.git@4fdcb061a166e0d6ccc27d3829a28e04415ae825",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-emacs-bash-completion",
+      "name": "emacs-bash-completion",
+      "versionInfo": "e2ae243588db8e03f4d0485bb09b670abbc63eaf",
+      "downloadLocation": "git+https://github.com/szermatt/emacs-bash-completion.git@e2ae243588db8e03f4d0485bb09b670abbc63eaf",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-2.0-or-later",
+      "licenseDeclared": "GPL-2.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-emacs-buttercup",
+      "name": "emacs-buttercup",
+      "versionInfo": "39c8e762408a166a5afa03b8e79dd8d1a0de5caa",
+      "downloadLocation": "git+https://github.com/jorgenschaefer/emacs-buttercup.git@39c8e762408a166a5afa03b8e79dd8d1a0de5caa",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-emacs-calfw",
+      "name": "emacs-calfw",
+      "versionInfo": "24fa167af96a6e677aea7c6b9385f669b550ee2f",
+      "downloadLocation": "git+https://github.com/kiwanami/emacs-calfw.git@24fa167af96a6e677aea7c6b9385f669b550ee2f",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-emacs-ccls",
+      "name": "emacs-ccls",
+      "versionInfo": "f3f8df0a2848defafa629611925347a4974e360c",
+      "downloadLocation": "git+https://github.com/emacs-lsp/emacs-ccls.git@f3f8df0a2848defafa629611925347a4974e360c",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-emacs-deferred",
+      "name": "emacs-deferred",
+      "versionInfo": "2239671d94b38d92e9b28d4e12fd79814cfb9c16",
+      "downloadLocation": "git+https://github.com/kiwanami/emacs-deferred.git@2239671d94b38d92e9b28d4e12fd79814cfb9c16",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-emacs-emojify",
+      "name": "emacs-emojify",
+      "versionInfo": "1b726412f19896abf5e4857d4c32220e33400b55",
+      "downloadLocation": "git+https://github.com/iqbalansari/emacs-emojify.git@1b726412f19896abf5e4857d4c32220e33400b55",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-emacs-everywhere",
+      "name": "emacs-everywhere",
+      "versionInfo": "09a6a64dd07a712aad8ef1d0b99c086f025540d3",
+      "downloadLocation": "git+https://github.com/tecosaur/emacs-everywhere.git@09a6a64dd07a712aad8ef1d0b99c086f025540d3",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-emacs-ipython-notebook",
+      "name": "emacs-ipython-notebook",
+      "versionInfo": "8fa836fcd1c22f45d36249b09590b32a890f2b9e",
+      "downloadLocation": "git+https://github.com/millejoh/emacs-ipython-notebook.git@8fa836fcd1c22f45d36249b09590b32a890f2b9e",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-emacs-libvterm",
+      "name": "emacs-libvterm",
+      "versionInfo": "70921114908ebb260d6686db8cbe2445a64f90a2",
+      "downloadLocation": "git+https://github.com/akermu/emacs-libvterm.git@70921114908ebb260d6686db8cbe2445a64f90a2",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-emacs-load-env-vars",
+      "name": "emacs-load-env-vars",
+      "versionInfo": "3808520efaf9492033f6e11a9bffd68eabf02a0f",
+      "downloadLocation": "git+https://github.com/diasjorge/emacs-load-env-vars.git@3808520efaf9492033f6e11a9bffd68eabf02a0f",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-emacs-oauth2-auto",
+      "name": "emacs-oauth2-auto",
+      "versionInfo": "1f046222a51a1650f48895437996c8f83940bc31",
+      "downloadLocation": "git+https://github.com/telotortium/emacs-oauth2-auto.git@1f046222a51a1650f48895437996c8f83940bc31",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-emacs-python-pytest",
+      "name": "emacs-python-pytest",
+      "versionInfo": "8c0e048a771f355903a8c2ce78fa0974a077214e",
+      "downloadLocation": "git+https://github.com/wbolster/emacs-python-pytest.git@8c0e048a771f355903a8c2ce78fa0974a077214e",
+      "filesAnalyzed": false,
+      "licenseConcluded": "BSD-3-Clause",
+      "licenseDeclared": "BSD-3-Clause",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-emacs-request",
+      "name": "emacs-request",
+      "versionInfo": "c22e3c23a6dd90f64be536e176ea0ed6113a5ba6",
+      "downloadLocation": "git+https://github.com/tkf/emacs-request.git@c22e3c23a6dd90f64be536e176ea0ed6113a5ba6",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-emacs-shift-number",
+      "name": "emacs-shift-number",
+      "versionInfo": "52f4d32080cca50da0f88b2141d597827c7341cf",
+      "downloadLocation": "git+https://codeberg.org/ideasman42/emacs-shift-number.git@52f4d32080cca50da0f88b2141d597827c7341cf",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-emacs-solaire-mode",
+      "name": "emacs-solaire-mode",
+      "versionInfo": "1bd0134194e48c8fe4089e9d505517935b2b15e3",
+      "downloadLocation": "git+https://github.com/hlissner/emacs-solaire-mode.git@1bd0134194e48c8fe4089e9d505517935b2b15e3",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-emacs-web-server",
+      "name": "emacs-web-server",
+      "versionInfo": "d74da3eaf2b37432fe8fa66c2a470550e811f081",
+      "downloadLocation": "git+https://github.com/skeeto/emacs-web-server.git@d74da3eaf2b37432fe8fa66c2a470550e811f081",
+      "filesAnalyzed": false,
+      "licenseConcluded": "Unlicense",
+      "licenseDeclared": "Unlicense",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-emacs-websocket",
+      "name": "emacs-websocket",
+      "versionInfo": "2195e1247ecb04c30321702aa5f5618a51c329c5",
+      "downloadLocation": "git+https://github.com/ahyatt/emacs-websocket.git@2195e1247ecb04c30321702aa5f5618a51c329c5",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-2.0-or-later",
+      "licenseDeclared": "GPL-2.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-emacs-winum",
+      "name": "emacs-winum",
+      "versionInfo": "c5455e866e8a5f7eab6a7263e2057aff5f1118b9",
+      "downloadLocation": "git+https://github.com/deb0ch/emacs-winum.git@c5455e866e8a5f7eab6a7263e2057aff5f1118b9",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-emacsmirror-mirror",
+      "name": "emacsmirror-mirror",
+      "versionInfo": "45c4d293b6d6fe62aba884b82fc7c61389fc73d9",
+      "downloadLocation": "git+https://github.com/emacs-straight/emacsmirror-mirror.git@45c4d293b6d6fe62aba884b82fc7c61389fc73d9",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-emacsql",
+      "name": "emacsql",
+      "versionInfo": "d811bbefcb5e27841af55cae53aa939ba720de77",
+      "downloadLocation": "git+https://github.com/magit/emacsql.git@d811bbefcb5e27841af55cae53aa939ba720de77",
+      "filesAnalyzed": false,
+      "licenseConcluded": "Unlicense",
+      "licenseDeclared": "Unlicense",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-embark",
+      "name": "embark",
+      "versionInfo": "87e53827cf6659dcc4ac4e54be9af34aeca44f6e",
+      "downloadLocation": "git+https://github.com/oantolin/embark.git@87e53827cf6659dcc4ac4e54be9af34aeca44f6e",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-embrace.el",
+      "name": "embrace.el",
+      "versionInfo": "c7e748603151d7d91c237fd2d9cdf56e9f3b1ea8",
+      "downloadLocation": "git+https://github.com/cute-jumper/embrace.el.git@c7e748603151d7d91c237fd2d9cdf56e9f3b1ea8",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-epl",
+      "name": "epl",
+      "versionInfo": "78ab7a85c08222cd15582a298a364774e3282ce6",
+      "downloadLocation": "git+https://github.com/cask/epl.git@78ab7a85c08222cd15582a298a364774e3282ce6",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-eros",
+      "name": "eros",
+      "versionInfo": "66ee90baa3162fea028f5101ddcc370f7d1d4fcf",
+      "downloadLocation": "git+https://github.com/xiongtx/eros.git@66ee90baa3162fea028f5101ddcc370f7d1d4fcf",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-esh-help",
+      "name": "esh-help",
+      "versionInfo": "417673ed18a983930a66a6692dbfb288a995cb80",
+      "downloadLocation": "git+https://github.com/tom-tan/esh-help.git@417673ed18a983930a66a6692dbfb288a995cb80",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-eshell-did-you-mean",
+      "name": "eshell-did-you-mean",
+      "versionInfo": "80cd8c4b186a2fb29621cf634bcf2bcd914f1e3d",
+      "downloadLocation": "git+https://github.com/xuchunyang/eshell-did-you-mean.git@80cd8c4b186a2fb29621cf634bcf2bcd914f1e3d",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-eshell-syntax-highlighting",
+      "name": "eshell-syntax-highlighting",
+      "versionInfo": "62418fd8b2380114a3f6dad699c1ba45329db1d2",
+      "downloadLocation": "git+https://github.com/akreisher/eshell-syntax-highlighting.git@62418fd8b2380114a3f6dad699c1ba45329db1d2",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-eshell-up",
+      "name": "eshell-up",
+      "versionInfo": "1999afaa509204b780db44e99ac9648fe7d92d32",
+      "downloadLocation": "git+https://github.com/peterwvj/eshell-up.git@1999afaa509204b780db44e99ac9648fe7d92d32",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-eshell-z",
+      "name": "eshell-z",
+      "versionInfo": "337cb241e17bd472bd3677ff166a0800f684213c",
+      "downloadLocation": "git+https://github.com/xuchunyang/eshell-z.git@337cb241e17bd472bd3677ff166a0800f684213c",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-evil",
+      "name": "evil",
+      "versionInfo": "6a3e1ddd04ac504a016590940d0af2a3361b9efd",
+      "downloadLocation": "git+https://github.com/emacs-evil/evil.git@6a3e1ddd04ac504a016590940d0af2a3361b9efd",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-evil-anzu",
+      "name": "evil-anzu",
+      "versionInfo": "7309650425797420944075c9c1556c7c1ff960b3",
+      "downloadLocation": "git+https://github.com/emacsorphanage/evil-anzu.git@7309650425797420944075c9c1556c7c1ff960b3",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-evil-args",
+      "name": "evil-args",
+      "versionInfo": "a8151556f63c9d45d0c44c8a7ef9e5a542f3cdc7",
+      "downloadLocation": "git+https://github.com/wcsmith/evil-args.git@a8151556f63c9d45d0c44c8a7ef9e5a542f3cdc7",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-evil-collection",
+      "name": "evil-collection",
+      "versionInfo": "fa8da0ebba4bbf2a84a78183420d8303179ef427",
+      "downloadLocation": "git+https://github.com/emacs-evil/evil-collection.git@fa8da0ebba4bbf2a84a78183420d8303179ef427",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-evil-easymotion",
+      "name": "evil-easymotion",
+      "versionInfo": "629c894af63336028a61cc93d6465d10837eb82b",
+      "downloadLocation": "git+https://github.com/PythonNut/evil-easymotion.git@629c894af63336028a61cc93d6465d10837eb82b",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-evil-embrace.el",
+      "name": "evil-embrace.el",
+      "versionInfo": "3081d37811b6a3dfaaf01d578c7ab7a746c6064d",
+      "downloadLocation": "git+https://github.com/cute-jumper/evil-embrace.el.git@3081d37811b6a3dfaaf01d578c7ab7a746c6064d",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-evil-escape",
+      "name": "evil-escape",
+      "versionInfo": "819f1ee1cf3f69a1ae920e6004f2c0baeebbe077",
+      "downloadLocation": "git+https://github.com/hlissner/evil-escape.git@819f1ee1cf3f69a1ae920e6004f2c0baeebbe077",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-evil-exchange",
+      "name": "evil-exchange",
+      "versionInfo": "5f0a2d41434c17c6fb02e4f744043775de1c63a2",
+      "downloadLocation": "git+https://github.com/Dewdrops/evil-exchange.git@5f0a2d41434c17c6fb02e4f744043775de1c63a2",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-evil-goggles",
+      "name": "evil-goggles",
+      "versionInfo": "34ca276a85f615d2b45e714c9f8b5875bcb676f3",
+      "downloadLocation": "git+https://github.com/edkolev/evil-goggles.git@34ca276a85f615d2b45e714c9f8b5875bcb676f3",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-evil-indent-plus",
+      "name": "evil-indent-plus",
+      "versionInfo": "f392696e4813f1d3a92c7eeed333248914ba6dae",
+      "downloadLocation": "git+https://github.com/TheBB/evil-indent-plus.git@f392696e4813f1d3a92c7eeed333248914ba6dae",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-2.0-or-later",
+      "licenseDeclared": "GPL-2.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-evil-lion",
+      "name": "evil-lion",
+      "versionInfo": "5a0bca151466960e090d1803c4c5ded88875f90a",
+      "downloadLocation": "git+https://github.com/edkolev/evil-lion.git@5a0bca151466960e090d1803c4c5ded88875f90a",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-evil-markdown",
+      "name": "evil-markdown",
+      "versionInfo": "8e6cc68af83914b2fa9fd3a3b8472573dbcef477",
+      "downloadLocation": "git+https://github.com/Somelauw/evil-markdown.git@8e6cc68af83914b2fa9fd3a3b8472573dbcef477",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-evil-mc",
+      "name": "evil-mc",
+      "versionInfo": "7e363dd6b0a39751e13eb76f2e9b7b13c7054a43",
+      "downloadLocation": "git+https://github.com/gabesoft/evil-mc.git@7e363dd6b0a39751e13eb76f2e9b7b13c7054a43",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-evil-multiedit",
+      "name": "evil-multiedit",
+      "versionInfo": "23b53bc8743fb82a8854ba907b1d277374c93a79",
+      "downloadLocation": "git+https://github.com/hlissner/evil-multiedit.git@23b53bc8743fb82a8854ba907b1d277374c93a79",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-evil-nerd-commenter",
+      "name": "evil-nerd-commenter",
+      "versionInfo": "db5ee61a6e75db074b7d20e9dcb68e0b94b4edc7",
+      "downloadLocation": "git+https://github.com/redguardtoo/evil-nerd-commenter.git@db5ee61a6e75db074b7d20e9dcb68e0b94b4edc7",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-evil-numbers",
+      "name": "evil-numbers",
+      "versionInfo": "616aff9e5cee012954756ed2715209fa90308cdf",
+      "downloadLocation": "git+https://github.com/juliapath/evil-numbers.git@616aff9e5cee012954756ed2715209fa90308cdf",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-evil-org-mode",
+      "name": "evil-org-mode",
+      "versionInfo": "e8b535bb0e9b590a9f46701b80c82dc9563f579e",
+      "downloadLocation": "git+https://github.com/doomelpa/evil-org-mode.git@e8b535bb0e9b590a9f46701b80c82dc9563f579e",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-evil-quick-diff",
+      "name": "evil-quick-diff",
+      "versionInfo": "69c883720b30a892c63bc89f49d4f0e8b8028908",
+      "downloadLocation": "git+https://github.com/rgrinberg/evil-quick-diff.git@69c883720b30a892c63bc89f49d4f0e8b8028908",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-evil-snipe",
+      "name": "evil-snipe",
+      "versionInfo": "16317d7e54313490a0fe8642ed9a1a72498e7ad2",
+      "downloadLocation": "git+https://github.com/hlissner/evil-snipe.git@16317d7e54313490a0fe8642ed9a1a72498e7ad2",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-evil-surround",
+      "name": "evil-surround",
+      "versionInfo": "e6548372e8359ee55e67d73ca418314086011f1a",
+      "downloadLocation": "git+https://github.com/emacs-evil/evil-surround.git@e6548372e8359ee55e67d73ca418314086011f1a",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-evil-textobj-anyblock",
+      "name": "evil-textobj-anyblock",
+      "versionInfo": "29280cd71a05429364cdceef2ff595ae8afade4d",
+      "downloadLocation": "git+https://github.com/willghatch/evil-textobj-anyblock.git@29280cd71a05429364cdceef2ff595ae8afade4d",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-only",
+      "licenseDeclared": "GPL-3.0-only",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-evil-traces",
+      "name": "evil-traces",
+      "versionInfo": "82e8a7b4213aed140f6eb5f2cc33a09bb5587166",
+      "downloadLocation": "git+https://github.com/mamapanda/evil-traces.git@82e8a7b4213aed140f6eb5f2cc33a09bb5587166",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-evil-vimish-fold",
+      "name": "evil-vimish-fold",
+      "versionInfo": "b6e0e6b91b8cd047e80debef1a536d9d49eef31a",
+      "downloadLocation": "git+https://github.com/alexmurray/evil-vimish-fold.git@b6e0e6b91b8cd047e80debef1a536d9d49eef31a",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-evil-visualstar",
+      "name": "evil-visualstar",
+      "versionInfo": "06c053d8f7381f91c53311b1234872ca96ced752",
+      "downloadLocation": "git+https://github.com/bling/evil-visualstar.git@06c053d8f7381f91c53311b1234872ca96ced752",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-exato",
+      "name": "exato",
+      "versionInfo": "aee7af7b7a0e7551478f453d1de7d5b9cb2e06c4",
+      "downloadLocation": "git+https://github.com/ninrod/exato.git@aee7af7b7a0e7551478f453d1de7d5b9cb2e06c4",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-expand-region.el",
+      "name": "expand-region.el",
+      "versionInfo": "351279272330cae6cecea941b0033a8dd8bcc4e8",
+      "downloadLocation": "git+https://github.com/magnars/expand-region.el.git@351279272330cae6cecea941b0033a8dd8bcc4e8",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-f.el",
+      "name": "f.el",
+      "versionInfo": "931b6d0667fe03e7bf1c6c282d6d8d7006143c52",
+      "downloadLocation": "git+https://github.com/rejeep/f.el.git@931b6d0667fe03e7bf1c6c282d6d8d7006143c52",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-flycheck",
+      "name": "flycheck",
+      "versionInfo": "7074b82cc82b6c3258f0f436514eca5236101336",
+      "downloadLocation": "git+https://github.com/flycheck/flycheck.git@7074b82cc82b6c3258f0f436514eca5236101336",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-flycheck-plantuml",
+      "name": "flycheck-plantuml",
+      "versionInfo": "183be89e1dbba0b38237dd198dff600e0790309d",
+      "downloadLocation": "git+https://github.com/alexmurray/flycheck-plantuml.git@183be89e1dbba0b38237dd198dff600e0790309d",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-flymake",
+      "name": "flymake",
+      "versionInfo": "7edbb3639d05f26806037f7b0a24916d33d6d6a4",
+      "downloadLocation": "git+https://github.com/emacs-straight/flymake.git@7edbb3639d05f26806037f7b0a24916d33d6d6a4",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-flymake-popon",
+      "name": "flymake-popon",
+      "versionInfo": "99ea813346f3edef7220d8f4faeed2ec69af6060",
+      "downloadLocation": "git+https://github.com/doomelpa/flymake-popon.git@99ea813346f3edef7220d8f4faeed2ec69af6060",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-flyspell-correct",
+      "name": "flyspell-correct",
+      "versionInfo": "cabf0c9bdba3a08ae3c517302ea6ad55cd638098",
+      "downloadLocation": "git+https://github.com/d12frosted/flyspell-correct.git@cabf0c9bdba3a08ae3c517302ea6ad55cd638098",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-only",
+      "licenseDeclared": "GPL-3.0-only",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-flyspell-lazy",
+      "name": "flyspell-lazy",
+      "versionInfo": "0fc5996bcee20b46cbd227ae948d343c3bef7339",
+      "downloadLocation": "git+https://github.com/rolandwalker/flyspell-lazy.git@0fc5996bcee20b46cbd227ae948d343c3bef7339",
+      "filesAnalyzed": false,
+      "licenseConcluded": "BSD-2-Clause",
+      "licenseDeclared": "BSD-2-Clause",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-font-utils",
+      "name": "font-utils",
+      "versionInfo": "abc572eb0dc30a26584c0058c3fe6c7273a10003",
+      "downloadLocation": "git+https://github.com/rolandwalker/font-utils.git@abc572eb0dc30a26584c0058c3fe6c7273a10003",
+      "filesAnalyzed": false,
+      "licenseConcluded": "BSD-2-Clause",
+      "licenseDeclared": "BSD-2-Clause",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-forge",
+      "name": "forge",
+      "versionInfo": "29f45d8f247079a1d8d2247efdacb5b50a3b1e51",
+      "downloadLocation": "git+https://github.com/magit/forge.git@29f45d8f247079a1d8d2247efdacb5b50a3b1e51",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-fzf.el",
+      "name": "fzf.el",
+      "versionInfo": "75060d81f4eea3f8088ac2a4a3a253c686b44d44",
+      "downloadLocation": "git+https://github.com/bling/fzf.el.git@75060d81f4eea3f8088ac2a4a3a253c686b44d44",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-gcmh",
+      "name": "gcmh",
+      "versionInfo": "0089f9c3a6d4e9a310d0791cf6fa8f35642ecfd9",
+      "downloadLocation": "git+https://gitlab.com/koral/gcmh.git@0089f9c3a6d4e9a310d0791cf6fa8f35642ecfd9",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-general.el",
+      "name": "general.el",
+      "versionInfo": "a48768f85a655fe77b5f45c2880b420da1b1b9c3",
+      "downloadLocation": "git+https://github.com/noctuid/general.el.git@a48768f85a655fe77b5f45c2880b420da1b1b9c3",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-ghostel",
+      "name": "ghostel",
+      "versionInfo": "dd72e1f4ae891345a1f76ed98c5cbd71c18e808e",
+      "downloadLocation": "git+https://github.com/dakra/ghostel.git@dd72e1f4ae891345a1f76ed98c5cbd71c18e808e",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-ghub",
+      "name": "ghub",
+      "versionInfo": "cba5666d8b999e2733aefac369a4e0def3be7fc9",
+      "downloadLocation": "git+https://github.com/magit/ghub.git@cba5666d8b999e2733aefac369a4e0def3be7fc9",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-git-link",
+      "name": "git-link",
+      "versionInfo": "ca01d013bd575710e2cd47001ee1ef6ee41667cf",
+      "downloadLocation": "git+https://github.com/sshaw/git-link.git@ca01d013bd575710e2cd47001ee1ef6ee41667cf",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-git-modes",
+      "name": "git-modes",
+      "versionInfo": "f291a4cc4a8b02a25d5cf93b4ab6af29e6f060d9",
+      "downloadLocation": "git+https://github.com/magit/git-modes.git@f291a4cc4a8b02a25d5cf93b4ab6af29e6f060d9",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-git-timemachine",
+      "name": "git-timemachine",
+      "versionInfo": "d1346a76122595aeeb7ebb292765841c6cfd417b",
+      "downloadLocation": "git+https://github.com/emacsmirror/git-timemachine.git@d1346a76122595aeeb7ebb292765841c6cfd417b",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-glsl-mode",
+      "name": "glsl-mode",
+      "versionInfo": "515a2ba4dab3ec89c83a962902a123ddf81e3cfe",
+      "downloadLocation": "git+https://github.com/jimhourihan/glsl-mode.git@515a2ba4dab3ec89c83a962902a123ddf81e3cfe",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-gntp.el",
+      "name": "gntp.el",
+      "versionInfo": "767571135e2c0985944017dc59b0be79af222ef5",
+      "downloadLocation": "git+https://github.com/tekai/gntp.el.git@767571135e2c0985944017dc59b0be79af222ef5",
+      "filesAnalyzed": false,
+      "licenseConcluded": "BSD-3-Clause",
+      "licenseDeclared": "BSD-3-Clause",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-gnu-elpa-mirror",
+      "name": "gnu-elpa-mirror",
+      "versionInfo": "6390a0b5e8ff9fbbb7f108ac8d4221b72a6415b1",
+      "downloadLocation": "git+https://github.com/emacs-straight/gnu-elpa-mirror.git@6390a0b5e8ff9fbbb7f108ac8d4221b72a6415b1",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-goto-chg",
+      "name": "goto-chg",
+      "versionInfo": "72f556524b88e9d30dc7fc5b0dc32078c166fda7",
+      "downloadLocation": "git+https://github.com/emacs-evil/goto-chg.git@72f556524b88e9d30dc7fc5b0dc32078c166fda7",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-gptel",
+      "name": "gptel",
+      "versionInfo": "ac4e1fe736f37cf6d3927cd3ebc26f54d383425a",
+      "downloadLocation": "git+https://github.com/karthink/gptel.git@ac4e1fe736f37cf6d3927cd3ebc26f54d383425a",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-gptel-agent",
+      "name": "gptel-agent",
+      "versionInfo": "7a74b695909c0e3304eb8cbd583a1f53e0802c60",
+      "downloadLocation": "git+https://github.com/karthink/gptel-agent.git@7a74b695909c0e3304eb8cbd583a1f53e0802c60",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-gptel-magit",
+      "name": "gptel-magit",
+      "versionInfo": "fc55c36d5b7d26104358021fe802cc338ddbdff4",
+      "downloadLocation": "git+https://github.com/ArthurHeymans/gptel-magit.git@fc55c36d5b7d26104358021fe802cc338ddbdff4",
+      "filesAnalyzed": false,
+      "licenseConcluded": "Apache-2.0",
+      "licenseDeclared": "Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-gptel-quick",
+      "name": "gptel-quick",
+      "versionInfo": "36fe296e016449433fa1213f4b89cb8dc7d4db5e",
+      "downloadLocation": "git+https://github.com/karthink/gptel-quick.git@36fe296e016449433fa1213f4b89cb8dc7d4db5e",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-helpful",
+      "name": "helpful",
+      "versionInfo": "cbaa4d2673963ecb369cf1d2f3a20247703fad02",
+      "downloadLocation": "git+https://github.com/hlissner/helpful.git@cbaa4d2673963ecb369cf1d2f3a20247703fad02",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-highlight-quoted",
+      "name": "highlight-quoted",
+      "versionInfo": "24103478158cd19fbcfb4339a3f1fa1f054f1469",
+      "downloadLocation": "git+https://github.com/Fanael/highlight-quoted.git@24103478158cd19fbcfb4339a3f1fa1f054f1469",
+      "filesAnalyzed": false,
+      "licenseConcluded": "BSD-2-Clause",
+      "licenseDeclared": "BSD-2-Clause",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-hl-todo",
+      "name": "hl-todo",
+      "versionInfo": "527d545b8c2f36243194cbe4a8d0e6ac9d50e6a7",
+      "downloadLocation": "git+https://github.com/tarsius/hl-todo.git@527d545b8c2f36243194cbe4a8d0e6ac9d50e6a7",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-ht.el",
+      "name": "ht.el",
+      "versionInfo": "1c49aad1c820c86f7ee35bf9fff8429502f60fef",
+      "downloadLocation": "git+https://github.com/Wilfred/ht.el.git@1c49aad1c820c86f7ee35bf9fff8429502f60fef",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-htmlize",
+      "name": "htmlize",
+      "versionInfo": "fa644880699adea3770504f913e6dddbec90c076",
+      "downloadLocation": "git+https://github.com/emacsorphanage/htmlize.git@fa644880699adea3770504f913e6dddbec90c076",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-hydra",
+      "name": "hydra",
+      "versionInfo": "59a2a45a35027948476d1d7751b0f0215b1e61aa",
+      "downloadLocation": "git+https://github.com/abo-abo/hydra.git@59a2a45a35027948476d1d7751b0f0215b1e61aa",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-ibuffer-projectile",
+      "name": "ibuffer-projectile",
+      "versionInfo": "d012ccf7f1e3abe33e67953a5ce2774ae1437467",
+      "downloadLocation": "git+https://github.com/purcell/ibuffer-projectile.git@d012ccf7f1e3abe33e67953a5ce2774ae1437467",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-ibuffer-vc",
+      "name": "ibuffer-vc",
+      "versionInfo": "bcdbbc0ea1b3368850fa71e853bb0806b993e8f0",
+      "downloadLocation": "git+https://github.com/purcell/ibuffer-vc.git@bcdbbc0ea1b3368850fa71e853bb0806b993e8f0",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-iedit",
+      "name": "iedit",
+      "versionInfo": "14161daa295332a49dda92b97c00d62efd38acfe",
+      "downloadLocation": "git+https://github.com/victorhge/iedit.git@14161daa295332a49dda92b97c00d62efd38acfe",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-indent-bars",
+      "name": "indent-bars",
+      "versionInfo": "36620c5f3fba2ba8f23d7ef947e0d1d09e412bf5",
+      "downloadLocation": "git+https://github.com/jdtsmith/indent-bars.git@36620c5f3fba2ba8f23d7ef947e0d1d09e412bf5",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-jeison",
+      "name": "jeison",
+      "versionInfo": "19a51770f24eaa7b538c7be6a8a5c25d154b641f",
+      "downloadLocation": "git+https://github.com/SavchenkoValeriy/jeison.git@19a51770f24eaa7b538c7be6a8a5c25d154b641f",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-jsonrpc",
+      "name": "jsonrpc",
+      "versionInfo": "d8143c52679eaeebcca26dd41e015dc73d167b49",
+      "downloadLocation": "git+https://github.com/emacs-straight/jsonrpc.git@d8143c52679eaeebcca26dd41e015dc73d167b49",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-let-completion.el",
+      "name": "let-completion.el",
+      "versionInfo": "460cdd5a73d857d6d91469e28f84f02465db8dac",
+      "downloadLocation": "git+https://github.com/gggion/let-completion.el.git@460cdd5a73d857d6d91469e28f84f02465db8dac",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-levenshtein",
+      "name": "levenshtein",
+      "versionInfo": "070925197ebf6b704e6e00c4f2d2ec783f3df38c",
+      "downloadLocation": "git+https://github.com/emacsorphanage/levenshtein.git@070925197ebf6b704e6e00c4f2d2ec783f3df38c",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-2.0-or-later",
+      "licenseDeclared": "GPL-2.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-ligature.el",
+      "name": "ligature.el",
+      "versionInfo": "e0bc07ec41203b72386a2b878b6c8a65c28f4ced",
+      "downloadLocation": "git+https://github.com/mickeynp/ligature.el.git@e0bc07ec41203b72386a2b878b6c8a65c28f4ced",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-link-hint.el",
+      "name": "link-hint.el",
+      "versionInfo": "8fda5dcb9caff5a3c49d22b82e570ac9e29af7dd",
+      "downloadLocation": "git+https://github.com/noctuid/link-hint.el.git@8fda5dcb9caff5a3c49d22b82e570ac9e29af7dd",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-lispy",
+      "name": "lispy",
+      "versionInfo": "c42d3737c57de86a5aa321d7efa29390aeedcf6f",
+      "downloadLocation": "git+https://github.com/enzuru/lispy.git@c42d3737c57de86a5aa321d7efa29390aeedcf6f",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-lispyville",
+      "name": "lispyville",
+      "versionInfo": "14ee8711d58b649aeac03581d22b10ab077f06bd",
+      "downloadLocation": "git+https://github.com/noctuid/lispyville.git@14ee8711d58b649aeac03581d22b10ab077f06bd",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-list-utils",
+      "name": "list-utils",
+      "versionInfo": "bbea0e7cc7ab7d96e7f062014bde438aa8ffcd43",
+      "downloadLocation": "git+https://github.com/rolandwalker/list-utils.git@bbea0e7cc7ab7d96e7f062014bde438aa8ffcd43",
+      "filesAnalyzed": false,
+      "licenseConcluded": "BSD-2-Clause",
+      "licenseDeclared": "BSD-2-Clause",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-llama",
+      "name": "llama",
+      "versionInfo": "4d4024048053b898a01521046e0f063ee47615b0",
+      "downloadLocation": "git+https://github.com/tarsius/llama.git@4d4024048053b898a01521046e0f063ee47615b0",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-llm-tool-collection",
+      "name": "llm-tool-collection",
+      "versionInfo": "b9fd45bedf3e0fb07d289730991199ae18785157",
+      "downloadLocation": "git+https://github.com/skissue/llm-tool-collection.git@b9fd45bedf3e0fb07d289730991199ae18785157",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-log4e",
+      "name": "log4e",
+      "versionInfo": "6d71462df9bf595d3861bfb328377346aceed422",
+      "downloadLocation": "git+https://github.com/aki2o/log4e.git@6d71462df9bf595d3861bfb328377346aceed422",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-lsp-mode",
+      "name": "lsp-mode",
+      "versionInfo": "e15b8205cbd0369df40b412909eb3ed3264e96a2",
+      "downloadLocation": "git+https://github.com/emacs-lsp/lsp-mode.git@e15b8205cbd0369df40b412909eb3ed3264e96a2",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-lsp-ui",
+      "name": "lsp-ui",
+      "versionInfo": "176eca71d1c5498ed6258b5b27d73293ff7cd7ed",
+      "downloadLocation": "git+https://github.com/emacs-lsp/lsp-ui.git@176eca71d1c5498ed6258b5b27d73293ff7cd7ed",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-macrostep",
+      "name": "macrostep",
+      "versionInfo": "d0928626b4711dcf9f8f90439d23701118724199",
+      "downloadLocation": "git+https://github.com/emacsorphanage/macrostep.git@d0928626b4711dcf9f8f90439d23701118724199",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-magit",
+      "name": "magit",
+      "versionInfo": "67f203853e74e926e2c99f60ed508840714f7ced",
+      "downloadLocation": "git+https://github.com/magit/magit.git@67f203853e74e926e2c99f60ed508840714f7ced",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-map",
+      "name": "map",
+      "versionInfo": "d0aac540461a2ed0e6f9e83de68a819d1a0db8c1",
+      "downloadLocation": "git+https://github.com/emacs-straight/map.git@d0aac540461a2ed0e6f9e83de68a819d1a0db8c1",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-marginalia",
+      "name": "marginalia",
+      "versionInfo": "13220ab7a67f450434e6b2da452b9700ffcb39bf",
+      "downloadLocation": "git+https://github.com/minad/marginalia.git@13220ab7a67f450434e6b2da452b9700ffcb39bf",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-markdown-mode",
+      "name": "markdown-mode",
+      "versionInfo": "f441e8bc9951e73b12c61e9198658488dd8e86e1",
+      "downloadLocation": "git+https://github.com/jrblevin/markdown-mode.git@f441e8bc9951e73b12c61e9198658488dd8e86e1",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-markdown-toc",
+      "name": "markdown-toc",
+      "versionInfo": "ab4ba86e627ef83b7eec6706d66b81241c96f48c",
+      "downloadLocation": "git+https://github.com/ardumont/markdown-toc.git@ab4ba86e627ef83b7eec6706d66b81241c96f48c",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-mastodon.el",
+      "name": "mastodon.el",
+      "versionInfo": "5ddf28b9454ad9ee12738f9467e3ad013b788ee3",
+      "downloadLocation": "git+https://codeberg.org/martianh/mastodon.el.git@5ddf28b9454ad9ee12738f9467e3ad013b788ee3",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-melpa",
+      "name": "melpa",
+      "versionInfo": "fa4a6c0d3e91acdf258317e325ad037a472887ec",
+      "downloadLocation": "git+https://github.com/melpa/melpa.git@fa4a6c0d3e91acdf258317e325ad037a472887ec",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-mu4e-compat",
+      "name": "mu4e-compat",
+      "versionInfo": "a33345cb8ef83554f01510bbc8f5c7323713aa8d",
+      "downloadLocation": "git+https://github.com/tecosaur/mu4e-compat.git@a33345cb8ef83554f01510bbc8f5c7323713aa8d",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-only",
+      "licenseDeclared": "GPL-3.0-only",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-multi-vterm",
+      "name": "multi-vterm",
+      "versionInfo": "36746d85870dac5aaee6b9af4aa1c3c0ef21a905",
+      "downloadLocation": "git+https://github.com/suonlight/multi-vterm.git@36746d85870dac5aaee6b9af4aa1c3c0ef21a905",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-nav-flash",
+      "name": "nav-flash",
+      "versionInfo": "5d4b48567862f6be0ca973d6b1dca90e4815cb9b",
+      "downloadLocation": "git+https://github.com/rolandwalker/nav-flash.git@5d4b48567862f6be0ca973d6b1dca90e4815cb9b",
+      "filesAnalyzed": false,
+      "licenseConcluded": "BSD-2-Clause",
+      "licenseDeclared": "BSD-2-Clause",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-nerd-icons-completion",
+      "name": "nerd-icons-completion",
+      "versionInfo": "45b585d972192a3eaeb239e15e55de7f46f8920a",
+      "downloadLocation": "git+https://github.com/rainstormstudio/nerd-icons-completion.git@45b585d972192a3eaeb239e15e55de7f46f8920a",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-nerd-icons-corfu",
+      "name": "nerd-icons-corfu",
+      "versionInfo": "f821e953b1a3dc9b381bc53486aabf366bf11cb1",
+      "downloadLocation": "git+https://github.com/LuigiPiucco/nerd-icons-corfu.git@f821e953b1a3dc9b381bc53486aabf366bf11cb1",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-nerd-icons.el",
+      "name": "nerd-icons.el",
+      "versionInfo": "1e75075e323dedaf9f2fd5837082c60a2d0dfae3",
+      "downloadLocation": "git+https://github.com/rainstormstudio/nerd-icons.el.git@1e75075e323dedaf9f2fd5837082c60a2d0dfae3",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-nongnu-elpa",
+      "name": "nongnu-elpa",
+      "versionInfo": "6f2032b569ca4fb07e8627c7618682bfc88875df",
+      "downloadLocation": "git+https://github.com/emacsmirror/nongnu_elpa.git@6f2032b569ca4fb07e8627c7618682bfc88875df",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-only",
+      "licenseDeclared": "GPL-3.0-only",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-nose",
+      "name": "nose",
+      "versionInfo": "f8528297519eba911696c4e68fa88892de9a7b72",
+      "downloadLocation": "git+https://github.com/emacsattic/nose.git@f8528297519eba911696c4e68fa88892de9a7b72",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-ob-async",
+      "name": "ob-async",
+      "versionInfo": "9aac486073f5c356ada20e716571be33a350a982",
+      "downloadLocation": "git+https://github.com/astahlman/ob-async.git@9aac486073f5c356ada20e716571be33a350a982",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-ob-gptel",
+      "name": "ob-gptel",
+      "versionInfo": "4961120b7fc6bd2e2debd73f84cdef360188d3c7",
+      "downloadLocation": "git+https://github.com/jwiegley/ob-gptel.git@4961120b7fc6bd2e2debd73f84cdef360188d3c7",
+      "filesAnalyzed": false,
+      "licenseConcluded": "BSD-3-Clause",
+      "licenseDeclared": "BSD-3-Clause",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-olivetti",
+      "name": "olivetti",
+      "versionInfo": "845eb7a95a3ca3325f1120c654d761b91683f598",
+      "downloadLocation": "git+https://github.com/rnkn/olivetti.git@845eb7a95a3ca3325f1120c654d761b91683f598",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-opencl-mode",
+      "name": "opencl-mode",
+      "versionInfo": "6464abf969d916aba83e393b5206b147ac416da3",
+      "downloadLocation": "git+https://github.com/salmanebah/opencl-mode.git@6464abf969d916aba83e393b5206b147ac416da3",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-orderless",
+      "name": "orderless",
+      "versionInfo": "f4a8114ed729d34d35cec6c7eb34b5d0b23aaa6f",
+      "downloadLocation": "git+https://github.com/oantolin/orderless.git@f4a8114ed729d34d35cec6c7eb34b5d0b23aaa6f",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-org",
+      "name": "org",
+      "versionInfo": "7427df2d96d264734e1ba2a943545faa1c8c763f",
+      "downloadLocation": "git+https://github.com/emacs-straight/org-mode.git@7427df2d96d264734e1ba2a943545faa1c8c763f",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-org-appear",
+      "name": "org-appear",
+      "versionInfo": "77d23efec5f5c25fc0798364d2b51a3ce3d8d518",
+      "downloadLocation": "git+https://github.com/awth13/org-appear.git@77d23efec5f5c25fc0798364d2b51a3ce3d8d518",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-org-cliplink",
+      "name": "org-cliplink",
+      "versionInfo": "13e0940b65d22bec34e2de4bc8cba1412a7abfbc",
+      "downloadLocation": "git+https://github.com/rexim/org-cliplink.git@13e0940b65d22bec34e2de4bc8cba1412a7abfbc",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-org-contrib",
+      "name": "org-contrib",
+      "versionInfo": "b840bdabd1867f9d51ee36bef7bac4be7073288c",
+      "downloadLocation": "git+https://github.com/emacsmirror/org-contrib.git@b840bdabd1867f9d51ee36bef7bac4be7073288c",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-org-download",
+      "name": "org-download",
+      "versionInfo": "c8be2611786d1d8d666b7b4f73582de1093f25ac",
+      "downloadLocation": "git+https://github.com/abo-abo/org-download.git@c8be2611786d1d8d666b7b4f73582de1093f25ac",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-org-edna",
+      "name": "org-edna",
+      "versionInfo": "c6d7343eaf0eeb9596268f9a6243cbab6b628fb9",
+      "downloadLocation": "git+https://github.com/emacs-straight/org-edna.git@c6d7343eaf0eeb9596268f9a6243cbab6b628fb9",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-org-gcal.el",
+      "name": "org-gcal.el",
+      "versionInfo": "7304b592c283944db54ac83201d7be6f13a1f447",
+      "downloadLocation": "git+https://github.com/kidd/org-gcal.el.git@7304b592c283944db54ac83201d7be6f13a1f447",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-org-gtd.el",
+      "name": "org-gtd.el",
+      "versionInfo": "3dd86c08048257b91d793aaf7cde9c09ad4c833c",
+      "downloadLocation": "git+https://github.com/Trevoke/org-gtd.el.git@3dd86c08048257b91d793aaf7cde9c09ad4c833c",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-org-journal",
+      "name": "org-journal",
+      "versionInfo": "6460f6f2b0835b4b8aa87d5fdf40cac7deb319f5",
+      "downloadLocation": "git+https://github.com/bastibe/org-journal.git@6460f6f2b0835b4b8aa87d5fdf40cac7deb319f5",
+      "filesAnalyzed": false,
+      "licenseConcluded": "BSD-3-Clause",
+      "licenseDeclared": "BSD-3-Clause",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-org-modern",
+      "name": "org-modern",
+      "versionInfo": "1959cd4759d4abc8dd695a560563283d838e44e1",
+      "downloadLocation": "git+https://github.com/minad/org-modern.git@1959cd4759d4abc8dd695a560563283d838e44e1",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-org-msg",
+      "name": "org-msg",
+      "versionInfo": "7b45df759340f3e388e84f497052b7cf3a41698c",
+      "downloadLocation": "git+https://github.com/jeremy-compostella/org-msg.git@7b45df759340f3e388e84f497052b7cf3a41698c",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-org-noter",
+      "name": "org-noter",
+      "versionInfo": "feae91ca4ee6fdc7fd2489fa751dd96bc1f3ddf2",
+      "downloadLocation": "git+https://github.com/org-noter/org-noter.git@feae91ca4ee6fdc7fd2489fa751dd96bc1f3ddf2",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-org-pdftools",
+      "name": "org-pdftools",
+      "versionInfo": "2b3357828a4c2dfba8f87c906d64035d8bf221f2",
+      "downloadLocation": "git+https://github.com/fuxialexander/org-pdftools.git@2b3357828a4c2dfba8f87c906d64035d8bf221f2",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-org-re-reveal",
+      "name": "org-re-reveal",
+      "versionInfo": "9f09f2100a77e0dabe2c0d89bb62b29d96ab0206",
+      "downloadLocation": "git+https://gitlab.com/oer/org-re-reveal.git@9f09f2100a77e0dabe2c0d89bb62b29d96ab0206",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-org-roam",
+      "name": "org-roam",
+      "versionInfo": "903bd4ec56d29247990d005ed9052c201e18b812",
+      "downloadLocation": "git+https://github.com/org-roam/org-roam.git@903bd4ec56d29247990d005ed9052c201e18b812",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-org-roam-ui",
+      "name": "org-roam-ui",
+      "versionInfo": "5ac74960231db0bf7783c2ba7a19a60f582e91ab",
+      "downloadLocation": "git+https://github.com/org-roam/org-roam-ui.git@5ac74960231db0bf7783c2ba7a19a60f582e91ab",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-org-tree-slide",
+      "name": "org-tree-slide",
+      "versionInfo": "e2599a106a26ce5511095e23df4ea04be6687a8a",
+      "downloadLocation": "git+https://github.com/takaxp/org-tree-slide.git@e2599a106a26ce5511095e23df4ea04be6687a8a",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-orgit",
+      "name": "orgit",
+      "versionInfo": "c948819a7cad37a654ada275ebf7c003abf782d0",
+      "downloadLocation": "git+https://github.com/magit/orgit.git@c948819a7cad37a654ada275ebf7c003abf782d0",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-orgit-forge",
+      "name": "orgit-forge",
+      "versionInfo": "87f257ba03c634198a634f0bdafc1b9cf6c6d09a",
+      "downloadLocation": "git+https://github.com/magit/orgit-forge.git@87f257ba03c634198a634f0bdafc1b9cf6c6d09a",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-overseer.el",
+      "name": "overseer.el",
+      "versionInfo": "7fdcf1a6fba6b1569a09c1666b4e51bcde266ed9",
+      "downloadLocation": "git+https://github.com/tonini/overseer.el.git@7fdcf1a6fba6b1569a09c1666b4e51bcde266ed9",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-ox-clip",
+      "name": "ox-clip",
+      "versionInfo": "a549cc8e1747beb6b7e567ffac27e31ba45cb8e8",
+      "downloadLocation": "git+https://github.com/jkitchin/ox-clip.git@a549cc8e1747beb6b7e567ffac27e31ba45cb8e8",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-2.0-or-later",
+      "licenseDeclared": "GPL-2.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-ox-pandoc",
+      "name": "ox-pandoc",
+      "versionInfo": "1caeb56a4be26597319e7288edbc2cabada151b4",
+      "downloadLocation": "git+https://github.com/emacsorphanage/ox-pandoc.git@1caeb56a4be26597319e7288edbc2cabada151b4",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-package-lint",
+      "name": "package-lint",
+      "versionInfo": "87bf02ca387a37094e1a0057adefa9735d880cec",
+      "downloadLocation": "git+https://github.com/purcell/package-lint.git@87bf02ca387a37094e1a0057adefa9735d880cec",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-parinfer-rust-mode",
+      "name": "parinfer-rust-mode",
+      "versionInfo": "6ee9f905c41f6368689ad12aa99516b9ee4fb06d",
+      "downloadLocation": "git+https://github.com/justinbarclay/parinfer-rust-mode.git@6ee9f905c41f6368689ad12aa99516b9ee4fb06d",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-pcache",
+      "name": "pcache",
+      "versionInfo": "17d785afa4532043afa8b2dc9ae3d9733528e758",
+      "downloadLocation": "git+https://github.com/sigma/pcache.git@17d785afa4532043afa8b2dc9ae3d9733528e758",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-2.0-or-later",
+      "licenseDeclared": "GPL-2.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-pcmpl-args.el",
+      "name": "pcmpl-args.el",
+      "versionInfo": "bccbfe931a8383fb4ecc75551305057a9bd33700",
+      "downloadLocation": "git+https://github.com/JonWaltman/pcmpl-args.el.git@bccbfe931a8383fb4ecc75551305057a9bd33700",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-pdf-tools",
+      "name": "pdf-tools",
+      "versionInfo": "365f88238f46f9b1425685562105881800f10386",
+      "downloadLocation": "git+https://github.com/vedang/pdf-tools.git@365f88238f46f9b1425685562105881800f10386",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-persist",
+      "name": "persist",
+      "versionInfo": "a4c6e759e340d7af9b3f2aad21d279f336cfde68",
+      "downloadLocation": "git+https://github.com/emacs-straight/persist.git@a4c6e759e340d7af9b3f2aad21d279f336cfde68",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-persistent-soft",
+      "name": "persistent-soft",
+      "versionInfo": "c94b34332529df573bad8a97f70f5a35d5da7333",
+      "downloadLocation": "git+https://github.com/rolandwalker/persistent-soft.git@c94b34332529df573bad8a97f70f5a35d5da7333",
+      "filesAnalyzed": false,
+      "licenseConcluded": "BSD-2-Clause",
+      "licenseDeclared": "BSD-2-Clause",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-persp-mode.el",
+      "name": "persp-mode.el",
+      "versionInfo": "40e9993a9711cba5fb56dfec81a507fabeba9668",
+      "downloadLocation": "git+https://github.com/Bad-ptr/persp-mode.el.git@40e9993a9711cba5fb56dfec81a507fabeba9668",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-2.0-or-later",
+      "licenseDeclared": "GPL-2.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-pip-requirements.el",
+      "name": "pip-requirements.el",
+      "versionInfo": "31e0dc62abb2d88fa765e0ea88b919d756cc0e4f",
+      "downloadLocation": "git+https://github.com/Wilfred/pip-requirements.el.git@31e0dc62abb2d88fa765e0ea88b919d756cc0e4f",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-pipenv.el",
+      "name": "pipenv.el",
+      "versionInfo": "3af159749824c03f59176aff7f66ddd6a5785a10",
+      "downloadLocation": "git+https://github.com/pwalsh/pipenv.el.git@3af159749824c03f59176aff7f66ddd6a5785a10",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-pkg-info",
+      "name": "pkg-info",
+      "versionInfo": "76ba7415480687d05a4353b27fea2ae02b8d9d61",
+      "downloadLocation": "git+https://github.com/emacsorphanage/pkg-info.git@76ba7415480687d05a4353b27fea2ae02b8d9d61",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-plantuml-mode",
+      "name": "plantuml-mode",
+      "versionInfo": "a4a63efa4a3980bfbd825bfb3a263c6664401e79",
+      "downloadLocation": "git+https://github.com/skuro/plantuml-mode.git@a4a63efa4a3980bfbd825bfb3a263c6664401e79",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-plz",
+      "name": "plz",
+      "versionInfo": "8f5e5ffbde6da93920035be1489a1f1a9986b879",
+      "downloadLocation": "git+https://github.com/emacs-straight/plz.git@8f5e5ffbde6da93920035be1489a1f1a9986b879",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-polymode",
+      "name": "polymode",
+      "versionInfo": "8cb72fa5dcc0d98746c680043dc121edc7621e3a",
+      "downloadLocation": "git+https://github.com/polymode/polymode.git@8cb72fa5dcc0d98746c680043dc121edc7621e3a",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-popon",
+      "name": "popon",
+      "versionInfo": "bf8174cb7e6e8fe0fe91afe6b01b6562c4dc39da",
+      "downloadLocation": "git+https://codeberg.org/akib/emacs-popon@bf8174cb7e6e8fe0fe91afe6b01b6562c4dc39da",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-posframe",
+      "name": "posframe",
+      "versionInfo": "ec0ec37c0d6397422a07def499e87591ca037af7",
+      "downloadLocation": "git+https://github.com/tumashu/posframe.git@ec0ec37c0d6397422a07def499e87591ca037af7",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-powerthesaurus",
+      "name": "powerthesaurus",
+      "versionInfo": "d9ebb866f6fce469102665f187266f0a041cfc4b",
+      "downloadLocation": "git+https://github.com/doomelpa/powerthesaurus.git@d9ebb866f6fce469102665f187266f0a041cfc4b",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-project",
+      "name": "project",
+      "versionInfo": "ffb38d7798d86c7fa6623db0f64b461abb6572c2",
+      "downloadLocation": "git+https://github.com/emacs-straight/project.git@ffb38d7798d86c7fa6623db0f64b461abb6572c2",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-projectile",
+      "name": "projectile",
+      "versionInfo": "9d6b20b81cce3a827fb01c98cd1359b3ae6a697e",
+      "downloadLocation": "git+https://github.com/bbatsov/projectile.git@9d6b20b81cce3a827fb01c98cd1359b3ae6a697e",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-pythonic",
+      "name": "pythonic",
+      "versionInfo": "6036d5e3eeef534946de2adf0775caebd7cba45e",
+      "downloadLocation": "git+https://github.com/pythonic-emacs/pythonic.git@6036d5e3eeef534946de2adf0775caebd7cba45e",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-pyvenv",
+      "name": "pyvenv",
+      "versionInfo": "31ea715f2164dd611e7fc77b26390ef3ca93509b",
+      "downloadLocation": "git+https://github.com/jorgenschaefer/pyvenv.git@31ea715f2164dd611e7fc77b26390ef3ca93509b",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-queue",
+      "name": "queue",
+      "versionInfo": "8df1334d54d4735d2f821790422a850dfaaa08ef",
+      "downloadLocation": "git+https://github.com/emacs-straight/queue.git@8df1334d54d4735d2f821790422a850dfaaa08ef",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-quickrun",
+      "name": "quickrun",
+      "versionInfo": "a25264bead36ea4cb8c6fe6ba3755508f5cb8d83",
+      "downloadLocation": "git+https://github.com/emacsorphanage/quickrun.git@a25264bead36ea4cb8c6fe6ba3755508f5cb8d83",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-reveal.js",
+      "name": "reveal.js",
+      "versionInfo": "a3b940695648aa1c5b0680bc9a5b905cf43020e5",
+      "downloadLocation": "git+https://github.com/hakimel/reveal.js.git@a3b940695648aa1c5b0680bc9a5b905cf43020e5",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-rotate-text.el",
+      "name": "rotate-text.el",
+      "versionInfo": "48f193697db996855aee1ad2bc99b38c6646fe76",
+      "downloadLocation": "git+https://github.com/debug-ito/rotate-text.el.git@48f193697db996855aee1ad2bc99b38c6646fe76",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-2.0-or-later",
+      "licenseDeclared": "GPL-2.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-rust-mode",
+      "name": "rust-mode",
+      "versionInfo": "0058837c048cc031ca1a13f598a6a6604777458b",
+      "downloadLocation": "git+https://github.com/rust-lang/rust-mode.git@0058837c048cc031ca1a13f598a6a6604777458b",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-rustic",
+      "name": "rustic",
+      "versionInfo": "4afbca49f41045fa6ee32e3920f45c6964c349c6",
+      "downloadLocation": "git+https://github.com/emacs-rustic/rustic.git@4afbca49f41045fa6ee32e3920f45c6964c349c6",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-s.el",
+      "name": "s.el",
+      "versionInfo": "d7c04b84d03481a1ed62ee13dbe595224ccbe57c",
+      "downloadLocation": "git+https://github.com/magnars/s.el.git@d7c04b84d03481a1ed62ee13dbe595224ccbe57c",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-saveplace-pdf-view",
+      "name": "saveplace-pdf-view",
+      "versionInfo": "dc1e0b28a5ed8319a0b6725abaffba7c2fa8c730",
+      "downloadLocation": "git+https://github.com/nicolaisingh/saveplace-pdf-view.git@dc1e0b28a5ed8319a0b6725abaffba7c2fa8c730",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-seq",
+      "name": "seq",
+      "versionInfo": "da86da9bf111f68fb81efd466d76d53af5aebc00",
+      "downloadLocation": "git+https://github.com/emacs-straight/seq.git@da86da9bf111f68fb81efd466d76d53af5aebc00",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-shrink-path.el",
+      "name": "shrink-path.el",
+      "versionInfo": "c14882c8599aec79a6e8ef2d06454254bb3e1e41",
+      "downloadLocation": "git+https://gitlab.com/bennya/shrink-path.el.git@c14882c8599aec79a6e8ef2d06454254bb3e1e41",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-smartparens",
+      "name": "smartparens",
+      "versionInfo": "82d2cf084a19b0c2c3812e0550721f8a61996056",
+      "downloadLocation": "git+https://github.com/Fuco1/smartparens.git@82d2cf084a19b0c2c3812e0550721f8a61996056",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-snippets",
+      "name": "snippets",
+      "versionInfo": "fd4edaaf0c8476a26994db17d084b36733c635e2",
+      "downloadLocation": "git+https://github.com/doomemacs/snippets.git@fd4edaaf0c8476a26994db17d084b36733c635e2",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-spinner",
+      "name": "spinner",
+      "versionInfo": "fa117f0893788f3fe24673715a6b83bb34d238dd",
+      "downloadLocation": "git+https://github.com/emacs-straight/spinner.git@fa117f0893788f3fe24673715a6b83bb34d238dd",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-spotify-el",
+      "name": "spotify-el",
+      "versionInfo": "d918b5187638e0c44a2a2584f3980244b6aae3fa",
+      "downloadLocation": "git+https://codeberg.org/rwv/spotify-el.git@d918b5187638e0c44a2a2584f3980244b6aae3fa",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-straight.el",
+      "name": "straight.el",
+      "versionInfo": "0a08b585e62008f6c0a1bbaf068dcf4ccd039b04",
+      "downloadLocation": "git+https://github.com/radian-software/straight.el@0a08b585e62008f6c0a1bbaf068dcf4ccd039b04",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-swiper",
+      "name": "swiper",
+      "versionInfo": "0d02f5063d36ff4fa6138f0973c83c6d3874fba0",
+      "downloadLocation": "git+https://github.com/abo-abo/swiper.git@0d02f5063d36ff4fa6138f0973c83c6d3874fba0",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-switch-window",
+      "name": "switch-window",
+      "versionInfo": "1ccbfa53df499cb31d5ebbe21306cdcc6b06c135",
+      "downloadLocation": "git+https://github.com/dimitri/switch-window.git@1ccbfa53df499cb31d5ebbe21306cdcc6b06c135",
+      "filesAnalyzed": false,
+      "licenseConcluded": "WTFPL",
+      "licenseDeclared": "WTFPL",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-synosaurus",
+      "name": "synosaurus",
+      "versionInfo": "690755ce88a50e65ab0441ce9aabe6341aae3964",
+      "downloadLocation": "git+https://github.com/hpdeifel/synosaurus.git@690755ce88a50e65ab0441ce9aabe6341aae3964",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-tablist",
+      "name": "tablist",
+      "versionInfo": "01f065e387ffe6b7a41f180f257cd12551c7a9c2",
+      "downloadLocation": "git+https://github.com/emacsorphanage/tablist.git@01f065e387ffe6b7a41f180f257cd12551c7a9c2",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-themes",
+      "name": "themes",
+      "versionInfo": "a9b7144a4b6fe03be144b1610e0a6840e2b24d41",
+      "downloadLocation": "git+https://github.com/doomemacs/themes.git@a9b7144a4b6fe03be144b1610e0a6840e2b24d41",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-toc-org",
+      "name": "toc-org",
+      "versionInfo": "69165018974a82b397d0869f0c7f0bf7d3b4ee07",
+      "downloadLocation": "git+https://github.com/snosov1/toc-org.git@69165018974a82b397d0869f0c7f0bf7d3b4ee07",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-tp.el",
+      "name": "tp.el",
+      "versionInfo": "a83cd422cca09bc863a7179f1c5b5a35435e0d32",
+      "downloadLocation": "git+https://codeberg.org/martianh/tp.el.git@a83cd422cca09bc863a7179f1c5b5a35435e0d32",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-track-changes",
+      "name": "track-changes",
+      "versionInfo": "6d8fb08f6ef72e0b9bd8bea61d91d47a8b00ec81",
+      "downloadLocation": "git+https://github.com/emacs-straight/track-changes.git@6d8fb08f6ef72e0b9bd8bea61d91d47a8b00ec81",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-transient",
+      "name": "transient",
+      "versionInfo": "0ec75dcce235f5ab3d39a02b878e6aaa78159b22",
+      "downloadLocation": "git+https://github.com/magit/transient.git@0ec75dcce235f5ab3d39a02b878e6aaa78159b22",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-treepy.el",
+      "name": "treepy.el",
+      "versionInfo": "806c000bd40153d17dfa5709c6d19546d507a416",
+      "downloadLocation": "git+https://github.com/volrath/treepy.el.git@806c000bd40153d17dfa5709c6d19546d507a416",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-treesit-fold",
+      "name": "treesit-fold",
+      "versionInfo": "cc1003b730a3167b972cc8400dffe19be7988fc7",
+      "downloadLocation": "git+https://github.com/emacs-tree-sitter/treesit-fold@cc1003b730a3167b972cc8400dffe19be7988fc7",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-ucs-utils",
+      "name": "ucs-utils",
+      "versionInfo": "91b9e0207fff5883383fd39c45ad5522e9b90e65",
+      "downloadLocation": "git+https://github.com/rolandwalker/ucs-utils.git@91b9e0207fff5883383fd39c45ad5522e9b90e65",
+      "filesAnalyzed": false,
+      "licenseConcluded": "BSD-2-Clause",
+      "licenseDeclared": "BSD-2-Clause",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-ultra-scroll",
+      "name": "ultra-scroll",
+      "versionInfo": "0222f429955f5a2a3810f3c84d59ca441aa16eb2",
+      "downloadLocation": "git+https://github.com/jdtsmith/ultra-scroll.git@0222f429955f5a2a3810f3c84d59ca441aa16eb2",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-undo-tree",
+      "name": "undo-tree",
+      "versionInfo": "d8f72bbe7d3c3a2808986febd3bb1a46d4da7f51",
+      "downloadLocation": "git+https://github.com/emacs-straight/undo-tree.git@d8f72bbe7d3c3a2808986febd3bb1a46d4da7f51",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-unicode-fonts",
+      "name": "unicode-fonts",
+      "versionInfo": "d4a0648a2206d9a896433817110957b3b9e1c17a",
+      "downloadLocation": "git+https://github.com/rolandwalker/unicode-fonts.git@d4a0648a2206d9a896433817110957b3b9e1c17a",
+      "filesAnalyzed": false,
+      "licenseConcluded": "BSD-2-Clause",
+      "licenseDeclared": "BSD-2-Clause",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-uuidgen-el",
+      "name": "uuidgen-el",
+      "versionInfo": "cebbe09d27c63abe61fe8c2e2248587d90265b59",
+      "downloadLocation": "git+https://github.com/kanru/uuidgen-el.git@cebbe09d27c63abe61fe8c2e2248587d90265b59",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-uv-mode",
+      "name": "uv-mode",
+      "versionInfo": "7e7f9b90832210b65823c3d58e3255cd164394b7",
+      "downloadLocation": "git+https://github.com/z80dev/uv-mode.git@7e7f9b90832210b65823c3d58e3255cd164394b7",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-vertico",
+      "name": "vertico",
+      "versionInfo": "9adb8188c4aa926c15b8d68097c13f66c0d72071",
+      "downloadLocation": "git+https://github.com/minad/vertico.git@9adb8188c4aa926c15b8d68097c13f66c0d72071",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-vimish-fold",
+      "name": "vimish-fold",
+      "versionInfo": "f71f374d28a83e5f15612fa64aac1b2e78be2dcd",
+      "downloadLocation": "git+https://github.com/matsievskiysv/vimish-fold.git@f71f374d28a83e5f15612fa64aac1b2e78be2dcd",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-visual-fill-column",
+      "name": "visual-fill-column",
+      "versionInfo": "e1be9a1545157d24454d950c0ac79553c540edb7",
+      "downloadLocation": "git+https://github.com/emacsmirror/visual-fill-column.git@e1be9a1545157d24454d950c0ac79553c540edb7",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-whisper.el",
+      "name": "whisper.el",
+      "versionInfo": "fd9bf5787a99dd31a4bdf54d2bd9821aacf84e93",
+      "downloadLocation": "git+https://github.com/natrys/whisper.el.git@fd9bf5787a99dd31a4bdf54d2bd9821aacf84e93",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-with-editor",
+      "name": "with-editor",
+      "versionInfo": "a1f92a26e53033ec58e1d2ce9b132da7ebae816e",
+      "downloadLocation": "git+https://github.com/magit/with-editor.git@a1f92a26e53033ec58e1d2ce9b132da7ebae816e",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-wordnut",
+      "name": "wordnut",
+      "versionInfo": "dffc75a455d0d4458b7555f4c051c51d71c8e18a",
+      "downloadLocation": "git+https://github.com/gromnitsky/wordnut.git@dffc75a455d0d4458b7555f4c051c51d71c8e18a",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-only",
+      "licenseDeclared": "GPL-3.0-only",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-writegood-mode",
+      "name": "writegood-mode",
+      "versionInfo": "d54eadeedb8bf3aa0e0a584c0a7373c69644f4b8",
+      "downloadLocation": "git+https://github.com/bnbeckwith/writegood-mode.git@d54eadeedb8bf3aa0e0a584c0a7373c69644f4b8",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-ws-butler",
+      "name": "ws-butler",
+      "versionInfo": "67c49cfdf5a5a9f28792c500c8eb0017cfe74a3a",
+      "downloadLocation": "git+https://github.com/emacsmirror/nongnu_elpa.git@67c49cfdf5a5a9f28792c500c8eb0017cfe74a3a",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-xref",
+      "name": "xref",
+      "versionInfo": "bd31f9ac86a105c01631b29e6f442049500e9928",
+      "downloadLocation": "git+https://github.com/emacs-straight/xref.git@bd31f9ac86a105c01631b29e6f442049500e9928",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-xterm-color",
+      "name": "xterm-color",
+      "versionInfo": "ffdad85e584dfc0857f2a1fb970f5ef0f5d31ba3",
+      "downloadLocation": "git+https://github.com/atomontage/xterm-color.git@ffdad85e584dfc0857f2a1fb970f5ef0f5d31ba3",
+      "filesAnalyzed": false,
+      "licenseConcluded": "BSD-2-Clause",
+      "licenseDeclared": "BSD-2-Clause",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-yaml-mode",
+      "name": "yaml-mode",
+      "versionInfo": "5d7347519c94eac1c9383a3b9bebe218d3e43318",
+      "downloadLocation": "git+https://github.com/yoshiki/yaml-mode.git@5d7347519c94eac1c9383a3b9bebe218d3e43318",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-yaml.el",
+      "name": "yaml.el",
+      "versionInfo": "5546f36bde24a9a8c1934e0f6ce205cd41d72537",
+      "downloadLocation": "git+https://github.com/zkry/yaml.el.git@5546f36bde24a9a8c1934e0f6ce205cd41d72537",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-yasnippet",
+      "name": "yasnippet",
+      "versionInfo": "c1e6ff23e9af16b856c88dfaab9d3ad7b746ad37",
+      "downloadLocation": "git+https://github.com/joaotavora/yasnippet.git@c1e6ff23e9af16b856c88dfaab9d3ad7b746ad37",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-yasnippet-capf",
+      "name": "yasnippet-capf",
+      "versionInfo": "f53c42a996b86fc95b96bdc2deeb58581f48c666",
+      "downloadLocation": "git+https://github.com/elken/yasnippet-capf.git@f53c42a996b86fc95b96bdc2deeb58581f48c666",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-zoutline",
+      "name": "zoutline",
+      "versionInfo": "32857c6c4b9b0bcbed14d825a10b91a98d5fed0a",
+      "downloadLocation": "git+https://github.com/abo-abo/zoutline.git@32857c6c4b9b0bcbed14d825a10b91a98d5fed0a",
+      "filesAnalyzed": false,
+      "licenseConcluded": "GPL-3.0-or-later",
+      "licenseDeclared": "GPL-3.0-or-later",
+      "copyrightText": "NOASSERTION",
+      "supplier": "NOASSERTION"
+    }
+  ],
+  "relationships": [
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-doom-emacs"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-Emacs-langtool"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-Emacs-wgrep"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-a.el"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-ace-window"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-adaptive-wrap"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-alarm-clock"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-alert"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-anaphora"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-anzu"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-apheleia"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-auto-minor-mode"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-auto-yasnippet"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-avy"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-better-jumper"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-bitbake-el"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-bitbake-ts-mode"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-bug-hunter"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-cape"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-centered-window-mode"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-closql"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-cmake-ide"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-cmake-mode"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-code-review"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-compat"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-compiler-explorer.el"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-cond-let"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-conda.el"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-consult"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-consult-dash"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-consult-dir"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-consult-lsp"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-consult-mu"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-consult-omni"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-consult-yasnippet"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-corfu"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-csv-mode"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-cuda-mode"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-cuda-ts-mode"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-dag-draw.el"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-dape"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-dash-docs"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-dash.el"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-define-word"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-deflate"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-demangle-mode"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-devdocs.el"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-diff-hl"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-diredfl"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-dirvish"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-disaster"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-doom-modeline"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-dtrt-indent"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-dts-mode"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-dumb-jump"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-edit-indirect"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-el-get"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-eldoc"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-elfeed"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-elfeed-org"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-elfeed-tube"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-elisp-def"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-elisp-demos"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-elisp-refs"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-emacs-aio"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-emacs-async"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-emacs-bash-completion"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-emacs-buttercup"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-emacs-calfw"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-emacs-ccls"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-emacs-deferred"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-emacs-emojify"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-emacs-everywhere"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-emacs-ipython-notebook"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-emacs-libvterm"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-emacs-load-env-vars"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-emacs-oauth2-auto"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-emacs-python-pytest"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-emacs-request"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-emacs-shift-number"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-emacs-solaire-mode"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-emacs-web-server"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-emacs-websocket"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-emacs-winum"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-emacsmirror-mirror"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-emacsql"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-embark"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-embrace.el"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-epl"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-eros"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-esh-help"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-eshell-did-you-mean"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-eshell-syntax-highlighting"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-eshell-up"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-eshell-z"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-evil"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-evil-anzu"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-evil-args"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-evil-collection"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-evil-easymotion"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-evil-embrace.el"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-evil-escape"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-evil-exchange"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-evil-goggles"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-evil-indent-plus"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-evil-lion"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-evil-markdown"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-evil-mc"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-evil-multiedit"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-evil-nerd-commenter"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-evil-numbers"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-evil-org-mode"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-evil-quick-diff"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-evil-snipe"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-evil-surround"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-evil-textobj-anyblock"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-evil-traces"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-evil-vimish-fold"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-evil-visualstar"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-exato"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-expand-region.el"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-f.el"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-flycheck"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-flycheck-plantuml"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-flymake"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-flymake-popon"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-flyspell-correct"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-flyspell-lazy"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-font-utils"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-forge"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-fzf.el"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-gcmh"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-general.el"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-ghostel"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-ghub"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-git-link"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-git-modes"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-git-timemachine"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-glsl-mode"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-gntp.el"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-gnu-elpa-mirror"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-goto-chg"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-gptel"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-gptel-agent"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-gptel-magit"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-gptel-quick"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-helpful"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-highlight-quoted"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-hl-todo"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-ht.el"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-htmlize"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-hydra"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-ibuffer-projectile"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-ibuffer-vc"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-iedit"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-indent-bars"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-jeison"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-jsonrpc"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-let-completion.el"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-levenshtein"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-ligature.el"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-link-hint.el"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-lispy"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-lispyville"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-list-utils"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-llama"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-llm-tool-collection"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-log4e"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-lsp-mode"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-lsp-ui"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-macrostep"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-magit"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-map"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-marginalia"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-markdown-mode"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-markdown-toc"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-mastodon.el"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-melpa"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-mu4e-compat"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-multi-vterm"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-nav-flash"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-nerd-icons-completion"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-nerd-icons-corfu"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-nerd-icons.el"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-nongnu-elpa"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-nose"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-ob-async"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-ob-gptel"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-olivetti"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-opencl-mode"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-orderless"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-org"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-org-appear"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-org-cliplink"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-org-contrib"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-org-download"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-org-edna"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-org-gcal.el"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-org-gtd.el"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-org-journal"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-org-modern"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-org-msg"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-org-noter"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-org-pdftools"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-org-re-reveal"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-org-roam"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-org-roam-ui"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-org-tree-slide"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-orgit"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-orgit-forge"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-overseer.el"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-ox-clip"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-ox-pandoc"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-package-lint"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-parinfer-rust-mode"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-pcache"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-pcmpl-args.el"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-pdf-tools"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-persist"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-persistent-soft"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-persp-mode.el"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-pip-requirements.el"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-pipenv.el"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-pkg-info"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-plantuml-mode"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-plz"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-polymode"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-popon"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-posframe"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-powerthesaurus"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-project"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-projectile"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-pythonic"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-pyvenv"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-queue"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-quickrun"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-reveal.js"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-rotate-text.el"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-rust-mode"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-rustic"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-s.el"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-saveplace-pdf-view"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-seq"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-shrink-path.el"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-smartparens"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-snippets"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-spinner"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-spotify-el"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-straight.el"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-swiper"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-switch-window"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-synosaurus"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-tablist"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-themes"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-toc-org"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-tp.el"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-track-changes"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-transient"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-treepy.el"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-treesit-fold"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-ucs-utils"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-ultra-scroll"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-undo-tree"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-unicode-fonts"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-uuidgen-el"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-uv-mode"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-vertico"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-vimish-fold"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-visual-fill-column"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-whisper.el"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-with-editor"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-wordnut"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-writegood-mode"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-ws-butler"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-xref"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-xterm-color"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-yaml-mode"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-yaml.el"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-yasnippet"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-yasnippet-capf"
+    },
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-zoutline"
+    }
+  ]
+}
