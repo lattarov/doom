@@ -360,7 +360,8 @@ Shortcuts are mapped with the SPC n r prefix by default.
 #+end_src
 ** org-gtd
 #+begin_src emacs-lisp :tangle packages.el
-(package! org-gtd)
+(package! org-gtd
+  :pin "3dd86c08048257b91d793aaf7cde9c09ad4c833c")
 #+end_src
 
 #+begin_src emacs-lisp :tangle config.el
@@ -688,6 +689,7 @@ Set ollama as default backend for gptel, add default model and a few tweaks.
 **** llm-tool-collection
 #+begin_src emacs-lisp :tangle packages.el
 (package! llm-tool-collection
+  :pin "b9fd45bedf3e0fb07d289730991199ae18785157"
   :recipe '(:host github
             :repo "skissue/llm-tool-collection"))
 #+end_src
@@ -703,6 +705,7 @@ Set ollama as default backend for gptel, add default model and a few tweaks.
 **** karthink/gptel-agent
 #+begin_src emacs-lisp :tangle packages.el
 (package! gptel-agent
+  :pin "7a74b695909c0e3304eb8cbd583a1f53e0802c60"
   :recipe '(:host github
             :repo "karthink/gptel-agent"))
 #+end_src
@@ -759,7 +762,8 @@ Prerequisites:
 
 * bug-hunter
 #+begin_src emacs-lisp :tangle packages.el
-(package! bug-hunter)
+(package! bug-hunter
+  :pin "e89621287d14c8cc73cd78c63ef49595fbfd745f")
 #+end_src
 
 * elfeed
@@ -828,6 +832,7 @@ promising and would bring plenty of nice features to the config.
 
 #+begin_src emacs-lisp :tangle packages.el
 (package! consult-mu
+  :pin "8b54bbf86c2f112e3520eeeefb70d509b4590385"
   :recipe '(:host github
             :repo "armindarvish/consult-mu"
             :files (:defaults "extras/*.el")))
@@ -853,6 +858,7 @@ promising and would bring plenty of nice features to the config.
 #+begin_src emacs-lisp :tangle packages.el
 (package! consult-omni
   :type 'core
+  :pin "3a126ee54479755408faed10da945dbc2366303b"
   :recipe '(:host github
             :repo "armindarvish/consult-omni"
             :files ("sources/*.el" "consult-omni.el" "consult-omni-embark.el")
@@ -1802,16 +1808,19 @@ There's some overlay with LSP errors and warnings (in rust at least), hence this
 
 * fzf
 #+begin_src emacs-lisp :tangle packages.el
-(package! fzf)
+(package! fzf
+  :pin "75060d81f4eea3f8088ac2a4a3a253c686b44d44")
 #+end_src
 
 * bitbake-mode
 To be used in yocto workflows.
 
- #+begin_src emacs-lisp :tangle packages.el                       
-(package! bitbake)                                               
-(package! bitbake-ts-mode)
-#+end_src                                                        
+ #+begin_src emacs-lisp :tangle packages.el
+(package! bitbake
+  :pin "f626d37727df0550aa2afd3f1b0ce81f38be18a3")
+(package! bitbake-ts-mode
+  :pin "f3ebbae4c09584774b99e4ada568fdf9451b69be")
+#+end_src
 
 #+begin_src emacs-lisp :tangle config.el
 ;; bitbake is not in treesit-language-source-alist by default
@@ -2287,7 +2296,8 @@ To install the grammars, use 'M-x markdown-ts-mode-install-parsers'.
 
 #+begin_src emacs-lisp :tangle packages.el
 (package! mastodon
-  :disable (vlv-env-work-p))
+  :disable (vlv-env-work-p)
+  :pin "5ddf28b9454ad9ee12738f9467e3ad013b788ee3")
 #+end_src
 
 #+begin_src emacs-lisp :tangle config.el
@@ -2301,7 +2311,8 @@ To install the grammars, use 'M-x markdown-ts-mode-install-parsers'.
 * Alarms
 
 #+begin_src emacs-lisp :tangle packages.el
-(package! alarm-clock)
+(package! alarm-clock
+  :pin "8a805d365aa38be32041c4e968bb624d3bb1b54b")
 #+end_src
 
 #+begin_src emacs-lisp :tangle config.el
@@ -2319,6 +2330,10 @@ To install the grammars, use 'M-x markdown-ts-mode-install-parsers'.
 * Robot Framework
 
 #+begin_src emacs-lisp :tangle packages.el
+;; NOTE: not currently pinned — these are :disable'd on PERSONAL and have
+;; never been cloned on this machine, so there's no resolved commit to pin
+;; to yet. Pin them the next time they're enabled and synced on a WORK
+;; machine (see docs/dependency-provenance.md).
 (package! robot-mode
   :disable (vlv-env-personal-p))
 
@@ -2329,5 +2344,6 @@ To install the grammars, use 'M-x markdown-ts-mode-install-parsers'.
 * Device tree
 
 #+begin_src emacs-lisp :tangle packages.el
-(package! dts-mode)
+(package! dts-mode
+  :pin "cd1847d0e7162c1ecab772c6ca7ef4f3c5d2214d")
 #+end_src
