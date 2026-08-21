@@ -111,6 +111,10 @@ step_apt_deps() {
     libpoppler-glib-dev \
     gdb
 
+  log "Installing Cascadia Code (doom-font)..."
+  sudo apt install -y fonts-cascadia-code && fc-cache -f \
+    || warn "fonts-cascadia-code not available via apt — install Cascadia Code manually from https://github.com/microsoft/cascadia-code/releases"
+
   step_done "System packages installed."
 }
 
@@ -371,8 +375,59 @@ EOF
   step_done "Emacs daemon enabled and started."
 }
 
+step_first_run_setup() {
+  divider "Step 8 — First-run installs (vterm, ghostel, whisper.cpp)"
+  log "Triggers the same native-module/model downloads Emacs would otherwise"
+
+  ask "Run first-run installs now?" || { step_skip "first-run installs"; return 0; }
+
+  local started_temp_daemon=0
+  if ! emacsclient --eval 't' &>/dev/null; then
+    log "No Emacs daemon found — starting a temporary one."
+    emacs --daemon
+    started_temp_daemon=1
+  fi
+
+  log "Compiling vterm native module..."
+  emacsclient --eval '(vterm-module-compile)' &>/dev/null \
+    && step_done "vterm module compiled" || step_fail "vterm module compile failed"
+
+  log "Downloading ghostel native module..."
+  emacsclient --eval \
+    '(progn (require (quote ghostel))
+            (let ((ghostel-module-auto-install (quote download)))
+              (ghostel--ensure-module (ghostel--module-directory))))' &>/dev/null \
+    && step_done "ghostel module installed" || step_fail "ghostel module install failed"
+
+  log "Installing whisper.cpp and the default speech model..."
+  WHISPER_DIR=$(emacsclient --eval \
+    '(progn (require (quote whisper)) (expand-file-name whisper--install-path))' \
+    2>/dev/null | tr -d '"')
+  WHISPER_MODEL=$(emacsclient --eval 'whisper-model' 2>/dev/null | tr -d '"')
+  WHISPER_MODEL="${WHISPER_MODEL:-base}"
+  if [[ -n "$WHISPER_DIR" ]]; then
+    mkdir -p "$(dirname "$WHISPER_DIR")"
+    if [[ ! -d "$WHISPER_DIR" ]]; then
+      git clone https://github.com/ggerganov/whisper.cpp "$WHISPER_DIR"
+    fi
+    ( cd "$WHISPER_DIR" && CLICOLOR=0 cmake -B build && CLICOLOR=0 cmake --build build -j --config Release ) \
+      && ( cd "$WHISPER_DIR" && "models/download-ggml-model.sh" "$WHISPER_MODEL" ) \
+      && step_done "whisper.cpp + '${WHISPER_MODEL}' model ready" \
+      || step_fail "whisper.cpp/model install failed"
+  else
+    step_fail "could not resolve whisper install directory — is the whisper package loaded?"
+  fi
+
+  if [[ "$started_temp_daemon" -eq 1 ]]; then
+    log "Stopping temporary Emacs daemon."
+    emacsclient --eval '(kill-emacs)' &>/dev/null || true
+  fi
+
+  step_done "First-run installs complete."
+}
+
 step_cleanup() {
-  divider "Step 8 — Remove build-only packages"
+  divider "Step 9 — Remove build-only packages"
   log "The following -dev packages are only needed at compile time."
   log "Runtime .so files remain — the running Emacs binary is unaffected."
   warn "Do NOT remove these if you plan to rebuild Emacs or if vterm"
@@ -423,10 +478,7 @@ step_cleanup() {
 # ── summary ───────────────────────────────────────────────────────────────────
 print_summary() {
   divider "Setup complete"
-  log "Remaining manual steps inside Emacs:"
-  log "  M-x +vterm/here            — trigger vterm native module build"
-  log "  M-x whisper-install-model  — download whisper model"
-  log "  M-x lsp-install-server     — per language server"
+  log "vterm, ghostel, whisper.cpp were installed in Step 8."
   log ""
   log "Verify Wayland rendering:"
   log "  M-: (pgtk-backend-display-class)"
@@ -463,5 +515,6 @@ step_npm
 step_build_emacs
 step_doom
 step_systemd
+step_first_run_setup
 step_cleanup
 print_summary
