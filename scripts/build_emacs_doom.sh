@@ -13,6 +13,14 @@ ask() {
   local prompt="$1"
   local default="${2:-y}"
   local yn
+
+  # In CI (or with --yes), don't prompt — just take the step's own default.
+  if [[ "${CI:-}" == "true" || "${DOOM_NONINTERACTIVE:-}" == "1" ]]; then
+    log "  $prompt [auto: ${default}]"
+    [[ "$default" == "y" ]]
+    return
+  fi
+
   if [[ "$default" == "y" ]]; then
     read -r -p "  $prompt [Y/n] " yn
     yn="${yn:-y}"
@@ -21,6 +29,31 @@ ask() {
     yn="${yn:-n}"
   fi
   [[ "$yn" =~ ^[Yy]$ ]]
+}
+
+# ── CI step gating ────────────────────────────────────────────────────────────
+# When CI=true (set automatically by GitHub Actions) or --yes is passed, only
+# run the steps listed in DOOM_CI_STEPS (comma-separated step names, without
+# the "step_" prefix). Interactive/manual runs are unaffected.
+if [[ "${1:-}" == "--yes" ]]; then DOOM_NONINTERACTIVE=1; fi
+DOOM_CI_STEPS="${DOOM_CI_STEPS:-apt_deps,doom,post_install_checks}"
+
+run_step() {
+  local name="$1" fn="step_${1}"
+  if [[ "${CI:-}" == "true" || "${DOOM_NONINTERACTIVE:-}" == "1" ]]; then
+    local IFS=','
+    local step allowed=0
+    for step in $DOOM_CI_STEPS; do
+      if [[ "$step" == "$name" ]]; then
+        allowed=1
+        break
+      fi
+    done
+    if [[ "$allowed" -ne 1 ]]; then
+      return 0
+    fi
+  fi
+  "$fn"
 }
 
 step_done()   { echo "  ✔  $*"; }
@@ -331,8 +364,16 @@ step_doom() {
     step_done "doom sync complete."
   else
     ask "Install Doom Emacs?" || { step_skip "Doom install"; return 0; }
-    git clone --depth=1 https://github.com/doomemacs/doomemacs "$DOOM_DIR"
-    "${DOOM_DIR}/bin/doom" install
+    git clone https://github.com/doomemacs/doomemacs "$DOOM_DIR"
+    if [[ -n "${DOOM_REF:-}" ]]; then
+      log "Pinning doomemacs to ${DOOM_REF}..."
+      git -C "$DOOM_DIR" checkout "$DOOM_REF"
+    fi
+    local install_flags=()
+    if [[ "${CI:-}" == "true" || "${DOOM_NONINTERACTIVE:-}" == "1" ]]; then
+      install_flags+=(--force)
+    fi
+    "${DOOM_DIR}/bin/doom" install "${install_flags[@]}"
     step_done "Doom Emacs installed."
   fi
 }
@@ -513,14 +554,14 @@ log "Each step will ask for confirmation before running."
 log "You can safely skip steps you have already completed."
 echo ""
 
-step_apt_deps
-step_languagetool
-step_rust
-step_npm
-step_build_emacs
-step_doom
-step_systemd
-step_first_run_setup
-step_cleanup
-step_post_install_checks
+run_step apt_deps
+run_step languagetool
+run_step rust
+run_step npm
+run_step build_emacs
+run_step doom
+run_step systemd
+run_step first_run_setup
+run_step cleanup
+run_step post_install_checks
 print_summary

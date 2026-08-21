@@ -1,0 +1,79 @@
+name: full-pipeline
+
+on:
+  schedule:
+    # Poll for new doomemacs/doomemacs tags every 6h. GitHub can't subscribe
+    # this repo to tag events on a repo we don't own, so this polls instead.
+    - cron: "17 */6 * * *"
+  workflow_dispatch: {}
+
+jobs:
+  check-new-tag:
+    runs-on: ubuntu-latest
+    outputs:
+      tag: ${{ steps.check.outputs.tag }}
+      has_new: ${{ steps.check.outputs.has_new }}
+    steps:
+      - name: Check for a doomemacs tag newer than the poll interval
+        id: check
+        env:
+          GH_TOKEN: ${{ github.token }}
+          FORCED: ${{ github.event_name == 'workflow_dispatch' }}
+        run: |
+          set -euo pipefail
+          latest=$(gh api repos/doomemacs/doomemacs/tags --jq '.[0]')
+          tag=$(echo "$latest" | jq -r '.name')
+          sha=$(echo "$latest" | jq -r '.commit.sha')
+          tag_date=$(gh api "repos/doomemacs/doomemacs/commits/${sha}" --jq '.commit.committer.date')
+          tag_epoch=$(date -d "$tag_date" +%s)
+          now_epoch=$(date +%s)
+          age=$(( now_epoch - tag_epoch ))
+          # Cron runs every 6h (21600s); use a generous buffer for scheduler
+          # jitter/missed ticks so a tag never silently falls through the gap.
+          window=$(( 6 * 3600 + 3600 ))
+
+          echo "tag=${tag}" >> "$GITHUB_OUTPUT"
+          if [[ "$FORCED" == "true" || "$age" -le "$window" ]]; then
+            echo "has_new=true" >> "$GITHUB_OUTPUT"
+            echo "Running full pipeline for doom ${tag} (age ${age}s, forced=${FORCED})"
+          else
+            echo "has_new=false" >> "$GITHUB_OUTPUT"
+            echo "doom ${tag} is ${age}s old, outside the ${window}s poll window — skipping"
+          fi
+
+  env-setup-and-install:
+    needs: check-new-tag
+    if: needs.check-new-tag.outputs.has_new == 'true'
+    runs-on: ubuntu-latest
+    env:
+      DOOMDIR: ${{ github.workspace }}
+      XDG_CONFIG_HOME: ${{ github.workspace }}/.xdg-config
+      DOOM_REF: ${{ needs.check-new-tag.outputs.tag }}
+    steps:
+      - uses: actions/checkout@v4
+
+      # Layer 1: environment setup — the real apt-deps step from the
+      # interactive install script.
+      - name: Environment setup (apt deps)
+        run: CI=true DOOM_CI_STEPS=apt_deps ./scripts/build_emacs_doom.sh
+
+      # Layer 2: "emacs compilation" — a prebuilt package stands in for
+      # step_build_emacs (see the test-strategy plan for the fidelity/speed
+      # tradeoff this was a deliberate choice, not an oversight).
+      - name: Install Emacs (prebuilt)
+        run: |
+          sudo apt-get install -y emacs
+          emacs --version
+
+      - name: Post-install checks (native-comp availability)
+        run: CI=true DOOM_CI_STEPS=post_install_checks ./scripts/build_emacs_doom.sh
+
+      # Layer 3: doom setup, pinned to the tag being validated.
+      - name: doom install (pinned to ${{ needs.check-new-tag.outputs.tag }})
+        run: CI=true DOOM_CI_STEPS=doom ./scripts/build_emacs_doom.sh
+
+  unit-tests:
+    needs: [check-new-tag, env-setup-and-install]
+    uses: ./.github/workflows/unit-tests.yml
+    with:
+      doomemacs_ref: ${{ needs.check-new-tag.outputs.tag }}

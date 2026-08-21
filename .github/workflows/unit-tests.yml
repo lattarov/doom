@@ -1,0 +1,47 @@
+name: unit-tests
+
+on:
+  push:
+  workflow_call:
+    inputs:
+      doomemacs_ref:
+        description: "git ref (tag/branch/sha) of doomemacs/doomemacs to test against; empty = default branch"
+        type: string
+        required: false
+        default: ""
+
+jobs:
+  unit-tests:
+    runs-on: ubuntu-latest
+    env:
+      # This checkout *is* $DOOMDIR (mirrors how the config is deployed for
+      # real, at ~/.config/doom). step_doom clones doomemacs to
+      # $XDG_CONFIG_HOME/emacs, so pin that here for the later steps to find.
+      DOOMDIR: ${{ github.workspace }}
+      XDG_CONFIG_HOME: ${{ github.workspace }}/.xdg-config
+      DOOMEMACSDIR: ${{ github.workspace }}/.xdg-config/emacs
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Emacs (prebuilt) + doom runtime deps
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y emacs git ripgrep fd-find build-essential cmake libtool-bin libvterm-dev
+          emacs --version
+
+      - name: Tangle config.org -> config.el / packages.el
+        # Must happen before `doom install`/`doom sync` below — they read
+        # packages.el, and it doesn't exist until config.org is tangled.
+        run: |
+          emacs --batch -Q \
+            --eval "(require 'ob-tangle)" \
+            --eval "(org-babel-tangle-file \"config.org\")"
+
+      - name: doom install
+        run: CI=true DOOM_CI_STEPS=doom DOOM_REF="${{ inputs.doomemacs_ref }}" ./scripts/build_emacs_doom.sh
+
+      - name: doom sync
+        run: $DOOMEMACSDIR/bin/doom sync --force
+
+      - name: Run unit tests
+        run: ./scripts/ci/run-unit-tests.sh
