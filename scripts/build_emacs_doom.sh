@@ -641,6 +641,7 @@ log "Each step will ask for confirmation before running."
 log "You can safely skip steps you have already completed."
 echo ""
 
+step_corporate_network
 step_apt_deps
 step_languagetool
 step_rust
