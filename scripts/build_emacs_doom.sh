@@ -209,15 +209,13 @@ step_build_emacs() {
   log "Fetching available stable releases..."
   LATEST_STABLE=$(git ls-remote --tags https://git.savannah.gnu.org/git/emacs.git \
     | grep -oP 'emacs-\d+\.\d+(\.\d+)?$' \
-    | grep -v '\.' \
     | sort -V \
     | tail -1 \
-    || echo "emacs-30.2")  # fallback if network unavailable
+    || echo "Failed to fetch tags from remote.")
 
-  echo "       → ${LATEST_STABLE} (detected)"
+  echo "       → ${LATEST_STABLE}"
   echo ""
-  echo "    2) Master branch (development — currently Emacs 31.x)"
-  echo "       → unstable, latest features, may have bugs"
+  echo "    2) Master branch"
   echo ""
   read -r -p "  Choice [1/2, default 1]: " version_choice
   version_choice="${version_choice:-1}"
