@@ -1313,6 +1313,26 @@ In this case, the source directory is *c:/Tiama/tree-sitter*.
 #+begin_src pwsh :tangle no
 mklink /D "c:/Users/LATTARO-VOLPINI/.config/emacs/.local/cache/tree-sitter" "c:/Tiama/tree-sitter"
 #+end_src
+** bureaucracy
+
+#+begin_src emacs-lisp :tangle config.el
+(defun vlv-env-work-gen-payfit-report (ON-SITE-DAYS HOME-OFFICE-DAYS &optional COMMENT?)
+  "Create the monthly comment message for payfit.
+
+ON-SITE-DAYS and HOME-OFFICE-DAYS are self descriptive.
+COMMENT is an optional string to be appended to a new line. Useful for describing sick days or days off"
+  (interactive "nOn site days: \nnHome Office days:")
+  (let* ((on-site-fee (* ON-SITE-DAYS 15))
+         (home-office-fee (* HOME-OFFICE-DAYS 10))
+         (total (+ on-site-fee home-office-fee))
+         (comment (if COMMENT? (format " \n %s" COMMENT?) ""))
+         (text (format "%d jours x 15€/jour sur site + %d jours x 10€/jour TT = %d€ + %d€ = %d%s€"
+                       ON-SITE-DAYS HOME-OFFICE-DAYS on-site-fee home-office-fee total comment)))
+    
+                                        ; send the text to clipboard and log
+    (kill-new text)
+    (message "sent to clipboard: \"%s\"" text)))
+#+end_src
 
 * Compiler explorer
 #+begin_src emacs-lisp :tangle packages.el
