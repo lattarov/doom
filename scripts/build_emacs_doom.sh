@@ -224,20 +224,29 @@ step_build_emacs() {
     2)
       GIT_REF="master"
       GIT_BRANCH_FLAG="--depth=1"
+      SOURCE_METHOD="git"
       log "Selected: master (development)"
       ;;
     *)
       GIT_REF="${LATEST_STABLE}"
-      GIT_BRANCH_FLAG="--depth=1 --branch ${LATEST_STABLE}"
+      TARBALL_NAME="${LATEST_STABLE}.tar.xz"
+      TARBALL_URL="https://ftp.gnu.org/gnu/emacs/${TARBALL_NAME}"
+      SOURCE_METHOD="tarball"
       log "Selected: ${LATEST_STABLE} (stable)"
       ;;
   esac
 
   log ""
-  log "  Source dir : ${EMACS_SRC:-$HOME/dev/emacs}"
-  log "  Git ref    : ${GIT_REF}"
-  log "  Build jobs : $(nproc --ignore=1)"
-  log "  Install to : /usr/local"
+  log "  Source dir    : ${EMACS_SRC:-$HOME/dev/emacs}"
+  if [[ "$SOURCE_METHOD" == "tarball" ]]; then
+    log "  Source method : tarball download + GPG verify"
+    log "  Release       : ${GIT_REF}"
+  else
+    log "  Source method : git clone"
+    log "  Git ref       : ${GIT_REF}"
+  fi
+  log "  Build jobs    : $(nproc --ignore=1)"
+  log "  Install to    : /usr/local"
   log ""
   warn "This will take several minutes."
 
@@ -245,38 +254,102 @@ step_build_emacs() {
 
   EMACS_SRC="${EMACS_SRC:-$HOME/dev/emacs}"
   JOBS=$(nproc --ignore=1)
+  SKIP_DOWNLOAD=0
 
-  if [[ -d "$EMACS_SRC" ]]; then
-    log "Source directory exists at ${EMACS_SRC}."
-    CURRENT_REF=$(git -C "$EMACS_SRC" describe --tags 2>/dev/null \
-                  || git -C "$EMACS_SRC" rev-parse --abbrev-ref HEAD)
-    log "Currently at: ${CURRENT_REF}"
+  if [[ "$SOURCE_METHOD" == "git" ]]; then
+    if [[ -d "$EMACS_SRC" ]]; then
+      log "Source directory exists at ${EMACS_SRC}."
+      CURRENT_REF=$(git -C "$EMACS_SRC" describe --tags 2>/dev/null \
+                    || git -C "$EMACS_SRC" rev-parse --abbrev-ref HEAD 2>/dev/null \
+                    || echo "non-git checkout")
+      log "Currently at: ${CURRENT_REF}"
 
-    if ask "Wipe and reclone? (required when switching stable<->master)" "n"; then
-      rm -rf "$EMACS_SRC"
+      if ask "Wipe and reclone? (required when switching stable<->master)" "n"; then
+        rm -rf "$EMACS_SRC"
+        log "Cloning Emacs ${GIT_REF}..."
+        # shellcheck disable=SC2086
+        git clone $GIT_BRANCH_FLAG \
+          https://git.savannah.gnu.org/git/emacs.git "$EMACS_SRC"
+      else
+        log "Pulling latest for ${GIT_REF}..."
+        git -C "$EMACS_SRC" fetch --depth=1 origin "${GIT_REF}"
+        git -C "$EMACS_SRC" checkout "${GIT_REF}"
+        git -C "$EMACS_SRC" reset --hard "origin/${GIT_REF}" 2>/dev/null \
+          || git -C "$EMACS_SRC" reset --hard "${GIT_REF}"
+      fi
+    else
       log "Cloning Emacs ${GIT_REF}..."
       # shellcheck disable=SC2086
       git clone $GIT_BRANCH_FLAG \
         https://git.savannah.gnu.org/git/emacs.git "$EMACS_SRC"
-    else
-      log "Pulling latest for ${GIT_REF}..."
-      git -C "$EMACS_SRC" fetch --depth=1 origin "${GIT_REF}"
-      git -C "$EMACS_SRC" checkout "${GIT_REF}"
-      git -C "$EMACS_SRC" reset --hard "origin/${GIT_REF}" 2>/dev/null \
-        || git -C "$EMACS_SRC" reset --hard "${GIT_REF}"
     fi
   else
-    log "Cloning Emacs ${GIT_REF}..."
-    # shellcheck disable=SC2086
-    git clone $GIT_BRANCH_FLAG \
-      https://git.savannah.gnu.org/git/emacs.git "$EMACS_SRC"
+    # ── stable path: download the official release tarball and GPG-verify it ──
+    if [[ -d "$EMACS_SRC" ]]; then
+      log "Source directory exists at ${EMACS_SRC}."
+      if ask "Wipe and re-extract? (required when switching stable<->master, or to fetch a newer release)" "n"; then
+        rm -rf "$EMACS_SRC"
+      else
+        log "Reusing existing source at ${EMACS_SRC} — skipping download."
+        SKIP_DOWNLOAD=1
+      fi
+    fi
+
+    if [[ "$SKIP_DOWNLOAD" -eq 0 ]]; then
+      if ! command -v gpg &>/dev/null; then
+        log "gpg not found — installing gnupg."
+        sudo apt install -y gnupg
+      fi
+
+      WORKDIR=$(mktemp -d)
+
+      log "Downloading GNU keyring (for signature verification)..."
+      curl -L --progress-bar "https://ftp.gnu.org/gnu/gnu-keyring.gpg" \
+        -o "${WORKDIR}/gnu-keyring.gpg"
+
+      log "Downloading ${TARBALL_URL}..."
+      curl -L --progress-bar "${TARBALL_URL}" -o "${WORKDIR}/${TARBALL_NAME}"
+      curl -L --progress-bar "${TARBALL_URL}.sig" -o "${WORKDIR}/${TARBALL_NAME}.sig"
+
+      # Pinned SHA256 checksums for known official releases (defense-in-depth
+      # alongside the GPG signature check below; see https://ftp.gnu.org/gnu/emacs/)
+      declare -A EMACS_TARBALL_SHA256=(
+        ["emacs-31.1.tar.gz"]="3cad7fd1466c0e24867df8d2609da3ac75abc90d7c4c0175e410e9be46d4092a"
+        ["emacs-31.1.tar.xz"]="1da5790d9580c81932b5bf700633114468da7b3412d69faa767daebf974f4586"
+      )
+
+      if [[ -n "${EMACS_TARBALL_SHA256[$TARBALL_NAME]:-}" ]]; then
+        log "Verifying SHA256 checksum..."
+        echo "${EMACS_TARBALL_SHA256[$TARBALL_NAME]}  ${WORKDIR}/${TARBALL_NAME}" | sha256sum --check \
+          || die "SHA256 checksum mismatch for ${TARBALL_NAME} — refusing to build untrusted source. (Artifacts left in ${WORKDIR} for inspection.)"
+      else
+        warn "No pinned SHA256 for ${TARBALL_NAME} — skipping checksum check (GPG signature verification still applies)."
+      fi
+
+      log "Verifying GPG signature against GNU keyring..."
+      gpg --keyring "${WORKDIR}/gnu-keyring.gpg" --verify \
+        "${WORKDIR}/${TARBALL_NAME}.sig" "${WORKDIR}/${TARBALL_NAME}" \
+        || die "GPG signature verification FAILED for ${TARBALL_NAME} — refusing to build untrusted source. (Artifacts left in ${WORKDIR} for inspection.)"
+
+      log "Extracting ${TARBALL_NAME}..."
+      tar -xf "${WORKDIR}/${TARBALL_NAME}" -C "$WORKDIR"
+      mkdir -p "$(dirname "$EMACS_SRC")"
+      rm -rf "$EMACS_SRC"
+      mv "${WORKDIR}/${LATEST_STABLE}" "$EMACS_SRC"
+      rm -rf "$WORKDIR"
+    fi
   fi
 
   cd "$EMACS_SRC"
 
-  # stable tags need autogen; master ships a pre-generated configure
-  log "Running autogen..."
-  ./autogen.sh
+  if [[ "$SOURCE_METHOD" == "git" ]]; then
+    # git checkouts (master) ship no configure script — must generate it
+    log "Running autogen..."
+    ./autogen.sh
+  else
+    # official release tarballs already include a pre-generated ./configure
+    log "Skipping autogen (release tarball ships a pre-generated ./configure)."
+  fi
 
   log "Configuring..."
   ./configure \
