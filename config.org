@@ -1320,7 +1320,7 @@ mklink /D "c:/Users/LATTARO-VOLPINI/.config/emacs/.local/cache/tree-sitter" "c:/
   "Create the monthly comment message for payfit.
 
 ON-SITE-DAYS and HOME-OFFICE-DAYS are self descriptive.
-COMMENT is an optional string to be appended to a new line. Useful for describing sick days or days off"
+COMMENT is an optional string appended to a new line."
   (interactive "nOn site days: \nnHome Office days:")
   (let* ((on-site-fee (* ON-SITE-DAYS 15))
          (home-office-fee (* HOME-OFFICE-DAYS 10))
