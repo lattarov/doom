@@ -539,15 +539,15 @@ Allow automatic recognition of projects given a list of paths.
   :config
   (setopt dirvish-quick-access-entries
           (let ((org-path (expand-file-name org-directory))
-                (downloads-path (string-join (list vlv-home "Downloads/") ""))
                 (documents-path (string-join (list vlv-home "One Drive - Kestrel Visio/Documents/") ""))
-                (repos-path     (string-join (list vlv-home (if (vlv-env-work-p) "dev/@Src" "dev/")) "")))
-            `(("h" ,vlv-home "Home")
+                (downloads-path (string-join (list vlv-home "Downloads/") "")))
+            `(("h" "~" "Home")
               ("d" ,downloads-path "Downloads")
               ("D" ,documents-path "Documents")
-              ("t" "c:/Tiama/" "Tiama")
               ("o" ,org-path "Org")
-              ("r" ,repos-path "Repos"))))
+              ("r" "~/dev/" "Repos")
+              ("c" "/mnt/c/" "C:/")
+              ("d" "/mnt/d/" "D:/"))))
 
   ;; set `tramp-direct-async-process' locally in all ssh connections
   (connection-local-set-profile-variables
