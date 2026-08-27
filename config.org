@@ -237,6 +237,11 @@ In order to disactivate packages, the easiest way is to use the 'disable' field 
 (add-hook! 'emacs-lisp-mode-hook 'show-smartparens-mode)
 #+end_src
 
+** auto save
+#+begin_src emacs-lisp :tangle packages.el
+(setq recentf-autosave-interval 120)
+#+end_src
+
 * Calendar
 #+begin_src emacs-lisp :tangle config.el
 (setopt calendar-date-style 'european)
