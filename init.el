@@ -96,9 +96,9 @@
        (syntax +childframe ; tasing you for every semicolon you forget
                +flymake
                +icons)
-       (spell +aspell      ; tasing you for misspelling mispelling
-              +everywhere
-              +flyspell)
+       ;;(spell +aspell    ; superseded by jinx, see config.org > Spell checking
+       ;;       +everywhere
+       ;;       +flyspell)
        grammar           ; tasing grammar mistake every you make
 
        :tools

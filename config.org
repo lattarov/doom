@@ -281,6 +281,58 @@ In order to disactivate packages, the easiest way is to use the 'disable' field 
              yaml-ts-mode) 'olivetti-mode)
 #+end_src
 
+* Spell checking
+
+[[https://github.com/minad/jinx][Jinx]] replaces Doom's =:checkers spell= module (commented out in =init.el=). It
+binds directly to the libenchant C API through a native module instead of
+talking to an =aspell= subprocess, checks only the *visible* portion of the
+buffer, and picks regions by face - so =global-jinx-mode= covers both
+=flyspell-mode= and =flyspell-prog-mode=, restricting itself to comments and
+strings in code.
+
+Crucially it loads several dictionaries at once and accepts a word if *any* of
+them knows it, which is what makes brazilian portuguese, english and french
+work simultaneously in the same buffer.
+
+System prerequisites (Debian/Ubuntu):
+
+#+begin_src sh :tangle no
+sudo apt install libenchant-2-dev pkgconf hunspell-pt-br hunspell-fr aspell-en
+#+end_src
+
+Caveat: the accepted vocabulary is the *union* of the three languages, so
+homographs (=pas=, =son=, =mais=, =on=, =mode=, =cor=) let some real typos
+through. Narrow the set per buffer with =C-M-$=, per project with a
+=.dir-locals.el= entry for =jinx-languages=, or per file with =#+language:=.
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! jinx
+  :disable (eq system-type 'windows-nt))
+#+end_src
+
+#+begin_src emacs-lisp :tangle config.el
+(use-package! jinx
+  ;; The native module needs libenchant headers + a C compiler, which we do
+  ;; not have on native Windows. WSL is fine.
+  :unless (eq system-type 'windows-nt)
+  :hook (doom-first-buffer . global-jinx-mode)
+  :config
+  ;; Checked in parallel: a word is valid if ANY of these accepts it.
+  (setopt jinx-languages "en_US pt_BR fr_FR")
+
+  ;; Doom already turns on `vertico-multiform-mode'; a grid fits suggestions
+  ;; better than the default vertical list.
+  (after! vertico-multiform
+    (add-to-list 'vertico-multiform-categories
+                 '(jinx grid (vertico-grid-annotate . 20) (vertico-count . 4))))
+
+  (map! "M-$"   #'jinx-correct
+        "C-M-$" #'jinx-languages
+        :n "z=" #'jinx-correct
+        :n "]s" #'jinx-next
+        :n "[s" #'jinx-previous))
+#+end_src
+
 * Org
 ** Basic config
 #+begin_src emacs-lisp :tangle config.el
