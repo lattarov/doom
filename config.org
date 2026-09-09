@@ -129,9 +129,6 @@ In order to disactivate packages, the easiest way is to use the 'disable' field 
 #+end_src
 * Doom
 #+begin_src emacs-lisp :tangle config.el
-;; frame
-(add-to-list 'default-frame-alist '(alpha-background . 80))
-
 ;; avoids having pgtk build messing with the top bar
 ;; in Windows, this hides the topbar and breaks the
 ;; OS window manager Super + <arrow> bindings
