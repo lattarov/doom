@@ -156,7 +156,7 @@ In order to disactivate packages, the easiest way is to use the 'disable' field 
 
   (setopt +dashboard-ascii-banner-fn #'vlv-doom-dashboard-draw-ascii-banner-fn))
 
-(setopt doom-theme 'doom-moonlight)
+(setopt doom-theme 'modus-vivendi-deuteranopia)
 
 ;; font
 (setopt doom-font (font-spec :family "Cascadia Code" :size 18))
