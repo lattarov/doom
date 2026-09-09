@@ -261,6 +261,7 @@ In order to disactivate packages, the easiest way is to use the 'disable' field 
              Man-mode-hook
              compilation-mode
              conf-unix-mode-hook
+             elfeed-search-mode-hook
              elfeed-show-mode-hook
              eshell-mode-hook
              eww-mode-hook
