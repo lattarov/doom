@@ -62,6 +62,7 @@ step_apt_deps() {
     libharfbuzz-dev \
     libotf-dev \
     libm17n-dev \
+    libenchant-2-dev \
     libfreetype-dev \
     libjpeg-dev \
     libtiff-dev \
@@ -89,6 +90,7 @@ step_apt_deps() {
     maildir-utils \
     graphviz \
     pandoc \
+    pkgconf \
     maim \
     wl-clipboard \
     texlive-latex-base \
