@@ -49,69 +49,69 @@ step_apt_deps() {
   GCC_VER=$(gcc -dumpversion | cut -d. -f1)
   sudo apt update
   sudo apt install -y \
-    fd-find \
-    git \
-    ripgrep \
-    build-essential \
-    autoconf \
-    texinfo \
-    libgccjit0 \
     "libgccjit-${GCC_VER}-dev" \
-    libgtk-3-dev \
+    autoconf \
+    build-essential \
+    clangd \
+    cmake \
+    default-jre \
+    fd-find \
+    ffmpeg \
+    ffmpegthumbnailer \
+    gdb
+    git \
+    graphviz \
+    imagemagick \
+    isync \
+    libacl1-dev \
+    libasound2-dev \
     libcairo2-dev \
-    libharfbuzz-dev \
-    libotf-dev \
-    libm17n-dev \
+    libdbus-1-dev \
     libenchant-2-dev \
     libfreetype-dev \
-    libjpeg-dev \
-    libtiff-dev \
+    libgccjit0 \
     libgif-dev \
-    libpng-dev \
-    libwebp-dev \
-    librsvg2-dev \
-    libxpm-dev \
-    libmagickwand-dev \
-    liblcms2-dev \
-    libgnutls28-dev \
-    libdbus-1-dev \
-    libsystemd-dev \
-    libxml2-dev \
-    libsqlite3-dev \
-    sqlite3 \
-    libtree-sitter-dev \
-    libasound2-dev \
     libgmp-dev \
-    libacl1-dev \
+    libgnutls28-dev \
+    libgpm-dev \
+    libgtk-3-dev \
+    libharfbuzz-dev \
+    libjpeg-dev \
+    liblcms2-dev \
+    libm17n-dev \
+    libmagickwand-dev \
+    libotf-dev \
+    libpng-dev \
+    libpoppler-glib-dev \
+    librsvg2-dev \
     libseccomp-dev \
     libselinux1-dev \
-    libgpm-dev \
-    isync \
+    libsqlite3-dev \
+    libsystemd-dev \
+    libtiff-dev \
+    libtool-bin \
+    libtree-sitter-dev \
+    libvterm-dev \
+    libwebp-dev \
+    libxml2-dev \
+    libxpm-dev \
     maildir-utils \
-    graphviz \
+    maim \
+    mediainfo \
+    npm \
     pandoc \
     pkgconf \
-    maim \
-    wl-clipboard \
-    texlive-latex-base \
-    texlive-fonts-recommended \
-    texlive-fonts-extra \
-    texlive-latex-extra \
-    cmake \
-    libvterm-dev \
-    libtool-bin \
-    clangd \
-    npm \
-    ffmpegthumbnailer \
-    mediainfo \
-    imagemagick \
-    poppler-utils \
     plantuml \
-    default-jre \
-    ffmpeg \
+    poppler-utils \
     python3-pip \
-    libpoppler-glib-dev \
-    gdb
+    ripgrep \
+    sqlite3 \
+    texinfo \
+    texlive-fonts-extra \
+    texlive-fonts-recommended \
+    texlive-latex-base \
+    texlive-latex-extra \
+    wl-clipboard \
 
   log "Installing Cascadia Code (doom-font)..."
   sudo apt install -y fonts-cascadia-code && fc-cache -f \
