@@ -2369,7 +2369,7 @@ To install the grammars, use 'M-x markdown-ts-mode-install-parsers'.
 (use-package! mastodon
   :defer t
   :config
-  (setopt mastodon-active-user user-mail-address)
+  (setopt mastodon-active-user "victorlattaro")
   (setopt mastodon-instance-url "https://mastodon.social"))
 #+end_src
 
