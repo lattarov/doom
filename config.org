@@ -2406,3 +2406,13 @@ To install the grammars, use 'M-x markdown-ts-mode-install-parsers'.
 #+begin_src emacs-lisp :tangle packages.el
 (package! dts-mode)
 #+end_src
+
+* systemd
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! journalctl-mode)
+#+end_src
+
+#+begin_src emacs-lisp :tangle config.el
+(map! :leader "o j" #'journalctl)
+#+end_src
