@@ -1119,9 +1119,8 @@ From this point onwards, mu4e should be up and running.
                       '((mu4e-sent-folder       . "/gmail/Sent Mail")
                         (mu4e-drafts-folder     . "/gmail/Drafts")
                         (mu4e-trash-folder      . "/gmail/Trash")
-                        (mu4e-refile-folder     . "/gmail/All Mail")
-                        (smtpmail-smtp-user     . "victorlattaro@gmail.com")
-                        (mu4e-compose-signature . "---\nVictor Lattaro Volpini")))
+                        (mu4e-refile-folder     . "/gmail/All Mail") (smtpmail-smtp-user     . "victorlattaro@gmail.com")
+                        (message-signature . "Victor Lattaro Volpini")))
   ;; if "gmail" is missing from the address or maildir, the account must be
   ;; specified manually in `+mu4e-gmail-accounts':
   (setopt +mu4e-gmail-accounts '(("victorlattaro@gmail.com" . "/victorlattaro")))
