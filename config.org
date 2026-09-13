@@ -1130,7 +1130,20 @@ From this point onwards, mu4e should be up and running.
   (setopt mu4e-index-cleanup nil
           ;; because gmail uses labels as folders we can use lazy check since
           ;; messages don't really "move"
-          mu4e-index-lazy-check t))
+          mu4e-index-lazy-check t)
+
+  (require 'smtpmail)
+  (setq message-send-mail-function 'smtpmail-send-it
+        starttls-use-gnutls t
+        smtpmail-starttls-credentials '(("smtp.gmail.com" 587 nil nil))
+        smtpmail-auth-credentials
+        '(("smtp.gmail.com" 587 "victorlattaro@gmail.com" nil))
+        smtpmail-default-smtp-server "smtp.gmail.com"
+        smtpmail-smtp-server "smtp.gmail.com"
+        smtpmail-smtp-service 587)
+
+  ;; don't keep message buffers around
+  (setq message-kill-buffer-on-exit t))
 #+end_src
 
 * Copilot :wip:
