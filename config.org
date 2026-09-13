@@ -162,34 +162,35 @@ In order to disactivate packages, the easiest way is to use the 'disable' field 
 ;; make lookup online use eww insted of default browser.
 (setopt +lookup-open-url-fn 'eww)
 
-;; clear SPC f p prefix to use in private config
+(defvar vlv-private-config-workspace "DOOM"
+  "Name of the private Doom config workspace.")
+
+(defvar vlv-private-config-workspace "DOOM"
+  "Name of the private Doom config workspace.")
+
+(defun vlv--private-config-workspace ()
+  "Switch to `vlv-private-config-workspace', creating it on first call."
+  (unless (modulep! :ui workspaces)
+    (user-error "The :ui workspaces module is required"))
+  (unless (+workspace-exists-p vlv-private-config-workspace)
+    (+workspace-new vlv-private-config-workspace)
+    (projectile-add-known-project (file-truename doom-user-dir)))
+  (+workspace-switch vlv-private-config-workspace))
+
+(defun vlv-open-private-config-file (file)
+  "Open FILE, relative to `doom-user-dir', in the private config workspace."
+  (interactive (list (read-file-name "Private config file: " doom-user-dir)))
+  (vlv--private-config-workspace)
+  (prog1 (find-file (expand-file-name file doom-user-dir))
+    (+workspace/display)))
+
 (map! :leader
-      :prefix "f" "p" nil)
-
-(defun vlv-open-init-file ()
-  "Opens the init.el file from private config."
-  (interactive)
-  (find-file (expand-file-name doom-module-init-file doom-user-dir)))
-
-(defun vlv-open-literate-config-file ()
-  "Opens the config.org file from private config.
-
-        NOTE we can't use +literate-config-file for it's not loaded
-        until the user opens that file."
-  (interactive)
-  (find-file (expand-file-name "config.org" doom-user-dir)))
-
-(defun vlv-open-elfeed-file ()
-  "Opens the elfeed feeds descriptor file from private config."
-  (interactive)
-  (find-file (expand-file-name "elfeed.org" doom-user-dir)))
-
-(map! :leader
+      :prefix ("f p" . nil)
       :prefix ("f p" . "Private config")
-      :desc "Open init.el" "i" #'vlv-open-init-file
-      :desc "Open elfeed.org" "e" #'vlv-open-elfeed-file
-      :desc "Open literate config" "c" #'vlv-open-literate-config-file
-      :desc "Browse" "p" #'doom/open-private-config)
+      :desc "Open init.el"         "i" (cmd! (vlv-open-private-config-file "init.el"))
+      :desc "Open elfeed.org"      "e" (cmd! (vlv-open-private-config-file "elfeed.org"))
+      :desc "Open literate config" "c" (cmd! (vlv-open-private-config-file "config.org")))
+
 
 (add-hook! 'doom-scratch-buffer-hook 'org-mode)
 
