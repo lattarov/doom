@@ -253,9 +253,7 @@ In order to disactivate packages, the easiest way is to use the 'disable' field 
 #+end_src
 
 #+begin_src emacs-lisp :tangle config.el
-(use-package! olivetti
-  :defer t
-  :config
+(after! olivetti
   (setopt olivetti-body-width 120))
 
 (add-hook! '(Info-mode-hook
@@ -310,41 +308,38 @@ through. Narrow the set per buffer with =C-M-$=, per project with a
 #+end_src
 
 #+begin_src emacs-lisp :tangle config.el
-(use-package! jinx
-  ;; The native module needs libenchant headers + a C compiler, which we do
-  ;; not have on native Windows. WSL is fine.
-  :unless (eq system-type 'windows-nt)
-  :hook (doom-first-buffer . global-jinx-mode)
-  :config
-  ;; Checked in parallel: a word is valid if ANY of these accepts it.
-  (setopt jinx-languages "en_US pt_BR fr_FR")
-
-  ;; Doom already turns on `vertico-multiform-mode'; a grid fits suggestions
-  ;; better than the default vertical list.
-  (after! vertico-multiform
-    (add-to-list 'vertico-multiform-categories
-                 '(jinx grid (vertico-grid-annotate . 20) (vertico-count . 4))))
+;; The native module needs libenchant headers + a C compiler, which we do
+;; not have on native Windows. WSL is fine.
+(unless (eq system-type 'windows-nt)
+  (add-hook 'doom-first-buffer-hook #'global-jinx-mode)
 
   (map! "M-$"   #'jinx-correct
         "C-M-$" #'jinx-languages
         :n "z=" #'jinx-correct
         :n "]s" #'jinx-next
-        :n "[s" #'jinx-previous))
+        :n "[s" #'jinx-previous)
+
+  (after! jinx
+    ;; Checked in parallel: a word is valid if ANY of these accepts it.
+    (setopt jinx-languages "en_US pt_BR fr_FR")
+
+    ;; Doom already turns on `vertico-multiform-mode'; a grid fits suggestions
+    ;; better than the default vertical list.
+    (after! vertico-multiform
+      (add-to-list 'vertico-multiform-categories
+                   '(jinx grid (vertico-grid-annotate . 20) (vertico-count . 4))))))
 #+end_src
 
 * Org
 ** Basic config
 #+begin_src emacs-lisp :tangle config.el
-(use-package! org
-  :defer t
-  :init
-  (setopt org-directory (string-join
-                         (list vlv-home (if (vlv-env-work-p)
-                                            "OneDrive - Kestrel Vision/"
-                                          "")
-                               "org/") ""))
+(setopt org-directory (string-join
+                       (list vlv-home (if (vlv-env-work-p)
+                                          "OneDrive - Kestrel Vision/"
+                                        "")
+                             "org/") ""))
 
-  :config
+(after! org
   (add-hook! 'org-mode-hook #'show-smartparens-mode)
 
   ;; babel
@@ -361,9 +356,7 @@ through. Narrow the set per buffer with =C-M-$=, per project with a
 
 *** Configuration
 #+begin_src emacs-lisp :tangle config.el
-(use-package! org-agenda
-  :defer t
-  :config
+(after! org-agenda
   ;; start on monday
   (setopt org-agenda-start-on-weekday 1)
 
@@ -391,18 +384,14 @@ Shortcuts are mapped with the SPC n r prefix by default.
 #+end_src
 
 #+begin_src emacs-lisp :tangle config.el
-(use-package! websocket
-  :defer t
-  :after org-roam)
+;; normally we'd recommend hooking orui after org-roam, but since org-roam does not have
+;; a hookable mode anymore, you're advised to pick something yourself
+;; if you don't care about startup time, use
+;; (add-hook 'after-init-hook #'org-roam-ui-mode)
+(after! org-roam ;; or (after! org ...)
+  (require 'websocket)
+  (require 'org-roam-ui)
 
-(use-package! org-roam-ui
-  :defer t
-  :after org-roam ;; or :after org
-  ;;         normally we'd recommend hooking orui after org-roam, but since org-roam does not have
-  ;;         a hookable mode anymore, you're advised to pick something yourself
-  ;;         if you don't care about startup time, use
-  ;;  :hook (after-init . org-roam-ui-mode)
-  :config
   (setopt org-roam-ui-sync-theme t
           org-roam-ui-follow t
           org-roam-ui-update-on-save t
@@ -420,13 +409,12 @@ Shortcuts are mapped with the SPC n r prefix by default.
 #+end_src
 
 #+begin_src emacs-lisp :tangle config.el
-(use-package! org-gtd
-  :after org
-  :init
-  ;; Suppress upgrade warnings (must be set before package loads)
-  (setopt org-gtd-update-ack "4.6.1")
+;; Suppress upgrade warnings (must be set before package loads)
+(setopt org-gtd-update-ack "4.6.1")
 
-  :config
+(after! org
+  (require 'org-gtd)
+
   (setopt org-gtd-directory (expand-file-name "gtd/" org-directory))
 
   (add-to-list 'org-agenda-files org-gtd-directory)
@@ -549,9 +537,7 @@ If DEST, a buffer, is provided, insert the markup there."
 
 * Python
 #+begin_src emacs-lisp :tangle config.el
-(use-package! python
-  :defer t
-  :config
+(after! python
   (if (executable-find "ipython")
       (setopt python-shell-interpreter "ipython")
     (message "ipython not found in path. Using %s." python-shell-interpreter)))
@@ -559,9 +545,7 @@ If DEST, a buffer, is provided, insert the markup there."
 
 ** Conda
 #+begin_src emacs-lisp :tangle config.el
-(use-package! conda
-  :defer t
-  :config
+(after! conda
   (setopt conda-anaconda-home (expand-file-name "~/miniconda3"))
   (setopt conda-env-home-directory (expand-file-name "~/miniconda3"))
   (conda-env-initialize-interactive-shells)
@@ -571,9 +555,7 @@ If DEST, a buffer, is provided, insert the markup there."
 * Projectile
 Allow automatic recognition of projects given a list of paths.
 #+begin_src emacs-lisp :tangle config.el
-(use-package! projectile
-  :defer t
-  :config
+(after! projectile
   (setopt +workspaces-on-switch-project-behavior t)
   (setopt projectile-project-search-path '("~/dev"
                                            "/mnt/d/@Src/")))
@@ -581,18 +563,14 @@ Allow automatic recognition of projects given a list of paths.
 
 * Dired
 #+begin_src emacs-lisp :tangle config.el
-(use-package! dired
-  :defer t
-  :config
+(after! dired
   (setopt dired-async-mode       t
           dired-listing-switches "-alh --no-group -g"))
 #+end_src
 
 * Dirvish
 #+begin_src emacs-lisp :tangle config.el
-(use-package! dirvish
-  :defer t
-  :config
+(after! dirvish
   (setopt dirvish-quick-access-entries
           (let ((org-path (expand-file-name org-directory))
                 (documents-path (string-join (list vlv-home "One Drive - Kestrel Visio/Documents/") ""))
@@ -630,9 +608,7 @@ Allow automatic recognition of projects given a list of paths.
 
 * YASNIPPET
 #+begin_src emacs-lisp :tangle config.el
-(use-package! yasnippet
-  :defer t
-  :config
+(after! yasnippet
   (defun yasnippet-extract-arg-and-type (arg)
     "Extract argument name and type from a string of the form `arg: type'."
     (let* ((parts (split-string arg ": ")))
@@ -676,9 +652,7 @@ If there are no arguments, return `pass'."
 * C++
 ** LSP (clangd)
 #+begin_src emacs-lisp :tangle config.el
-(use-package! lsp-clangd
-  :defer t
-  :config
+(after! lsp-clangd
   (setopt lsp-clients-clangd-args
           '("-j=3"
             "--background-index"
@@ -696,9 +670,7 @@ If there are no arguments, return `pass'."
 #+end_src
 
 #+begin_src emacs-lisp :tangle config.el
-(use-package! cmake-ide
-  :defer t
-  :config
+(after! cmake-ide
   (cmake-ide-setup))
 #+End_src
 * Large language model (LLM) support
@@ -715,9 +687,7 @@ curl -fsSL https://ollama.com/install.sh | sh
 Set ollama as default backend for gptel, add default model and a few tweaks.
 
 #+begin_src emacs-lisp :tangle config.el
-(use-package! gptel
-  :defer t
-  :config
+(after! gptel
   (add-hook! 'gptel-post-stream-hook 'gptel-auto-scroll)
 
   (add-hook! 'gptel-post-response-functions 'gptel-end-of-response)
@@ -749,10 +719,9 @@ Set ollama as default backend for gptel, add default model and a few tweaks.
 #+end_src
 
 #+begin_src emacs-lisp :tangle config.el
-(use-package! llm-tool-collection
-  :defer t
-  :after gptel
-  :config
+(after! gptel
+  (require 'llm-tool-collection)
+
   (mapc (apply-partially #'apply #'gptel-make-tool)
         (llm-tool-collection-get-all)))
 #+end_src
@@ -764,10 +733,8 @@ Set ollama as default backend for gptel, add default model and a few tweaks.
 #+end_src
 
 #+begin_src emacs-lisp :tangle config.el
-(use-package! gptel-agent
-  :defer t
-  :after gptel
-  :config
+(after! gptel
+  (require 'gptel-agent)
   (gptel-agent-update))
 #+end_src
 
@@ -790,13 +757,9 @@ Prerequisites:
 ;; Load local Auggie configuration
 (add-to-list 'load-path (expand-file-name "auggie" doom-user-dir))
 
-(use-package! acp
-  :defer t)
+(after! acp
+  (require 'agent-shell)
 
-(use-package! agent-shell
-  :defer t
-  :after acp
-  :config
   ;; Load Auggie configuration and add it to available agents
   (require 'auggie-config)
   (add-to-list 'agent-shell-agent-configs (auggie-make-config)))
@@ -824,9 +787,7 @@ Prerequisites:
 (declare-function elfeed-search-selected "elfeed-search")
 (declare-function sk/elfeed-db-remove-entry nil)
 
-(use-package! elfeed
-  :defer t
-  :config
+(after! elfeed
   ;; the basic value cuts a part of the feed's title.
   ;; Increasing the column width fixes it.
   (setopt elfeed-goodies/feed-source-column-width 25)
@@ -890,20 +851,16 @@ promising and would bring plenty of nice features to the config.
 #+end_src
 
 #+begin_src emacs-lisp :tangle config.el
-(use-package! consult-mu
-  :defer t
-  :custom
+(after! consult-mu
+  (setopt consult-mu-maxnum 200)
 
-  ;;maximum number of results shown in minibuffer
-  (consult-mu-maxnum 200)
-  ;;show preview when pressing any keys
-  (consult-mu-preview-key 'any)
-  ;;do not mark email as read when previewed
-  (consult-mu-mark-previewed-as-read nil)
-  ;;do not amrk email as read when selected. This is a good starting point to ensure you would not miss important emails marked as read by mistake especially when trying this package out. Later you can change this to t.
-  (consult-mu-mark-viewed-as-read nil)
-  ;; open the message in mu4e-view-buffer when selected.
-  (consult-mu-action #'consult-mu--view-action))
+  (setopt consult-mu-preview-key 'any)
+
+  (setopt consult-mu-mark-previewed-as-read nil)
+
+  (setopt consult-mu-mark-viewed-as-read nil)
+
+  (setopt consult-mu-action #'consult-mu--view-action))
 #+end_src
 
 #+begin_src emacs-lisp :tangle packages.el
@@ -916,14 +873,14 @@ promising and would bring plenty of nice features to the config.
 #+end_src
 
 #+begin_src emacs-lisp :tangle config.el
-(use-package! consult-omni
-  :defer t
-  :custom
+;; General settings that apply to all sources
+(setopt consult-omni-show-preview t) ;;; show previews
+;; consult-omni's :type spec for this defcustom uses invalid widget
+;; names, so `setopt' crashes here validating against it (upstream bug);
+;; `setq' skips that validation.
+(setq consult-omni-preview-key "C-o") ;;; set the preview key to C-o
 
-  ;; General settings that apply to all sources
-  (consult-omni-show-preview t) ;;; show previews
-  (consult-omni-preview-key "C-o") ;;; set the preview key to C-o
-  :config
+(after! consult-omni
   ;; Load Sources Core code
   (require 'consult-omni-sources)
   ;; Load Embark Actions
@@ -1111,10 +1068,7 @@ From this point onwards, mu4e should be up and running.
 *** Configuration
 
 #+begin_src emacs-lisp :tangle config.el
-(use-package! mu
-  :defer t
-  :if (vlv-env-personal-p)
-  :init
+(when (vlv-env-personal-p)
   ;; setting up accounts
   (set-email-account! "@gmail.com"
                       '((mu4e-sent-folder       . "/gmail/Sent Mail")
@@ -1156,14 +1110,14 @@ From this point onwards, mu4e should be up and running.
 
 #+begin_src emacs-lisp :tangle no
 ;; accept completion from copilot and fallback to company
-(use-package! copilot
-  :defer t
-  :hook (prog-mode . copilot-mode)
-  :bind (:map copilot-completion-map
-              ("<tab>" . 'copilot-accept-completion)
-              ("TAB" . 'copilot-accept-completion)
-              ("C-TAB" . 'copilot-accept-completion-by-word)
-              ("C-<tab>" . 'copilot-accept-completion-by-word)))
+(add-hook 'prog-mode-hook #'copilot-mode)
+
+(after! copilot
+  (map! :map copilot-completion-map
+        "<tab>"    #'copilot-accept-completion
+        "TAB"      #'copilot-accept-completion
+        "C-TAB"    #'copilot-accept-completion-by-word
+        "C-<tab>"  #'copilot-accept-completion-by-word))
 
 #+end_src
 
@@ -1325,10 +1279,7 @@ From this point onwards, mu4e should be up and running.
 #+end_src
 
 #+begin_src emacs-lisp :tangle config.el
-(use-package! consult-everything
-  :defer t
-  :config
-
+(after! consult-everything
   ;; the .exe makes it work on wsl
   (setopt consult-everything-args "es.exe -r"))
 
@@ -1341,9 +1292,7 @@ From this point onwards, mu4e should be up and running.
 
 ** Tree-sitter
 #+begin_src emacs-lisp :tangle config.el
-(use-package! treesit
-  :defer t
-  :config
+(after! treesit
   (setopt treesit-auto-install-grammar 'ask)
 
   ;; TODO find a more optimal way to do this
@@ -1393,9 +1342,6 @@ COMMENT is an optional string appended to a new line."
 #+end_src
 
 #+begin_src emacs-lisp :tangle config.el
-(use-package! compiler-explorer
-  :defer t)
-
 (map! :leader
       :prefix "o"
       :desc "Compiler Explorer (GodBolt)" "c" #'compiler-explorer)
@@ -1407,9 +1353,6 @@ COMMENT is an optional string appended to a new line."
 #+end_src
 
 #+begin_src emacs-lisp :tangle config.el
-(use-package! devdocs
-  :defer t)
-
 (map! :leader
       :prefix "s"
       :desc "devdocs-lookup"
@@ -1423,26 +1366,26 @@ COMMENT is an optional string appended to a new line."
 #+end_src
 
 #+begin_src emacs-lisp :tangle config.el
-(use-package! spotify
-  ;; WARNING using "defer t" makes the package not be loaded when using bindings.
-  :config
-  (defun vlv-spotify-next-and-display()
-    "Plays the next song and displays it's author, name and album."
-    (interactive)
-    (spotify-next)
-    (call-interactively 'spotify-current))
+;; WARNING deferring load (e.g. via `after!') makes the package not be loaded when using bindings.
+(require 'spotify)
 
-  (defun vlv-spotify-previous-and-display()
-    "Plays the previous song and displays it's author, name and album."
-    (interactive)
-    (spotify-previous)
-    (call-interactively 'spotify-current))
+(defun vlv-spotify-next-and-display()
+  "Plays the next song and displays it's author, name and album."
+  (interactive)
+  (spotify-next)
+  (call-interactively 'spotify-current))
 
-  (defun vlv-spotify-playpause-and-display()
-    "Toggles pause and displays it's author, name and album."
-    (interactive)
-    (spotify-playpause)
-    (call-interactively 'spotify-current)))
+(defun vlv-spotify-previous-and-display()
+  "Plays the previous song and displays it's author, name and album."
+  (interactive)
+  (spotify-previous)
+  (call-interactively 'spotify-current))
+
+(defun vlv-spotify-playpause-and-display()
+  "Toggles pause and displays it's author, name and album."
+  (interactive)
+  (spotify-playpause)
+  (call-interactively 'spotify-current))
 
 (map! :leader
       (:prefix ("v" . "perso")
@@ -1488,10 +1431,6 @@ COMMENT is an optional string appended to a new line."
   :pin "36746d85870dac5aaee6b9af4aa1c3c0ef21a905")
 #+end_src
 
-#+begin_src emacs-lisp :tangle config.el
-(use-package! multi-vterm
-  :defer t)
-#+end_src
 
 * Emacs Application Framework EAF :WIP:
 
@@ -1532,9 +1471,7 @@ sudo apt-get install ffmpeg
 
 
 #+begin_src emacs-lisp :tangle config.el
-(use-package! whisper.el
-  :defer t
-  :config
+(after! whisper
   (setopt whisper-install-directory "/tmp/"
           whisper-model "base"
           whisper-language "en"
@@ -1587,64 +1524,60 @@ sudo apt-get install ffmpeg
 * Emacs Web Wowser EWW
 ** Configuration
 #+begin_src emacs-lisp :tangle config.el
-(use-package! eww
-  :defer t
-  :init
+(defconst vlv-eww-workspace-name "*EWW*"
+  "Name of the dedicated EWW workspace.")
 
-  (defconst vlv-eww-workspace-name "*EWW*"
-    "Name of the dedicated EWW workspace.")
+(defun vlv-eww--get-or-create-workspace ()
+  "Switch to EWW workspace, creating it if needed."
+  (if (+workspace-exists-p vlv-eww-workspace-name)
+      (+workspace-switch vlv-eww-workspace-name)
+    (+workspace-new vlv-eww-workspace-name)
+    (+workspace-switch vlv-eww-workspace-name)))
 
-  (defun vlv-eww--get-or-create-workspace ()
-    "Switch to EWW workspace, creating it if needed."
-    (if (+workspace-exists-p vlv-eww-workspace-name)
-        (+workspace-switch vlv-eww-workspace-name)
-      (+workspace-new vlv-eww-workspace-name)
-      (+workspace-switch vlv-eww-workspace-name)))
-
-  (defun vlv-eww--workspace-eww-buffers ()
-    "Return EWW buffers belonging to the EWW workspace, excluding current buffer."
-    (when (+workspace-exists-p vlv-eww-workspace-name)
-      (seq-filter
-       (lambda (buf)
+(defun vlv-eww--workspace-eww-buffers ()
+  "Return EWW buffers belonging to the EWW workspace, excluding current buffer."
+  (when (+workspace-exists-p vlv-eww-workspace-name)
+    (seq-filter
+     (lambda (buf)
                                         ; exclude the buffer being killed
-         (and (not (eq buf (current-buffer)))
-              (eq (buffer-local-value 'major-mode buf) 'eww-mode)))
-       (+workspace-buffer-list
-        (+workspace-get vlv-eww-workspace-name)))))
+       (and (not (eq buf (current-buffer)))
+            (eq (buffer-local-value 'major-mode buf) 'eww-mode)))
+     (+workspace-buffer-list
+      (+workspace-get vlv-eww-workspace-name)))))
 
-  (defun vlv-eww--maybe-close-workspace ()
-    "Close EWW workspace if no EWW buffers remain in it."
-    (when (+workspace-exists-p vlv-eww-workspace-name)
-      (unless (vlv-eww--workspace-eww-buffers)
-        (when (string= (+workspace-current-name) vlv-eww-workspace-name)
-          (+workspace-switch +workspace--last))
-        (persp-kill vlv-eww-workspace-name)
-        (message "EWW workspace closed."))))
+(defun vlv-eww--maybe-close-workspace ()
+  "Close EWW workspace if no EWW buffers remain in it."
+  (when (+workspace-exists-p vlv-eww-workspace-name)
+    (unless (vlv-eww--workspace-eww-buffers)
+      (when (string= (+workspace-current-name) vlv-eww-workspace-name)
+        (+workspace-switch +workspace--last))
+      (persp-kill vlv-eww-workspace-name)
+      (message "EWW workspace closed."))))
 
-  (defun vlv-eww (url)
-    "Open URL in EWW in the dedicated EWW workspace."
-    (interactive
-     (list (read-string "URL: " (thing-at-point-url-at-point))))
-    (vlv-eww--get-or-create-workspace)
-    (eww url)
-    (delete-other-windows))
+(defun vlv-eww (url)
+  "Open URL in EWW in the dedicated EWW workspace."
+  (interactive
+   (list (read-string "URL: " (thing-at-point-url-at-point))))
+  (vlv-eww--get-or-create-workspace)
+  (eww url)
+  (delete-other-windows))
 
-  (defun vlv-eww-open-in-eww-workspace (url &rest _)
-    "Open URL in the EWW workspace. Used as `browse-url-browser-function'."
-    (vlv-eww url))
+(defun vlv-eww-open-in-eww-workspace (url &rest _)
+  "Open URL in the EWW workspace. Used as `browse-url-browser-function'."
+  (vlv-eww url))
 
-  (defun vlv-eww--on-buffer-kill ()
-    "Close EWW workspace when the last EWW buffer is killed."
-    (when (eq major-mode 'eww-mode)
-      (vlv-eww--maybe-close-workspace)))
+(defun vlv-eww--on-buffer-kill ()
+  "Close EWW workspace when the last EWW buffer is killed."
+  (when (eq major-mode 'eww-mode)
+    (vlv-eww--maybe-close-workspace)))
 
-  (setq browse-url-browser-function #'vlv-eww-open-in-eww-workspace)
+(setq browse-url-browser-function #'vlv-eww-open-in-eww-workspace)
 
-  (map! :leader
-        (:prefix "o"
-         :desc "EWW browser" "u" #'vlv-eww))
+(map! :leader
+      (:prefix "o"
+       :desc "EWW browser" "u" #'vlv-eww))
 
-  :config
+(after! eww
   (add-hook! 'kill-buffer-hook #'vlv-eww--on-buffer-kill)
 
   (setq eww-bookmarks
@@ -1687,9 +1620,7 @@ It can be quite disturbing to have a white background PDF displayed given that b
 * ibuffer
 
 #+begin_src emacs-lisp :tangle config.el
-(use-package! ibuffer
-  :defer t
-  :config
+(after! ibuffer
   (map! :leader
         :prefix "b"
         :desc "Kill buffer and window" "K" #'kill-buffer-and-window)
@@ -1708,9 +1639,7 @@ It can be quite disturbing to have a white background PDF displayed given that b
 
 #+begin_src emacs-lisp :tangle config.el
 ;; append the WARNING keyword to the keyword faces
-(use-package! hl-todo
-  :defer t
-  :config
+(after! hl-todo
   (setopt hl-todo-keyword-faces (append hl-todo-keyword-faces '(("WARNING" warning bold))))
 
   ;; add warning to the base regex used by hl-todo
@@ -1718,9 +1647,7 @@ It can be quite disturbing to have a white background PDF displayed given that b
 #+end_src
 * Magit
 #+begin_src emacs-lisp :tangle config.el
-(use-package! magit
-  :defer t
-  :config
+(after! magit
   (defun vlv-delete-merged-branches ()
     "Fetch prune then deletes branches already merged to a target branch.
 Found in https://emacs.stackexchange.com/questions/60200/magit-remove-local-branches-that-were-merged-into-another-branch"
@@ -1822,9 +1749,7 @@ There's some overlay with LSP errors and warnings (in rust at least), hence this
 #+end_src
 
 #+begin_src emacs-lisp :tangle no
-(use-package! flyover
-  :defer t
-  :config
+(after! flyover
   ;; Enable flyover-mode globally
   (add-hook! 'flycheck-mode-hook #'flyover-mode)
 
@@ -1888,12 +1813,10 @@ To be used in yocto workflows.
   (add-to-list 'treesit-language-source-alist
                '(bitbake "https://github.com/tree-sitter-grammars/tree-sitter-bitbake")))
 
-(use-package! bitbake
-  :defer t
-  :mode (("\\.bb\\'"       . bitbake-ts-mode)
-         ("\\.bbappend\\'" . bitbake-ts-mode)
-         ("\\.bbclass\\'"  . bitbake-ts-mode)
-         ("\\.inc\\'"      . bitbake-ts-mode)))
+(add-to-list 'auto-mode-alist '("\\.bb\\'"       . bitbake-ts-mode))
+(add-to-list 'auto-mode-alist '("\\.bbappend\\'" . bitbake-ts-mode))
+(add-to-list 'auto-mode-alist '("\\.bbclass\\'"  . bitbake-ts-mode))
+(add-to-list 'auto-mode-alist '("\\.inc\\'"      . bitbake-ts-mode))
 #+end_src
 
 * Stuff to do or learn when porting to Emacs 31
@@ -2346,7 +2269,7 @@ To install the grammars, use 'M-x markdown-ts-mode-install-parsers'.
 
 * evil-mode
 #+begin_src emacs-lisp :tangle config.el
-;; evil is loaded before config.el, hence using after! or use-package! :defer t
+;; evil is loaded before config.el, hence wrapping this in an `after!' block
 ;; makes this block never to be run.
 
 (setopt evil-shift-width 30)
@@ -2360,9 +2283,7 @@ To install the grammars, use 'M-x markdown-ts-mode-install-parsers'.
 #+end_src
 
 #+begin_src emacs-lisp :tangle config.el
-(use-package! mastodon
-  :defer t
-  :config
+(after! mastodon
   (setopt mastodon-active-user "victorlattaro")
   (setopt mastodon-instance-url "https://mastodon.social"))
 #+end_src
@@ -2374,9 +2295,7 @@ To install the grammars, use 'M-x markdown-ts-mode-install-parsers'.
 #+end_src
 
 #+begin_src emacs-lisp :tangle config.el
-(use-package! alarm-clock
-  :defer t
-  :config
+(after! alarm-clock
   (when (vlv-env-work-p)
     (alarm-clock-set "08:30" "🍵 Coffee time!")
     (alarm-clock-set "10:00" "🍵 Coffee time!")
