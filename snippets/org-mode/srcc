@@ -4,5 +4,5 @@
 # key: srcc
 # --
 #+begin_src emacs-lisp :tangle config.el
-`%`(use-package! $0)
+`%`(after! $0)
 #+end_src

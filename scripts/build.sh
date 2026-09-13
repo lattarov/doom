@@ -1,31 +1,10 @@
 #!/usr/bin/env bash
-# install-doom.sh — Interactive Doom Emacs setup
+# build.sh — Interactive Doom Emacs setup
 set -euo pipefail
 
-# ── helpers ───────────────────────────────────────────────────────────────────
-log()     { echo "[INFO]  $*"; }
-warn()    { echo "[WARN]  $*" >&2; }
-die()     { echo "[ERROR] $*" >&2; exit 1; }
-divider() { echo ""; echo "════════════════════════════════════════════════════════"; echo "  $*"; echo "════════════════════════════════════════════════════════"; echo ""; }
-
-ask() {
-  # ask "Question?" => returns 0 for yes, 1 for no
-  local prompt="$1"
-  local default="${2:-y}"
-  local yn
-  if [[ "$default" == "y" ]]; then
-    read -r -p "  $prompt [Y/n] " yn
-    yn="${yn:-y}"
-  else
-    read -r -p "  $prompt [y/N] " yn
-    yn="${yn:-n}"
-  fi
-  [[ "$yn" =~ ^[Yy]$ ]]
-}
-
-step_done()   { echo "  ✔  $*"; }
-step_skip()   { echo "  ─  $* (skipped)"; }
-step_fail()   { echo "  ✘  $*" >&2; }
+SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
+# shellcheck source=lib/common.sh
+source "${SCRIPT_DIR}/lib/common.sh"
 
 # ── platform detection ────────────────────────────────────────────────────────
 if [[ "${OS:-}" == "Windows_NT" ]]; then
@@ -58,7 +37,7 @@ step_apt_deps() {
     fd-find \
     ffmpeg \
     ffmpegthumbnailer \
-    gdb
+    gdb \
     git \
     graphviz \
     imagemagick \
@@ -111,7 +90,7 @@ step_apt_deps() {
     texlive-fonts-recommended \
     texlive-latex-base \
     texlive-latex-extra \
-    wl-clipboard \
+    wl-clipboard
 
   log "Installing Cascadia Code (doom-font)..."
   sudo apt install -y fonts-cascadia-code && fc-cache -f \
@@ -395,17 +374,15 @@ step_build_emacs() {
 step_doom() {
   divider "Step 6 — Doom Emacs"
 
-  DOOM_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/emacs"
-
-  if [[ -d "$DOOM_DIR" ]]; then
-    log "Doom already present at ${DOOM_DIR}."
+  if [[ -d "$EMACS_DIR" ]]; then
+    log "Doom already present at ${EMACS_DIR}."
     ask "Run doom sync?" || { step_skip "doom sync"; return 0; }
-    "${DOOM_DIR}/bin/doom" sync
+    "$DOOM_BIN" sync
     step_done "doom sync complete."
   else
     ask "Install Doom Emacs?" || { step_skip "Doom install"; return 0; }
-    git clone --depth=1 https://github.com/doomemacs/doomemacs "$DOOM_DIR"
-    "${DOOM_DIR}/bin/doom" install
+    git clone --depth=1 https://github.com/doomemacs/doomemacs "$EMACS_DIR"
+    "$DOOM_BIN" install
     step_done "Doom Emacs installed."
   fi
 }
