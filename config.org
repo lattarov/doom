@@ -1114,25 +1114,6 @@ From this point onwards, mu4e should be up and running.
   :defer t
   :if (vlv-env-personal-p)
   :init
-  ;; installation path for mu4e installed by the makefile (manual compiled)
-  (add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu4e")
-
-  ;; apt-based installation
-  (let* ((mu-version-command               "mu --version")
-         (mu-version-command-output-prefix "version ")
-         (mu-version-command-output        (shell-command-to-string mu-version-command))
-         (mu4e-target-version              (string-trim (string-remove-prefix
-                                                         mu-version-command-output-prefix
-                                                         mu-version-command-output)))
-         (mu4e-target-path-base            "/usr/share/emacs/site-lisp/elpa-src/mu4e-")
-         (mu4e-load-path                   (concat mu4e-target-path-base
-                                                   mu4e-target-version)))
-    ;; check if directory exusts
-    (if (file-directory-p mu4e-load-path)
-        (add-to-list 'load-path mu4e-load-path)
-      (error "Path to mu4e does not exist: %s. \n Potential version mismatch between mu and mu4e"
-             mu4e-load-path)))
-
   ;; setting up accounts
   (set-email-account! "@gmail.com"
                       '((mu4e-sent-folder       . "/gmail/Sent Mail")
