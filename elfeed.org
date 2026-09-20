@@ -15,3 +15,4 @@
 ** [[https://silosneeded.com/en/feed.xml][Silos Needed]]
 ** [[https://feeds.fireside.fm/easyitalian/rss][Easy Italian]]
 ** [[https://users.cg.tuwien.ac.at/zsolnai/feed/][Károly Zsolnai-Fehér – Research Scientist]]
+** [[https://www.insieme.com.br/it/feed][Insieme]]
