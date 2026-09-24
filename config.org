@@ -565,7 +565,7 @@ Allow automatic recognition of projects given a list of paths.
 #+begin_src emacs-lisp :tangle config.el
 (after! dired
   (setopt dired-async-mode       t
-          dired-listing-switches "-alh --no-group -g"))
+          dired-listing-switches "-alh --no-group -g --sort=extension"))
 #+end_src
 
 * Dirvish
