@@ -738,6 +738,58 @@ Set ollama as default backend for gptel, add default model and a few tweaks.
   (gptel-agent-update))
 #+end_src
 
+** Claude Code
+[[https://github.com/manzaltu/claude-code-ide.el][claude-code-ide.el]] runs the =claude= CLI inside Emacs, so it uses the Claude Code
+subscription (log in once with =claude= → =/login=).  gptel can't: it calls the
+API directly, and subscription logins are not allowed in third-party clients.
+
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! claude-code-ide
+  :recipe (:host github
+           :repo "manzaltu/claude-code-ide.el"))
+#+end_src
+
+Terminals come from Doom's =:term= modules (=SPC o t= / =SPC o T=), and Claude
+Code reuses whichever one is enabled.  Its keys sit under the =:tools llm=
+prefix (=SPC o l=), next to gptel's.
+
+#+begin_src emacs-lisp :tangle config.el
+(defcustom vlv-claude-code-width-ratio 0.4
+  "Share of the frame width taken by the Claude Code side window."
+  :type 'number
+  :group 'vlv)
+
+(defcustom vlv-claude-code-min-width 100
+  "Minimum width, in columns, of the Claude Code side window."
+  :type 'integer
+  :group 'vlv)
+
+(defun vlv/claude-code ()
+  "Toggle the project's Claude Code window, starting Claude if none runs."
+  (interactive)
+  (setopt claude-code-ide-window-width
+          (max vlv-claude-code-min-width
+               (floor (* vlv-claude-code-width-ratio (frame-width)))))
+  (condition-case nil
+      (claude-code-ide-toggle)
+    (user-error (claude-code-ide))))
+
+(after! claude-code-ide
+  (setopt claude-code-ide-terminal-backend
+          (cond ((modulep! :term ghostel) 'ghostel)
+                ((modulep! :term vterm) 'vterm)
+                (t 'eat)))
+  (claude-code-ide-emacs-tools-setup))
+
+(map! :leader
+      :prefix "o l"
+      :desc "Toggle Claude Code"         "c" #'vlv/claude-code
+      :desc "Claude Code menu"           "C" #'claude-code-ide-menu
+      :desc "Send prompt to Claude"      "p" #'claude-code-ide-send-prompt
+      :desc "Insert selection in Claude" "i" #'claude-code-ide-insert-at-mentioned)
+#+end_src
+
 ** Auggie (Augment Code CLI) via agent-shell :WIP:
 Auggie is the Augment Code CLI that provides AI-powered coding assistance via the Agent Client Protocol (ACP).
 This integrates agent-shell.el to use Auggie alongside gptel backends.
