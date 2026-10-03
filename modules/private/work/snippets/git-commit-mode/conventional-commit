@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: Conventional Commit
+# key: cc
+# expand-env: ((type "feat") (scope nil) (breaking nil))
+# --
+[VILAT] `type``(and scope (format "(%s)" scope))``(and breaking "!")`: $1
+
+$2
+
+`(and breaking "BREAKING CHANGE: ")`$0

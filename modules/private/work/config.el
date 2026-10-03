@@ -160,3 +160,13 @@ from home.  COMMENT is an optional string appended on a new line."
   (alarm-clock-set "12:00" "nham nham!")
   (alarm-clock-set "15:00" "🍵 Coffee time!")
   (alarm-clock-set "17:00" "Go home!"))
+
+
+;;
+;;; Commit messages
+
+;; Override commit-butler's "Conventional Commit" snippet to add the
+;; "[VILAT] " prefix.  Prepended, so it shadows the package's copy.
+(after! yasnippet
+  (add-to-list 'yas-snippet-dirs
+               (expand-file-name "snippets" (dir!))))
