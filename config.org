@@ -869,11 +869,9 @@ Prerequisites:
       :desc "Enter elfeed" "e" #'elfeed
       :desc "Update all feeds" "u" #'elfeed-update)
 
-;; copy elfeed.org to the org directory. Put here so that the elfeed.org
-;; is tangled whenever doom-reload is run.
-
-(when (vlv-env-personal-p)
-  (copy-file (expand-file-name "elfeed.org" doom-user-dir) org-directory t))
+;; read the feed list straight from the private config. Doom's :app rss +org
+;; defaults to a relative "elfeed.org", resolved against `org-directory'.
+(setopt rmh-elfeed-org-files (list (expand-file-name "elfeed.org" doom-user-dir)))
 #+end_src
 
 * Consult :wip:
