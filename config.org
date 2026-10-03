@@ -165,9 +165,6 @@ In order to disactivate packages, the easiest way is to use the 'disable' field 
 (defvar vlv-private-config-workspace "DOOM"
   "Name of the private Doom config workspace.")
 
-(defvar vlv-private-config-workspace "DOOM"
-  "Name of the private Doom config workspace.")
-
 (defun vlv--private-config-workspace ()
   "Switch to `vlv-private-config-workspace', creating it on first call."
   (unless (modulep! :ui workspaces)
