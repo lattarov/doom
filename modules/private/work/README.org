@@ -1,0 +1,42 @@
+#+title: :private work
+#+subtitle: Everything that only makes sense on the work machine
+
+* Description
+Work-only tools and settings. =init.el= enables this module only when
+=vlv-env-work-p= is non-nil (native Windows or WSL):
+
+#+begin_src emacs-lisp
+:private
+(:if (vlv-env-work-p) work)
+#+end_src
+
+It provides:
+- extra =exec-path= / =PATH= entries for the native Windows install (=c:/Emacs=
+  runtimes, Cygwin);
+- =clang= as the org-babel C/C++ compiler;
+- a TightVNC machine menu (=C-c v=);
+- opening the project's =.sln= in Visual Studio (=SPC o s=);
+- launching Wind River Workbench 3 / 4 (=SPC o W= / =SPC o w=);
+- [[https://github.com/jthaman/consult-everything][consult-everything]] for Windows' Everything search (=SPC s E=);
+- the C# tree-sitter grammar source;
+- =vlv-work-gen-payfit-report=, the monthly Payfit expense comment;
+- daily reminders through =alarm-clock=;
+- =robot-mode= and =robot-log= for Robot Framework.
+
+* Configuration
+** TightVNC password
+The password is read from auth-source only, e.g. in =~/.authinfo.gpg=:
+
+#+begin_example
+machine vnc-work login admin password <secret>
+#+end_example
+
+** Tree-sitter grammars on Windows
+Download or compile grammars into a subdirectory of =C:/Tiama/= (to avoid false
+antivirus warnings and blockers) and symlink it to
+=treesit--install-language-grammar-out-dir-history=. Here the source directory
+is =c:/Tiama/tree-sitter=:
+
+#+begin_src pwsh
+mklink /D "c:/Users/LATTARO-VOLPINI/.config/emacs/.local/cache/tree-sitter" "c:/Tiama/tree-sitter"
+#+end_src
