@@ -1557,11 +1557,22 @@ There's some overlay with LSP errors and warnings (in rust at least), hence this
 #+end_src
 
 * Conventional commits
+[[file:~/dev/commit-butler][commit-butler]] inserts conventional commit headers from a transient menu
+(=C-c C-;= in commit buffers) or the =cc= snippet.  The work-only "[VILAT] "
+prefix is set in the =:private work= module.
+
+#+begin_src emacs-lisp :tangle packages.el
+;; TODO switch to the GitHub recipe once published
+(package! commit-butler
+  :recipe (:local-repo "~/dev/commit-butler"
+           :files ("*.el" "snippets")))
+#+end_src
 
 #+begin_src emacs-lisp :tangle config.el
-;; TODO convert to proper package with vc
-(quiet! (load-file (expand-file-name "conventional-commits-snippets.el"
-                                     doom-user-dir)))
+(use-package! commit-butler
+  :hook (git-commit-setup . commit-butler-mode)
+  :config
+  (after! yasnippet (commit-butler-yas-setup)))
 #+end_src
 
 * display-time

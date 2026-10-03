@@ -160,3 +160,10 @@ from home.  COMMENT is an optional string appended on a new line."
   (alarm-clock-set "12:00" "nham nham!")
   (alarm-clock-set "15:00" "🍵 Coffee time!")
   (alarm-clock-set "17:00" "Go home!"))
+
+
+;;
+;;; Commit messages
+
+(after! commit-butler
+  (setq commit-butler-prefix "[VILAT] "))
