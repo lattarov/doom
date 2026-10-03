@@ -213,6 +213,7 @@
        ;;web               ; the tubes
        (yaml +lsp          ; JSON, but readable
              +tree-sitter)
+       yocto             ; private: bitbake, kas & device trees
        ;;zig               ; C, but simpler
 
        :email

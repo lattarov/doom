@@ -1344,9 +1344,6 @@ From this point onwards, mu4e should be up and running.
 
   ;; TODO find a more optimal way to do this
   (add-to-list 'treesit-language-source-alist
- 		       '(devicetree "https://github.com/joelspadin/tree-sitter-devicetree"))
-
-  (add-to-list 'treesit-language-source-alist
  		       '(csharp     "https://github.com/tree-sitter/tree-sitter-c-sharp.git")))
 #+end_src
 
@@ -1846,26 +1843,6 @@ There's some overlay with LSP errors and warnings (in rust at least), hence this
 (package! fzf)
 #+end_src
 
-* bitbake-mode
-To be used in yocto workflows.
-
- #+begin_src emacs-lisp :tangle packages.el                       
-(package! bitbake)                                               
-(package! bitbake-ts-mode)
-#+end_src                                                        
-
-#+begin_src emacs-lisp :tangle config.el
-;; bitbake is not in treesit-language-source-alist by default
-(after! treesit
-  (add-to-list 'treesit-language-source-alist
-               '(bitbake "https://github.com/tree-sitter-grammars/tree-sitter-bitbake")))
-
-(add-to-list 'auto-mode-alist '("\\.bb\\'"       . bitbake-ts-mode))
-(add-to-list 'auto-mode-alist '("\\.bbappend\\'" . bitbake-ts-mode))
-(add-to-list 'auto-mode-alist '("\\.bbclass\\'"  . bitbake-ts-mode))
-(add-to-list 'auto-mode-alist '("\\.inc\\'"      . bitbake-ts-mode))
-#+end_src
-
 * Stuff to do or learn when porting to Emacs 31
 ** TODO Emacs on MS-Windows is now capable of exporting frame screenshots to files.
 The new primitive 'w32-export-frame' can be used to export a screenshot
@@ -2359,12 +2336,6 @@ To install the grammars, use 'M-x markdown-ts-mode-install-parsers'.
 
 (package! robot-log
   :disable (vlv-env-personal-p))
-#+end_src
-
-* Device tree
-
-#+begin_src emacs-lisp :tangle packages.el
-(package! dts-mode)
 #+end_src
 
 * systemd
