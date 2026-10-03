@@ -570,7 +570,7 @@ Allow automatic recognition of projects given a list of paths.
 (after! dirvish
   (setopt dirvish-quick-access-entries
           (let ((org-path (expand-file-name org-directory))
-                (documents-path (string-join (list vlv-home "One Drive - Kestrel Visio/Documents/") ""))
+                (documents-path (string-join (list vlv-home "OneDrive - Kestrel Vision/Documents/") ""))
                 (downloads-path (string-join (list vlv-home "Downloads/") "")))
             `(("h" "~" "Home")
               ("d" ,downloads-path "Downloads")
