@@ -255,7 +255,7 @@ In order to disactivate packages, the easiest way is to use the 'disable' field 
 
 (add-hook! '(Info-mode-hook
              Man-mode-hook
-             compilation-mode
+             compilation-mode-hook
              conf-unix-mode-hook
              elfeed-search-mode-hook
              elfeed-show-mode-hook
@@ -271,8 +271,8 @@ In order to disactivate packages, the easiest way is to use the 'disable' field 
              python-mode-hook
              python-ts-mode-hook
              woman-mode-hook
-             yaml-mode
-             yaml-ts-mode) 'olivetti-mode)
+             yaml-mode-hook
+             yaml-ts-mode-hook) 'olivetti-mode)
 #+end_src
 
 * Spell checking
