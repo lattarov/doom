@@ -578,7 +578,7 @@ Allow automatic recognition of projects given a list of paths.
               ("o" ,org-path "Org")
               ("r" "~/dev/" "Repos")
               ("c" "/mnt/c/" "C:/")
-              ("d" "/mnt/d/" "D:/"))))
+              ("e" "/mnt/d/" "D:/"))))
 
   ;; set `tramp-direct-async-process' locally in all ssh connections
   (connection-local-set-profile-variables
