@@ -14,6 +14,17 @@
 ;;   Alternatively, press 'gd' (or 'C-c c d') on a module to browse its
 ;;   directory (for easy access to its source code).
 
+;; Work or personal machine? Defined here, before `doom!', so that the module
+;; list below and every packages.el/config.el can rely on them.
+(defun vlv-env-work-p ()
+  "Return non-nil on the work machine (native Windows or WSL)."
+  (or (getenv "WSL_DISTRO_NAME")
+      (eq system-type 'windows-nt)))
+
+(defun vlv-env-personal-p ()
+  "Return non-nil on a personal machine."
+  (not (vlv-env-work-p)))
+
 (doom! :input
        ;;bidi              ; (tfel ot) thgir etirw uoy gnipleh
        ;;chinese
@@ -232,4 +243,7 @@
 
        :config
        literate
-       (default +bindings +smartparens))
+       (default +bindings +smartparens)
+
+       :private
+       (:if (vlv-env-work-p) work)) ; work-only tools, see modules/private/work

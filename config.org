@@ -41,91 +41,29 @@
 
 * Cross platform compatibility
 
-Small tweaks to activate or configurate variables depending on the machine. This will ultimately be replaced by doom profiles + modules, but it should work for now.
+The work/personal split is decided in =init.el=, before the =doom!= block, by
+=vlv-env-work-p= and =vlv-env-personal-p=. Defining them there makes them
+available to =init.el= itself and to every =packages.el= and =config.el=, so
+nothing has to be tangled into several files.
 
-#+name: vlv-env-setup
-#+begin_src emacs-lisp :tangle no
+Everything that only makes sense at work lives in the =:private work= module
+(=modules/private/work/=), which =init.el= enables only when =vlv-env-work-p= is
+non-nil. What remains in this file are one-line differences in shared settings
+(paths, e-mail address, ...) and =:disable= flags on personal-only packages.
+
+#+begin_src emacs-lisp :tangle config.el
 (defgroup vlv nil
   "personal config toggles."
   :group 'convenience)
 
-(defcustom vlv-env
-  (if (or (getenv "WSL_DISTRO_NAME")
-          (eq system-type 'windows-nt))
-      "WORK"
-    "PERSONAL")
-
-  "The current environment.
-
-Used to enable/disable parts of the configuration.
-
-
-TODO: replace this by a dedicated config for work once the doom
-profiles API is stable."
-  :type '(choice (const :tag "PERSONAL" "PERSONAL")
-          (const :tag "WORK" "WORK"))
-  :group 'vlv)
-
-(defun vlv-env-work-p ()
-  "Return non-nil if the current environment is Work."
-  (string-equal vlv-env "WORK"))
-
-(defun vlv-env-personal-p ()
-  "Return non-nil if the current environment is Personal."
-  (string-equal vlv-env "PERSONAL"))
-
 (defcustom vlv-home
-  (if (vlv-env-work-p)
-      (if (getenv "WSL_DISTRO_NAME")
-          "/mnt/c/Users/LATTARO-VOLPINI/"
-        "~/")
+  (if (and (vlv-env-work-p)
+           (getenv "WSL_DISTRO_NAME"))
+      "/mnt/c/Users/LATTARO-VOLPINI/"
     "~/")
   "The home directory variable, compatible between Linux, Windows and wsl systems."
   :type 'string
   :group 'vlv)
-
-;; external doom dependencies in work environment
-(when (vlv-env-work-p)
-  (let* ((vlv-env-work-p-emacs-install-path  "c:/Emacs/")
-         (vlv-env-work-p-runtimes-path       (expand-file-name "runtimes/"
-                                                               vlv-env-work-p-emacs-install-path))
-         (vlv-env-work-p-runtimes-fd-path    (expand-file-name "fd"
-                                                               vlv-env-work-p-runtimes-path))
-         (vlv-env-work-p-runtimes-rg-path    (expand-file-name "rg"
-                                                               vlv-env-work-p-runtimes-path))
-
-         (vlv-env-work-p-cygwin-path         "C:/cygwin64")
-
-         (vlv-env-work-p-cygwin-bin-path     (expand-file-name "bin"
-                                                               vlv-env-work-p-cygwin-path))
-
-
-         (paths-to-add (list vlv-env-work-p-emacs-install-path
-                             vlv-env-work-p-runtimes-path
-                             vlv-env-work-p-runtimes-fd-path
-                             vlv-env-work-p-runtimes-rg-path
-                             vlv-env-work-p-cygwin-path
-                             vlv-env-work-p-cygwin-bin-path)))
-
-    ;; Add each existing path to `exec-path` and to the PATH env var
-    (dolist (path paths-to-add)
-      (let ((dir (directory-file-name (expand-file-name path))))
-        (when (file-directory-p dir)
-          ;; Add to Emacs' exec-path (used by call-process, etc.)
-          (add-to-list 'exec-path dir)
-          ;; Also add to the OS PATH environment so external tools can be found
-          (setenv "PATH" (concat dir ";" (getenv "PATH"))))))))
-#+end_src
-
-
-In order to disactivate packages, the easiest way is to use the 'disable' field of packages! macro. the vlv-env-* helper functions are quite handy for that, hence tangling them to packages.el and config.el at the same time solves all issues.
-
-#+begin_src emacs-lisp :tangle config.el :noweb yes
-<<vlv-env-setup>>
-#+end_src
-
-#+begin_src emacs-lisp :tangle packages.el :noweb yes
-<<vlv-env-setup>>
 #+end_src
 * Doom
 #+begin_src emacs-lisp :tangle config.el
@@ -337,12 +275,7 @@ through. Narrow the set per buffer with =C-M-$=, per project with a
                              "org/") ""))
 
 (after! org
-  (add-hook! 'org-mode-hook #'show-smartparens-mode)
-
-  ;; babel
-  (when (vlv-env-work-p)
-    (setopt org-babel-C++-compiler "clang"
-            org-babel-C-compiler   "clang")))
+  (add-hook! 'org-mode-hook #'show-smartparens-mode))
 #+end_src
 ** Org agenda
 *** Improvements
@@ -1169,211 +1102,14 @@ From this point onwards, mu4e should be up and running.
 #+end_src
 
 * Work
-** TightVNC
-*** Transient menu :WIP:
-#+begin_src emacs-lisp :tangle config.el
-(require 'transient)
-(defvar vlv-vnc-machines
-  '(("VISIO"            . "10.4.54.221")
-    ("VERN"             . "10.102.31.63")
-    ("CMX"              . "10.4.54.223")
-    ("CXP"              . "10.4.54.224")
-    ("STARLORD"         . "10.4.52.3")
-    ("BDT-INCA10-VERN"  . "10.102.31.64"))
-  "Alist mapping machine names to their TightVNC IPs.")
+Work-only configuration (TightVNC, Visual Studio, Wind River Workbench,
+consult-everything, Robot Framework, ...) lives in the =:private work= module,
+see [[file:modules/private/work/README.org]].
 
-(defcustom vlv-vncviewer-path (string-join (list (if (getenv "WSL_DISTRO_NAME")
-                                                     "/mnt/c/"
-                                                   "C:/")
-                                                 "Program Files/TightVNC/tvnviewer.exe") "")
-  "Path to the TightVNC viewer executable."
-  :type 'file
-  :group 'work)
-
-(defun vlv--vnc-password ()
-  "Retrieve VNC password from auth-source, or prompt if not found."
-  (require 'auth-source)
-  (let ((entry (auth-source-search :host "vnc-work" :user "admin" :max 1)))
-    (if entry
-        (funcall (plist-get (car entry) :secret))
-      "ADMINVME")))
-
-(defun vlv--vnc-check-viewer ()
-  "Signal an error if the TightVNC viewer executable is not found."
-  (unless (file-executable-p vlv-vncviewer-path)
-    (user-error "TightVNC not found at: %s" vlv-vncviewer-path)))
-
-(defun vlv-connect-to-vnc-with-machine (machine)
-  "Connect to MACHINE by name via TightVNC."
-  (let ((ip (cdr (assoc machine vlv-vnc-machines))))
-    (unless ip (user-error "Unknown machine: %s" machine))
-    (vlv-connect-to-vnc-with-ip ip)))
-
-(defun vlv-connect-to-vnc-with-ip (ip)
-  "Connect to IP via TightVNC."
-  (vlv--vnc-check-viewer)
-  (message "Connecting to %s..." ip)
-  (start-process "tightvnc" nil vlv-vncviewer-path
-                 ip (concat "-password=" (vlv--vnc-password))))
-
-(defun vlv--vnc-assign-keys (machines)
-  "Assign unique single-char keys to MACHINES, falling back to digits on collision."
-  (let ((used '())
-        (counter 0))
-    (mapcar (lambda (pair)
-              (let* ((name (car pair))
-                     (preferred (downcase (substring name 0 1)))
-                     (key (if (member preferred used)
-                              (prog1 (number-to-string counter)
-                                (cl-incf counter))
-                            preferred)))
-                (push key used)
-                (cons key name)))
-            machines)))
-
-(defun vlv--vnc-transient-items ()
-  "Build transient suffix list dynamically from `vlv-vnc-machines'."
-  (mapcar (lambda (pair)
-            (let ((key  (car pair))
-                  (name (cdr pair)))
-              (list key name
-                    `(lambda () (interactive)
-                       (vlv-connect-to-vnc-with-machine ,name)))))
-          (vlv--vnc-assign-keys vlv-vnc-machines)))
-
-(transient-define-prefix vlv-vnc-menu ()
-  "TightVNC machine selector — built dynamically from `vlv-vnc-machines'."
-  [:description "Machines"
-   :class transient-column
-   :setup-children
-   (lambda (_)
-     (mapcar
-      (lambda (item)
-        (transient-parse-suffix 'vlv-vnc-menu item))
-      (append
-       (vlv--vnc-transient-items)
-       '(("o" "Choose IP…"
-          (lambda () (interactive)
-            (vlv-connect-to-vnc-with-ip (read-string "IP: "))))))))])
-
-(map! :prefix "C-c" :desc "TightVNC menu" "v" #'vlv-vnc-menu)
-#+end_src
-
-** Visual Studio
-#+begin_src emacs-lisp :tangle config.el
-(defun vlv-find-and-open-sln-in-visual-studio ()
-  "Find .sln files in the current Projectile project and open one in Visual Studio."
-  (interactive)
-  (let* ((project-root (projectile-project-root))
-         (sln-files (directory-files-recursively project-root "\\.sln$")))
-    (if (null sln-files)
-        (error "No .sln files found in the project."))
-    (let ((chosen-sln (if (= (length sln-files) 1)
-                          (car sln-files)
-                        (completing-read "Choose a solution: " sln-files nil t))))
-      (let* ((command (format "start devenv \"%s\"" chosen-sln)))
-        (message "Running: %s" command)
-        (start-process-shell-command "open-sln" nil command)))))
-
-(map! :leader
-      :prefix "o"
-      :desc "Find project SLN and open Visual Studio" "s" #'vlv-find-and-open-sln-in-visual-studio)
-#+end_src
-** Wind River Workbench
-
-#+begin_src emacs-lisp :tangle config.el
-(defcustom vlv--workbench3-path
-  "/mnt/c/WindRiver_6947/workbench-3.3/wrwb/platform/x86-win32/eclipse/wrwb-x86-win32.exe"
-  "The path to the executable or script to start WindRiver 3 workbench IDE."
-  :type 'file
-  :group 'work)
-
-(defcustom vlv--workbench4-path
-  "/mnt/c/089-VXWORKS_CALIA4/workbench-4/startWorkbench.bat"
-  "The path to the executable or script to start WindRiver 4 workbench IDE."
-  :type 'file
-  :group 'work)
-
-(defun vlv-open-windriver3-workbench ()
-  "Open Wind River Workbench 3 IDE."
-  (interactive)
-  (start-process "workbench" nil vlv--workbench3-path))
-
-(defun vlv-open-windriver4-workbench ()
-  "Open Wind River Workbench 4 IDE."
-  (interactive)
-  (start-process "workbench" nil vlv--workbench4-path))
-
-
-(map! :leader
-      :prefix "o"
-      :desc "WindRiver Workbench 3" "W" #'vlv-open-windriver3-workbench)
-
-(map! :leader
-      :prefix "o"
-      :desc "WindRiver Workbench 4" "w" #'vlv-open-windriver4-workbench)
-#+end_src
-
-** consult-everything (windows)
-
-#+begin_src emacs-lisp :tangle packages.el
-(package! consult-everything
-  :pin "ac574a63b3e869787bbe6354b57a7a8021647ee3"
-  :disable (vlv-env-personal-p)
-  :recipe '(:host github
-            :repo "jthaman/consult-everything"
-            :build t))
-#+end_src
-
-#+begin_src emacs-lisp :tangle config.el
-(after! consult-everything
-  ;; the .exe makes it work on wsl
-  (setopt consult-everything-args "es.exe -r"))
-
-;; put here to avoid byte-compiler errors in git-commit-hook
-(map! :leader
-      :after consult-everything
-      :prefix "s"
-      :desc "consult-everything" "E" #'consult-everything)
-#+end_src
-
-** Tree-sitter
+* Tree-sitter
 #+begin_src emacs-lisp :tangle config.el
 (after! treesit
-  (setopt treesit-auto-install-grammar 'ask)
-
-  ;; TODO find a more optimal way to do this
-  (add-to-list 'treesit-language-source-alist
- 		       '(csharp     "https://github.com/tree-sitter/tree-sitter-c-sharp.git")))
-#+end_src
-
-*** Grammars
-Download or compile grammars and add them to a subdirectory in C:/Tiama/ (to avoid false AV warnings and blockers) and symlink it to *treesit--install-language-grammar-out-dir-history*.
-
-In this case, the source directory is *c:/Tiama/tree-sitter*.
-
-#+begin_src pwsh :tangle no
-mklink /D "c:/Users/LATTARO-VOLPINI/.config/emacs/.local/cache/tree-sitter" "c:/Tiama/tree-sitter"
-#+end_src
-** bureaucracy
-
-#+begin_src emacs-lisp :tangle config.el
-(defun vlv-env-work-gen-payfit-report (ON-SITE-DAYS HOME-OFFICE-DAYS &optional COMMENT?)
-  "Create the monthly comment message for payfit.
-
-ON-SITE-DAYS and HOME-OFFICE-DAYS are self descriptive.
-COMMENT is an optional string appended to a new line."
-  (interactive "nOn site days: \nnHome Office days:")
-  (let* ((on-site-fee (* ON-SITE-DAYS 15))
-         (home-office-fee (* HOME-OFFICE-DAYS 10))
-         (total (+ on-site-fee home-office-fee))
-         (comment (if COMMENT? (format " \n %s" COMMENT?) ""))
-         (text (format "%d jours x 15€/jour sur site + %d jours x 10€/jour TT = %d€ + %d€ = %d%s€"
-                       ON-SITE-DAYS HOME-OFFICE-DAYS on-site-fee home-office-fee total comment)))
-    
-                                        ; send the text to clipboard and log
-    (kill-new text)
-    (message "sent to clipboard: \"%s\"" text)))
+  (setopt treesit-auto-install-grammar 'ask))
 #+end_src
 
 * Compiler explorer
@@ -2310,32 +2046,6 @@ To install the grammars, use 'M-x markdown-ts-mode-install-parsers'.
 (after! mastodon
   (setopt mastodon-active-user "victorlattaro")
   (setopt mastodon-instance-url "https://mastodon.social"))
-#+end_src
-
-* Alarms
-
-#+begin_src emacs-lisp :tangle packages.el
-(package! alarm-clock)
-#+end_src
-
-#+begin_src emacs-lisp :tangle config.el
-(after! alarm-clock
-  (when (vlv-env-work-p)
-    (alarm-clock-set "08:30" "🍵 Coffee time!")
-    (alarm-clock-set "10:00" "🍵 Coffee time!")
-    (alarm-clock-set "12:00" "nham nham!")
-    (alarm-clock-set "15:00" "🍵 Coffee time!")
-    (alarm-clock-set "17:00" "Go home!")))
-#+end_src
-
-* Robot Framework
-
-#+begin_src emacs-lisp :tangle packages.el
-(package! robot-mode
-  :disable (vlv-env-personal-p))
-
-(package! robot-log
-  :disable (vlv-env-personal-p))
 #+end_src
 
 * systemd
