@@ -13,5 +13,5 @@
 (package! robot-log)
 
 ;; TODO switch to the GitHub recipe once published
-(package! tightvnc-menu
-  :recipe (:local-repo "~/dev/tightvnc-menu" :files ("tightvnc-menu.el")))
+(package! tightvnc
+  :recipe (:local-repo "~/dev/tightvnc-menu" :files ("tightvnc.el")))

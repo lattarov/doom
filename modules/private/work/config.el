@@ -38,12 +38,12 @@
 ;;
 ;;; TightVNC
 
-(use-package! tightvnc-menu
+(use-package! tightvnc
   :defer t
   :init
-  (map! :prefix "C-c" :desc "TightVNC menu" "v" #'tightvnc-menu)
+  (map! :prefix "C-c" :desc "TightVNC menu" "v" #'tightvnc)
   :config
-  (setq tightvnc-menu-machines
+  (setq tightvnc-machines
         '(("VISIO"           . "10.4.54.221")
           ("VERN"            . "10.102.31.63")
           ("CMX"             . "10.4.54.223")
@@ -51,8 +51,8 @@
           ("STARLORD"        . "10.4.52.3")
           ("BDT-INCA10-VERN" . "10.102.31.64"))
         ;; one shared ~/.authinfo.gpg entry for every machine
-        tightvnc-menu-auth-source-host "vnc-work"
-        tightvnc-menu-auth-source-user "admin"))
+        tightvnc-auth-source-host "vnc-work"
+        tightvnc-auth-source-user "admin"))
 
 
 ;;
