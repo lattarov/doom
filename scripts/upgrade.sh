@@ -14,13 +14,13 @@ divider "Upgrade Doom Emacs"
 JOBS=$(nproc --ignore=1 2>/dev/null || echo 1)
 
 "$DOOM_BIN" upgrade --force --aot --jobs "$JOBS" \
-  && step_done "Upgrade complete." || die "Failed to upgrade Doom Emacs!"
+    && step_done "Upgrade complete." || die "Failed to upgrade Doom Emacs!"
 
 "$DOOM_BIN" sync --jobs "$JOBS" \
-  && step_done "Sync complete." || die "Failed to sync after upgrade!"
+    && step_done "Sync complete." || die "Failed to sync after upgrade!"
 
 "$DOOM_BIN" gc --force \
-  && step_done "Garbage collection complete." || warn "Failed to garbage-collect after upgrade!"
+    && step_done "Garbage collection complete." || warn "Failed to garbage-collect after upgrade!"
 
 step_done "Upgrade done!"
 

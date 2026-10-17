@@ -21,34 +21,46 @@ ARCHIVE_COUNT_MAX="${ARCHIVE_COUNT_MAX:-3}"
 ARCHIVE_BACKUP_DIR="${ARCHIVE_BACKUP_DIR:-${XDG_CONFIG_HOME}/backups}"
 
 # ── logging ───────────────────────────────────────────────────────────────────
-log()     { echo -e "[INFO]  $*"; }
-warn()    { echo -e "${YELLOW}[WARN]  $*${RESET}" >&2; }
-die()     { echo -e "${RED}[ERROR] $*${RESET}" >&2; exit 1; }
-divider() { echo ""; echo "════════════════════════════════════════════════════════"; echo "  $*"; echo "════════════════════════════════════════════════════════"; echo ""; }
+log() { echo -e "[INFO]  $*"; }
+warn() { echo -e "${YELLOW}[WARN]  $*${RESET}" >&2; }
+die() {
+    echo -e "${RED}[ERROR] $*${RESET}" >&2
+    exit 1
+}
+divider() {
+    echo ""
+    echo "════════════════════════════════════════════════════════"
+    echo "  $*"
+    echo "════════════════════════════════════════════════════════"
+    echo ""
+}
 
 step_done() { echo -e "  ${GREEN}✔${RESET}  $*"; }
 step_skip() { echo "  ─  $* (skipped)"; }
 step_fail() { echo -e "  ${RED}✘${RESET}  $*" >&2; }
 
 ask() {
-  # ask "Question?" [default: y|n] => returns 0 for yes, 1 for no
-  local prompt="$1"
-  local default="${2:-y}"
-  local yn
-  if [[ "$default" == "y" ]]; then
-    read -r -p "  $prompt [Y/n] " yn
-    yn="${yn:-y}"
-  else
-    read -r -p "  $prompt [y/N] " yn
-    yn="${yn:-n}"
-  fi
-  [[ "$yn" =~ ^[Yy]$ ]]
+    # ask "Question?" [default: y|n] => returns 0 for yes, 1 for no
+    local prompt="$1"
+    local default="${2:-y}"
+    local yn
+    if [[ "$default" == "y" ]]; then
+        read -r -p "  $prompt [Y/n] " yn
+        yn="${yn:-y}"
+    else
+        read -r -p "  $prompt [y/N] " yn
+        yn="${yn:-n}"
+    fi
+    [[ "$yn" =~ ^[Yy]$ ]]
 }
 
 # ── shared actions ────────────────────────────────────────────────────────────
 restart_emacs_daemon() {
-  log "Restarting Emacs daemon..."
-  systemctl --user restart emacs.service \
-    && step_done "Emacs daemon restarted." \
-    || { step_fail "Failed to restart Emacs daemon."; return 1; }
+    log "Restarting Emacs daemon..."
+    systemctl --user restart emacs.service \
+        && step_done "Emacs daemon restarted." \
+        || {
+            step_fail "Failed to restart Emacs daemon."
+            return 1
+        }
 }

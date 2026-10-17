@@ -19,22 +19,22 @@ mapfile -t archives < <(ls -1t "${ARCHIVE_BACKUP_DIR}/${ARCHIVE_PREFIX}"*".${ARC
 archive_path="${1:-}"
 
 if [[ -z "$archive_path" ]]; then
-  echo "  Available backups (newest first):"
-  echo ""
-  for i in "${!archives[@]}"; do
-    printf "    %d) %s\n" "$((i + 1))" "$(basename "${archives[$i]}")"
-  done
-  echo ""
-  read -r -p "  Restore which backup? [1-${#archives[@]}, default 1]: " choice
-  choice="${choice:-1}"
-  [[ "$choice" =~ ^[0-9]+$ ]] && (( choice >= 1 && choice <= ${#archives[@]} )) \
-    || die "Invalid selection: $choice"
-  archive_path="${archives[$((choice - 1))]}"
+    echo "  Available backups (newest first):"
+    echo ""
+    for i in "${!archives[@]}"; do
+        printf "    %d) %s\n" "$((i + 1))" "$(basename "${archives[$i]}")"
+    done
+    echo ""
+    read -r -p "  Restore which backup? [1-${#archives[@]}, default 1]: " choice
+    choice="${choice:-1}"
+    [[ "$choice" =~ ^[0-9]+$ ]] && ((choice >= 1 && choice <= ${#archives[@]})) \
+        || die "Invalid selection: $choice"
+    archive_path="${archives[$((choice - 1))]}"
 elif [[ ! -f "$archive_path" ]]; then
-  # allow passing just a filename, resolved against the backup dir
-  candidate="${ARCHIVE_BACKUP_DIR}/$(basename "$archive_path")"
-  [[ -f "$candidate" ]] || die "Backup archive not found: $archive_path"
-  archive_path="$candidate"
+    # allow passing just a filename, resolved against the backup dir
+    candidate="${ARCHIVE_BACKUP_DIR}/$(basename "$archive_path")"
+    [[ -f "$candidate" ]] || die "Backup archive not found: $archive_path"
+    archive_path="$candidate"
 fi
 
 log "Selected backup: $(basename "$archive_path")"

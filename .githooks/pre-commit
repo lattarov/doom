@@ -14,15 +14,18 @@ trap cleanup EXIT
 
 printf 'pre-commit: tangling config.org → config.el\n'
 "$EMACS" --batch -Q \
-  --eval "(require 'ob-tangle)" \
-  --eval "(org-babel-tangle-file \"${CONFIG_ORG}\" \"${CONFIG_EL}\" \"emacs-lisp\")" \
-  2>/dev/null || true
+    --eval "(require 'ob-tangle)" \
+    --eval "(org-babel-tangle-file \"${CONFIG_ORG}\" \"${CONFIG_EL}\" \"emacs-lisp\")" \
+    2>/dev/null || true
 
-[[ -f "$CONFIG_EL" ]] || { printf 'pre-commit: no config.el after tangle — skipping\n'; exit 0; }
+[[ -f "$CONFIG_EL" ]] || {
+    printf 'pre-commit: no config.el after tangle — skipping\n'
+    exit 0
+}
 
 if ! "$EMACSCLIENT" --eval 't' &>/dev/null; then
-  printf 'pre-commit: no Emacs server found — skipping byte-compile\n'
-  exit 0
+    printf 'pre-commit: no Emacs server found — skipping byte-compile\n'
+    exit 0
 fi
 
 printf 'pre-commit: byte-compiling config.el\n'
@@ -41,8 +44,11 @@ result=$("$EMACSCLIENT" --eval "
       (let ((has-diag (string-match-p \"Warning:\\\\|Error:\" (buffer-string))))
         (if (and ok (not has-diag)) :ok :error)))))")
 
-output=$(< "$TMPLOG")
+output=$(<"$TMPLOG")
 [[ -n "$output" ]] && printf '%s\n' "$output"
 
-[[ "$result" == ":ok" ]] || { printf 'pre-commit: byte-compilation failed\n' >&2; exit 1; }
+[[ "$result" == ":ok" ]] || {
+    printf 'pre-commit: byte-compilation failed\n' >&2
+    exit 1
+}
 exit 0

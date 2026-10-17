@@ -4,7 +4,6 @@
 #
 # A temporary, brute-force, simplest way to have a full backup of the $EMACS_DIR.
 
-
 set -euo pipefail
 
 SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
@@ -23,7 +22,10 @@ archive_path="${ARCHIVE_BACKUP_DIR}/${archive_name}"
 
 log "Archiving ${EMACS_DIR} → ${archive_path}"
 tar --create --gzip --file "$archive_path" -C "$(dirname "$EMACS_DIR")" "$(basename "$EMACS_DIR")" \
-  || { rm -f "$archive_path"; die "Failed to archive ${EMACS_DIR} — old archives left untouched."; }
+    || {
+        rm -f "$archive_path"
+        die "Failed to archive ${EMACS_DIR} — old archives left untouched."
+    }
 
 step_done "Backup complete: ${archive_name}"
 
@@ -31,8 +33,8 @@ step_done "Backup complete: ${archive_name}"
 mapfile -t archives < <(ls -1t "${ARCHIVE_BACKUP_DIR}/${ARCHIVE_PREFIX}"*".${ARCHIVE_FILE_TYPE}" 2>/dev/null || true)
 
 while [[ "${#archives[@]}" -gt "$ARCHIVE_COUNT_MAX" ]]; do
-  oldest="${archives[-1]}"
-  rm -f "$oldest" && warn "Removed oldest archive: $(basename "$oldest")"
-  unset 'archives[-1]'
-  archives=("${archives[@]}")
+    oldest="${archives[-1]}"
+    rm -f "$oldest" && warn "Removed oldest archive: $(basename "$oldest")"
+    unset 'archives[-1]'
+    archives=("${archives[@]}")
 done
