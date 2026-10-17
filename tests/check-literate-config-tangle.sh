@@ -16,6 +16,9 @@ trap 'rm -rf "$out"' EXIT
 cp "${REPO}/config.org" "$out/"
 (cd "$out" && "$EMACS" --batch -Q -l org --eval '(org-babel-tangle-file "config.org")')
 
+# Hand-written Lisp: init.el and the private modules under modules/.
+mapfile -t handwritten < <(find "${REPO}/init.el" "${REPO}/modules" -name '*.el' | sort)
+
 for f in config.el packages.el; do
     [[ -s "${out}/${f}" ]] || {
         echo "check-literate-config-tangle: config.org did not produce ${f}" >&2
@@ -43,6 +46,6 @@ done
   (setq command-line-args-left nil)
   (kill-emacs (if failed 1 0)))' \
     "${out}/config.el" "${out}/packages.el" \
-    "${REPO}/init.el" "${REPO}/conventional-commits-snippets.el"
+    "${handwritten[@]}"
 
 echo "check-literate-config-tangle: config.org tangles to readable config.el and packages.el"
