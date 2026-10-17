@@ -1,0 +1,64 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  SHELLCHECK_VERSION: v0.11.0
+  SHFMT_VERSION: v3.12.0
+  EMACS_VERSION: "31.1"
+
+jobs:
+  lint:
+    name: shellcheck + shfmt
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Install shellcheck and shfmt
+        run: |
+          mkdir -p "$HOME/.local/bin"
+          curl -fsSL "https://github.com/koalaman/shellcheck/releases/download/${SHELLCHECK_VERSION}/shellcheck-${SHELLCHECK_VERSION}.linux.x86_64.tar.xz" \
+            | tar -xJ --strip-components=1 -C "$HOME/.local/bin" "shellcheck-${SHELLCHECK_VERSION}/shellcheck"
+          curl -fsSL -o "$HOME/.local/bin/shfmt" \
+            "https://github.com/mvdan/sh/releases/download/${SHFMT_VERSION}/shfmt_${SHFMT_VERSION}_linux_amd64"
+          chmod +x "$HOME/.local/bin/shfmt"
+          echo "$HOME/.local/bin" >>"$GITHUB_PATH"
+
+      # shfmt picks its style up from .editorconfig.
+      - name: shfmt
+        run: shfmt --diff scripts .githooks tests
+
+      - name: shellcheck
+        run: shfmt --find scripts .githooks tests | xargs shellcheck --severity=warning
+
+  bats:
+    name: bats (scripts/)
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Install bats
+        run: sudo apt-get update && sudo apt-get install -y bats
+
+      - name: bats
+        run: bats --print-output-on-failure tests/scripts
+
+  tangle:
+    name: config.org tangles
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: purcell/setup-emacs@v8.0
+        with:
+          version: ${{ env.EMACS_VERSION }}
+
+      - name: Tangle and read config.org
+        run: tests/check-literate-config-tangle.sh

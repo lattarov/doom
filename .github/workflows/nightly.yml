@@ -1,0 +1,119 @@
+name: Nightly
+
+on:
+  schedule:
+    - cron: "0 3 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  EMACS_VERSION: "31.1"
+  CACHE_PREFIX: doom-nightly-31.1-
+
+jobs:
+  build_upgrade_rollback:
+    name: build → upgrade → rollback
+    runs-on: ubuntu-24.04
+    timeout-minutes: 150
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: purcell/setup-emacs@v8.0
+        with:
+          version: ${{ env.EMACS_VERSION }}
+
+      - name: Prepare the runner like the desktop
+        run: |
+          sudo apt-get update && sudo apt-get install -y ripgrep fd-find
+          # emacs.service (written by build.sh) hardcodes /usr/local/bin.
+          sudo ln -sf "$(command -v emacs)" /usr/local/bin/emacs
+          sudo ln -sf "$(command -v emacsclient)" /usr/local/bin/emacsclient
+          # This repository is the Doom config, as with the dotfiles symlink.
+          mkdir -p ~/.config
+          ln -sfn "$GITHUB_WORKSPACE" ~/.config/doom
+
+      - name: Start a user systemd instance
+        run: |
+          sudo loginctl enable-linger "$USER"
+          runtime_dir="/run/user/$(id -u)"
+          echo "XDG_RUNTIME_DIR=$runtime_dir" >>"$GITHUB_ENV"
+          echo "DBUS_SESSION_BUS_ADDRESS=unix:path=$runtime_dir/bus" >>"$GITHUB_ENV"
+          export XDG_RUNTIME_DIR="$runtime_dir"
+          for _ in $(seq 30); do
+            systemctl --user show-environment &>/dev/null && exit 0
+            sleep 1
+          done
+          echo "user systemd did not come up" >&2
+          exit 1
+
+      - name: Restore the previous night's install
+        uses: actions/cache/restore@v4
+        with:
+          path: ~/.config/emacs
+          key: ${{ env.CACHE_PREFIX }}${{ github.run_id }}
+          restore-keys: ${{ env.CACHE_PREFIX }}
+
+      # Each step reads its confirmation prompts from `yes`.
+      - name: "build.sh: install or sync Doom"
+        run: |
+          source scripts/build.sh
+          step_doom < <(yes)
+
+      - name: "build.sh: install and start emacs.service"
+        run: |
+          source scripts/build.sh
+          step_systemd < <(yes)
+
+      - name: Doom boots (after build)
+        run: tests/doom-smoke.sh server
+
+      - name: "build.sh: post-install checks"
+        run: |
+          source scripts/build.sh
+          step_post_install_checks
+
+      - name: doom doctor
+        # Informational: the runner lacks fonts, mu, etc. that doctor warns about.
+        continue-on-error: true
+        run: ~/.config/emacs/bin/doom doctor
+
+      - name: Record the pre-upgrade Doom commit
+        run: echo "PRE_UPGRADE_SHA=$(git -C ~/.config/emacs rev-parse HEAD)" >>"$GITHUB_ENV"
+
+      - name: upgrade.sh
+        run: |
+          scripts/upgrade.sh
+          # upgrade.sh's own backup is the newest archive at this point.
+          newest="$(find ~/.config/backups -name 'emacs_*.tar.gz' -printf '%T@ %p\n' | sort -n | tail -1 | cut -d' ' -f2-)"
+          echo "UPGRADE_BACKUP=$newest" >>"$GITHUB_ENV"
+          echo "Doom $PRE_UPGRADE_SHA → $(git -C ~/.config/emacs rev-parse HEAD)"
+
+      - name: Doom boots (after upgrade)
+        run: tests/doom-smoke.sh server
+
+      # Only a booting, upgraded install becomes tomorrow's starting point.
+      - name: Save the upgraded install
+        uses: actions/cache/save@v4
+        with:
+          path: ~/.config/emacs
+          key: ${{ env.CACHE_PREFIX }}${{ github.run_id }}
+
+      - name: rollback.sh to the pre-upgrade backup
+        run: scripts/rollback.sh "$UPGRADE_BACKUP" < <(yes)
+
+      - name: Doom boots (after rollback)
+        run: tests/doom-smoke.sh server
+
+      - name: Rollback restored the pre-upgrade Doom
+        run: |
+          sha="$(git -C ~/.config/emacs rev-parse HEAD)"
+          [[ "$sha" == "$PRE_UPGRADE_SHA" ]] || {
+            echo "expected Doom at $PRE_UPGRADE_SHA after rollback, got $sha" >&2
+            exit 1
+          }
+
+      - name: emacs.service journal
+        if: failure()
+        run: journalctl --user -u emacs.service --no-pager | tail -200

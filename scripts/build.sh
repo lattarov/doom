@@ -590,6 +590,9 @@ print_summary() {
 }
 
 # ── main ──────────────────────────────────────────────────────────────────────
+# When sourced (e.g. by the nightly CI job), only define the steps above.
+[[ "${BASH_SOURCE[0]}" == "$0" ]] || return 0
+
 [[ "$PLATFORM" == "windows" ]] && die "Interactive mode is Linux-only. Run with --windows for Windows deps."
 
 divider "Doom Emacs — Interactive Setup"
