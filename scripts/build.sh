@@ -455,6 +455,8 @@ EOF
 
     systemctl --user daemon-reload
     systemctl --user enable --now emacs.service
+    systemctl --user is-active --quiet emacs.service \
+        || die "emacs.service failed to start — see: journalctl --user -u emacs.service"
     step_done "Emacs daemon enabled and started."
 }
 

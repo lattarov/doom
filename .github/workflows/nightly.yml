@@ -49,7 +49,7 @@ jobs:
           exit 1
 
       - name: Restore the previous night's install
-        uses: actions/cache/restore@v4
+        uses: actions/cache/restore@v6
         with:
           path: ~/.config/emacs
           key: ${{ env.CACHE_PREFIX }}${{ github.run_id }}
@@ -59,12 +59,16 @@ jobs:
       - name: "build.sh: install or sync Doom"
         run: |
           source scripts/build.sh
-          step_doom < <(yes)
+          step_doom < <(yes 2>/dev/null)
 
       - name: "build.sh: install and start emacs.service"
         run: |
+          # setup-emacs' Emacs is built without libsystemd, so it never sends
+          # the READY=1 that the unit's Type=notify waits for.
+          mkdir -p ~/.config/systemd/user/emacs.service.d
+          printf '[Service]\nType=simple\n' >~/.config/systemd/user/emacs.service.d/ci.conf
           source scripts/build.sh
-          step_systemd < <(yes)
+          step_systemd < <(yes 2>/dev/null)
 
       - name: Doom boots (after build)
         run: tests/doom-smoke.sh server
@@ -95,13 +99,13 @@ jobs:
 
       # Only a booting, upgraded install becomes tomorrow's starting point.
       - name: Save the upgraded install
-        uses: actions/cache/save@v4
+        uses: actions/cache/save@v6
         with:
           path: ~/.config/emacs
           key: ${{ env.CACHE_PREFIX }}${{ github.run_id }}
 
       - name: rollback.sh to the pre-upgrade backup
-        run: scripts/rollback.sh "$UPGRADE_BACKUP" < <(yes)
+        run: scripts/rollback.sh "$UPGRADE_BACKUP" < <(yes 2>/dev/null)
 
       - name: Doom boots (after rollback)
         run: tests/doom-smoke.sh server

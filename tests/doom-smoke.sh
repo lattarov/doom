@@ -4,9 +4,10 @@
 #
 # Usage: doom-smoke.sh [SERVER]
 #   With SERVER, checks that already-running daemon (e.g. "server", started by
-#   emacs.service). Without, boots a throwaway daemon under its own server name,
-#   so it never touches a running one, and stops it without running
-#   `kill-emacs-hook' so no session/recentf/savehist state is written back.
+#   emacs.service), waiting up to 60s for its socket. Without, boots a
+#   throwaway daemon under its own server name, so it never touches a running
+#   one, and stops it without running `kill-emacs-hook' so no
+#   session/recentf/savehist state is written back.
 set -euo pipefail
 
 EMACS="${EMACS:-emacs}"
@@ -21,6 +22,11 @@ if [[ -z "$SERVER" ]]; then
     SERVER="doom-smoke-$$"
     trap stop_daemon EXIT
     "$EMACS" --daemon="$SERVER"
+else
+    for _ in $(seq 60); do
+        "$EMACSCLIENT" -s "$SERVER" --eval t &>/dev/null && break
+        sleep 1
+    done
 fi
 
 result="$("$EMACSCLIENT" -s "$SERVER" --eval '

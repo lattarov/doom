@@ -1414,7 +1414,8 @@ COMMENT is an optional string appended to a new line."
 
 #+begin_src emacs-lisp :tangle config.el
 ;; WARNING deferring load (e.g. via `after!') makes the package not be loaded when using bindings.
-(when (vlv-env-personal-p) ; the package is disabled at work
+;; The package is disabled at work, and on GNU/Linux it errors on load without D-Bus.
+(when (and (vlv-env-personal-p) (featurep 'dbusbind))
   (require 'spotify))
 
 (defun vlv-spotify-next-and-display()
