@@ -1,0 +1,15 @@
+root = true
+
+[*.{sh,bash,bats}]
+indent_style = space
+indent_size = 4
+# shfmt options
+binary_next_line = true
+switch_case_indent = true
+
+# Extensionless hook scripts.
+[.githooks/*]
+indent_style = space
+indent_size = 4
+binary_next_line = true
+switch_case_indent = true
