@@ -38,12 +38,12 @@
 ;;
 ;;; TightVNC
 
-(use-package! tightvnc-menu
+(use-package! tightvnc
   :defer t
   :init
-  (map! :prefix "C-c" :desc "TightVNC menu" "v" #'tightvnc-menu)
+  (map! :prefix "C-c" :desc "TightVNC menu" "v" #'tightvnc)
   :config
-  (setq tightvnc-menu-machines
+  (setq tightvnc-machines
         '(("VISIO"           . "10.4.54.221")
           ("VERN"            . "10.102.31.63")
           ("CMX"             . "10.4.54.223")
@@ -51,8 +51,8 @@
           ("STARLORD"        . "10.4.52.3")
           ("BDT-INCA10-VERN" . "10.102.31.64"))
         ;; one shared ~/.authinfo.gpg entry for every machine
-        tightvnc-menu-auth-source-host "vnc-work"
-        tightvnc-menu-auth-source-user "admin"))
+        tightvnc-auth-source-host "vnc-work"
+        tightvnc-auth-source-user "admin"))
 
 
 ;;
@@ -153,13 +153,21 @@ from home.  COMMENT is an optional string appended on a new line."
 ;;; Alarms
 
 ;; `alarm-clock-set' is autoloaded. Run once at startup, not on every
-;; `doom/reload', which would stack duplicate alarms.
+;; `doom/reload', which would stack duplicate alarms.  `run-at-time' fires an
+;; "HH:MM" time that has already passed today immediately, so skip those.
+;; `alarm-clock-set' also switches buffers behind our back, hence
+;; `save-current-buffer'.
 (add-hook! 'doom-after-init-hook
-  (alarm-clock-set "08:30" "🍵 Coffee time!")
-  (alarm-clock-set "10:00" "🍵 Coffee time!")
-  (alarm-clock-set "12:00" "nham nham!")
-  (alarm-clock-set "15:00" "🍵 Coffee time!")
-  (alarm-clock-set "17:00" "Go home!"))
+  (let ((now (format-time-string "%H:%M")))
+    (save-current-buffer
+      (pcase-dolist (`(,time . ,message)
+                     '(("08:30" . "🍵 Coffee time!")
+                       ("10:00" . "🍵 Coffee time!")
+                       ("12:00" . "nham nham!")
+                       ("15:00" . "🍵 Coffee time!")
+                       ("17:00" . "Go home!")))
+        (when (string> time now)
+          (alarm-clock-set time message))))))
 
 
 ;;
@@ -167,6 +175,12 @@ from home.  COMMENT is an optional string appended on a new line."
 
 ;; Override commit-butler's "Conventional Commit" snippet to add the
 ;; "[VILAT] " prefix.  Prepended, so it shadows the package's copy.
-(after! yasnippet
-  (add-to-list 'yas-snippet-dirs
-               (expand-file-name "snippets" (dir!))))
+(defvar +work-snippets-dir (dir! "snippets/")
+  "Directory holding the snippets shipped with this module.")
+
+(when (modulep! :editor snippets)
+  (after! yasnippet
+    (add-to-list 'yas-snippet-dirs '+work-snippets-dir)
+    ;; `yas-global-mode' has already loaded `yas-snippet-dirs' by now
+    (when (bound-and-true-p yas-global-mode)
+      (yas-load-directory +work-snippets-dir t))))

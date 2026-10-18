@@ -34,4 +34,7 @@
 
 (when (modulep! :editor snippets)
   (after! yasnippet
-    (add-to-list 'yas-snippet-dirs '+yocto-snippets-dir 'append #'eq)))
+    (add-to-list 'yas-snippet-dirs '+yocto-snippets-dir 'append)
+    ;; `yas-global-mode' has already loaded `yas-snippet-dirs' by now
+    (when (bound-and-true-p yas-global-mode)
+      (yas-load-directory +yocto-snippets-dir t))))
