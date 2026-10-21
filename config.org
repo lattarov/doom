@@ -318,7 +318,7 @@ through. Narrow the set per buffer with =C-M-$=, per project with a
 
   (after! jinx
     ;; Checked in parallel: a word is valid if ANY of these accepts it.
-    (setopt jinx-languages "en_US pt_BR fr_FR")
+    (setopt jinx-languages "en_US pt_BR fr_FR it_IT")
 
     ;; Doom already turns on `vertico-multiform-mode'; a grid fits suggestions
     ;; better than the default vertical list.
