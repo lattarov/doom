@@ -14,7 +14,7 @@ env:
 
 jobs:
   build_upgrade_rollback:
-    name: build → upgrade → rollback
+    name: install → upgrade → rollback
     runs-on: ubuntu-24.04
     timeout-minutes: 150
     steps:
@@ -27,7 +27,7 @@ jobs:
       - name: Prepare the runner like the desktop
         run: |
           sudo apt-get update && sudo apt-get install -y ripgrep fd-find
-          # emacs.service (written by build.sh) hardcodes /usr/local/bin.
+          # emacs.service (written by install.sh) hardcodes /usr/local/bin.
           sudo ln -sf "$(command -v emacs)" /usr/local/bin/emacs
           sudo ln -sf "$(command -v emacsclient)" /usr/local/bin/emacsclient
           # This repository is the Doom config, as with the dotfiles symlink.
@@ -56,26 +56,26 @@ jobs:
           restore-keys: ${{ env.CACHE_PREFIX }}
 
       # Each step reads its confirmation prompts from `yes`.
-      - name: "build.sh: install or sync Doom"
+      - name: "install.sh: install or sync Doom"
         run: |
-          source scripts/build.sh
+          source scripts/install.sh
           step_doom < <(yes 2>/dev/null)
 
-      - name: "build.sh: install and start emacs.service"
+      - name: "install.sh: install and start emacs.service"
         run: |
           # setup-emacs' Emacs is built without libsystemd, so it never sends
           # the READY=1 that the unit's Type=notify waits for.
           mkdir -p ~/.config/systemd/user/emacs.service.d
           printf '[Service]\nType=simple\n' >~/.config/systemd/user/emacs.service.d/ci.conf
-          source scripts/build.sh
+          source scripts/install.sh
           step_systemd < <(yes 2>/dev/null)
 
-      - name: Doom boots (after build)
+      - name: Doom boots (after install)
         run: tests/doom-smoke.sh server
 
-      - name: "build.sh: post-install checks"
+      - name: "install.sh: post-install checks"
         run: |
-          source scripts/build.sh
+          source scripts/install.sh
           step_post_install_checks
 
       - name: doom doctor

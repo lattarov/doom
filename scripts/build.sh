@@ -1,203 +1,95 @@
 #!/usr/bin/env bash
-# build.sh — Interactive Doom Emacs setup
+# build.sh — Interactive build of Emacs from source (pgtk, native-comp AOT)
+#
+# Setup order on a fresh machine: deps.sh → build.sh → install.sh
 set -euo pipefail
 
 SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
 # shellcheck source=lib/common.sh
 source "${SCRIPT_DIR}/lib/common.sh"
 
-# ── platform detection ────────────────────────────────────────────────────────
-if [[ "${OS:-}" == "Windows_NT" ]]; then
-    PLATFORM="windows"
-elif [[ "$(uname)" == "Linux" ]]; then
-    PLATFORM="linux"
-else
-    die "Unsupported platform."
-fi
+# Packages only needed to compile Emacs; step_cleanup removes them again.
+build_only_packages() {
+    local gcc_ver
+    gcc_ver=$(gcc -dumpversion | cut -d. -f1)
+    BUILD_ONLY_PACKAGES=(
+        autoconf
+        texinfo
+        "libgccjit-${gcc_ver}-dev"
+        libgtk-3-dev
+        libcairo2-dev
+        libharfbuzz-dev
+        libotf-dev
+        libm17n-dev
+        libfreetype-dev
+        libjpeg-dev
+        libtiff-dev
+        libgif-dev
+        libpng-dev
+        libwebp-dev
+        librsvg2-dev
+        libxpm-dev
+        libmagickwand-dev
+        liblcms2-dev
+        libgnutls28-dev
+        libdbus-1-dev
+        libsystemd-dev
+        libxml2-dev
+        libsqlite3-dev
+        libtree-sitter-dev
+        libasound2-dev
+        libgmp-dev
+        libacl1-dev
+        libseccomp-dev
+        libselinux1-dev
+        libgpm-dev
+    )
+}
+
+is_installed() {
+    [[ "$(dpkg-query -W -f='${db:Status-Status}' "$1" 2>/dev/null)" == "installed" ]]
+}
+
+# Set by step_build_deps / step_build_emacs. step_cleanup removes only the
+# build-only packages this run installed (anything already present, e.g. pulled
+# in by deps.sh, stays), and only once Emacs has actually been built.
+NEWLY_INSTALLED_PACKAGES=()
+EMACS_BUILT=0
 
 # ── step definitions ──────────────────────────────────────────────────────────
 
-step_apt_deps() {
-    divider "Step 1 — System packages (apt)"
-    log "This installs all build and runtime dependencies."
+step_build_deps() {
+    divider "Step 1 — Emacs build dependencies (apt)"
     log "Requires: sudo, apt, gcc"
     echo ""
 
-    ask "Install system packages?" || {
-        step_skip "apt packages"
+    ask "Install Emacs build dependencies?" || {
+        step_skip "build dependencies"
         return 0
     }
 
-    GCC_VER=$(gcc -dumpversion | cut -d. -f1)
+    build_only_packages
+    local pkg
+    for pkg in "${BUILD_ONLY_PACKAGES[@]}"; do
+        is_installed "$pkg" || NEWLY_INSTALLED_PACKAGES+=("$pkg")
+    done
+
     sudo apt update
+    # libgccjit0 is the native-comp runtime and stays after step_cleanup.
     sudo apt install -y \
-        "libgccjit-${GCC_VER}-dev" \
-        autoconf \
         build-essential \
-        clangd \
-        cmake \
-        default-jre \
-        fd-find \
-        ffmpeg \
-        ffmpegthumbnailer \
-        gdb \
+        curl \
         git \
-        graphviz \
-        imagemagick \
-        isync \
-        libacl1-dev \
-        libasound2-dev \
-        libcairo2-dev \
-        libdbus-1-dev \
-        libenchant-2-dev \
-        libfreetype-dev \
+        gnupg \
         libgccjit0 \
-        libgif-dev \
-        libgmp-dev \
-        libgnutls28-dev \
-        libgpm-dev \
-        libgtk-3-dev \
-        libharfbuzz-dev \
-        libjpeg-dev \
-        liblcms2-dev \
-        libm17n-dev \
-        libmagickwand-dev \
-        libotf-dev \
-        libpng-dev \
-        libpoppler-glib-dev \
-        librsvg2-dev \
-        libseccomp-dev \
-        libselinux1-dev \
-        libsqlite3-dev \
-        libsystemd-dev \
-        libtiff-dev \
-        libtool-bin \
-        libtree-sitter-dev \
-        libvterm-dev \
-        libwebp-dev \
-        libxml2-dev \
-        libxpm-dev \
-        maildir-utils \
-        maim \
-        mediainfo \
-        npm \
-        pandoc \
         pkgconf \
-        plantuml \
-        poppler-utils \
-        python3-pip \
-        ripgrep \
-        sqlite3 \
-        texinfo \
-        texlive-fonts-extra \
-        texlive-fonts-recommended \
-        texlive-latex-base \
-        texlive-latex-extra \
-        wl-clipboard
+        "${BUILD_ONLY_PACKAGES[@]}"
 
-    log "Installing Cascadia Code (doom-font)..."
-    sudo apt install -y fonts-cascadia-code && fc-cache -f \
-        || warn "fonts-cascadia-code not available via apt — install Cascadia Code manually from https://github.com/microsoft/cascadia-code/releases"
-
-    step_done "System packages installed."
-}
-
-step_languagetool() {
-    divider "Step 2 — LanguageTool (grammar checker)"
-    log "LanguageTool is not in apt — downloaded directly from languagetool.org."
-
-    LT_VERSION="6.4"
-    LT_DIR="${HOME}/.local/share/languagetool"
-    LT_ZIP="LanguageTool-${LT_VERSION}.zip"
-    LT_URL="https://languagetool.org/download/${LT_ZIP}"
-    LT_SHA256="7f5be0e0b5f1e0745aecf15dd4ee58c3f22b9bd62044af9bb5ac59f5ba90cf26"
-
-    if [[ -d "${LT_DIR}/LanguageTool-${LT_VERSION}" ]]; then
-        log "LanguageTool ${LT_VERSION} already present at ${LT_DIR}."
-        ask "Reinstall?" "n" || {
-            step_skip "LanguageTool"
-            return 0
-        }
-        rm -rf "${LT_DIR:?}/LanguageTool-${LT_VERSION}"
-    else
-        ask "Install LanguageTool ${LT_VERSION}?" || {
-            step_skip "LanguageTool"
-            return 0
-        }
-    fi
-
-    log "Downloading ${LT_URL}..."
-    curl -L --progress-bar "${LT_URL}" -o "/tmp/${LT_ZIP}"
-
-    log "Verifying checksum..."
-    echo "${LT_SHA256}  /tmp/${LT_ZIP}" | sha256sum --check \
-        || die "Checksum mismatch — aborting LanguageTool install."
-
-    mkdir -p "${LT_DIR}"
-    unzip -q "/tmp/${LT_ZIP}" -d "${LT_DIR}"
-    rm "/tmp/${LT_ZIP}"
-
-    LT_JAR=$(find "${LT_DIR}" -name "languagetool-commandline.jar" | head -1)
-    step_done "LanguageTool installed."
-    log "Add to config.el:"
-    log "  (setq langtool-language-tool-jar \"${LT_JAR}\")"
-}
-
-step_rust() {
-    divider "Step 3 — Rust toolchain"
-    log "Installs rustup, rust-analyzer, and emacs-lsp-booster."
-
-    if command -v rustup &>/dev/null; then
-        log "rustup already installed ($(rustup --version 2>/dev/null | head -1))."
-        ask "Update and reinstall components anyway?" "n" || {
-            step_skip "Rust"
-            return 0
-        }
-    else
-        ask "Install Rust toolchain?" || {
-            step_skip "Rust"
-            return 0
-        }
-        curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
-        source "${HOME}/.cargo/env"
-    fi
-
-    rustup update
-    rustup component add rust-analyzer
-
-    if cargo install --list | grep -q "emacs-lsp-booster"; then
-        log "emacs-lsp-booster already installed."
-        ask "Reinstall?" "n" && cargo install --force emacs-lsp-booster \
-            || step_skip "emacs-lsp-booster"
-    else
-        cargo install emacs-lsp-booster
-    fi
-
-    step_done "Rust toolchain ready."
-}
-
-step_npm() {
-    divider "Step 4 — npm global packages (pyright)"
-    log "Configures npm to use ~/.local to avoid requiring sudo."
-
-    ask "Install npm packages?" || {
-        step_skip "npm packages"
-        return 0
-    }
-
-    NPM_PREFIX="${HOME}/.local"
-    npm config set prefix "${NPM_PREFIX}"
-    export PATH="${NPM_PREFIX}/bin:${PATH}"
-
-    npm install -g pyright
-
-    step_done "npm packages installed."
-    log "Make sure ~/.local/bin is in your PATH:"
-    log "  export PATH=\"\$HOME/.local/bin:\$PATH\""
+    step_done "Build dependencies installed."
 }
 
 step_build_emacs() {
-    divider "Step 5 — Build Emacs from source"
+    divider "Step 2 — Build Emacs from source"
 
     # ── branch/version selection ───────────────────────────────────────────────
     echo "  Which Emacs version do you want to build?"
@@ -388,232 +280,48 @@ step_build_emacs() {
 
     log "Installing (requires sudo)..."
     sudo make install
+    EMACS_BUILT=1
 
     step_done "Emacs built and installed ($(emacs --version | head -1))."
 }
 
-step_doom() {
-    divider "Step 6 — Doom Emacs"
-
-    if [[ -d "$EMACS_DIR" ]]; then
-        log "Doom already present at ${EMACS_DIR}."
-        ask "Run doom sync?" || {
-            step_skip "doom sync"
-            return 0
-        }
-        "$DOOM_BIN" sync
-        step_done "doom sync complete."
-    else
-        ask "Install Doom Emacs?" || {
-            step_skip "Doom install"
-            return 0
-        }
-        git clone --depth=1 https://github.com/doomemacs/doomemacs "$EMACS_DIR"
-        "$DOOM_BIN" install
-        step_done "Doom Emacs installed."
-    fi
-}
-
-step_systemd() {
-    divider "Step 7 — Emacs systemd daemon"
-    log "Installs and enables an Emacs user service that starts on login."
-
-    SYSTEMD_UNIT="${HOME}/.config/systemd/user/emacs.service"
-
-    if [[ -f "$SYSTEMD_UNIT" ]]; then
-        log "Unit file already exists at ${SYSTEMD_UNIT}."
-        ask "Overwrite and restart?" "n" || {
-            step_skip "systemd unit"
-            return 0
-        }
-        systemctl --user stop emacs.service 2>/dev/null || true
-    else
-        ask "Install Emacs systemd daemon?" || {
-            step_skip "systemd daemon"
-            return 0
-        }
-    fi
-
-    mkdir -p "$(dirname "$SYSTEMD_UNIT")"
-    cat >"$SYSTEMD_UNIT" <<'EOF'
-[Unit]
-Description=Emacs text editor
-Documentation=info:emacs man:emacs(1) https://gnu.org/software/emacs/
-
-[Service]
-Type=notify
-Environment=GDK_BACKEND=wayland
-Environment=EMACS_PGTK_FORCE_WAYLAND=1
-Environment=SSH_AUTH_SOCK=%t/keyring/ssh
-ExecStart=/usr/local/bin/emacs --fg-daemon
-ExecStop=/usr/local/bin/emacsclient --eval "(kill-emacs)"
-Restart=on-failure
-
-[Install]
-WantedBy=default.target
-EOF
-
-    systemctl --user daemon-reload
-    systemctl --user enable --now emacs.service
-    systemctl --user is-active --quiet emacs.service \
-        || die "emacs.service failed to start — see: journalctl --user -u emacs.service"
-    step_done "Emacs daemon enabled and started."
-}
-
-step_first_run_setup() {
-    divider "Step 8 — First-run installs (vterm, ghostel, whisper.cpp)"
-    log "Triggers the same native-module/model downloads Emacs would otherwise"
-
-    ask "Run first-run installs now?" || {
-        step_skip "first-run installs"
-        return 0
-    }
-
-    local started_temp_daemon=0
-    if ! emacsclient --eval 't' &>/dev/null; then
-        log "No Emacs daemon found — starting a temporary one."
-        emacs --daemon
-        started_temp_daemon=1
-    fi
-
-    log "Compiling vterm native module..."
-    emacsclient --eval '(vterm-module-compile)' &>/dev/null \
-        && step_done "vterm module compiled" || step_fail "vterm module compile failed"
-
-    log "Downloading ghostel native module..."
-    emacsclient --eval \
-        '(progn (require (quote ghostel))
-            (let ((ghostel-module-auto-install (quote download)))
-              (ghostel--ensure-module (ghostel--module-directory))))' &>/dev/null \
-        && step_done "ghostel module installed" || step_fail "ghostel module install failed"
-
-    log "Installing whisper.cpp and the default speech model..."
-    WHISPER_DIR=$(emacsclient --eval \
-        '(progn (require (quote whisper)) (expand-file-name whisper--install-path))' \
-        2>/dev/null | tr -d '"')
-    WHISPER_MODEL=$(emacsclient --eval 'whisper-model' 2>/dev/null | tr -d '"')
-    WHISPER_MODEL="${WHISPER_MODEL:-base}"
-    if [[ -n "$WHISPER_DIR" ]]; then
-        mkdir -p "$(dirname "$WHISPER_DIR")"
-        if [[ ! -d "$WHISPER_DIR" ]]; then
-            git clone https://github.com/ggerganov/whisper.cpp "$WHISPER_DIR"
-        fi
-        (cd "$WHISPER_DIR" && CLICOLOR=0 cmake -B build && CLICOLOR=0 cmake --build build -j --config Release) \
-            && (cd "$WHISPER_DIR" && "models/download-ggml-model.sh" "$WHISPER_MODEL") \
-            && step_done "whisper.cpp + '${WHISPER_MODEL}' model ready" \
-            || step_fail "whisper.cpp/model install failed"
-    else
-        step_fail "could not resolve whisper install directory — is the whisper package loaded?"
-    fi
-
-    if [[ "$started_temp_daemon" -eq 1 ]]; then
-        log "Stopping temporary Emacs daemon."
-        emacsclient --eval '(kill-emacs)' &>/dev/null || true
-    fi
-
-    step_done "First-run installs complete."
-}
-
 step_cleanup() {
-    divider "Step 9 — Remove build-only packages"
-    log "The following -dev packages are only needed at compile time."
-    log "Runtime .so files remain — the running Emacs binary is unaffected."
-    warn "Do NOT remove these if you plan to rebuild Emacs or if vterm"
-    warn "has not yet compiled its native module (run M-x +vterm/here first)."
-    echo ""
+    divider "Step 3 — Remove build-only packages"
 
-    ask "Remove build-only dev packages?" "n" || {
+    if [[ "$EMACS_BUILT" -ne 1 ]]; then
+        log "Emacs was not built in this run — keeping the build dependencies."
         step_skip "cleanup"
         return 0
-    }
+    fi
+    if [[ ${#NEWLY_INSTALLED_PACKAGES[@]} -eq 0 ]]; then
+        log "This run installed no build-only packages — nothing to remove."
+        step_skip "cleanup"
+        return 0
+    fi
 
-    GCC_VER=$(gcc -dumpversion | cut -d. -f1)
-    sudo apt remove --purge \
-        build-essential \
-        autoconf \
-        texinfo \
-        "libgccjit-${GCC_VER}-dev" \
-        libgtk-3-dev \
-        libcairo2-dev \
-        libharfbuzz-dev \
-        libotf-dev \
-        libm17n-dev \
-        libfreetype-dev \
-        libjpeg-dev \
-        libtiff-dev \
-        libgif-dev \
-        libpng-dev \
-        libwebp-dev \
-        librsvg2-dev \
-        libxpm-dev \
-        libmagickwand-dev \
-        liblcms2-dev \
-        libgnutls28-dev \
-        libdbus-1-dev \
-        libsystemd-dev \
-        libxml2-dev \
-        libsqlite3-dev \
-        libtree-sitter-dev \
-        libasound2-dev \
-        libgmp-dev \
-        libacl1-dev \
-        libseccomp-dev \
-        libselinux1-dev \
-        libgpm-dev \
-        libpoppler-glib-dev
+    log "Removing the -dev packages this run installed only to compile Emacs:"
+    log "  ${NEWLY_INSTALLED_PACKAGES[*]}"
+    log "Runtime .so files remain — the installed Emacs is unaffected."
+    log "Rerunning this script reinstalls them for the next rebuild."
+    echo ""
 
+    # No -y: apt lists everything it will remove and asks for confirmation.
+    sudo apt remove --purge "${NEWLY_INSTALLED_PACKAGES[@]}"
     sudo apt autoremove --purge
+
     step_done "Build packages removed."
 }
 
-step_post_install_checks() {
-    divider "Step 10 — Post-install checks"
-
-    local started_temp_daemon=0
-    if ! emacsclient --eval 't' &>/dev/null; then
-        emacs --daemon
-        started_temp_daemon=1
-    fi
-
-    local native_comp
-
-    native_comp=$(emacsclient --eval '(if (and (fboundp (quote native-comp-available-p)) (native-comp-available-p)) "t" "nil")' 2>/dev/null | tr -d '"')
-    [[ "$native_comp" == "t" ]] \
-        && step_done "Native compilation" \
-        || step_fail "Native compilation unavailable"
-
-    [[ "$started_temp_daemon" -eq 1 ]] && emacsclient --eval '(kill-emacs)' &>/dev/null || true
-}
-
-# ── summary ───────────────────────────────────────────────────────────────────
-print_summary() {
-    divider "Setup complete"
-    log "vterm, ghostel, whisper.cpp installed in Step 8; checked in Step 10."
-}
-
 # ── main ──────────────────────────────────────────────────────────────────────
-# When sourced (e.g. by the nightly CI job), only define the steps above.
+# When sourced (e.g. by the tests), only define the steps above.
 [[ "${BASH_SOURCE[0]}" == "$0" ]] || return 0
 
-[[ "$PLATFORM" == "windows" ]] && die "Interactive mode is Linux-only. Run with --windows for Windows deps."
+require_linux
+setup_banner "Doom Emacs — Build Emacs"
 
-divider "Doom Emacs — Interactive Setup"
-log "Platform : $PLATFORM"
-log "User     : $USER"
-log "Home     : $HOME"
-echo ""
-log "Each step will ask for confirmation before running."
-log "You can safely skip steps you have already completed."
-echo ""
-
-step_apt_deps
-step_languagetool
-step_rust
-step_npm
+step_build_deps
 step_build_emacs
-step_doom
-step_systemd
-step_first_run_setup
 step_cleanup
-step_post_install_checks
-print_summary
+
+divider "Build done"
+log "Next: scripts/install.sh to install Doom Emacs."
