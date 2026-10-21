@@ -54,6 +54,21 @@ ask() {
     [[ "$yn" =~ ^[Yy]$ ]]
 }
 
+require_linux() {
+    [[ "$(uname)" == "Linux" ]] || die "Interactive setup is Linux-only."
+}
+
+setup_banner() {
+    # setup_banner "Title" — header shared by the interactive setup scripts
+    divider "$1"
+    log "User     : $USER"
+    log "Home     : $HOME"
+    echo ""
+    log "Each step will ask for confirmation before running."
+    log "You can safely skip steps you have already completed."
+    echo ""
+}
+
 # ── shared actions ────────────────────────────────────────────────────────────
 restart_emacs_daemon() {
     log "Restarting Emacs daemon..."
