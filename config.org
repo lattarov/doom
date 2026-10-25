@@ -46,6 +46,11 @@ The work/personal split is decided in =init.el=, before the =doom!= block, by
 available to =init.el= itself and to every =packages.el= and =config.el=, so
 nothing has to be tangled into several files.
 
+Everything that only makes sense at work lives in the =:private work= module
+(=modules/private/work/=), which =init.el= enables only when =vlv-env-work-p= is
+non-nil. What remains in this file are one-line differences in shared settings
+(paths, e-mail address, ...) and =:disable= flags on personal-only packages.
+
 #+begin_src emacs-lisp :tangle config.el
 (defgroup vlv nil
   "Personal configuration."
@@ -265,12 +270,7 @@ through. Narrow the set per buffer with =C-M-$=, per project with a
                              "org/") ""))
 
 (after! org
-  (add-hook! 'org-mode-hook #'show-smartparens-mode)
-
-  ;; babel
-  (when (vlv-env-work-p)
-    (setopt org-babel-C++-compiler "clang"
-            org-babel-C-compiler   "clang")))
+  (add-hook! 'org-mode-hook #'show-smartparens-mode))
 #+end_src
 ** Org agenda
 *** Improvements

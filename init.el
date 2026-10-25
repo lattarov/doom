@@ -241,4 +241,7 @@
 
        :config
        literate
-       (default +bindings +smartparens))
+       (default +bindings +smartparens)
+
+       :private
+       (:if (vlv-env-work-p) work)) ; work-only tools, see modules/private/work
