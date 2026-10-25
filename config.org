@@ -50,8 +50,7 @@ Small tweaks to activate or configurate variables depending on the machine. This
   :group 'convenience)
 
 (defcustom vlv-env
-  (if (or (getenv "WSL_DISTRO_NAME")
-          (eq system-type 'windows-nt))
+  (if (getenv "WSL_DISTRO_NAME")
       "WORK"
     "PERSONAL")
 
@@ -76,11 +75,9 @@ profiles API is stable."
 
 (defcustom vlv-home
   (if (vlv-env-work-p)
-      (if (getenv "WSL_DISTRO_NAME")
-          "/mnt/c/Users/LATTARO-VOLPINI/"
-        "~/")
+      "/mnt/c/Users/LATTARO-VOLPINI/"
     "~/")
-  "The home directory variable, compatible between Linux, Windows and wsl systems."
+  "The home directory variable: the Windows home under WSL, ~/ on Linux."
   :type 'string
   :group 'vlv)
 #+end_src
