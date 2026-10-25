@@ -1856,22 +1856,6 @@ To be used in yocto workflows.
 #+end_src
 
 * Stuff to do or learn when porting to Emacs 31
-** TODO Emacs on MS-Windows is now capable of exporting frame screenshots to files.
-The new primitive 'w32-export-frame' can be used to export a screenshot
-of a specified frame to an image file in one of the supported image
-formats, such as JPEG or PNG.
----
-** TODO Emacs on MS-Windows now supports the ':data' keyword for 'play-sound'.
-In addition to ':file FILE' for playing a sound from a file, ':data
-DATA' can now be used to play a sound from memory.
-
----
-** TODO New primitive 'w32-sound-volume'.
-This primitive allows getting and setting the volume of the system's
-default audio device (or the "optimal device", if there are several
-devices).
-
----
 ** TODO adapt to new pgtk toolkit handling
 
 ** TODO New major mode 'icalendar-mode'.
