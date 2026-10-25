@@ -1249,11 +1249,7 @@ From this point onwards, mu4e should be up and running.
 ** Tree-sitter
 #+begin_src emacs-lisp :tangle config.el
 (after! treesit
-  (setopt treesit-auto-install-grammar 'ask)
-
-  ;; TODO find a more optimal way to do this
-  (add-to-list 'treesit-language-source-alist
- 		       '(devicetree "https://github.com/joelspadin/tree-sitter-devicetree")))
+  (setopt treesit-auto-install-grammar 'ask))
 #+end_src
 
 ** bureaucracy
