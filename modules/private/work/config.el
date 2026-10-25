@@ -113,6 +113,11 @@ interactively, a prefix argument asks for it."
 ;; "HH:MM" time that has already passed today immediately, so skip those.
 ;; `alarm-clock-set' also switches buffers behind our back, hence
 ;; `save-current-buffer'.
+;;
+;; The alarms are set again at every startup and `alarm-clock-restore' is never
+;; called, so don't write them to the cache file on every `alarm-clock-set'.
+(setq alarm-clock-auto-save nil)
+
 (add-hook! 'doom-after-init-hook
   (let ((now (format-time-string "%H:%M")))
     (save-current-buffer
