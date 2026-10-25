@@ -36,36 +36,36 @@
 ;;
 ;;; Wind River Workbench
 
-(defcustom vlv--workbench3-path
+(defcustom vlv-work-workbench3-path
   "/mnt/c/WindRiver_6947/workbench-3.3/wrwb/platform/x86-win32/eclipse/wrwb-x86-win32.exe"
   "The path to the executable or script to start WindRiver 3 workbench IDE."
   :type 'file
   :group 'vlv-work)
 
-(defcustom vlv--workbench4-path
+(defcustom vlv-work-workbench4-path
   "/mnt/c/089-VXWORKS_CALIA4/workbench-4/startWorkbench.bat"
   "The path to the executable or script to start WindRiver 4 workbench IDE."
   :type 'file
   :group 'vlv-work)
 
-(defun vlv-open-windriver3-workbench ()
+(defun vlv-work-open-windriver3-workbench ()
   "Open Wind River Workbench 3 IDE."
   (interactive)
-  (start-process "workbench" nil vlv--workbench3-path))
+  (start-process "workbench" nil vlv-work-workbench3-path))
 
-(defun vlv-open-windriver4-workbench ()
+(defun vlv-work-open-windriver4-workbench ()
   "Open Wind River Workbench 4 IDE."
   (interactive)
-  (start-process "workbench" nil vlv--workbench4-path))
+  (start-process "workbench" nil vlv-work-workbench4-path))
 
 
 (map! :leader
       :prefix "o"
-      :desc "WindRiver Workbench 3" "W" #'vlv-open-windriver3-workbench)
+      :desc "WindRiver Workbench 3" "W" #'vlv-work-open-windriver3-workbench)
 
 (map! :leader
       :prefix "o"
-      :desc "WindRiver Workbench 4" "w" #'vlv-open-windriver4-workbench)
+      :desc "WindRiver Workbench 4" "w" #'vlv-work-open-windriver4-workbench)
 
 
 ;;
@@ -85,7 +85,7 @@
 ;;
 ;;; Bureaucracy
 
-(defun vlv-env-work-gen-payfit-report (ON-SITE-DAYS HOME-OFFICE-DAYS &optional COMMENT?)
+(defun vlv-work-gen-payfit-report (ON-SITE-DAYS HOME-OFFICE-DAYS &optional COMMENT?)
   "Create the monthly comment message for payfit.
 
 ON-SITE-DAYS and HOME-OFFICE-DAYS are self descriptive.
