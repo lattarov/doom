@@ -71,9 +71,7 @@
   ;; the .exe makes it work on wsl
   (setopt consult-everything-args "es.exe -r"))
 
-;; put here to avoid byte-compiler errors in git-commit-hook
 (map! :leader
-      :after consult-everything
       :prefix "s"
       :desc "consult-everything" "E" #'consult-everything)
 
