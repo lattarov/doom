@@ -27,12 +27,14 @@
   :group 'work)
 
 (defun vlv--vnc-password ()
-  "Retrieve VNC password from auth-source, or prompt if not found."
+  "Retrieve the VNC password from auth-source.
+Expects an entry for host \"vnc-work\" and user \"admin\"."
   (require 'auth-source)
-  (let ((entry (auth-source-search :host "vnc-work" :user "admin" :max 1)))
-    (if entry
-        (funcall (plist-get (car entry) :secret))
-      "ADMINVME")))
+  (let ((entry (car (auth-source-search :host "vnc-work" :user "admin" :max 1))))
+    (unless entry
+      (user-error "No auth-source entry for host vnc-work, user admin"))
+    (let ((secret (plist-get entry :secret)))
+      (if (functionp secret) (funcall secret) secret))))
 
 (defun vlv--vnc-check-viewer ()
   "Signal an error if the TightVNC viewer executable is not found."
@@ -48,9 +50,10 @@
 (defun vlv-connect-to-vnc-with-ip (ip)
   "Connect to IP via TightVNC."
   (vlv--vnc-check-viewer)
-  (message "Connecting to %s..." ip)
-  (start-process "tightvnc" nil vlv-vncviewer-path
-                 ip (concat "-password=" (vlv--vnc-password))))
+  (let ((password (vlv--vnc-password)))
+    (message "Connecting to %s..." ip)
+    (start-process "tightvnc" nil vlv-vncviewer-path
+                   ip (concat "-password=" password))))
 
 (defun vlv--vnc-assign-keys (machines)
   "Assign unique single-char keys to MACHINES, falling back to digits on collision."
