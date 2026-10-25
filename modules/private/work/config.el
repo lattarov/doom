@@ -128,3 +128,17 @@
 (map! :leader
       :prefix "o"
       :desc "WindRiver Workbench 4" "w" #'vlv-open-windriver4-workbench)
+
+
+;;
+;;; consult-everything (Windows search)
+
+(after! consult-everything
+  ;; the .exe makes it work on wsl
+  (setopt consult-everything-args "es.exe -r"))
+
+;; put here to avoid byte-compiler errors in git-commit-hook
+(map! :leader
+      :after consult-everything
+      :prefix "s"
+      :desc "consult-everything" "E" #'consult-everything)

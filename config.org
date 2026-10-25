@@ -1101,29 +1101,6 @@ From this point onwards, mu4e should be up and running.
 #+end_src
 
 * Work
-** consult-everything (windows)
-
-#+begin_src emacs-lisp :tangle packages.el
-(package! consult-everything
-  :pin "ac574a63b3e869787bbe6354b57a7a8021647ee3"
-  :disable (vlv-env-personal-p)
-  :recipe '(:host github
-            :repo "jthaman/consult-everything"
-            :build t))
-#+end_src
-
-#+begin_src emacs-lisp :tangle config.el
-(after! consult-everything
-  ;; the .exe makes it work on wsl
-  (setopt consult-everything-args "es.exe -r"))
-
-;; put here to avoid byte-compiler errors in git-commit-hook
-(map! :leader
-      :after consult-everything
-      :prefix "s"
-      :desc "consult-everything" "E" #'consult-everything)
-#+end_src
-
 ** Tree-sitter
 #+begin_src emacs-lisp :tangle config.el
 (after! treesit
