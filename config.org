@@ -1351,14 +1351,6 @@ From this point onwards, mu4e should be up and running.
  		       '(devicetree "https://github.com/joelspadin/tree-sitter-devicetree")))
 #+end_src
 
-*** Grammars
-Download or compile grammars and add them to a subdirectory in C:/Tiama/ (to avoid false AV warnings and blockers) and symlink it to *treesit--install-language-grammar-out-dir-history*.
-
-In this case, the source directory is *c:/Tiama/tree-sitter*.
-
-#+begin_src pwsh :tangle no
-mklink /D "c:/Users/LATTARO-VOLPINI/.config/emacs/.local/cache/tree-sitter" "c:/Tiama/tree-sitter"
-#+end_src
 ** bureaucracy
 
 #+begin_src emacs-lisp :tangle config.el
