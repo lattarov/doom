@@ -109,14 +109,18 @@ interactively, a prefix argument asks for it."
 ;;; Alarms
 
 ;; `alarm-clock-set' is autoloaded. Run once at startup, not on every
-;; `doom/reload', which would stack duplicate alarms.  `alarm-clock-set' also
-;; switches buffers behind our back, hence `save-current-buffer'.
+;; `doom/reload', which would stack duplicate alarms.  `run-at-time' fires an
+;; "HH:MM" time that has already passed today immediately, so skip those.
+;; `alarm-clock-set' also switches buffers behind our back, hence
+;; `save-current-buffer'.
 (add-hook! 'doom-after-init-hook
-  (save-current-buffer
-    (pcase-dolist (`(,time . ,message)
-                   '(("08:30" . "🍵 Coffee time!")
-                     ("10:00" . "🍵 Coffee time!")
-                     ("12:00" . "nham nham!")
-                     ("15:00" . "🍵 Coffee time!")
-                     ("17:00" . "Go home!")))
-      (alarm-clock-set time message))))
+  (let ((now (format-time-string "%H:%M")))
+    (save-current-buffer
+      (pcase-dolist (`(,time . ,message)
+                     '(("08:30" . "🍵 Coffee time!")
+                       ("10:00" . "🍵 Coffee time!")
+                       ("12:00" . "nham nham!")
+                       ("15:00" . "🍵 Coffee time!")
+                       ("17:00" . "Go home!")))
+        (when (string> time now)
+          (alarm-clock-set time message))))))
