@@ -41,37 +41,15 @@
 
 * Cross platform compatibility
 
-Small tweaks to activate or configurate variables depending on the machine. This will ultimately be replaced by doom profiles + modules, but it should work for now.
+The work/personal split is decided in =init.el=, before the =doom!= block, by
+=vlv-env-work-p= and =vlv-env-personal-p=. Defining them there makes them
+available to =init.el= itself and to every =packages.el= and =config.el=, so
+nothing has to be tangled into several files.
 
-#+name: vlv-env-setup
-#+begin_src emacs-lisp :tangle no
+#+begin_src emacs-lisp :tangle config.el
 (defgroup vlv nil
   "personal config toggles."
   :group 'convenience)
-
-(defcustom vlv-env
-  (if (getenv "WSL_DISTRO_NAME")
-      "WORK"
-    "PERSONAL")
-
-  "The current environment.
-
-Used to enable/disable parts of the configuration.
-
-
-TODO: replace this by a dedicated config for work once the doom
-profiles API is stable."
-  :type '(choice (const :tag "PERSONAL" "PERSONAL")
-          (const :tag "WORK" "WORK"))
-  :group 'vlv)
-
-(defun vlv-env-work-p ()
-  "Return non-nil if the current environment is Work."
-  (string-equal vlv-env "WORK"))
-
-(defun vlv-env-personal-p ()
-  "Return non-nil if the current environment is Personal."
-  (string-equal vlv-env "PERSONAL"))
 
 (defcustom vlv-home
   (if (vlv-env-work-p)
@@ -80,17 +58,6 @@ profiles API is stable."
   "The home directory variable: the Windows home under WSL, ~/ on Linux."
   :type 'string
   :group 'vlv)
-#+end_src
-
-
-In order to disactivate packages, the easiest way is to use the 'disable' field of packages! macro. the vlv-env-* helper functions are quite handy for that, hence tangling them to packages.el and config.el at the same time solves all issues.
-
-#+begin_src emacs-lisp :tangle config.el :noweb yes
-<<vlv-env-setup>>
-#+end_src
-
-#+begin_src emacs-lisp :tangle packages.el :noweb yes
-<<vlv-env-setup>>
 #+end_src
 * Doom
 #+begin_src emacs-lisp :tangle config.el

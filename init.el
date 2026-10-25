@@ -14,6 +14,16 @@
 ;;   Alternatively, press 'gd' (or 'C-c c d') on a module to browse its
 ;;   directory (for easy access to its source code).
 
+;; Work or personal machine? Defined here, before `doom!', so that the module
+;; list below and every packages.el/config.el can rely on them.
+(defun vlv-env-work-p ()
+  "Return non-nil on the work machine (WSL)."
+  (getenv "WSL_DISTRO_NAME"))
+
+(defun vlv-env-personal-p ()
+  "Return non-nil on a personal machine."
+  (not (vlv-env-work-p)))
+
 (doom! :input
        ;;bidi              ; (tfel ot) thgir etirw uoy gnipleh
        ;;chinese
