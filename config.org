@@ -1744,26 +1744,6 @@ There's some overlay with LSP errors and warnings (in rust at least), hence this
 (package! fzf)
 #+end_src
 
-* bitbake-mode
-To be used in yocto workflows.
-
- #+begin_src emacs-lisp :tangle packages.el                       
-(package! bitbake)                                               
-(package! bitbake-ts-mode)
-#+end_src                                                        
-
-#+begin_src emacs-lisp :tangle config.el
-;; bitbake is not in treesit-language-source-alist by default
-(after! treesit
-  (add-to-list 'treesit-language-source-alist
-               '(bitbake "https://github.com/tree-sitter-grammars/tree-sitter-bitbake")))
-
-(add-to-list 'auto-mode-alist '("\\.bb\\'"       . bitbake-ts-mode))
-(add-to-list 'auto-mode-alist '("\\.bbappend\\'" . bitbake-ts-mode))
-(add-to-list 'auto-mode-alist '("\\.bbclass\\'"  . bitbake-ts-mode))
-(add-to-list 'auto-mode-alist '("\\.inc\\'"      . bitbake-ts-mode))
-#+end_src
-
 * Stuff to do or learn when porting to Emacs 31
 ** TODO adapt to new pgtk toolkit handling
 
