@@ -48,7 +48,7 @@ nothing has to be tangled into several files.
 
 #+begin_src emacs-lisp :tangle config.el
 (defgroup vlv nil
-  "personal config toggles."
+  "Personal configuration."
   :group 'convenience)
 
 (defcustom vlv-home
