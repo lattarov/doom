@@ -93,3 +93,38 @@
             (vlv-connect-to-vnc-with-ip (read-string "IP: "))))))))])
 
 (map! :prefix "C-c" :desc "TightVNC menu" "v" #'vlv-vnc-menu)
+
+
+;;
+;;; Wind River Workbench
+
+(defcustom vlv--workbench3-path
+  "/mnt/c/WindRiver_6947/workbench-3.3/wrwb/platform/x86-win32/eclipse/wrwb-x86-win32.exe"
+  "The path to the executable or script to start WindRiver 3 workbench IDE."
+  :type 'file
+  :group 'work)
+
+(defcustom vlv--workbench4-path
+  "/mnt/c/089-VXWORKS_CALIA4/workbench-4/startWorkbench.bat"
+  "The path to the executable or script to start WindRiver 4 workbench IDE."
+  :type 'file
+  :group 'work)
+
+(defun vlv-open-windriver3-workbench ()
+  "Open Wind River Workbench 3 IDE."
+  (interactive)
+  (start-process "workbench" nil vlv--workbench3-path))
+
+(defun vlv-open-windriver4-workbench ()
+  "Open Wind River Workbench 4 IDE."
+  (interactive)
+  (start-process "workbench" nil vlv--workbench4-path))
+
+
+(map! :leader
+      :prefix "o"
+      :desc "WindRiver Workbench 3" "W" #'vlv-open-windriver3-workbench)
+
+(map! :leader
+      :prefix "o"
+      :desc "WindRiver Workbench 4" "w" #'vlv-open-windriver4-workbench)
