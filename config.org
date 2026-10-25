@@ -1147,10 +1147,7 @@ From this point onwards, mu4e should be up and running.
     ("BDT-INCA10-VERN"  . "10.102.31.64"))
   "Alist mapping machine names to their TightVNC IPs.")
 
-(defcustom vlv-vncviewer-path (string-join (list (if (getenv "WSL_DISTRO_NAME")
-                                                     "/mnt/c/"
-                                                   "C:/")
-                                                 "Program Files/TightVNC/tvnviewer.exe") "")
+(defcustom vlv-vncviewer-path "/mnt/c/Program Files/TightVNC/tvnviewer.exe"
   "Path to the TightVNC viewer executable."
   :type 'file
   :group 'work)
