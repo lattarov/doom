@@ -163,3 +163,14 @@ COMMENT is an optional string appended to a new line."
                                         ; send the text to clipboard and log
     (kill-new text)
     (message "sent to clipboard: \"%s\"" text)))
+
+
+;;
+;;; Alarms
+
+(after! alarm-clock
+  (alarm-clock-set "08:30" "🍵 Coffee time!")
+  (alarm-clock-set "10:00" "🍵 Coffee time!")
+  (alarm-clock-set "12:00" "nham nham!")
+  (alarm-clock-set "15:00" "🍵 Coffee time!")
+  (alarm-clock-set "17:00" "Go home!"))

@@ -6,3 +6,5 @@
   :recipe '(:host github
             :repo "jthaman/consult-everything"
             :build t))
+
+(package! alarm-clock)
