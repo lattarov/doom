@@ -1,0 +1,24 @@
+#+title:    :lang yocto
+#+subtitle: BitBake recipes, kas files and device trees
+
+* Description
+Support for Yocto/OpenEmbedded work:
+
+- BitBake recipes (=.bb=, =.bbappend=, =.bbclass=) open in =bitbake-ts-mode=.
+- =.inc= files open in =bitbake-ts-mode= *only* inside a Yocto layer (a
+  directory tree containing =conf/layer.conf=). Everywhere else Emacs picks
+  the major mode as usual.
+- =bitbake= (the =bitbake-mode= package), for its server and layer commands.
+  Its global =auto-mode-alist= entry, which grabs every =.inc= file, is
+  removed once it loads.
+- Device trees (=.dts=, =.dtsi=) via =dts-mode=.
+- The tree-sitter grammar source for =bitbake=.
+- Snippets for =bitbake-mode= (inherited by =bitbake-ts-mode=) and kas
+  (=yaml-mode=), in this module's =snippets/= directory. Needs =:editor
+  snippets=.
+
+* Installation
+Enable =yocto= under =:lang= in =init.el= and run =doom sync=, then install the
+grammar with =M-x treesit-install-language-grammar RET bitbake=.
+
+Requires Emacs built with tree-sitter.
