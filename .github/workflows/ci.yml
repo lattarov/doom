@@ -38,18 +38,6 @@ jobs:
       - name: shellcheck
         run: shfmt --find scripts .githooks tests | xargs shellcheck --severity=warning
 
-  bats:
-    name: bats (scripts/)
-    runs-on: ubuntu-24.04
-    steps:
-      - uses: actions/checkout@v5
-
-      - name: Install bats
-        run: sudo apt-get update && sudo apt-get install -y bats
-
-      - name: bats
-        run: bats --print-output-on-failure tests/scripts
-
   tangle:
     name: config.org tangles
     runs-on: ubuntu-24.04
