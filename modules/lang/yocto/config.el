@@ -1,5 +1,9 @@
 ;;; lang/yocto/config.el -*- lexical-binding: t; -*-
 
+(defvar +yocto-snippets-dir (dir! "snippets/")
+  "Directory holding the snippets shipped with this module.")
+
+
 ;;
 ;;; BitBake
 
@@ -21,3 +25,14 @@
   ;; not in `treesit-language-source-alist' by default
   (add-to-list 'treesit-language-source-alist
                '(bitbake "https://github.com/tree-sitter-grammars/tree-sitter-bitbake")))
+
+
+;;
+;;; Snippets
+
+(when (modulep! :editor snippets)
+  (after! yasnippet
+    (add-to-list 'yas-snippet-dirs '+yocto-snippets-dir 'append)
+    ;; `yas-global-mode' has already loaded `yas-snippet-dirs' by now
+    (when (bound-and-true-p yas-global-mode)
+      (yas-load-directory +yocto-snippets-dir t))))
