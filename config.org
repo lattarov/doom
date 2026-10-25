@@ -2027,16 +2027,6 @@ To install the grammars, use 'M-x markdown-ts-mode-install-parsers'.
   (setopt mastodon-instance-url "https://mastodon.social"))
 #+end_src
 
-* Robot Framework
-
-#+begin_src emacs-lisp :tangle packages.el
-(package! robot-mode
-  :disable (vlv-env-personal-p))
-
-(package! robot-log
-  :disable (vlv-env-personal-p))
-#+end_src
-
 * systemd
 
 #+begin_src emacs-lisp :tangle packages.el

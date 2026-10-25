@@ -8,3 +8,6 @@
             :build t))
 
 (package! alarm-clock)
+
+(package! robot-mode)
+(package! robot-log)
