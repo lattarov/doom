@@ -300,31 +300,27 @@ through. Narrow the set per buffer with =C-M-$=, per project with a
 =.dir-locals.el= entry for =jinx-languages=, or per file with =#+language:=.
 
 #+begin_src emacs-lisp :tangle packages.el
-(package! jinx
-  :disable (eq system-type 'windows-nt))
+(package! jinx)
 #+end_src
 
 #+begin_src emacs-lisp :tangle config.el
-;; The native module needs libenchant headers + a C compiler, which we do
-;; not have on native Windows. WSL is fine.
-(unless (eq system-type 'windows-nt)
-  (add-hook 'doom-first-buffer-hook #'global-jinx-mode)
+(add-hook 'doom-first-buffer-hook #'global-jinx-mode)
 
-  (map! "M-$"   #'jinx-correct
-        "C-M-$" #'jinx-languages
-        :n "z=" #'jinx-correct
-        :n "]s" #'jinx-next
-        :n "[s" #'jinx-previous)
+(map! "M-$"   #'jinx-correct
+      "C-M-$" #'jinx-languages
+      :n "z=" #'jinx-correct
+      :n "]s" #'jinx-next
+      :n "[s" #'jinx-previous)
 
-  (after! jinx
-    ;; Checked in parallel: a word is valid if ANY of these accepts it.
-    (setopt jinx-languages "en_US pt_BR fr_FR it_IT")
+(after! jinx
+  ;; Checked in parallel: a word is valid if ANY of these accepts it.
+  (setopt jinx-languages "en_US pt_BR fr_FR it_IT")
 
-    ;; Doom already turns on `vertico-multiform-mode'; a grid fits suggestions
-    ;; better than the default vertical list.
-    (after! vertico-multiform
-      (add-to-list 'vertico-multiform-categories
-                   '(jinx grid (vertico-grid-annotate . 20) (vertico-count . 4))))))
+  ;; Doom already turns on `vertico-multiform-mode'; a grid fits suggestions
+  ;; better than the default vertical list.
+  (after! vertico-multiform
+    (add-to-list 'vertico-multiform-categories
+                 '(jinx grid (vertico-grid-annotate . 20) (vertico-count . 4)))))
 #+end_src
 
 * Org
