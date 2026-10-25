@@ -83,38 +83,6 @@ profiles API is stable."
   "The home directory variable, compatible between Linux, Windows and wsl systems."
   :type 'string
   :group 'vlv)
-
-;; external doom dependencies in work environment
-(when (vlv-env-work-p)
-  (let* ((vlv-env-work-p-emacs-install-path  "c:/Emacs/")
-         (vlv-env-work-p-runtimes-path       (expand-file-name "runtimes/"
-                                                               vlv-env-work-p-emacs-install-path))
-         (vlv-env-work-p-runtimes-fd-path    (expand-file-name "fd"
-                                                               vlv-env-work-p-runtimes-path))
-         (vlv-env-work-p-runtimes-rg-path    (expand-file-name "rg"
-                                                               vlv-env-work-p-runtimes-path))
-
-         (vlv-env-work-p-cygwin-path         "C:/cygwin64")
-
-         (vlv-env-work-p-cygwin-bin-path     (expand-file-name "bin"
-                                                               vlv-env-work-p-cygwin-path))
-
-
-         (paths-to-add (list vlv-env-work-p-emacs-install-path
-                             vlv-env-work-p-runtimes-path
-                             vlv-env-work-p-runtimes-fd-path
-                             vlv-env-work-p-runtimes-rg-path
-                             vlv-env-work-p-cygwin-path
-                             vlv-env-work-p-cygwin-bin-path)))
-
-    ;; Add each existing path to `exec-path` and to the PATH env var
-    (dolist (path paths-to-add)
-      (let ((dir (directory-file-name (expand-file-name path))))
-        (when (file-directory-p dir)
-          ;; Add to Emacs' exec-path (used by call-process, etc.)
-          (add-to-list 'exec-path dir)
-          ;; Also add to the OS PATH environment so external tools can be found
-          (setenv "PATH" (concat dir ";" (getenv "PATH"))))))))
 #+end_src
 
 
