@@ -142,3 +142,24 @@
       :after consult-everything
       :prefix "s"
       :desc "consult-everything" "E" #'consult-everything)
+
+
+;;
+;;; Bureaucracy
+
+(defun vlv-env-work-gen-payfit-report (ON-SITE-DAYS HOME-OFFICE-DAYS &optional COMMENT?)
+  "Create the monthly comment message for payfit.
+
+ON-SITE-DAYS and HOME-OFFICE-DAYS are self descriptive.
+COMMENT is an optional string appended to a new line."
+  (interactive "nOn site days: \nnHome Office days:")
+  (let* ((on-site-fee (* ON-SITE-DAYS 15))
+         (home-office-fee (* HOME-OFFICE-DAYS 10))
+         (total (+ on-site-fee home-office-fee))
+         (comment (if COMMENT? (format " \n %s" COMMENT?) ""))
+         (text (format "%d jours x 15€/jour sur site + %d jours x 10€/jour TT = %d€ + %d€ = %d%s€"
+                       ON-SITE-DAYS HOME-OFFICE-DAYS on-site-fee home-office-fee total comment)))
+    
+                                        ; send the text to clipboard and log
+    (kill-new text)
+    (message "sent to clipboard: \"%s\"" text)))
