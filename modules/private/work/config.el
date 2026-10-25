@@ -88,9 +88,10 @@ from home.  COMMENT is an optional string appended on a new line."
   (let* ((on-site-fee (* on-site-days 15))
          (home-office-fee (* home-office-days 10))
          (total (+ on-site-fee home-office-fee))
-         (comment (if comment (format " \n %s" comment) ""))
-         (text (format "%d jours x 15€/jour sur site + %d jours x 10€/jour TT = %d€ + %d€ = %d%s€"
-                       on-site-days home-office-days on-site-fee home-office-fee total comment)))
+         (text (format "%d jours x 15€/jour sur site + %d jours x 10€/jour TT = %d€ + %d€ = %d€"
+                       on-site-days home-office-days on-site-fee home-office-fee total)))
+    (unless (string-empty-p (or comment ""))
+      (setq text (concat text "\n" comment)))
     ;; send the text to clipboard and log
     (kill-new text)
     (message "sent to clipboard: \"%s\"" text)))
