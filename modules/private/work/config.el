@@ -83,8 +83,13 @@
   "Copy the monthly Payfit expense comment to the clipboard.
 
 ON-SITE-DAYS and HOME-OFFICE-DAYS are the number of days worked on site and
-from home.  COMMENT is an optional string appended on a new line."
-  (interactive "nOn site days: \nnHome Office days: ")
+from home.  COMMENT is an optional string appended on a new line;
+interactively, a prefix argument asks for it."
+  (interactive
+   (list (read-number "On site days: ")
+         (read-number "Home Office days: ")
+         (when current-prefix-arg
+           (read-string "Comment: "))))
   (let* ((on-site-fee (* on-site-days 15))
          (home-office-fee (* home-office-days 10))
          (total (+ on-site-fee home-office-fee))
