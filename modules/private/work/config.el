@@ -1,5 +1,10 @@
 ;;; private/work/config.el -*- lexical-binding: t; -*-
 
+(defgroup vlv-work nil
+  "Work-only configuration."
+  :group 'convenience)
+
+
 ;;
 ;;; Org babel
 
@@ -35,13 +40,13 @@
   "/mnt/c/WindRiver_6947/workbench-3.3/wrwb/platform/x86-win32/eclipse/wrwb-x86-win32.exe"
   "The path to the executable or script to start WindRiver 3 workbench IDE."
   :type 'file
-  :group 'work)
+  :group 'vlv-work)
 
 (defcustom vlv--workbench4-path
   "/mnt/c/089-VXWORKS_CALIA4/workbench-4/startWorkbench.bat"
   "The path to the executable or script to start WindRiver 4 workbench IDE."
   :type 'file
-  :group 'work)
+  :group 'vlv-work)
 
 (defun vlv-open-windriver3-workbench ()
   "Open Wind River Workbench 3 IDE."
