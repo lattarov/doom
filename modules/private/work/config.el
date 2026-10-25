@@ -90,11 +90,14 @@ interactively, a prefix argument asks for it."
          (read-number "Home Office days: ")
          (when current-prefix-arg
            (read-string "Comment: "))))
-  (let* ((on-site-fee (* on-site-days 15))
-         (home-office-fee (* home-office-days 10))
+  (let* ((on-site-rate 15)
+         (home-office-rate 10)
+         (on-site-fee (* on-site-days on-site-rate))
+         (home-office-fee (* home-office-days home-office-rate))
          (total (+ on-site-fee home-office-fee))
-         (text (format "%d jours x 15€/jour sur site + %d jours x 10€/jour TT = %d€ + %d€ = %d€"
-                       on-site-days home-office-days on-site-fee home-office-fee total)))
+         (text (format "%d jours x %d€/jour sur site + %d jours x %d€/jour TT = %d€ + %d€ = %d€"
+                       on-site-days on-site-rate home-office-days home-office-rate
+                       on-site-fee home-office-fee total)))
     (unless (string-empty-p (or comment ""))
       (setq text (concat text "\n" comment)))
     ;; send the text to clipboard and log
