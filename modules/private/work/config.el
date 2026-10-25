@@ -129,3 +129,19 @@ interactively, a prefix argument asks for it."
                        ("17:00" . "Go home!")))
         (when (string> time now)
           (alarm-clock-set time message))))))
+
+
+;;
+;;; Commit messages
+
+;; Override commit-butler's "Conventional Commit" snippet to add the
+;; "[VILAT] " prefix.  Prepended, so it shadows the package's copy.
+(defvar vlv-work-snippets-dir (dir! "snippets/")
+  "Directory holding the snippets shipped with this module.")
+
+(when (modulep! :editor snippets)
+  (after! yasnippet
+    (add-to-list 'yas-snippet-dirs 'vlv-work-snippets-dir)
+    ;; `yas-global-mode' has already loaded `yas-snippet-dirs' by now
+    (when (bound-and-true-p yas-global-mode)
+      (yas-load-directory vlv-work-snippets-dir t))))
