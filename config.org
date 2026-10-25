@@ -657,8 +657,11 @@ If there are no arguments, return `pass'."
             "--completion-style=detailed"
             "--header-insertion=never"
             "--header-insertion-decorators=0"))
-  (set-lsp-priority! 'clangd 2)
-  (lsp-semantic-token-mode))
+  (set-lsp-priority! 'clangd 2))
+
+;; Semantic tokens for C/C++ only: set buffer-locally, before lsp starts there.
+(setq-hook! '(c-mode-hook c++-mode-hook c-ts-mode-hook c++-ts-mode-hook)
+  lsp-semantic-tokens-enable t)
 #+end_src
 ** CMAKE-IDE
 [[https://github.com/Fox7Fog/emacs-cmake-ide][GitHub - Fox7Fog/emacs-cmake-ide: Use Emacs as a C/C++ IDE]]
