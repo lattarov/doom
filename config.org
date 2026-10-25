@@ -1101,7 +1101,11 @@ From this point onwards, mu4e should be up and running.
 #+end_src
 
 * Work
-** Tree-sitter
+Work-only configuration (TightVNC, Wind River Workbench, consult-everything,
+Robot Framework, ...) lives in the =:private work= module, see
+[[file:modules/private/work/README.org]].
+
+* Tree-sitter
 #+begin_src emacs-lisp :tangle config.el
 (after! treesit
   (setopt treesit-auto-install-grammar 'ask))
