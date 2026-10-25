@@ -79,20 +79,19 @@
 ;;
 ;;; Bureaucracy
 
-(defun vlv-work-gen-payfit-report (ON-SITE-DAYS HOME-OFFICE-DAYS &optional COMMENT?)
-  "Create the monthly comment message for payfit.
+(defun vlv-work-gen-payfit-report (on-site-days home-office-days &optional comment)
+  "Copy the monthly Payfit expense comment to the clipboard.
 
-ON-SITE-DAYS and HOME-OFFICE-DAYS are self descriptive.
-COMMENT is an optional string appended to a new line."
-  (interactive "nOn site days: \nnHome Office days:")
-  (let* ((on-site-fee (* ON-SITE-DAYS 15))
-         (home-office-fee (* HOME-OFFICE-DAYS 10))
+ON-SITE-DAYS and HOME-OFFICE-DAYS are the number of days worked on site and
+from home.  COMMENT is an optional string appended on a new line."
+  (interactive "nOn site days: \nnHome Office days: ")
+  (let* ((on-site-fee (* on-site-days 15))
+         (home-office-fee (* home-office-days 10))
          (total (+ on-site-fee home-office-fee))
-         (comment (if COMMENT? (format " \n %s" COMMENT?) ""))
+         (comment (if comment (format " \n %s" comment) ""))
          (text (format "%d jours x 15€/jour sur site + %d jours x 10€/jour TT = %d€ + %d€ = %d%s€"
-                       ON-SITE-DAYS HOME-OFFICE-DAYS on-site-fee home-office-fee total comment)))
-    
-                                        ; send the text to clipboard and log
+                       on-site-days home-office-days on-site-fee home-office-fee total comment)))
+    ;; send the text to clipboard and log
     (kill-new text)
     (message "sent to clipboard: \"%s\"" text)))
 
