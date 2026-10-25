@@ -46,6 +46,6 @@ done
   (setq command-line-args-left nil)
   (kill-emacs (if failed 1 0)))' \
     "${out}/config.el" "${out}/packages.el" \
-    "${handwritten[@]}" "${REPO}/conventional-commits-snippets.el"
+    "${handwritten[@]}"
 
 echo "check-literate-config-tangle: config.org tangles to readable config.el and packages.el; init.el and modules/ are readable"
