@@ -58,13 +58,9 @@
   (interactive)
   (start-process "workbench" nil vlv-work-workbench4-path))
 
-
 (map! :leader
       :prefix "o"
-      :desc "WindRiver Workbench 3" "W" #'vlv-work-open-windriver3-workbench)
-
-(map! :leader
-      :prefix "o"
+      :desc "WindRiver Workbench 3" "W" #'vlv-work-open-windriver3-workbench
       :desc "WindRiver Workbench 4" "w" #'vlv-work-open-windriver4-workbench)
 
 
