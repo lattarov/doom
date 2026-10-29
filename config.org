@@ -1514,7 +1514,10 @@ Found in https://emacs.stackexchange.com/questions/60200/magit-remove-local-bran
   (add-to-list 'magit-main-branch-names "develop")
 
   ;; work commit format is long by nature...
-  (setopt magit-show-long-lines-warning (unless (vlv-env-work-p) t)))
+  (setopt magit-show-long-lines-warning (unless (vlv-env-work-p) t))
+
+  ;; a good commit message header isn't necessarily short
+  (setq git-commit-summary-max-length 68))
 #+end_src
 
 * Flyover :WIP:
