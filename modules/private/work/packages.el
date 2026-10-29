@@ -10,6 +10,5 @@
 (package! robot-mode)
 (package! robot-log)
 
-;; TODO switch to the GitHub recipe once published
 (package! tightvnc
-  :recipe (:local-repo "~/dev/tightvnc" :files ("tightvnc.el")))
+  :recipe (:host github :repo "lattarov/tightvnc.el"))

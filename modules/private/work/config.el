@@ -21,7 +21,7 @@
   :init
   (map! :prefix "C-c" :desc "TightVNC menu" "v" #'tightvnc)
   :config
-  (setopt tightvnc-machines
+  (setopt tightvnc-servers
           '(("VISIO"           . "10.4.54.221")
             ("VERN"            . "10.102.31.63")
             ("CMX"             . "10.4.54.223")
