@@ -31,10 +31,15 @@ fi
 printf 'pre-commit: byte-compiling config.el\n'
 
 result=$("$EMACSCLIENT" --eval "
-(let ((log-buf (get-buffer-create \" *pre-commit-bytecomp*\")))
+(let ((log-buf (get-buffer-create \" *pre-commit-bytecomp*\"))
+      (doom-file (symbol-function 'file!)))
   (with-current-buffer log-buf (setq buffer-read-only nil) (erase-buffer))
   (let* ((byte-compile-log-buffer log-buf)
-         (ok (byte-compile-file \"${CONFIG_EL}\")))
+         (ok (cl-letf (((symbol-function 'file!)
+                        (cons 'macro (lambda ()
+                                       (or (macroexp-file-name)
+                                           (funcall (cdr doom-file)))))))
+               (byte-compile-file \"${CONFIG_EL}\"))))
     (with-current-buffer log-buf
       ;; The log always starts with a 'Compiling file … at DATE' header line.
       ;; Skip it so the written log and the emptiness check only cover diagnostics.
