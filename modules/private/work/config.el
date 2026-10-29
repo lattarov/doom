@@ -134,8 +134,6 @@ interactively, a prefix argument asks for it."
 ;;
 ;;; Commit messages
 
-;; Override commit-butler's "Conventional Commit" snippet to add the
-;; "[VILAT] " prefix.  Prepended, so it shadows the package's copy.
 (defvar vlv-work-snippets-dir (dir! "snippets/")
   "Directory holding the snippets shipped with this module.")
 

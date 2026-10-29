@@ -7,4 +7,6 @@
 
 $2
 
+$3
+
 `(and breaking "BREAKING CHANGE: ")`$0
