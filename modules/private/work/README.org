@@ -17,7 +17,9 @@ It provides:
 - [[https://github.com/jthaman/consult-everything][consult-everything]] for Windows' Everything search (=SPC s E=);
 - =vlv-work-gen-payfit-report=, the monthly Payfit expense comment;
 - daily reminders through =alarm-clock=;
-- =robot-mode= and =robot-log= for Robot Framework.
+- =robot-mode= and =robot-log= for Robot Framework;
+- the "[VILAT] " prefix and =cc= key for commit-butler's "Conventional Commit"
+  snippet.
 
 * Configuration
 ** TightVNC password
