@@ -203,6 +203,7 @@ non-nil. What remains in this file are one-line differences in shared settings
              ibuffer-mode-hook
              magit-mode-hook
              markdown-mode-hook
+             markdown-ts-mode-hook
              org-mode-hook
              prog-mode-hook
              python-mode-hook
