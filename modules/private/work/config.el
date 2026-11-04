@@ -56,7 +56,7 @@
 (defun vlv-work-open-windriver4-workbench ()
   "Open Wind River Workbench 4 IDE."
   (interactive)
-  (start-process "workbench" nil vlv-work-workbench4-path))
+  (start-process "workbench" nil "cmd.exe" vlv-work-workbench4-path))
 
 (map! :leader
       :prefix "o"
