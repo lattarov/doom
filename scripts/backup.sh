@@ -1,8 +1,14 @@
 #!/usr/bin/env bash
-# backup.sh — Archive the Emacs directory (Doom binaries + all caches),
-# rotating out old archives beyond ARCHIVE_COUNT_MAX.
+# backup.sh — Snapshot the Emacs directory (Doom binaries + all caches) into a
+# deduplicating borg repository, pruning snapshots beyond BACKUP_KEEP.
 #
-# A temporary, brute-force, simplest way to have a full backup of the $EMACS_DIR.
+# Usage: backup.sh [--no-prune]
+#   --no-prune  Keep every snapshot. rollback.sh uses it so its safety
+#               snapshot can never prune the snapshot being restored.
+#
+# Only content that changed since the previous snapshot is stored: git
+# refreshes the mtime of its packfiles on every fetch, which makes borg re-read
+# them, but identical chunks are never stored twice.
 
 set -euo pipefail
 
@@ -10,31 +16,40 @@ SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
 # shellcheck source=lib/common.sh
 source "${SCRIPT_DIR}/lib/common.sh"
 
+case "${1:-}" in
+    "") prune=1 ;;
+    --no-prune) prune=0 ;;
+    *) die "Usage: backup.sh [--no-prune]" ;;
+esac
+
 divider "Backup Doom Emacs"
 
-mkdir -p "$ARCHIVE_BACKUP_DIR"
+require_borg
+[[ -d "$EMACS_DIR" ]] || die "Nothing to back up: ${EMACS_DIR} does not exist."
+
+if [[ ! -d "$BORG_REPO" ]]; then
+    log "Creating borg repository ${BORG_REPO}"
+    mkdir -p "$(dirname "$BORG_REPO")"
+    borg init --encryption=none "$BORG_REPO"
+fi
 
 ## Get the current Git HEAD SHA-1
 git_sha=$(git -C "$EMACS_DIR" rev-parse --short HEAD 2>/dev/null || echo "unknown")
 
-archive_name="${ARCHIVE_PREFIX}_$(date +%Y-%m-%d_%H-%M-%S)_${git_sha}.${ARCHIVE_FILE_TYPE}"
-archive_path="${ARCHIVE_BACKUP_DIR}/${archive_name}"
+snapshot="${BACKUP_PREFIX}_$(date +%Y-%m-%d_%H-%M-%S)_${git_sha}"
 
-log "Archiving ${EMACS_DIR} → ${archive_path}"
-tar --create --gzip --file "$archive_path" -C "$(dirname "$EMACS_DIR")" "$(basename "$EMACS_DIR")" \
-    || {
-        rm -f "$archive_path"
-        die "Failed to archive ${EMACS_DIR} — old archives left untouched."
-    }
+log "Snapshotting ${EMACS_DIR} → ${BORG_REPO}::${snapshot}"
+# Store paths relative to the parent ("emacs/..."), as the old tarballs did.
+cd "$(dirname "$EMACS_DIR")"
+borg_run create --stats --one-file-system --compression auto,zstd,3 \
+    "::${snapshot}" "$(basename "$EMACS_DIR")" \
+    || die "Failed to snapshot ${EMACS_DIR} — old snapshots left untouched."
 
-step_done "Backup complete: ${archive_name}"
+step_done "Backup complete: ${snapshot}"
 
-## Limit amount of archives — only once the new one is safely on disk.
-mapfile -t archives < <(ls -1t "${ARCHIVE_BACKUP_DIR}/${ARCHIVE_PREFIX}"*".${ARCHIVE_FILE_TYPE}" 2>/dev/null || true)
+((prune)) || exit 0
 
-while [[ "${#archives[@]}" -gt "$ARCHIVE_COUNT_MAX" ]]; do
-    oldest="${archives[-1]}"
-    rm -f "$oldest" && warn "Removed oldest archive: $(basename "$oldest")"
-    unset 'archives[-1]'
-    archives=("${archives[@]}")
-done
+## Limit amount of snapshots — only once the new one is safely stored.
+borg prune --list --keep-last "$BACKUP_KEEP" --glob-archives "${BACKUP_PREFIX}_*" \
+    && borg compact \
+    || warn "Failed to prune snapshots beyond the newest ${BACKUP_KEEP}."

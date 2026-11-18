@@ -27,6 +27,7 @@ step_apt_deps() {
     # the native modules Doom packages compile themselves (vterm, jinx,
     # pdf-tools, whisper.cpp), not for building Emacs — see build.sh.
     sudo apt install -y \
+        borgbackup \
         build-essential \
         clangd \
         cmake \
@@ -54,6 +55,7 @@ step_apt_deps() {
         poppler-utils \
         python3-pip \
         ripgrep \
+        rsync \
         sqlite3 \
         texlive-fonts-extra \
         texlive-fonts-recommended \

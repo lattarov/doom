@@ -14,11 +14,14 @@ XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
 EMACS_DIR="${EMACS_DIR:-${XDG_CONFIG_HOME}/emacs}"
 DOOM_BIN="${DOOM_BIN:-${EMACS_DIR}/bin/doom}"
 
-# ── backup archive config ────────────────────────────────────────────────────
-ARCHIVE_PREFIX="${ARCHIVE_PREFIX:-emacs}"
-ARCHIVE_FILE_TYPE="${ARCHIVE_FILE_TYPE:-tar.gz}"
-ARCHIVE_COUNT_MAX="${ARCHIVE_COUNT_MAX:-3}"
-ARCHIVE_BACKUP_DIR="${ARCHIVE_BACKUP_DIR:-${XDG_CONFIG_HOME}/backups}"
+# ── backup repository config ─────────────────────────────────────────────────
+BACKUP_REPO="${BACKUP_REPO:-${XDG_CONFIG_HOME}/backups/emacs.borg}"
+BACKUP_PREFIX="${BACKUP_PREFIX:-emacs}"
+BACKUP_KEEP="${BACKUP_KEEP:-6}"
+# borg takes the repository from the environment. It is unencrypted on purpose
+# (local rollback insurance, not an off-site backup), so don't prompt about it.
+export BORG_REPO="$BACKUP_REPO"
+export BORG_UNKNOWN_UNENCRYPTED_REPO_ACCESS_IS_OK=yes
 
 # ── logging ───────────────────────────────────────────────────────────────────
 log() { echo -e "[INFO]  $*"; }
@@ -58,6 +61,10 @@ require_linux() {
     [[ "$(uname)" == "Linux" ]] || die "Interactive setup is Linux-only."
 }
 
+require_borg() {
+    command -v borg &>/dev/null || die "borg not found — install borgbackup (see scripts/deps.sh)."
+}
+
 setup_banner() {
     # setup_banner "Title" — header shared by the interactive setup scripts
     divider "$1"
@@ -70,6 +77,15 @@ setup_banner() {
 }
 
 # ── shared actions ────────────────────────────────────────────────────────────
+borg_run() {
+    # borg_run <borg args...> — borg exits 1 on warnings (e.g. a file the
+    # running daemon changed mid-read); only >= 2 means the command failed.
+    local rc=0
+    borg "$@" || rc=$?
+    ((rc < 2)) || return "$rc"
+    ((rc == 0)) || warn "borg $1 finished with warnings (see above)."
+}
+
 restart_emacs_daemon() {
     log "Restarting Emacs daemon..."
     systemctl --user restart emacs.service \

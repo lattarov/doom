@@ -26,7 +26,7 @@ jobs:
 
       - name: Prepare the runner like the desktop
         run: |
-          sudo apt-get update && sudo apt-get install -y ripgrep fd-find
+          sudo apt-get update && sudo apt-get install -y ripgrep fd-find borgbackup rsync
           # emacs.service (written by install.sh) hardcodes /usr/local/bin.
           sudo ln -sf "$(command -v emacs)" /usr/local/bin/emacs
           sudo ln -sf "$(command -v emacsclient)" /usr/local/bin/emacsclient
@@ -89,9 +89,9 @@ jobs:
       - name: upgrade.sh
         run: |
           scripts/upgrade.sh
-          # upgrade.sh's own backup is the newest archive at this point.
-          newest="$(find ~/.config/backups -name 'emacs_*.tar.gz' -printf '%T@ %p\n' | sort -n | tail -1 | cut -d' ' -f2-)"
-          echo "UPGRADE_BACKUP=$newest" >>"$GITHUB_ENV"
+          # upgrade.sh's own backup is the newest snapshot at this point.
+          source scripts/lib/common.sh
+          echo "UPGRADE_BACKUP=$(borg list --short --last 1)" >>"$GITHUB_ENV"
           echo "Doom $PRE_UPGRADE_SHA → $(git -C ~/.config/emacs rev-parse HEAD)"
 
       - name: Doom boots (after upgrade)
@@ -117,6 +117,13 @@ jobs:
             echo "expected Doom at $PRE_UPGRADE_SHA after rollback, got $sha" >&2
             exit 1
           }
+
+      - name: Backup repository is consistent
+        run: |
+          source scripts/lib/common.sh
+          borg check
+          # The pre-upgrade backup plus rollback.sh's safety snapshot.
+          borg list
 
       - name: emacs.service journal
         if: failure()
