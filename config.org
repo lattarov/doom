@@ -622,7 +622,7 @@ Set ollama as default backend for gptel, add default model and a few tweaks.
 
   (add-hook! 'gptel-post-response-functions 'gptel-end-of-response)
 
-  (setopt gptel-model 'gpt-oss:20b)
+  (setopt gptel-model 'mistral-small:24b)
 
   (setopt vlv--gptel-ollama (gptel-make-ollama "ollama"
                               :host "localhost:11434"
@@ -632,6 +632,7 @@ Set ollama as default backend for gptel, add default model and a few tweaks.
                                         (deepseek-r1:8b)
                                         (deepseek-r1:32b)
                                         (ministral-3:8b)
+                                        (mistral-small:24b)
                                         (gpt-oss:20b)
                                         (deepseek-r1:7b))))
 
