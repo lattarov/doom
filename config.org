@@ -126,8 +126,6 @@ non-nil. What remains in this file are one-line differences in shared settings
       :desc "Open literate config" "c" (cmd! (vlv-open-private-config-file "config.org")))
 
 
-(add-hook! 'doom-scratch-buffer-hook 'org-mode)
-
 (setopt doom-modeline-enable-buffer-position nil)
 
 (setopt doom-modeline-time-analogue-clock nil)
@@ -339,8 +337,6 @@ Shortcuts are mapped with the SPC n r prefix by default.
 (setopt org-gtd-update-ack "4.6.1")
 
 (after! org
-  (require 'org-gtd)
-
   (setopt org-gtd-directory (expand-file-name "gtd/" org-directory))
 
   (add-to-list 'org-agenda-files org-gtd-directory)
@@ -362,18 +358,20 @@ Shortcuts are mapped with the SPC n r prefix by default.
   (setopt org-gtd-refile-to-any-target nil)
 
   ;; Avoids manual saving all buffers once we're done
-  (setopt org-gtd-save-after-organize t)
+  (setopt org-gtd-save-after-organize t))
 
-  ;; keybindings
-  (map!
-   (:map org-gtd-clarify-mode-map
-         "C-c c" #'org-gtd-organize)
-   (:map org-agenda-mode-map
-         "C-c ." #'org-gtd-agenda-transient))
+;; keybindings
+(map! :after org-gtd
+      :map org-gtd-clarify-mode-map
+      "C-c c" #'org-gtd-organize)
 
-  (map! :leader
-        :prefix "o"
-        :desc "org-gtd" "g" #'org-gtd-command-center))
+(map! :after org-agenda
+      :map org-agenda-mode-map
+      "C-c ." #'org-gtd-agenda-transient)
+
+(map! :leader
+      :prefix "o"
+      :desc "org-gtd" "g" #'org-gtd-command-center)
 
 #+end_src
 
